@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Guides">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Guides\CustomTraits">
+      <UniqueIdentifier>{b0bae326-0362-47fe-9446-01a4c1685fea}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\guides\main.cpp">
+      <Filter>Guides</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\guides\CustomTraits\Traits.h">
+      <Filter>Guides\CustomTraits</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\guides\CustomTraits\RemoveReference.h">
+      <Filter>Guides\CustomTraits</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\guides\CustomTraits\AddReference.h">
+      <Filter>Guides\CustomTraits</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\guides\CustomTraits\RemoveQualifiers.h">
+      <Filter>Guides\CustomTraits</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\guides\CustomTraits\Decay.h">
+      <Filter>Guides\CustomTraits</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\guides\CustomTraits\TrueType.h">
+      <Filter>Guides\CustomTraits</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\guides\CustomTraits\IsSame.h">
+      <Filter>Guides\CustomTraits</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\guides\CustomTraits\Declval.h">
+      <Filter>Guides\CustomTraits</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\guides\CustomTraits\IsDefaultConstructable.h">
+      <Filter>Guides\CustomTraits</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\guides\CustomTraits\IsDefaultConstructable2.h">
+      <Filter>Guides\CustomTraits</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\guides\CustomTraits\IsInvokable.h">
+      <Filter>Guides\CustomTraits</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\guides\CustomTraits\IsConvertible.h">
+      <Filter>Guides\CustomTraits</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\guides\CustomTraits\Function.h">
+      <Filter>Guides\CustomTraits</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
