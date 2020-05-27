@@ -10,8 +10,6 @@
 
 #pragma once
 
-#include "CustomTraits/TrueType.h"
-#include "CustomTraits/Declval.h"
 #include "IFunctorBridge.h"
 
 template <typename Signature>
@@ -34,7 +32,7 @@ public:
 	}
 
 	template <typename F>
-	explicit Function(F&& f)
+	Function(F&& f)
 		: m_bridge(nullptr)
 	{
 		using Functor = std::decay_t<F>;
@@ -82,7 +80,7 @@ public:
 
 	R operator()(Args... args) const
 	{
-		return m_bridge->Invoke(std::forward<Args>(args...));
+		return m_bridge->Invoke(std::forward<Args>(args)...);
 	}
 	
 private:

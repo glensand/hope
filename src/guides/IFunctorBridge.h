@@ -19,13 +19,15 @@ namespace Detail
 	class IFunctorBridge
 	{
 	public:
-		virtual IFunctorBridge*	Clone() const = 0;
+		virtual ~IFunctorBridge(){}
+
+        [[nodiscard]] virtual IFunctorBridge*	Clone() const = 0;
 		
 		virtual R				Invoke(Args... args) const = 0;
 	};
 
 	template <typename Functor, typename R, typename... Args>
-	class FunctorBridge final : IFunctorBridge<R, Args...>
+	class FunctorBridge final : public IFunctorBridge<R, Args...>
 	{
 	public:
 		template <typename ForwardedFunctor>
