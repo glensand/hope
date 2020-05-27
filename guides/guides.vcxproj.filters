@@ -51,8 +51,11 @@
     <ClInclude Include="..\src\guides\CustomTraits\IsConvertible.h">
       <Filter>Guides\CustomTraits</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\guides\CustomTraits\Function.h">
-      <Filter>Guides\CustomTraits</Filter>
+    <ClInclude Include="..\src\guides\Function.h">
+      <Filter>Guides</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\guides\IFunctorBridge.h">
+      <Filter>Guides</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

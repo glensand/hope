@@ -145,7 +145,6 @@
     <ClInclude Include="..\src\guides\CustomTraits\AddReference.h" />
     <ClInclude Include="..\src\guides\CustomTraits\Decay.h" />
     <ClInclude Include="..\src\guides\CustomTraits\Declval.h" />
-    <ClInclude Include="..\src\guides\CustomTraits\Function.h" />
     <ClInclude Include="..\src\guides\CustomTraits\IsConvertible.h" />
     <ClInclude Include="..\src\guides\CustomTraits\IsDefaultConstructable.h" />
     <ClInclude Include="..\src\guides\CustomTraits\IsDefaultConstructable2.h" />
@@ -155,6 +154,8 @@
     <ClInclude Include="..\src\guides\CustomTraits\RemoveReference.h" />
     <ClInclude Include="..\src\guides\CustomTraits\Traits.h" />
     <ClInclude Include="..\src\guides\CustomTraits\TrueType.h" />
+    <ClInclude Include="..\src\guides\Function.h" />
+    <ClInclude Include="..\src\guides\IFunctorBridge.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
