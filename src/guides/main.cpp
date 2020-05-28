@@ -1,7 +1,8 @@
 #include <iostream>
 #include <type_traits>
 #include <functional>
-#include "Function.h"
+
+#include "Function/Function.h"
 
 // TODO:: tests
 template <typename T>
