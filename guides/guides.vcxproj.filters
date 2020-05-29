@@ -8,6 +8,9 @@
     <Filter Include="Guides\CustomTraits">
       <UniqueIdentifier>{b0bae326-0362-47fe-9446-01a4c1685fea}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Guides\Function">
+      <UniqueIdentifier>{00e30a10-85a0-4c95-8e1c-67b7f54b94a0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\guides\main.cpp">
@@ -51,11 +54,11 @@
     <ClInclude Include="..\src\guides\CustomTraits\IsConvertible.h">
       <Filter>Guides\CustomTraits</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\guides\Function.h">
-      <Filter>Guides</Filter>
+    <ClInclude Include="..\src\guides\Function\Function.h">
+      <Filter>Guides\Function</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\guides\IFunctorBridge.h">
-      <Filter>Guides</Filter>
+    <ClInclude Include="..\src\guides\Function\IFunctorBridge.h">
+      <Filter>Guides\Function</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

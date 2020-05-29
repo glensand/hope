@@ -154,8 +154,8 @@
     <ClInclude Include="..\src\guides\CustomTraits\RemoveReference.h" />
     <ClInclude Include="..\src\guides\CustomTraits\Traits.h" />
     <ClInclude Include="..\src\guides\CustomTraits\TrueType.h" />
-    <ClInclude Include="..\src\guides\Function.h" />
-    <ClInclude Include="..\src\guides\IFunctorBridge.h" />
+    <ClInclude Include="..\src\guides\Function\Function.h" />
+    <ClInclude Include="..\src\guides\Function\IFunctorBridge.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
