@@ -88,6 +88,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalIncludeDirectories>$(SolutionDir)src/guides;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -156,6 +157,9 @@
     <ClInclude Include="..\src\guides\CustomTraits\TrueType.h" />
     <ClInclude Include="..\src\guides\Function\Function.h" />
     <ClInclude Include="..\src\guides\Function\IFunctorBridge.h" />
+    <ClInclude Include="..\src\guides\Tuple\Tuple1.h" />
+    <ClInclude Include="..\src\guides\Tuple\Tuple2.h" />
+    <ClInclude Include="..\src\guides\TypeList\TypeList.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

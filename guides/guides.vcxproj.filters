@@ -11,6 +11,12 @@
     <Filter Include="Guides\Function">
       <UniqueIdentifier>{00e30a10-85a0-4c95-8e1c-67b7f54b94a0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Guides\TypeList">
+      <UniqueIdentifier>{f68d0cf4-511e-40ce-b229-57ff22f1291f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Guides\Tuple">
+      <UniqueIdentifier>{ceeba869-dbf5-4fae-9063-dacd2c9ffdbf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\guides\main.cpp">
@@ -59,6 +65,15 @@
     </ClInclude>
     <ClInclude Include="..\src\guides\Function\IFunctorBridge.h">
       <Filter>Guides\Function</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\guides\TypeList\TypeList.h">
+      <Filter>Guides\TypeList</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\guides\Tuple\Tuple1.h">
+      <Filter>Guides\Tuple</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\guides\Tuple\Tuple2.h">
+      <Filter>Guides\Tuple</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
