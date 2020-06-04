@@ -34,21 +34,19 @@ public:
         // TODO:: implement for_each for type list and use it here
     }
 
-    template <typename T>
+    template <typename T, typename NativeT = Decay<T>>
     constexpr std::enable_if_t<Contains<T>(TypeList<Ts...>{}),
-    T&> Get()
+    NativeT&> Get()
     {
-        using NativeT = Decay<T>;
         return static_cast<NativeT&>(
             static_cast<Detail::JustValue<T>&>(*this).Value
             );
     }
 
-    template <typename T>
+    template <typename T, typename NativeT = Decay<T>>
     constexpr std::enable_if_t<Contains<T>(TypeList<Ts...>{}),
-    const T&> Get() const
+    const NativeT&> Get() const
     {
-        using NativeT = Decay<T>;
         return static_cast<const NativeT&>(
             static_cast<const Detail::JustValue<T>&>(*this).Value
             );
