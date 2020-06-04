@@ -3,6 +3,7 @@
 #include <functional>
 
 #include "Function/Function.h"
+#include "Tuple/Tuple2.h"
 
 // TODO:: tests
 template <typename T>
@@ -41,7 +42,7 @@ int main()
 
     const TestFunction2 f2 = [](int)
 	{
-		std::cout << "My custom std::function realization";
+		std::cout << "My custom std::function realization" << std::endl;
 	};
 
 	f2(1);
@@ -50,5 +51,14 @@ int main()
 	TestFunction2 func4(b);
 
 	func3(1);
+
+	Tuple<int, float, double> tuple;
+	//Tuple<int, float, double, double> tuple2;
+	auto&& floatValue = tuple.Get<float>();
+	floatValue = 11.0;
+
+	auto&& floatValue2 = tuple.Get<float>();
+	std::cout << floatValue2 << std::endl;;
+
 	return 0;
 }

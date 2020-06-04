@@ -28,7 +28,7 @@ class TypeList
 template <typename... Ts>
 constexpr size_t Size(TypeList<Ts...>)
 {
-    return sizeof(Ts);
+    return sizeof...(Ts);
 }
 
 template<typename T, typename... Ts>

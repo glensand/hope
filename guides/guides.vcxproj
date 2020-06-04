@@ -155,6 +155,7 @@
     <ClInclude Include="..\src\guides\CustomTraits\RemoveReference.h" />
     <ClInclude Include="..\src\guides\CustomTraits\Traits.h" />
     <ClInclude Include="..\src\guides\CustomTraits\TrueType.h" />
+    <ClInclude Include="..\src\guides\CustomTraits\UniqueTypes.h" />
     <ClInclude Include="..\src\guides\Function\Function.h" />
     <ClInclude Include="..\src\guides\Function\IFunctorBridge.h" />
     <ClInclude Include="..\src\guides\Tuple\Tuple1.h" />
