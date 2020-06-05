@@ -58,7 +58,12 @@ int main()
 
 	func3(1);
 
-	Tuple<int, float, double> tuple;
+	Tuple<int, float, double> tuple{};
+	Tuple<int, float, double> tuple2(1, 1.f, 1.0);
+
+	// TODO:: implement completely constexpr compile-time tuple
+	//static_assert(tuple2.Get<1>() == 1.f);
+
 	auto&& floatValue = tuple.Get<float>();
 	floatValue = 11.0;
 

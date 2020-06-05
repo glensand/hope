@@ -19,6 +19,17 @@ namespace Detail
     template<typename T>
     struct JustValue
     {
+        constexpr JustValue() = default;
+        ~JustValue() = default;
+
+        template<typename Vt,
+        typename = std::is_constructible<T, Vt>>
+        constexpr JustValue(Vt&& valueRef) noexcept(T(std::forward<Vt>(valueRef)))
+            : Value(std::forward<Vt>(valueRef))
+        {
+
+        }
+
         T Value;
     };
 }
@@ -28,10 +39,14 @@ class Tuple final : public Detail::JustValue<Ts>...
 {
 public:
 
-    template <typename... VTs>
+    constexpr Tuple() = default;
+    ~Tuple() = default;
+
+    template <typename... VTs,
+    typename = std::enable_if_t<std::is_same_v<TypeList<VTs...>, TypeList<Ts...>>>>
     constexpr Tuple(VTs&&... elems) noexcept
+        : Detail::JustValue<VTs>(std::forward<VTs>(elems))...
     {
-        // TODO:: implement for_each for type list and use it here
     }
 
     template <typename T, typename NativeT = Decay<T>>
@@ -66,30 +81,21 @@ public:
         return stream;
     }
 
-    template<typename T>
-    Tuple<T, Ts...> PushFront(T&&)
-    {
-        this;
-        return {};
-    }
-
-    template<typename T>
-    Tuple<T, Ts...> PushBack(T&&)
-    {
-        this;
-        return {};
-    }
-
-    template <template <typename...> typename F>
-    constexpr void ForEach()
-    {
-        F(static_cast<Detail::JustValue<Ts>&>(*this)...);
-        //// TODO:: explore and...
-        //constexpr bool bs[] = { F<Ts>::value... };
-        //return std::find(bs, true) - bs;
-    }
-
 private:
     UniqueTypes<Ts...>  m_uniqueChecker;
 };
+
+template<typename T, typename... Ts>
+Tuple<T, Ts...> PushFront(T&& element, Tuple<Ts...>&& tuple)
+{
+    
+    return {};
+}
+
+template<typename T, typename... Ts>
+Tuple<T, Ts...> PushBack(T&& element, Tuple<Ts...>&& tuple)
+{
+    
+    return {};
+}
 
