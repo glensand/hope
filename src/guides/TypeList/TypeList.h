@@ -95,12 +95,22 @@ constexpr size_t Find(TypeList<Ts...> list)
 static_assert(Find<int>(TypeList<int, bool, float, double>{}) == 0);
 static_assert(Find<unsigned>(TypeList<int, bool, float, double>{}) == 4);
 
+template <typename T, typename... Ts>
+constexpr size_t Find20(TypeList<Ts...>)
+{
+    constexpr bool bs[] = { IsSameV<T, Ts>... };
+    return std::find(bs, true) - bs;
+}
+
+//static_assert(Find20<int>(TypeList<int, bool, float, double>{}) == 0);
+//static_assert(Find20<unsigned>(TypeList<int, bool, float, double>{}) == 4);
+
 template <template <typename...> typename F, typename... Ts>
-constexpr size_t FindIf(TypeList<Ts...> list)
+constexpr size_t FindIf(TypeList<Ts...>)
 {
     // TODO:: explore and...
     constexpr bool bs[] = { F<Ts>::value... };
-    return 0;
+    return std::find(bs, true) - bs;
 }
 
 // TODO:: maybe it is good idea to use value based approach every were
@@ -126,4 +136,24 @@ template <template <typename...> typename F, typename... Ts>
 constexpr bool NoneOf(TypeList<Ts...> list)
 {
     return !AnyOf<F>(list);
+}
+
+namespace Detail
+{
+    template <typename Is>
+    struct Get;
+
+    template <size_t... Is>
+    struct Get<std::index_sequence<Is...>>
+    {
+        template <typename T>
+        static constexpr T Extractor(decltype(Is, static_cast<void*>(0))..., T*, ...);
+    };
+}
+
+template<size_t I, typename... Ts>
+constexpr auto GetNthType(TypeList<Ts...>)
+{
+    return TypeHolder<decltype(
+        Detail::Get<std::make_index_sequence<I>>::Extractor((Ts*)(0)...))>{};
 }

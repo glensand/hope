@@ -23,6 +23,12 @@ struct DefaultLessConstructor
 	DefaultLessConstructor() = delete;
 };
 
+template <typename T>
+struct Add
+{
+    
+};
+
 int main()
 {
 	using IntRef = int&;
@@ -53,12 +59,15 @@ int main()
 	func3(1);
 
 	Tuple<int, float, double> tuple;
-	//Tuple<int, float, double, double> tuple2;
 	auto&& floatValue = tuple.Get<float>();
 	floatValue = 11.0;
 
+	const auto& sec = tuple.Get<1>();
+	std::cout << sec << std::endl;
+	static_assert(std::is_same_v<decltype(tuple.Get<1>()), float&>);
+
 	auto&& floatValue2 = tuple.Get<float>();
-	std::cout << floatValue2 << std::endl;;
+	std::cout << floatValue2 << std::endl;
 
 	return 0;
 }
