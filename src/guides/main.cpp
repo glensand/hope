@@ -4,6 +4,7 @@
 
 #include "Function/Function.h"
 #include "Tuple/Tuple2.h"
+#include <string_view>
 
 // TODO:: tests
 template <typename T>
@@ -59,7 +60,7 @@ int main()
 	func3(1);
 
 	Tuple<int, float, double> tuple{};
-	Tuple<int, float, double> tuple2(1, 1.f, 1.0);
+	Tuple<int, float, double> tuple2(10, 15.f, 20.0);
 
 	// TODO:: implement completely constexpr compile-time tuple
 	//static_assert(tuple2.Get<1>() == 1.f);
@@ -73,6 +74,16 @@ int main()
 
 	auto&& floatValue2 = tuple.Get<float>();
 	std::cout << floatValue2 << std::endl;
+
+	auto expandedTuple = PushFront(std::string_view("const"), tuple2);
+	std::cout << expandedTuple.Get<float>() << std::endl;
+	std::cout << expandedTuple.Get<int>() << std::endl;
+	std::cout << expandedTuple.Get<double>() << std::endl;
+	std::cout << expandedTuple.Get<0>() << std::endl;
+
+	std::cout << tuple << std::endl
+    << tuple2 << std::endl
+    << expandedTuple << std::endl;
 
 	return 0;
 }

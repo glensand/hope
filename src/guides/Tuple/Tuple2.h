@@ -56,10 +56,12 @@ public:
     }
 
     template <typename... VTs, typename T>
-    constexpr Tuple(T&& front, Tuple< VTs...>&& tuple) noexcept
+    constexpr Tuple(T&& front, const Tuple< VTs...>& tuple) noexcept
         : Detail::JustValue<T>(std::forward<T>(front))
-        //, Detail::JustValue<VTs>(std::forward<VTs>(elems))...
+        //, Detail::JustValue<VTs>(static_cast<const Detail::JustValue<VTs&>>(tuple).Value)...
+        , Detail::JustValue<VTs>(tuple.Get<VTs>())...
     {
+        
     }
 
     template <typename T, typename NativeT = Decay<T>>
@@ -88,27 +90,43 @@ public:
         return Get<NativeType>();
     }
 
-    friend std::ostream& operator<< (std::ostream& stream, Tuple<Ts...> tuple)
+    template <size_t N,
+    typename = std::enable_if < (Size(TypeList<Ts...>{}) > N) >>
+    constexpr decltype(auto) Get() const noexcept 
     {
-        // TODO:: implement for_each
+        using NativeType = Decay<typename decltype(GetNthType<N>(TypeList<Ts...>{}))::Type >;
+        return Get<NativeType>();
+    }
+
+    friend constexpr std::ostream& operator<< (std::ostream& stream, const Tuple<Ts...>& tuple)
+    {
+        constexpr auto length = Size(TypeList<Ts...>{});
+        Print(stream, tuple, std::make_index_sequence<length>{});
         return stream;
     }
 
 private:
+
+    template<std::size_t... Is>
+    friend void Print(std::ostream& stream, const Tuple<Ts...>& tuple, std::index_sequence<Is...>)
+    {
+        stream << "{ ";
+        ((stream << (Is == 0 ? "" : ", ") << tuple.Get<Is>()), ...);
+        stream << " };";
+    }
+
     UniqueTypes<Ts...>  m_uniqueChecker;
 };
 
 template<typename T, typename... Ts>
-Tuple<T, Ts...> PushFront(T&& element, Tuple<Ts...>&& tuple)
+auto PushFront(T&& element, const Tuple<Ts...>& tuple)
 {
-    
-    return {};
+    return Tuple<Decay<T>, Decay<Ts>...>(std::forward<T&&>(element), tuple);
 }
 
 template<typename T, typename... Ts>
-Tuple<T, Ts...> PushBack(T&& element, Tuple<Ts...>&& tuple)
+auto TuplePushBack(T&& element, const Tuple<Ts...>& tuple)
 {
-    
-    return {};
+    return Tuple<Decay<Ts>..., Decay<T>>(std::forward<T&&>(element), tuple);
 }
 
