@@ -20,11 +20,14 @@ namespace Detail
     struct JustValue
     {
         constexpr JustValue() = default;
+        constexpr JustValue(JustValue&&) = default;
+        constexpr JustValue(const JustValue&) = default;
+
         ~JustValue() = default;
 
         template<typename Vt,
         typename = std::is_constructible<T, Vt>>
-        constexpr JustValue(Vt&& valueRef) noexcept(T(std::forward<Vt>(valueRef)))
+        explicit constexpr JustValue(Vt&& valueRef) /*noexcept(T(std::forward<Vt>(valueRef)))*/
             : Value(std::forward<Vt>(valueRef))
         {
 
@@ -40,12 +43,22 @@ class Tuple final : public Detail::JustValue<Ts>...
 public:
 
     constexpr Tuple() = default;
+    constexpr Tuple(const Tuple&) = default;
+    constexpr Tuple(Tuple&&) = default;
+
     ~Tuple() = default;
 
     template <typename... VTs,
     typename = std::enable_if_t<std::is_same_v<TypeList<VTs...>, TypeList<Ts...>>>>
     constexpr Tuple(VTs&&... elems) noexcept
         : Detail::JustValue<VTs>(std::forward<VTs>(elems))...
+    {
+    }
+
+    template <typename... VTs, typename T>
+    constexpr Tuple(T&& front, Tuple< VTs...>&& tuple) noexcept
+        : Detail::JustValue<T>(std::forward<T>(front))
+        //, Detail::JustValue<VTs>(std::forward<VTs>(elems))...
     {
     }
 
