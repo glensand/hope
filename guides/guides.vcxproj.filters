@@ -17,6 +17,9 @@
     <Filter Include="Guides\Tuple">
       <UniqueIdentifier>{ceeba869-dbf5-4fae-9063-dacd2c9ffdbf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Guides\Variant">
+      <UniqueIdentifier>{a5d76455-0cdb-4d29-bc0b-c55a0fa13fdb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\guides\main.cpp">
@@ -77,6 +80,9 @@
     </ClInclude>
     <ClInclude Include="..\src\guides\CustomTraits\UniqueTypes.h">
       <Filter>Guides\CustomTraits</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\guides\Variant\Variant.h">
+      <Filter>Guides\Variant</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

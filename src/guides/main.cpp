@@ -5,6 +5,7 @@
 #include "Function/Function.h"
 #include "Tuple/Tuple2.h"
 #include <string_view>
+#include <variant>
 
 // TODO:: tests
 template <typename T>
@@ -84,6 +85,10 @@ int main()
 	std::cout << tuple << std::endl
     << tuple2 << std::endl
     << expandedTuple << std::endl;
+
+    std::variant<std::string, float, double> variant = 1.0;
+	variant = "lol";
+	std::cout << std::get<0>(variant) << std::endl;
 
 	return 0;
 }

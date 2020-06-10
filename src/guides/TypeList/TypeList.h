@@ -12,6 +12,7 @@
 
 #include <CustomTraits/IsSame.h>
 #include <type_traits>
+#include <algorithm>
 
 template <typename T>
 struct TypeHolder
@@ -156,4 +157,18 @@ constexpr auto GetNthType(TypeList<Ts...>)
 {
     return TypeHolder<decltype(
         Detail::Get<std::make_index_sequence<I>>::Extractor((Ts*)(0)...))>{};
+}
+
+template <typename T, typename... Ts>
+constexpr size_t IndexOf(TypeList<Ts...>)
+{
+    constexpr bool bs[] = { IsSameV<T, Ts>... };
+    return std::count_if(bs, true);
+}
+
+template <typename... Ts>
+constexpr size_t LargestType(TypeList<Ts...>)
+{
+    constexpr std::array<std::size_t, sizeof...(Ts)> sizes{ sizeof(Ts)... };
+    return std::max_element(std::begin(sizes), std::end(sizes));
 }
