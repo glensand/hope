@@ -30,6 +30,20 @@ struct Add
     
 };
 
+template <std::size_t, typename T>
+struct type_by_index {
+	using type = T;
+};
+
+template <typename, typename...>
+struct inherit_types_by_index;
+
+template <std::size_t... indices, typename... Ts>
+struct inherit_types_by_index<std::index_sequence<indices...>, Ts...>
+	: type_by_index<indices, Ts>...
+{};
+
+
 int main()
 {
 	using IntRef = int&;

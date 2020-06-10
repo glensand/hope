@@ -78,5 +78,8 @@
     <ClInclude Include="..\src\guides\CustomTraits\UniqueTypes.h">
       <Filter>Guides\CustomTraits</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\guides\Tuple\TupleImpl.h">
+      <Filter>Guides\Tuple</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

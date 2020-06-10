@@ -160,6 +160,7 @@
     <ClInclude Include="..\src\guides\Function\IFunctorBridge.h" />
     <ClInclude Include="..\src\guides\Tuple\Tuple1.h" />
     <ClInclude Include="..\src\guides\Tuple\Tuple2.h" />
+    <ClInclude Include="..\src\guides\Tuple\TupleImpl.h" />
     <ClInclude Include="..\src\guides\TypeList\TypeList.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
