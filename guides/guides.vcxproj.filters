@@ -72,17 +72,20 @@
     <ClInclude Include="..\src\guides\TypeList\TypeList.h">
       <Filter>Guides\TypeList</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\guides\Tuple\Tuple1.h">
-      <Filter>Guides\Tuple</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\guides\Tuple\Tuple2.h">
-      <Filter>Guides\Tuple</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\guides\CustomTraits\UniqueTypes.h">
       <Filter>Guides\CustomTraits</Filter>
     </ClInclude>
     <ClInclude Include="..\src\guides\Variant\Variant.h">
       <Filter>Guides\Variant</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\guides\Tuple\FlatTuple.h">
+      <Filter>Guides\Tuple</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\guides\Tuple\FlatTupleUniqueTypes.h">
+      <Filter>Guides\Tuple</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\guides\Tuple\Tuple.h">
+      <Filter>Guides\Tuple</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

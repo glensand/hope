@@ -3,7 +3,9 @@
 #include <functional>
 
 #include "Function/Function.h"
-#include "Tuple/Tuple2.h"
+#include "Tuple/FlatTuplePrint.h"
+#include "Tuple/FlatTupleUniqueTypes.h"
+
 #include <string_view>
 #include <variant>
 
@@ -30,6 +32,20 @@ struct Add
 {
     
 };
+
+template <std::size_t, typename T>
+struct type_by_index {
+	using type = T;
+};
+
+template <typename, typename...>
+struct inherit_types_by_index;
+
+template <std::size_t... indices, typename... Ts>
+struct inherit_types_by_index<std::index_sequence<indices...>, Ts...>
+	: type_by_index<indices, Ts>...
+{};
+
 
 int main()
 {
@@ -60,8 +76,8 @@ int main()
 
 	func3(1);
 
-	Tuple<int, float, double> tuple{};
-	Tuple<int, float, double> tuple2(10, 15.f, 20.0);
+	FlatTupleUniqueTypes<int, float, double> tuple{};
+	FlatTupleUniqueTypes<int, float, double> tuple2(10, 15.f, 20.0);
 
 	// TODO:: implement completely constexpr compile-time tuple
 	//static_assert(tuple2.Get<1>() == 1.f);
@@ -89,6 +105,12 @@ int main()
     std::variant<std::string, float, double> variant = 1.0;
 	variant = "lol";
 	std::cout << std::get<0>(variant) << std::endl;
+
+	FlatTuple<int, float, double> flatTuple(1, 1.2f, 1.0);
+	std::cout << "FlatTuple: " << flatTuple.Get<1>() << std::endl;
+	std::cout << "FlatTuple: " << flatTuple.Get<2>() << std::endl;
+	std::cout << "FlatTuple: " << flatTuple.Get<0>() << std::endl;
+	std::cout << "FlatTuple: " << flatTuple << std::endl;
 
 	return 0;
 }

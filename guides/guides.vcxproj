@@ -163,8 +163,9 @@
     <ClInclude Include="..\src\guides\CustomTraits\UniqueTypes.h" />
     <ClInclude Include="..\src\guides\Function\Function.h" />
     <ClInclude Include="..\src\guides\Function\IFunctorBridge.h" />
-    <ClInclude Include="..\src\guides\Tuple\Tuple1.h" />
-    <ClInclude Include="..\src\guides\Tuple\Tuple2.h" />
+    <ClInclude Include="..\src\guides\Tuple\Tuple.h" />
+    <ClInclude Include="..\src\guides\Tuple\FlatTupleUniqueTypes.h" />
+    <ClInclude Include="..\src\guides\Tuple\FlatTuple.h" />
     <ClInclude Include="..\src\guides\TypeList\TypeList.h" />
     <ClInclude Include="..\src\guides\Variant\Variant.h" />
   </ItemGroup>
