@@ -3,8 +3,9 @@
 #include <functional>
 
 #include "Function/Function.h"
-#include "Tuple/FlatTuplePrint.h"
+#include "Tuple/FlatTuple.h"
 #include "Tuple/FlatTupleUniqueTypes.h"
+#include "Variant/Variant.h"
 
 #include <string_view>
 #include <variant>
@@ -37,15 +38,6 @@ template <std::size_t, typename T>
 struct type_by_index {
 	using type = T;
 };
-
-template <typename, typename...>
-struct inherit_types_by_index;
-
-template <std::size_t... indices, typename... Ts>
-struct inherit_types_by_index<std::index_sequence<indices...>, Ts...>
-	: type_by_index<indices, Ts>...
-{};
-
 
 int main()
 {
@@ -111,6 +103,12 @@ int main()
 	std::cout << "FlatTuple: " << flatTuple.Get<2>() << std::endl;
 	std::cout << "FlatTuple: " << flatTuple.Get<0>() << std::endl;
 	std::cout << "FlatTuple: " << flatTuple << std::endl;
+
+	Variant<std::string, double, float> myVariant(1.34534534f);
+
+	
+	myVariant = std::string("Lol");
+	std::cout << myVariant.Get<std::string>() << std::endl;
 
 	return 0;
 }

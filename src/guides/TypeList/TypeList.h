@@ -13,6 +13,7 @@
 #include <CustomTraits/IsSame.h>
 #include <type_traits>
 #include <algorithm>
+#include <array>
 
 template <typename T>
 struct TypeHolder
@@ -167,8 +168,18 @@ constexpr size_t IndexOf(TypeList<Ts...>)
 }
 
 template <typename... Ts>
-constexpr size_t LargestType(TypeList<Ts...>)
+constexpr size_t LargestTypeIndex(TypeList<Ts...>)
 {
     constexpr std::array<std::size_t, sizeof...(Ts)> sizes{ sizeof(Ts)... };
-    return std::max_element(std::begin(sizes), std::end(sizes));
+    constexpr auto it =  std::max_element(std::begin(sizes), std::end(sizes));
+    return std::distance(std::begin(sizes), it);
 }
+
+template <typename... Ts>
+constexpr auto LargestType(TypeList<Ts...> list)
+{
+    constexpr std::size_t largestTypeIndex = LargestTypeIndex(list);
+    return GetNthType<largestTypeIndex>(list);
+}
+
+static_assert (LargestTypeIndex(TypeList<std::string, double, float>{}) == 0);

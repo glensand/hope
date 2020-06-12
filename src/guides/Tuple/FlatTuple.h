@@ -4,7 +4,7 @@
 // Copyright (c) 2020 glensand
 // All rights reserved.
 //
-// Date: 30.05.2020
+// Date: 10.06.2020
 // Author: Bezborodoff Gleb
 //------------------------------------------------------------------------------
 
@@ -46,7 +46,6 @@ template<std::size_t... Is, typename... Ts>
 class FlatTupleImpl<std::index_sequence<Is...>, Ts...> final : public Detail::IndexedValue <Ts, Is>...
 {
 public:
-
     constexpr FlatTupleImpl() = default;
     constexpr FlatTupleImpl(const FlatTupleImpl&) = default;
     constexpr FlatTupleImpl(FlatTupleImpl&&) = default;
@@ -61,39 +60,38 @@ public:
     }
 
     template <typename T, typename NativeT = Decay<T>>
-    constexpr std::enable_if_t<Contains<T>(TypeList<Ts...>{}),
-    NativeT&> Get() noexcept
+    constexpr NativeT& Get() noexcept
     {
-        return GetImpl < Find<NativeT>(TypeList<Ts...>{}), NativeT > ;
+        static_assert(Contains<T>(Types));
+        return GetImpl < Find<NativeT>(Types), NativeT > ;
     }
 
     template <typename T, typename NativeT = Decay<T>>
-    constexpr std::enable_if_t<Contains<T>(TypeList<Ts...>{}),
-    const NativeT&> Get() const noexcept
+    constexpr const NativeT& Get() const noexcept
     {
-        return GetImpl<Find<NativeT>(TypeList<Ts...>{}), NativeT>();
+        static_assert(Contains<T>(Types));
+        return GetImpl<Find<NativeT>(Types), NativeT>();
     }
 
-    template <size_t N,
-    typename = std::enable_if<(Size(TypeList<Ts...>{}) > N)>>
+    template <size_t N>
     constexpr decltype(auto) Get() noexcept
     {
-        using NativeType = Decay<typename decltype(GetNthType<N>(TypeList<Ts...>{}))::Type>;
+        static_assert(TupleSize > N);
+        using NativeType = Decay<typename decltype(GetNthType<N>(Types))::Type>;
         return GetImpl<N, NativeType>();
     }
 
-    template <size_t N,
-    typename = std::enable_if < (Size(TypeList<Ts...>{}) > N) >>
+    template <size_t N>
     [[nodiscard]] constexpr decltype(auto) Get() const noexcept 
     {
-        using NativeType = Decay<typename decltype(GetNthType<N>(TypeList<Ts...>{}))::Type >;
+        static_assert(TupleSize > N);
+        using NativeType = Decay<typename decltype(GetNthType<N>(Types))::Type >;
         return GetImpl<N, NativeType>();
     }
 
     friend constexpr std::ostream& operator<< (std::ostream& stream, const FlatTuple<Ts...>& tuple)
     {
-        constexpr auto length = Size(TypeList<Ts...>{});
-        PrintImpl(stream, tuple, std::make_index_sequence<length>{});
+        PrintImpl(stream, tuple, std::make_index_sequence<TupleSize>());
         return stream;
     }
 
@@ -122,6 +120,9 @@ private:
             static_cast<Detail::IndexedValue < NativeT, N >&> (*this).Value
             );
     }
+
+    constexpr static TypeList<Ts...>    Types{ };
+    constexpr static std::size_t        TupleSize{ Size(Types) };
 };
 
 template <typename... Ts>
