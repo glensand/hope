@@ -19,7 +19,7 @@ namespace Detail
 {
 
     template <typename... Ts>
-    class VariantStorage
+    class VariantStorage final
     {
     public:
 
@@ -124,7 +124,7 @@ namespace Detail
 }
 
 template <typename... Ts>
-class Variant
+class Variant final
 {
     constexpr static UniqueTypes<Ts...> UniqueChecker{ };
 public:
