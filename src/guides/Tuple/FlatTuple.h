@@ -10,8 +10,8 @@
 
 #pragma once
 
-#include "TypeList/TypeList.h"
-#include "CustomTraits/Decay.h"
+#include "typelist/TypeList.h"
+#include "customtraits/Decay.h"
 
 namespace Detail
 {

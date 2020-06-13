@@ -22,7 +22,7 @@ namespace Detail
 	template <typename F, typename... Args>
 	FalseType IsValidImpl(...);
 
-	inline constexpr
+	constexpr
 	auto IsValid = [](auto f)
 	{
 		return [](auto&&... args)

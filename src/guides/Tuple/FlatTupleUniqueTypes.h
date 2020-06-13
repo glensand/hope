@@ -10,9 +10,9 @@
 
 #pragma once
 
-#include "CustomTraits/UniqueTypes.h"
-#include "TypeList/TypeList.h"
-#include "CustomTraits/Decay.h"
+#include "customtraits/UniqueTypes.h"
+#include "typelist/TypeList.h"
+#include "customtraits/Decay.h"
 
 namespace Detail
 {

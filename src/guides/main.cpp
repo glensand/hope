@@ -2,10 +2,10 @@
 #include <type_traits>
 #include <functional>
 
-#include "Function/Function.h"
-#include "Tuple/FlatTuple.h"
-#include "Tuple/FlatTupleUniqueTypes.h"
-#include "Variant/Variant.h"
+#include "function/Function.h"
+#include "tuple/FlatTuple.h"
+#include "tuple/FlatTupleUniqueTypes.h"
+#include "variant/Variant.h"
 
 #include <string_view>
 #include <variant>

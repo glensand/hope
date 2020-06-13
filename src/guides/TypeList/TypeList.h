@@ -10,7 +10,7 @@
 
 #pragma once
 
-#include <CustomTraits/IsSame.h>
+#include "customtraits/IsSame.h"
 #include <type_traits>
 #include <algorithm>
 #include <array>
@@ -63,9 +63,6 @@ constexpr bool Contains(TypeList<Ts...>)
     return (... || IsSameV<T, Ts>);
 }
 
-static_assert(Contains<int>(TypeList<int, bool, float, double>{}));
-static_assert(!Contains<int>(TypeList<bool, float, double>{}));
-
 template <typename T, typename... Ts>
 constexpr bool Contains14(TypeList<Ts...>)
 {
@@ -76,9 +73,6 @@ constexpr bool Contains14(TypeList<Ts...>)
 
     return result;
 }
-
-static_assert(Contains14<int>(TypeList<int, bool, float, double>{}));
-static_assert(!Contains14<int>(TypeList<bool, float, double>{}));
 
 template <typename T, typename... Ts>
 constexpr size_t Find(TypeList<Ts...> list)
@@ -94,9 +88,6 @@ constexpr size_t Find(TypeList<Ts...> list)
     return size;
 }
 
-static_assert(Find<int>(TypeList<int, bool, float, double>{}) == 0);
-static_assert(Find<unsigned>(TypeList<int, bool, float, double>{}) == 4);
-
 template <typename T, typename... Ts>
 constexpr size_t Find20(TypeList<Ts...>)
 {
@@ -104,13 +95,9 @@ constexpr size_t Find20(TypeList<Ts...>)
     return std::find(bs, true) - bs;
 }
 
-//static_assert(Find20<int>(TypeList<int, bool, float, double>{}) == 0);
-//static_assert(Find20<unsigned>(TypeList<int, bool, float, double>{}) == 4);
-
 template <template <typename...> typename F, typename... Ts>
 constexpr size_t FindIf(TypeList<Ts...>)
 {
-    // TODO:: explore and...
     constexpr bool bs[] = { F<Ts>::value... };
     return std::find(bs, true) - bs;
 }
@@ -122,17 +109,11 @@ constexpr bool AllOf(TypeList<Ts...>)
     return (... && F<Ts>::value);
 }
 
-static_assert(AllOf<std::is_pointer>(TypeList<int*, bool*, float*, double*>{}));
-static_assert(!AllOf<std::is_pointer>(TypeList<int, bool, float, double>{}));
-static_assert(AllOf<std::is_integral>(TypeList<int, unsigned, long, long long, short>{}));
-
 template <template <typename...> typename F, typename... Ts>
 constexpr bool AnyOf(TypeList<Ts...>)
 {
     return (... || F<Ts>::value);
 }
-
-static_assert(AnyOf<std::is_pointer>(TypeList<int, bool*, float*, double*>{}));
 
 template <template <typename...> typename F, typename... Ts>
 constexpr bool NoneOf(TypeList<Ts...> list)
@@ -178,8 +159,6 @@ constexpr size_t LargestTypeIndex(TypeList<Ts...>)
 template <typename... Ts>
 constexpr auto LargestType(TypeList<Ts...> list)
 {
-    constexpr std::size_t largestTypeIndex = LargestTypeIndex(list);
+    constexpr auto largestTypeIndex = LargestTypeIndex(list);
     return GetNthType<largestTypeIndex>(list);
 }
-
-static_assert (LargestTypeIndex(TypeList<std::string, double, float>{}) == 0);
