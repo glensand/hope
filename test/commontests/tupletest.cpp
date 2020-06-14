@@ -4,22 +4,36 @@
 
 struct PODImitator
 {
+    constexpr static int DefaultInt{ 11 };
     float val1{ 10.f };
-    int val2{ 11 };
+    int val2{ DefaultInt };
 };
 
-TEST(TupleTest, test1)
+struct ComplicatedStruct
+{
+    std::string_view Name;
+    int Index;
+};
+
+TEST(TupleTest, ConstexprInitialization)
 {
     constexpr auto tuple = MakeFlatTuple(1.f, std::string_view("string"), PODImitator{});
-    ASSERT_EQ(tuple.Get<0>(), tuple.Get<float>());
+
+    static_assert(tuple.Get<0>() == tuple.Get<float>());
+    static_assert(tuple.Get<1>() == tuple.Get<std::string_view>());
+    static_assert(tuple.Get<2>().val2 == PODImitator::DefaultInt);
 }
 
-TEST(TupleTest, test2)
+TEST(TupleTest, ValueChanging)
 {
-
+    auto tuple = MakeFlatTuple(PODImitator{}, PODImitator{ 0.1, 1 });
+    auto&& secondInt = tuple.Get<1>().val2;
+    ASSERT_EQ(secondInt, 1);
+    secondInt = 12;
+    ASSERT_EQ(secondInt, 12);
 }
 
-TEST(TupleTest, test3)
+TEST(TupleTest, TupleFromTuple)
 {
 
 }

@@ -6,6 +6,7 @@
 #include "tuple/FlatTuple.h"
 #include "tuple/FlatTupleUniqueTypes.h"
 #include "variant/Variant.h"
+#include "typelist/typelistsort.h"
 
 #include <string_view>
 #include <variant>
@@ -110,5 +111,10 @@ int main()
 	myVariant = std::string("Lol");
 	std::cout << myVariant.Get<std::string>() << std::endl;
 
+    const TypeList<int, float, double> list;
+	constexpr TypeList sortedList = Sort(list);
+	//static_assert(std::is_same_v < decltype(GetNthType<0>(sortedList)), TypeHolder<double> >);
+
+	//static_assert(indexArray[0].TypeIndex == 2);
 	return 0;
 }

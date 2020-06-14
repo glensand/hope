@@ -23,16 +23,20 @@ add_subdirectory(${CMAKE_CURRENT_BINARY_DIR}/googletest-src
                  ${CMAKE_CURRENT_BINARY_DIR}/googletest-build
                  EXCLUDE_FROM_ALL)
 
-include_directories("${CMAKE_CURRENT_BINARY_DIR}/googletest-src/googletest/include" ../src/guides)
+# The gtest/gtest_main targets carry header search path
+# dependencies automatically when using CMake 2.8.11 or
+# later. Otherwise we have to add them here ourselves.
+if (CMAKE_VERSION VERSION_LESS 2.8.11)
+  include_directories("${gtest_SOURCE_DIR}/include" )
+endif()
 
-file(GLOB SOURCES
-    commontests/*.cpp
-)
+include_directories("../src/guides")
 
 # Now simply link against gtest or gtest_main as needed. Eg
-add_executable(tests Tests.cpp)
-add_executable(tuple_test commontests/tupletest.cpp)
-target_link_libraries(tests gtest_main)
-target_link_libraries(tuple_test gtest_main)
-add_test(NAME guides_test COMMAND guides_test)
-add_test(NAME tuple_test COMMAND tuple_test)
+add_executable(Test1 Tests.cpp)
+target_link_libraries(Test1 gtest_main)
+
+add_executable(Test2 commontests/tupletest.cpp)
+target_link_libraries(Test2 gtest_main)
+
+add_test(ALLTests unitTest COMMAND Test2 Test1)

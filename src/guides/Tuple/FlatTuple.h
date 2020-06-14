@@ -60,21 +60,21 @@ public:
     }
 
     template <typename T, typename NativeT = Decay<T>>
-    constexpr NativeT& Get() noexcept
+    [[nodiscard]] constexpr decltype(auto) Get() noexcept
     {
         static_assert(Contains<T>(Types));
         return GetImpl < Find<NativeT>(Types), NativeT > ;
     }
 
     template <typename T, typename NativeT = Decay<T>>
-    constexpr const NativeT& Get() const noexcept
+    [[nodiscard]] constexpr const NativeT& Get() const noexcept
     {
         static_assert(Contains<T>(Types));
         return GetImpl<Find<NativeT>(Types), NativeT>();
     }
 
     template <size_t N>
-    constexpr decltype(auto) Get() noexcept
+    [[nodiscard]] constexpr decltype(auto) Get() noexcept
     {
         static_assert(TupleSize > N);
         using NativeType = Decay<typename decltype(GetNthType<N>(Types))::Type>;
@@ -106,7 +106,7 @@ private:
     }
 
     template<std::size_t N, typename NativeT>
-    [[nodiscard]] decltype(auto) GetImpl() const noexcept
+    [[nodiscard]] constexpr decltype(auto) GetImpl() const noexcept
     {
         return static_cast<const NativeT&>(
             static_cast<const Detail::IndexedValue < NativeT, N > & > (*this).Value
@@ -114,7 +114,7 @@ private:
     }
 
     template<std::size_t N, typename NativeT>
-    decltype(auto) GetImpl() noexcept
+    constexpr decltype(auto) GetImpl() noexcept
     {
         return static_cast<NativeT&>(
             static_cast<Detail::IndexedValue < NativeT, N >&> (*this).Value
