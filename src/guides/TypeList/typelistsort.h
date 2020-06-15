@@ -51,10 +51,11 @@ namespace Detail
     {
         constexpr auto listSize = Size(list);
         std::array<SortHelper, listSize> sizes{ SortHelper(Is, sizeof(Ts))...};
-        
+
+        // should be replaced with std::sort in cxx20
         for(size_t i{ 0 }; i < listSize; ++i)
         {
-            auto it = std::min_element(std::begin(sizes) + i, std::end(sizes));
+            auto it = std::max_element(std::begin(sizes) + i, std::end(sizes));
             size_t pos = std::distance(std::begin(sizes), it);
             if(i != pos)
                 Swap(sizes[i], sizes[pos]);
@@ -64,7 +65,7 @@ namespace Detail
     }
 
     template <typename... Ts>
-    constexpr TypeList<Ts...> MakeTypeList(Ts&&...)
+    constexpr TypeList<Ts...> MakeTypeList(TypeHolder<Ts>&&...)
     {
         return {};
     }
@@ -73,7 +74,7 @@ namespace Detail
     constexpr auto SortTypeList(std::index_sequence<Is...> sequence, TypeList<Ts...> list)
     {
         constexpr auto sortedIndexArray = Detail::SortImpl(sequence, list);
-        return MakeTypeList(DeclVal<decltype(GetNthType<sortedIndexArray[Is].TypeIndex>(list))::Type>()...);
+        return MakeTypeList(GetNthType<sortedIndexArray[Is].TypeIndex>(list)...);
     }
 
 }

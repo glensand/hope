@@ -113,6 +113,11 @@ int main()
 
     const TypeList<int, float, double> list;
 	constexpr TypeList sortedList = Sort(list);
+	using FirstType = typename decltype(GetNthType<0>(sortedList))::Type;
+	static_assert(std::is_same_v<FirstType, double>);
+	//std::cout << typeid(FirstType).name() << std::endl;
+	//static_assert(std::is_same_v<typename decltype(GetNthType<0>(sortedList))::Type, double>);
+
 	//static_assert(std::is_same_v < decltype(GetNthType<0>(sortedList)), TypeHolder<double> >);
 
 	//static_assert(indexArray[0].TypeIndex == 2);
