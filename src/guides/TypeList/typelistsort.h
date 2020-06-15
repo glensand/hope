@@ -11,7 +11,6 @@
 #pragma once
 
 #include "typelist/TypeList.h"
-#include "customtraits/Declval.h"
 
 namespace Detail
 {

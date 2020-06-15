@@ -5,6 +5,7 @@
 #include "function/Function.h"
 #include "tuple/FlatTuple.h"
 #include "tuple/FlatTupleUniqueTypes.h"
+#include "tuple/DetectFieldsCount.h"
 #include "variant/Variant.h"
 #include "typelist/typelistsort.h"
 
@@ -115,11 +116,16 @@ int main()
 	constexpr TypeList sortedList = Sort(list);
 	using FirstType = typename decltype(GetNthType<0>(sortedList))::Type;
 	static_assert(std::is_same_v<FirstType, double>);
-	//std::cout << typeid(FirstType).name() << std::endl;
-	//static_assert(std::is_same_v<typename decltype(GetNthType<0>(sortedList))::Type, double>);
 
-	//static_assert(std::is_same_v < decltype(GetNthType<0>(sortedList)), TypeHolder<double> >);
+	struct SimpleStruct
+	{
+		int x;
+		double y;
+	};
 
-	//static_assert(indexArray[0].TypeIndex == 2);
+    const SimpleStruct ss = { 1 , 1.0};
+
+	const std::size_t fieldsCount = DetectFieldsCount(ss);
+	std::cout << fieldsCount << std::endl;
 	return 0;
 }
