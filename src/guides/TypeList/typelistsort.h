@@ -63,12 +63,6 @@ namespace Detail
         return sizes;
     }
 
-    template <typename... Ts>
-    constexpr TypeList<Ts...> MakeTypeList(TypeHolder<Ts>&&...)
-    {
-        return {};
-    }
-
     template<std::size_t... Is, typename... Ts>
     constexpr auto SortTypeList(std::index_sequence<Is...> sequence, TypeList<Ts...> list)
     {

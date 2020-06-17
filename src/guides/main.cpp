@@ -8,6 +8,8 @@
 #include "tuple/DetectFieldsCount.h"
 #include "variant/Variant.h"
 #include "typelist/typelistsort.h"
+#include "tuple/TupleFromStruct.h"
+#include "tuple/generated.h"
 
 #include <string_view>
 #include <variant>
@@ -121,11 +123,33 @@ int main()
 	{
 		int x;
 		double y;
+		float z;
+		float zz;
 	};
 
-    const SimpleStruct ss = { 1 , 1.0};
+	std::cout << sizeof(SimpleStruct) << std::endl;
+	std::cout << sizeof(FlatTuple<int, double, float, float>) << std::endl;
+	
+    constexpr SimpleStruct ss = { 1, 1., 1.f, 2222.f};
 
-	const std::size_t fieldsCount = DetectFieldsCount(ss);
-	std::cout << fieldsCount << std::endl;
+	constexpr auto fieldsCount = DetectFieldsCount(ss);
+	/*const auto tupleFromStruct = */TupleFromStructUnsafe(ss);
+	//constexpr std::size_t fieldsCount = DetectFieldsCount(ss);
+	//std::cout << fieldsCount << std::endl;
+
+ //   struct ZeroFields
+ //   {
+ //       
+ //   };
+
+	std::size_t types_[4];
+	using Unic = Detail::Unsafe::AnyConvertible<1>;
+
+	//constexpr SimpleStruct ss2{ Unic(types_) };
+
+	constexpr auto strTuple = TupleFromStruct(ss);
+
+	std::cout << strTuple << std::endl;
+
 	return 0;
-}
+} 

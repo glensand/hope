@@ -141,6 +141,9 @@ constexpr auto GetNthType(TypeList<Ts...>)
         Detail::Get<std::make_index_sequence<I>>::Extractor((Ts*)(0)...))>{};
 }
 
+template<size_t I, typename... Ts>
+using NthType = typename decltype(GetNthType<I>(TypeList<Ts>{}))::Type;
+
 template <typename T, typename... Ts>
 constexpr size_t IndexOf(TypeList<Ts...>)
 {
@@ -161,4 +164,10 @@ constexpr auto LargestType(TypeList<Ts...> list)
 {
     constexpr auto largestTypeIndex = LargestTypeIndex(list);
     return GetNthType<largestTypeIndex>(list);
+}
+
+template <typename... Ts>
+constexpr TypeList<Ts...> MakeTypeList(TypeHolder<Ts>&&...)
+{
+    return {};
 }

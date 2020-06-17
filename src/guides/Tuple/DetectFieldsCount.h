@@ -10,33 +10,28 @@
 
 #pragma once
 
-#include "typelist/TypeList.h"
-
 namespace Detail
 {
-    //template <std::size_t N, std::size_t I>
-    //struct AnyConvertible
-    //{
-    //    template <typename T>
-    //    T& operator()(std::array<std::size_t, N>& types)
-    //    {
-    //        types[I] = Find<std::decay_t<T>>(PreDefinedTypes::IntegralTypes);
-    //        return {};
-    //    }
-    //};
 
     template <std::size_t I>
     struct AnyConvertible
     {
         std::size_t fake;
         template <typename T>
-        /*constexpr */operator T& () const noexcept;
+        constexpr operator T& () const noexcept;
     };
 
     template <typename T, std::size_t... Is>
     constexpr auto IsConstructibleN(const T&, std::index_sequence<Is...>)
+        ->decltype(T{AnyConvertible<Is>{}...}, bool())
     {
-        return std::is_constructible_v < T, decltype(AnyConvertible<Is>{})...>;
+        return true;
+    }
+
+    template <typename T, std::size_t... Is>
+    constexpr auto IsConstructibleN(const T&, ...)
+    {
+        return false;
     }
 
     template <typename T, std::size_t... Is>
@@ -49,12 +44,12 @@ namespace Detail
         //    std::begin(bs), std::end(bs), false)
         //);
 
-        for (std::size_t i{ 0 }; i < size(sequence); ++i)
+        for (std::size_t i{ 1 }; i < size(sequence); ++i)
         {
-            if (!bs[i]) return i;
+            if (!bs[i]) return i - 1;
         }
 
-        return size(sequence);
+        return 0;
     }
 
 }

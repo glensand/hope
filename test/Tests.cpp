@@ -1,6 +1,7 @@
 #include "gtest/gtest.h"
 
 #include "commontests/customtraitstest.h"
+#include "commontests/fieldescounttest.h"
 
 int main(int argc, char* argv[])
 {
