@@ -1,6 +1,7 @@
 #include "gtest/gtest.h"
 
 #include "tuple/FlatTuple.h"
+#include "tuple/TupleFromStruct.h"
 
 struct PODImitator
 {
@@ -33,7 +34,14 @@ TEST(TupleTest, ValueChanging)
     ASSERT_EQ(secondInt, 12);
 }
 
-TEST(TupleTest, TupleFromTuple)
+struct TestStruct3
+{
+    double i;
+    float g;
+    int k;
+};
+
+TEST(TupleTest, TupleFromStruct)
 {
 
 }

@@ -1,6 +1,5 @@
 //------------------------------------------------------------------------------
 // integraltypes.h
-
 // Copyright (c) 2020 glensand
 // All rights reserved.
 //

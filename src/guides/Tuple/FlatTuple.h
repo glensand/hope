@@ -11,7 +11,7 @@
 #pragma once
 
 #include "typelist/TypeList.h"
-#include "customtraits/Decay.h"
+#include "core/Decay.h"
 
 namespace Detail
 {

@@ -9,7 +9,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 include_directories(src/ src/guides/)
 
 file(GLOB HEADERS
-    src/guides/customtraits/*.h
+    src/guides/core/*.h
     src/guides/fastpimpl/tree/*.h
     src/guides/function/expression/*.h
     src/guides/tuple/*.h

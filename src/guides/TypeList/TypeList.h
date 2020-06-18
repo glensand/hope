@@ -10,7 +10,7 @@
 
 #pragma once
 
-#include "customtraits/IsSame.h"
+#include "core/IsSame.h"
 #include <type_traits>
 #include <algorithm>
 #include <array>

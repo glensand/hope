@@ -1,3 +1,3 @@
 #pragma once
 
-#include "customtraits/Decay.h"
+#include "core/Decay.h"
