@@ -1,7 +1,7 @@
 #include "gtest/gtest.h"
 
 #include "tuple/FlatTuple.h"
-#include "tuple/TupleFromStruct.h"
+#include "tuple/generated.h"
 
 struct PODImitator
 {
@@ -39,11 +39,18 @@ struct TestStruct3
     double i;
     float g;
     int k;
+    bool b;
 };
 
 TEST(TupleTest, TupleFromStruct)
 {
+    constexpr TestStruct3 ts3{ 0.1, 0.1f, 11, true};
+    constexpr auto ts3Tuple = TupleFromStruct(ts3);
 
+    static_assert(ts3Tuple.Get<2>() == ts3.k);
+    static_assert(ts3Tuple.Get<3>() == ts3.b);
+
+    ASSERT_TRUE(std::abs(ts3Tuple.Get<0>() - ts3.i) < std::numeric_limits<double>::epsilon());
 }
 
 int main(int argc, char* argv[])

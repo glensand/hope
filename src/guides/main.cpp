@@ -10,6 +10,7 @@
 #include "typelist/typelistsort.h"
 #include "tuple/TupleFromStruct.h"
 #include "tuple/generated.h"
+#include "tuple/FlatSortedTuple.h"
 
 #include <string_view>
 #include <variant>
@@ -150,6 +151,12 @@ int main()
 	constexpr auto strTuple = TupleFromStruct(ss);
 
 	std::cout << strTuple << std::endl;
+
+	constexpr auto sortedTuple = MakeSortedTuple(false, false, 'c', 1.0, false, 4);
+	constexpr auto nonSortedTuple = MakeFlatTuple(false, false, 'c', 1.0, false, 4);
+
+	std::cout << sizeof(sortedTuple) << " " << sizeof(nonSortedTuple) << std::endl;
+	std::cout << sortedTuple << " " << nonSortedTuple << std::endl;
 
 	return 0;
 } 
