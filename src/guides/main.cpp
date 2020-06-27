@@ -11,6 +11,7 @@
 #include "tuple/TupleFromStruct.h"
 #include "tuple/generated.h"
 #include "tuple/FlatSortedTuple.h"
+#include "core/static_string.h"
 
 #include <string_view>
 #include <variant>
@@ -44,8 +45,26 @@ struct type_by_index {
 	using type = T;
 };
 
+template <typename T, typename W>
+class Wj
+{
+public:
+	void foo()
+	{
+		std::cout << "Wj<T, W>" << std::endl;
+	}
+};
+
+void Wj<int, char>::foo()
+{
+    
+}
+
 int main()
 {
+	Wj<int, int	>().foo();
+	Wj<int, char>().foo();
+
 	using IntRef = int&;
 	using IntRefRef = int&&;
 	using CustomRef = DefaultLessConstructor&;
@@ -158,5 +177,9 @@ int main()
 	std::cout << sizeof(sortedTuple) << " " << sizeof(nonSortedTuple) << std::endl;
 	std::cout << sortedTuple << " " << nonSortedTuple << std::endl;
 
+	constexpr auto static_string = gl::make_static_string("static_string");
+	constexpr auto static_string2 = gl::make_static_string("static_string2");
+	constexpr auto string2 = gl::concat(static_string, static_string2);
+	std::cout << string2;
 	return 0;
 } 
