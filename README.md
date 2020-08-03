@@ -1,2 +1,2 @@
-# hope
-## Simple template library, compilation of common knoledges about usefull technicks
+# Hope
+### Simple template library, compilation of common knoledges about usefull technicks
