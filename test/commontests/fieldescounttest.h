@@ -1,24 +1,21 @@
 #pragma once
 
-#include "tuple/DetectFieldsCount.h"
+#include "tuple/detect_fields_count.h"
 
-struct ZeroFields
-{
+struct ZeroFields {
     
 };
 
-static_assert(DetectFieldsCount(ZeroFields{}) == 0);
+static_assert(hope::detect_fields_count(ZeroFields{}) == 0);
 
-struct OneField
-{
+struct OneField {
     int x;
 };
 
-static_assert(DetectFieldsCount(OneField{}) == 1);
+static_assert(hope::detect_fields_count(OneField{}) == 1);
 
-struct ThirdFields
-{
+struct ThirdFields {
     int a, b, c;
 };
 
-static_assert(DetectFieldsCount(ThirdFields{}) == 3);
+static_assert(hope::detect_fields_count(ThirdFields{}) == 3);

@@ -9,13 +9,14 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 include_directories(src/ src/guides/)
 
 file(GLOB HEADERS
-    src/guides/core/*.h
-    src/guides/function/expression/*.h
-    src/guides/tuple/*.h
-    src/guides/typeList/*.h
-    src/guides/valueBasedWrappers/*.h
-    src/guides/variant/*.h*
+    source/core/*.h
+    source/function/*.h
+    source/tuple/*.h
+    source/type_list/*.h
+    source/variant/*.h*
+    source/component/*.h*
+    source/memory/*.h*
 )
 
-add_executable(run src/guides/main.cpp)
+add_executable(run source/main.cpp)
 add_subdirectory(test)

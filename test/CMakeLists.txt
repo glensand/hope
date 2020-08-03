@@ -30,13 +30,15 @@ if (CMAKE_VERSION VERSION_LESS 2.8.11)
   include_directories("${gtest_SOURCE_DIR}/include" )
 endif()
 
-include_directories("../src/guides")
+include_directories("../source")
 
-# Now simply link against gtest or gtest_main as needed. Eg
-add_executable(Test1 Tests.cpp)
-target_link_libraries(Test1 gtest_main)
+file(GLOB TEST_HEADERS
+    *.h)
+	
+file(GLOB TEST_SOURSES
+    *.cpp)
 
-add_executable(Test2 commontests/tupletest.cpp)
-target_link_libraries(Test2 gtest_main)
+add_executable(hopetest ${TEST_HEADERS} ${TEST_SOURSES})
+target_link_libraries(hopetest gtest_main)
 
-add_test(ALLTests unitTest COMMAND Test2 Test1)
+add_test(ALLTests unitTest COMMAND hopetest)

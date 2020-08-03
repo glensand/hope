@@ -1,18 +1,16 @@
 #include "gtest/gtest.h"
 
-#include "commontests/customtraitstest.h"
 #include "commontests/fieldescounttest.h"
-#include "core/fastpimpl.h"
+#include "core/fast_pimpl.h"
 
-struct TestStruct
-{
+struct test_struct{
     double a{ }, b{ }, c{ };
     int d{ };
 };
 
 TEST(TupleTest, ValueChanging)
 {
-    FastPImpl<TestStruct, sizeof(TestStruct), alignof(TestStruct)> p;
+    hope::fast_pimpl<test_struct, sizeof(test_struct), alignof(test_struct)> p;
     auto& n = *p;
     n.d = 1;
     ASSERT_EQ(p->d, n.d);
