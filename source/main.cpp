@@ -12,9 +12,22 @@
 #include "tuple/generated.h"
 #include "tuple/flat_sorted_tuple.h"
 #include "core/static_string.h"
-
+#include "memory/small_object_allocator.h"
+#include "memory/small_object.h"
 #include <string_view>
 #include <variant>
+
+
+struct small_struct1 : hope::memory::small_object
+{
+	bool small1;
+};
+
+struct small_struct2 : hope::memory::small_object
+{
+	bool small1;
+	int a;
+};
 
 int main()
 {
@@ -123,9 +136,14 @@ int main()
 	std::cout << sizeof(sortedTuple) << " " << sizeof(nonSortedTuple) << std::endl;
 	std::cout << sortedTuple << " " << nonSortedTuple << std::endl;
 
-	constexpr auto static_string = gl::make_static_string("static_string");
-	constexpr auto static_string2 = gl::make_static_string("static_string2");
-	constexpr auto string2 = gl::concat(static_string, static_string2);
+	constexpr auto static_string = hope::make_static_string("static_string");
+	constexpr auto static_string2 = hope::make_static_string("static_string2");
+	constexpr auto string2 = hope::concat(static_string, static_string2);
 	std::cout << string2;
+
+	hope::memory::small_object_allocator::instance().initialize(100, 100);
+	auto smal_s = new small_struct1;
+	delete smal_s;
+	new small_struct2;
 	return 0;
 } 

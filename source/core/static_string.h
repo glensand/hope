@@ -13,7 +13,7 @@
 #include <array>
 #include <iostream>
 
-namespace gl{
+namespace hope{
 
     template <std::size_t N>
     using static_string = std::array<const char, N>;
@@ -29,7 +29,7 @@ namespace gl{
         std::size_t... Is1, std::size_t... Is2>
         constexpr auto concat(const static_string<S1>& str1, const static_string<S2>& str2,
             std::index_sequence<Is1...>, std::index_sequence<Is2...>){
-            return gl::static_string<S1 + S2 + 1>{ str1[Is1]..., str2[Is2]..., '\0'};
+            return hope::static_string<S1 + S2 + 1>{ str1[Is1]..., str2[Is2]..., '\0'};
         }
 
     }
@@ -40,14 +40,13 @@ namespace gl{
     }
 
     template <std::size_t S1, std::size_t S2>
-    constexpr auto concat(const static_string<S1>& str1, const static_string<S2>& str2) noexcept{
+    constexpr auto concat(const static_string<S1>& str1, const static_string<S2>& str2) noexcept {
         return impl::concat(str1, str2, std::make_index_sequence<S1 - 2>(), std::make_index_sequence<S2 - 2>());
     }
-
 }
 
 template <std::size_t N>
-std::ostream& operator<<(std::ostream& stream, const gl::static_string<N>& str) {
+std::ostream& operator<<(std::ostream& stream, const hope::static_string<N>& str) {
     stream << str.data();
     return stream;
 }

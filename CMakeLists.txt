@@ -14,9 +14,14 @@ file(GLOB HEADERS
     source/tuple/*.h
     source/type_list/*.h
     source/variant/*.h*
-    source/component/*.h*
+    source/components/*.h*
     source/memory/*.h*
 )
 
-add_executable(run source/main.cpp)
+file(GLOB SOURSES
+    source/memory/*.cpp
+    source/*.cpp
+)
+
+add_executable(run ${HEADERS} ${SOURSES})
 add_subdirectory(test)

@@ -16,8 +16,7 @@
 
 namespace hope {
 
-    namespace detail
-    {
+    namespace detail {
         template <typename... Ts>
         class variant_storage final {
         public:
