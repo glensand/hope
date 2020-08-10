@@ -32,6 +32,8 @@ endif()
 
 include_directories("../source")
 
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+
 file(GLOB TEST_HEADERS
     *.h)
 	
@@ -39,6 +41,6 @@ file(GLOB TEST_SOURSES
     *.cpp)
 
 add_executable(hopetest ${TEST_HEADERS} ${TEST_SOURSES})
-target_link_libraries(hopetest gtest_main)
+target_link_libraries(hopetest gtest_main hope)
 
 add_test(ALLTests unitTest COMMAND hopetest)

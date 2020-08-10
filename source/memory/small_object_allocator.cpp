@@ -21,8 +21,15 @@ namespace hope::memory {
 
     void* small_object_allocator::allocate(std::size_t size) noexcept{
         assert(m_is_initialized);
-        if(size > m_max_object_size) [[unlikely]]
-            return new uint8_t[size];
+        if(size > m_max_object_size) [[unlikely]] {
+            try {
+                return new uint8_t[size];
+            }
+            catch (const std::bad_alloc& ex) {
+                assert(false);
+                return nullptr;
+            }
+        }
         auto alloc = find_allocator(size);
         if (alloc == nullptr) [[unlikely]]
             alloc = create_allocator(size);
