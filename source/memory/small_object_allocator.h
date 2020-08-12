@@ -11,6 +11,7 @@
 #pragma once
 
 #include "fixed_allocator.h"
+#include "sm_allocator_config.h"
 
 namespace hope::memory {
 
@@ -29,13 +30,6 @@ namespace hope::memory {
          * NOTE: before use this class, u have to initialize its instance, see small_object_allocator::initialize
          */
         static small_object_allocator& instance();
-
-        /**
-         * \brief singleton instance initialization
-         * \param chunk_size the number of blocks that one chunk contains (in the range from 0 to 256); obviously
-         * \param max_object_size the max size of object, that is considered small
-         */
-        void initialize(std::size_t chunk_size, std::size_t max_object_size) noexcept;
 
         /**
          * \brief try to deallocate passed pointer to object
@@ -66,11 +60,20 @@ namespace hope::memory {
          */
         fixed_allocator* create_allocator(std::size_t size) noexcept;
 
+        /**
+         * \brief Clearing of the sm_allocator instance, method deallocate all inner allocators
+         * is used only for testing, calling this method in production code cause assertion failure
+         */
+        void clear();
+
         small_object_allocator() = default;
-        std::vector<fixed_allocator> m_allocator_list;  // sorted vector (ascending), contains all available allocators
-        bool m_is_initialized{ false };                 // if singleton was initialized (has proper m_chunk_size and m_max_object_size)
-        std::size_t m_chunk_size{ 0 };                  // the number of blocks that one chunk contains
-        std::size_t m_max_object_size{ 0 };             // the max size of object, that is considered small
+        ~small_object_allocator();
+
+        std::vector<fixed_allocator> m_allocator_list;           // sorted vector (ascending), contains all available allocators
+        std::size_t m_chunk_size{ config::ChunkSize };           // the number of blocks that one chunk contains
+        std::size_t m_max_object_size{ config::MaxObjectSize };  // the max size of object, that is considered small
+
+        friend class reset_sm_allocator;
     };
 
 }

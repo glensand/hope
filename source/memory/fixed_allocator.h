@@ -21,6 +21,7 @@ namespace hope::memory {
         fixed_allocator(uint8_t max_blocks_count, std::size_t block_size) noexcept;
         fixed_allocator(fixed_allocator&& rhs) noexcept;
         fixed_allocator& operator=(fixed_allocator&& rhs) noexcept;
+        ~fixed_allocator() noexcept;
 
         /**
          * \brief to avoid extra or unsafe copying we have to explicitly delete copy constructor and copy assign operator
@@ -41,6 +42,13 @@ namespace hope::memory {
          * in realize mode this causes undefined behavior
          */
         void deallocate(void* ptr) noexcept;
+
+        /**
+         * \brief Method deallocate all recently allocated chunks, completely reset inner structure of fixed allocator instance
+         * Destructor of objects, containing in chunks block will not be called, you should explicit call destructor for the appropriate object
+         * before allocator will be cleared 
+         */
+        void clear() noexcept;
 
         /**
          * \brief returns size of block, witch may be allocated
@@ -84,8 +92,8 @@ namespace hope::memory {
         chunk*              m_free_block{ nullptr };        // completely deallocated block, is used to recycle deallocated blocks and avoid new\delete utilization
     };
 
-    inline fixed_allocator::fixed_allocator(uint8_t max_blocks_count, std::size_t block_size) noexcept:
-        m_block_size(block_size)
+    inline fixed_allocator::fixed_allocator(uint8_t max_blocks_count, std::size_t block_size) noexcept
+        : m_block_size(block_size)
         , m_blocks_in_chunk(max_blocks_count)
     {
         try {
@@ -106,8 +114,7 @@ namespace hope::memory {
         , m_last_allocated(rhs.m_last_allocated)
         , m_last_deallocated(rhs.m_last_deallocated)
     {
-        // NOTE:: some fields of rhs value especially was not assign to nullptr
-        // due to performance optimization...
+        rhs.m_free_block = rhs.m_last_allocated = rhs.m_last_deallocated = nullptr;
     }
 
     inline fixed_allocator& fixed_allocator::operator=(fixed_allocator&& rhs) noexcept {
@@ -116,9 +123,12 @@ namespace hope::memory {
         m_chunk_list = std::move(rhs.m_chunk_list);
         m_last_allocated = rhs.m_last_allocated;
         m_last_deallocated = rhs.m_last_deallocated;
-        // NOTE:: some fields of rhs value especially was not assign to nullptr
-        // due to performance optimization...
+        rhs.m_free_block = rhs.m_last_allocated = rhs.m_last_deallocated = nullptr;
         return *this;
+    }
+
+    inline fixed_allocator::~fixed_allocator() noexcept {
+        clear();
     }
 
     inline void* fixed_allocator::allocate() noexcept {
@@ -142,6 +152,11 @@ namespace hope::memory {
         update_free_chunk();
     }
 
+    inline void fixed_allocator::clear() noexcept {
+        for(auto& chunk : m_chunk_list)
+            delete[] chunk.data;
+    }
+
     inline std::size_t fixed_allocator::block_size() const noexcept {
         return m_block_size;
     }
@@ -156,18 +171,17 @@ namespace hope::memory {
     }
 
     inline bool fixed_allocator::update_alloc_chunk() noexcept {
-        if(m_free_block != nullptr) {
-            m_last_allocated = m_free_block;
-            m_free_block = nullptr;
-            return true;
-        }
         const auto chunk_it = std::find_if(std::begin(m_chunk_list), std::end(m_chunk_list), 
             [=](const auto& ch) {
                         return ch.free_blocks_count > 0;
         });
         const bool isFound = chunk_it != std::end(m_chunk_list);
         if (isFound) [[likely]]
+        {
             m_last_allocated = &*chunk_it;
+            if (m_free_block == m_last_allocated) 
+                m_free_block = nullptr;
+        }
         return isFound;
     }
 
@@ -184,12 +198,14 @@ namespace hope::memory {
     inline void fixed_allocator::update_free_chunk() noexcept {
         if (m_last_deallocated->free_blocks_count != m_blocks_in_chunk)
             return;
-        if(m_free_block != nullptr){
+        if(m_free_block != nullptr && m_chunk_list.size() > 1){
             const std::size_t dealloc_block_pos = (m_last_deallocated - m_chunk_list.data()) / sizeof(chunk);
             const auto begin = std::begin(m_chunk_list) + dealloc_block_pos;
+            assert(m_last_deallocated->data == begin->data);
+            delete[] begin->data;
             m_chunk_list.erase(begin);
             m_last_deallocated = &m_chunk_list.front();
-        } else {
+        } else if (m_free_block == nullptr){
             m_free_block = m_last_deallocated;
         }
     }

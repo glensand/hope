@@ -12,7 +12,6 @@ namespace hope::memory {
         if (size > m_max_object_size) [[unlikely]] {
             delete[] static_cast<uint8_t*>(ptr);
         } else [[likely]] {
-            assert(m_is_initialized);
             const auto alloc = find_allocator(size);
             assert(alloc);
             alloc->deallocate(ptr);
@@ -20,7 +19,6 @@ namespace hope::memory {
     }
 
     void* small_object_allocator::allocate(std::size_t size) noexcept{
-        assert(m_is_initialized);
         if(size > m_max_object_size) [[unlikely]] {
             try {
                 return new uint8_t[size];
@@ -37,12 +35,6 @@ namespace hope::memory {
         return alloc->allocate();
     }
 
-    void small_object_allocator::initialize(std::size_t chunk_size, std::size_t max_object_size) noexcept {
-        m_chunk_size = chunk_size;
-        m_max_object_size = max_object_size;
-        m_is_initialized = true;
-    }
-
     fixed_allocator* small_object_allocator::find_allocator(std::size_t size) noexcept {
         const auto allocIt = std::find_if(std::begin(m_allocator_list), std::end(m_allocator_list),
             [=](const auto& allocator) {
@@ -52,10 +44,21 @@ namespace hope::memory {
     }
 
     fixed_allocator* small_object_allocator::create_allocator(std::size_t size) noexcept {
-        const auto forwardIt = std::adjacent_find(std::begin(m_allocator_list), std::end(m_allocator_list),
-            [=](const auto& allocator1, const auto& allocator2) {
-                return allocator1.block_size() < size && allocator2.block_size() > size;
+        const auto forwardIt = std::find_if(std::begin(m_allocator_list), std::end(m_allocator_list),
+            [=](const auto& allocator) {
+                return allocator.block_size() > size;
             });
+        const auto isEnd = forwardIt == std::end(m_allocator_list);
         return &*m_allocator_list.emplace(forwardIt, m_chunk_size, size);
+    }
+
+    void small_object_allocator::clear() {
+        for(auto& allocator : m_allocator_list)
+            allocator.clear();
+        m_allocator_list.clear();
+    }
+
+    small_object_allocator::~small_object_allocator() {
+        clear();
     }
 }

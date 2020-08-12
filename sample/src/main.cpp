@@ -141,7 +141,6 @@ int main()
 	constexpr auto string2 = hope::concat(static_string, static_string2);
 	std::cout << string2;
 
-	hope::memory::small_object_allocator::instance().initialize(100, 100);
 	auto smal_s = new small_struct1;
 	delete smal_s;
 	new small_struct2;

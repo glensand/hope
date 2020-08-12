@@ -38,7 +38,8 @@ file(GLOB TEST_HEADERS
     *.h)
 	
 file(GLOB TEST_SOURSES
-    *.cpp)
+    *.cpp
+    memory/*.cpp)
 
 add_executable(hopetest ${TEST_HEADERS} ${TEST_SOURSES})
 target_link_libraries(hopetest gtest_main hope)
