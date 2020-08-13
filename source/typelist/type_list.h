@@ -124,7 +124,7 @@ namespace hope {
     }
 
     template<size_t I, typename... Ts>
-    using NthType = typename decltype(get_nth_type<I>(type_list<Ts>{}))::Type;
+    using NthType = typename decltype(get_nth_type<I>(type_list<Ts...>{}))::Type;
 
     template <typename T, typename... Ts>
     constexpr size_t index_of(type_list<Ts...>) {
@@ -135,7 +135,7 @@ namespace hope {
     template <typename... Ts>
     constexpr size_t largest_type_index(type_list<Ts...>) {
         constexpr std::array<std::size_t, sizeof...(Ts)> sizes{ sizeof(Ts)... };
-        constexpr auto it = std::max_element(std::begin(sizes), std::end(sizes));
+        const auto it = std::max_element(std::begin(sizes), std::end(sizes));
         return std::distance(std::begin(sizes), it);
     }
 

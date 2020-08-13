@@ -53,8 +53,6 @@ namespace hope::memory {
     }
 
     void small_object_allocator::clear() {
-        for(auto& allocator : m_allocator_list)
-            allocator.clear();
         m_allocator_list.clear();
     }
 

@@ -96,9 +96,10 @@ namespace hope::memory{
 
     inline void chunk::deallocate(void* ptr, std::size_t block_size) noexcept {
         assert(is_deallocation_valid(ptr, block_size));
-        const auto block_index = uint8_t(static_cast<uint8_t*>(ptr) - data) / block_size;
-        data[block_index] = first_free_block;
-        first_free_block = block_size;
+        const auto byteIndex = uint8_t(static_cast<uint8_t*>(ptr) - data);
+        const auto block_index = byteIndex / block_size;
+        data[byteIndex] = first_free_block;
+        first_free_block = block_index;
         free_blocks_count++;
     }
 

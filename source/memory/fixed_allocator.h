@@ -84,6 +84,12 @@ namespace hope::memory {
          */
         void update_free_chunk() noexcept;
 
+        /**
+         * \brief Takes resources from the passed object. Used in the move constructor and the move assign operator
+         * \param rhs resource donor object
+         */
+        void steal_resources(fixed_allocator&& rhs) noexcept;
+
         std::size_t         m_block_size;       // size of single block in the chunk
         uint8_t             m_blocks_in_chunk;  // count of blocks, contains in one chunk
         chunk_list_t        m_chunk_list;       // list of allocated chunks
@@ -107,23 +113,12 @@ namespace hope::memory {
         }
     }
 
-    inline fixed_allocator::fixed_allocator(fixed_allocator&& rhs) noexcept
-        : m_block_size(rhs.m_block_size)
-        , m_blocks_in_chunk(rhs.m_blocks_in_chunk)
-        , m_chunk_list(std::move(rhs.m_chunk_list))
-        , m_last_allocated(rhs.m_last_allocated)
-        , m_last_deallocated(rhs.m_last_deallocated)
-    {
-        rhs.m_free_block = rhs.m_last_allocated = rhs.m_last_deallocated = nullptr;
+    inline fixed_allocator::fixed_allocator(fixed_allocator&& rhs) noexcept {  // NOLINT(cppcoreguidelines-pro-type-member-init)
+        steal_resources(std::move(rhs));
     }
 
     inline fixed_allocator& fixed_allocator::operator=(fixed_allocator&& rhs) noexcept {
-        m_block_size = rhs.m_block_size;
-        m_blocks_in_chunk = rhs.m_blocks_in_chunk;
-        m_chunk_list = std::move(rhs.m_chunk_list);
-        m_last_allocated = rhs.m_last_allocated;
-        m_last_deallocated = rhs.m_last_deallocated;
-        rhs.m_free_block = rhs.m_last_allocated = rhs.m_last_deallocated = nullptr;
+        steal_resources(std::move(rhs));
         return *this;
     }
 
@@ -146,7 +141,7 @@ namespace hope::memory {
     }
 
     inline void fixed_allocator::deallocate(void* ptr) noexcept {
-        if (!can_be_deallocated(*m_last_deallocated, ptr)) [[likely]]
+        if (!can_be_deallocated(*m_last_deallocated, ptr)) [[unlikely]]
             update_dealloc_chunk(ptr);
         m_last_deallocated->deallocate(ptr, m_block_size);
         update_free_chunk();
@@ -154,7 +149,8 @@ namespace hope::memory {
 
     inline void fixed_allocator::clear() noexcept {
         for(auto& chunk : m_chunk_list)
-            delete[] chunk.data;
+            delete chunk.data;
+        m_chunk_list.clear();
     }
 
     inline std::size_t fixed_allocator::block_size() const noexcept {
@@ -201,12 +197,21 @@ namespace hope::memory {
         if(m_free_block != nullptr && m_chunk_list.size() > 1){
             const std::size_t dealloc_block_pos = (m_last_deallocated - m_chunk_list.data()) / sizeof(chunk);
             const auto begin = std::begin(m_chunk_list) + dealloc_block_pos;
-            assert(m_last_deallocated->data == begin->data);
             delete[] begin->data;
             m_chunk_list.erase(begin);
             m_last_deallocated = &m_chunk_list.front();
         } else if (m_free_block == nullptr){
             m_free_block = m_last_deallocated;
         }
+    }
+
+    inline void fixed_allocator::steal_resources(fixed_allocator&& rhs) noexcept {
+        m_block_size = rhs.m_block_size;
+        m_blocks_in_chunk = rhs.m_blocks_in_chunk;
+        m_chunk_list = std::move(rhs.m_chunk_list);
+        m_last_allocated = rhs.m_last_allocated;
+        m_last_deallocated = rhs.m_last_deallocated;
+        m_free_block = rhs.m_free_block;
+        rhs.m_free_block = rhs.m_last_allocated = rhs.m_last_deallocated = nullptr;
     }
 }

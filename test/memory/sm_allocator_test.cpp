@@ -46,7 +46,7 @@ namespace hope::memory::testing{
 		sm_vector_t		m_sm_vector;
 	};
 
-	constexpr std::size_t ObjectsCount{ 1 };
+	constexpr std::size_t ObjectsCount{ 1000 };
 
 	template<std::size_t... Is, typename... Ts>
 	void fill_vector(std::index_sequence<Is...> seq, type_list<Ts...> list, sm_vector_t& vec) {
@@ -63,7 +63,7 @@ namespace hope::memory::testing{
 		constexpr RegisteredTypes<TypeParam> InnerTypeList{};
 		fill_vector(std::make_index_sequence<size(InnerTypeList)>(), InnerTypeList, this->m_sm_vector);
 		auto rng = std::default_random_engine{};
-	    std::shuffle(std::begin(this->m_sm_vector), std::end(this->m_sm_vector), rng);
+	    //std::shuffle(std::begin(this->m_sm_vector), std::end(this->m_sm_vector), rng);
 
 		for (const auto object : this->m_sm_vector)
 			delete object;

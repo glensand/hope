@@ -37,8 +37,8 @@ namespace hope {
 
             template <typename T>
             constexpr operator T () const noexcept {
-                constexpr auto type = find<std::decay_t<T>>(predefinedtypes::IntegralTypes);
-                assign(type);
+                //constexpr auto type = find<std::decay_t<T>>(predefinedtypes::IntegralTypes);
+                //assign(type);
                 return construct_helper<T>();
             }
         };
