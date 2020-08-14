@@ -13,6 +13,7 @@
 #include <new>
 #include <cassert>
 #include <limits>
+#include <new>
 
 namespace hope::memory{
 
@@ -75,15 +76,12 @@ namespace hope::memory{
     };
 
     inline void chunk::init(std::size_t block_size, uint8_t blocks_count) noexcept {
-        try {
-            data = new uint8_t[block_size * blocks_count];
-            free_blocks_count = blocks_count;
-            auto begin = data;
-            for (uint8_t i{0}; i < blocks_count; ++i, begin += block_size)
-                *begin = i + 1;
-        } catch (const std::bad_alloc& ex) {
-            assert(false);
-        }
+        data = new(std::nothrow) uint8_t[block_size * std::size_t(blocks_count)];
+        assert(data != nullptr);
+        free_blocks_count = blocks_count;
+        auto begin = data;
+        for (uint8_t i{ 0 }; i < blocks_count; ++i, begin += block_size)
+            *begin = i + 1;
     }
 
     inline void* chunk::allocate(std::size_t block_size) noexcept {
@@ -96,8 +94,8 @@ namespace hope::memory{
 
     inline void chunk::deallocate(void* ptr, std::size_t block_size) noexcept {
         assert(is_deallocation_valid(ptr, block_size));
-        const auto byteIndex = uint8_t(static_cast<uint8_t*>(ptr) - data);
-        const auto block_index = byteIndex / block_size;
+        const auto byteIndex = std::size_t(static_cast<uint8_t*>(ptr) - data);
+        const auto block_index = uint8_t(byteIndex / block_size);
         data[byteIndex] = first_free_block;
         first_free_block = block_index;
         free_blocks_count++;
@@ -108,7 +106,6 @@ namespace hope::memory{
             && ptr != nullptr
             && free_blocks_count < std::numeric_limits<uint8_t>::max()
             && block_size > 0
-            && ptr < data + block_size * std::numeric_limits<uint8_t>::max()
             && (static_cast<uint8_t*>(ptr) - data) % block_size == 0;
     }
 

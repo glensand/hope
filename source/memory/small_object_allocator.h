@@ -19,6 +19,7 @@ namespace hope::memory {
      * \brief 
      */
     class small_object_allocator {
+        using allocator_list = std::vector<fixed_allocator>;
     public:
         small_object_allocator(const small_object_allocator&) = delete;
         small_object_allocator(small_object_allocator&&) = delete;
@@ -69,7 +70,7 @@ namespace hope::memory {
         small_object_allocator() = default;
         ~small_object_allocator();
 
-        std::vector<fixed_allocator> m_allocator_list;           // sorted vector (ascending), contains all available allocators
+        allocator_list m_allocator_list;                         // sorted vector (ascending), contains all available allocators
         std::size_t m_chunk_size{ config::ChunkSize };           // the number of blocks that one chunk contains
         std::size_t m_max_object_size{ config::MaxObjectSize };  // the max size of object, that is considered small
 

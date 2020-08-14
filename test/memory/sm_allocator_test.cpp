@@ -13,6 +13,8 @@ namespace hope::memory {
 		public:
         static void apply() {
 			small_object_allocator::instance().clear();
+			small_object_allocator::allocator_list bleach;
+			std::swap(small_object_allocator::instance().m_allocator_list, bleach);
 		}
 	};
 
@@ -30,26 +32,28 @@ namespace hope::memory::testing{
 		>
 		TestTypes;
 
-    using sm_vector_t = std::vector<small_object*>;
+    using sm_list = std::vector<small_object*>;
 
 	template <typename TArgumentClass>
 	class sm_allocator_test : public ::testing::Test {
 	protected:
 		void SetUp() override {
-
+			_CrtMemCheckpoint(&m_startup);
 		}
 
 		void TearDown() override {
-			reset_sm_allocator::apply();
+			_CrtMemState teardown, diff;
+			_CrtMemCheckpoint(&teardown);
+			ASSERT_EQ(0, _CrtMemDifference(&diff, &m_startup, &teardown)) << "Memory leaks detected";
 		}
-
-		sm_vector_t		m_sm_vector;
+		_CrtMemState m_startup{ };
+		sm_list m_sm_vector;
 	};
 
-	constexpr std::size_t ObjectsCount{ 1000 };
+	constexpr std::size_t ObjectsCount{ 3000 };
 
 	template<std::size_t... Is, typename... Ts>
-	void fill_vector(std::index_sequence<Is...> seq, type_list<Ts...> list, sm_vector_t& vec) {
+	void fill_vector(std::index_sequence<Is...> seq, type_list<Ts...> list, sm_list& vec) {
 	    for(std::size_t j{ 0 }; j < ObjectsCount; ++j) {
 			small_object* br[] = { new typename decltype(get_nth_type<Is>(list))::Type... };
 			vec.insert(std::end(vec), std::begin(br), std::end(br));
@@ -63,11 +67,13 @@ namespace hope::memory::testing{
 		constexpr RegisteredTypes<TypeParam> InnerTypeList{};
 		fill_vector(std::make_index_sequence<size(InnerTypeList)>(), InnerTypeList, this->m_sm_vector);
 		auto rng = std::default_random_engine{};
-	    //std::shuffle(std::begin(this->m_sm_vector), std::end(this->m_sm_vector), rng);
+	    std::shuffle(std::begin(this->m_sm_vector), std::end(this->m_sm_vector), rng);
 
 		for (const auto object : this->m_sm_vector)
 			delete object;
-		this->m_sm_vector.clear();
+
+		this->m_sm_vector = sm_list{};
+		reset_sm_allocator::apply();
 	}
 
 }
