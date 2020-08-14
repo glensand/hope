@@ -6,7 +6,5 @@
  * this file. If not, please write to: bezborodoff.gleb@gmail.com, or visit : https://github.com/glensand/hope
  */
 
-#pragma once
+#include "gtest/gtest.h"
 
-#include "variant/variant.hpp"
-#include "variant/variantimpl.hpp"
