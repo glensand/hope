@@ -8,3 +8,14 @@
 
 #include "gtest/gtest.h"
 
+#include "typelist/type_list.h"
+#include "sm_objects.h"
+#include <vector>
+#include <algorithm>
+#include <random>
+#include "objects_aligned_to1.h"
+
+TEST(stres, test_1)
+{
+
+}

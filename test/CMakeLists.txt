@@ -31,7 +31,7 @@ if (CMAKE_VERSION VERSION_LESS 2.8.11)
 endif()
 
 include_directories("../source")
-
+add_definitions(-D_ENABLE_EXTENDED_ALIGNED_STORAGE=1)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 file(GLOB TEST_HEADERS

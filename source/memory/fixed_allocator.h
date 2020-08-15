@@ -135,8 +135,8 @@ namespace hope::memory {
     }
 
     inline void fixed_allocator::deallocate(void* ptr) noexcept {
-        if (m_last_deallocated!= nullptr 
-            && !can_be_deallocated(*m_last_deallocated, ptr)) [[unlikely]]
+        if (m_last_deallocated == nullptr 
+            || !can_be_deallocated(*m_last_deallocated, ptr)) [[unlikely]]
             update_dealloc_chunk(ptr);
         m_last_deallocated->deallocate(ptr, m_block_size);
         update_free_chunk();

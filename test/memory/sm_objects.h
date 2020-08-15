@@ -8,46 +8,53 @@
 
 #pragma once
 
+#include <functional>
+
 #include "memory/small_object.h"
+#include "typelist/type_list.h"
 
 template <typename T>
-struct sm_object_5 : hope::memory::small_object{
-    T _1, _2, _3, _4, _5;
+struct sm_object : hope::memory::small_object {
+    T val;
 };
 
 template <typename T>
-struct sm_object_4 : hope::memory::small_object {
-    T _1, _2, _3, _4;
+struct sm_object_std {
+    virtual ~sm_object_std() = default;
 };
 
-template <typename T>
-struct sm_object_3 : hope::memory::small_object {
-    T _1, _2, _3;
-};
+namespace hope::memory {
 
-template <typename T>
-struct sm_object_2 : hope::memory::small_object {
-    T _1, _2;
-};
+	class reset_sm_allocator {
+	public:
+		static void apply() {
+			small_object_allocator::instance().clear();
+			small_object_allocator::allocator_list bleach;
+			std::swap(small_object_allocator::instance().m_allocator_list, bleach);
+		}
+	};
 
-template <typename T>
-struct sm_object_1 : hope::memory::small_object {
-    T _1;
-};
+	namespace testing {
+		using sm_list_t = std::vector<small_object*>;
+		using sm_list_modifier_t = std::function<void(sm_list_t& list)>;
 
-template <typename T>
-struct sm_object_0 : hope::memory::small_object {
+	    template<std::size_t... Is, typename... Ts>
+		void fill_vector(std::index_sequence<Is...> seq, type_list<Ts...> list, sm_list_t& vec) {
+			small_object* br[] = { new sm_object<typename decltype(get_nth_type<Is>(list))::Type>... };
+			vec.insert(std::end(vec), std::begin(br), std::end(br));
+		}
 
-};
-
-using bytes_1 = std::aligned_storage_t<1, 1>;
-using bytes_2 = std::aligned_storage_t<2, 1>;
-using bytes_3 = std::aligned_storage_t<3, 1>;
-using bytes_4 = std::aligned_storage_t<4, 1>;
-using bytes_5 = std::aligned_storage_t<5, 1>;
-using bytes_6 = std::aligned_storage_t<6, 1>;
-using bytes_7 = std::aligned_storage_t<7, 1>;
-using bytes_8 = std::aligned_storage_t<8, 1>;
-using bytes_9 = std::aligned_storage_t<9, 1>;
-using bytes_10 = std::aligned_storage_t<10, 1>;
-using bytes_11 = std::aligned_storage_t<11, 1>;
+		template <typename... Ts>
+		void alloc_dealloc(type_list<Ts...> list, std::size_t objects_count, const sm_list_modifier_t& modifier) {
+			constexpr auto sequence = std::make_index_sequence < size(list) >();
+			sm_list_t sm_list;
+	        for (std::size_t i = 0; i < objects_count; ++i)
+				fill_vector(sequence, list, sm_list);
+	        modifier(sm_list);
+	        for (const auto object : sm_list)
+				delete object;
+	        sm_list = sm_list_t{};
+			reset_sm_allocator::apply();
+		}
+	}
+}
