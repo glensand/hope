@@ -72,7 +72,7 @@ namespace hope::memory {
         std::size_t m_chunk_size{ config::ChunkSize };           // the number of blocks that one chunk contains
         std::size_t m_max_object_size{ config::MaxObjectSize };  // the max size of object, that is considered small
 
-        friend class reset_sm_allocator;
+        friend class sm_allocator_reset;
     };
 
 }

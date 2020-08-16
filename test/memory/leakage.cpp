@@ -6,14 +6,10 @@
  * this file. If not, please write to: bezborodoff.gleb@gmail.com, or visit : https://github.com/glensand/hope
  */
 
-#include "gtest/gtest.h"
 #include <vector>
 #include <random>
-
+#include "registered_types.h"
 #include "sm_objects.h"
-#include "objects_aligned_to1.h"
-#include "objects_aligned_to4.h"
-#include "objects_aligned_to16.h"
 
 namespace hope::memory::testing{
 
@@ -21,6 +17,7 @@ namespace hope::memory::testing{
 	class leakage_test : public ::testing::Test {
 	protected:
 		void SetUp() override {
+			small_object_allocator::instance();
 			_CrtMemCheckpoint(&m_startup);
 		}
 
@@ -32,36 +29,20 @@ namespace hope::memory::testing{
 		_CrtMemState m_startup{ };
 	};
 
-	using TestTypes = ::testing::Types
-		<
-		RegisteredTypesAscendingAlignedTo1,
-		RegisteredTypesAscendingAlignedTo4,
-		RegisteredTypesAscendingAlignedTo16,
-		RegisteredTypesDescendingAlignedTo1,
-		RegisteredTypesDescendingAlignedTo4,
-		RegisteredTypesDescendingAlignedTo16,
-		RegisteredTypesShuffledAlignedTo1,
-		RegisteredTypesShuffledAlignedTo4,
-		RegisteredTypesShuffledAlignedTo16
-		>;
-
 	constexpr std::size_t ObjectsCount{ 300u };
 
-	template <typename... Ts>
-	void apply_alloc_dealloc(type_list<Ts...> list) {
-		alloc_dealloc(list, ObjectsCount, [](auto&&) {});
-		alloc_dealloc(list, ObjectsCount,
-			[](auto&& sm_list) {
-				auto rng = std::default_random_engine{};
-				std::shuffle(std::begin(sm_list), std::end(sm_list), rng);
-			});
+	TYPED_TEST_SUITE(leakage_test, TestTypes);
+
+	TYPED_TEST(leakage_test, sm_allocator_leakage_simple)
+	{
+		apply_alloc_dealloc<simple_sm_object>(TypeParam{}, ObjectsCount);
+		sm_allocator_reset::apply();
 	}
 
-	TYPED_TEST_CASE(leakage_test, TestTypes);
-
-	TYPED_TEST(leakage_test, sm_alLOCATOR_LEAKAGE)
+	TYPED_TEST(leakage_test, sm_allocator_leakage_complicated)
 	{
-		apply_alloc_dealloc(TypeParam{});
+		apply_alloc_dealloc<complicated_sm_object>(TypeParam{}, ObjectsCount);
+		sm_allocator_reset::apply();
 	}
 
 }

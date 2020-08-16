@@ -22,7 +22,7 @@ HEADER = '''
 
 '''
 
-ALIGNMENT = 16
+ALIGNMENT = 1
 MAX_SM_OBJECT_SIZE = 64
 FILENAME = "objects_aligned_to" + str(ALIGNMENT) + ".h"
 ALIGNED_STORAGE_BEGIN = 'std::aligned_storage_t<'
@@ -31,7 +31,7 @@ ALIGNED_STORAGE_END = ", " + str(ALIGNMENT) + ">, \n"
 def write_types(types_header, indeces, stream):
     generated.write(types_header)
     for i in indeces:
-        if i % ALIGNMENT == 0:
+        if i % ALIGNMENT == 0 or i == 1:
             generated.write(ALIGNED_STORAGE_BEGIN)
             generated.write(str(i))
             generated.write(ALIGNED_STORAGE_END)

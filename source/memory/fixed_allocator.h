@@ -82,11 +82,11 @@ namespace hope::memory {
         void steal_resources(fixed_allocator&& rhs) noexcept;
 
         std::size_t         m_block_size;       // size of single block in the chunk
-        uint8_t             m_blocks_in_chunk;  // count of blocks, contains in one chunk
         chunk_list          m_chunk_list;       // list of allocated chunks
         chunk*              m_last_allocated{ nullptr };    // last allocation was held in this chunk, cannot be nullptr
         chunk*              m_last_deallocated{ nullptr };  // last deallocation was held in this chunk, cannot be nullptr
         chunk*              m_free_block{ nullptr };        // completely deallocated block, is used to recycle deallocated blocks and avoid new\delete utilization
+        uint8_t             m_blocks_in_chunk;  // count of blocks, contains in one chunk
     };
 
     inline fixed_allocator::fixed_allocator(uint8_t max_blocks_count, std::size_t block_size) noexcept
