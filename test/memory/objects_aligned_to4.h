@@ -13,6 +13,7 @@
 
 using RegisteredTypesAscendingAlignedTo4 = hope::type_list
 <
+std::aligned_storage_t<0, 4>, 
 std::aligned_storage_t<1, 4>, 
 std::aligned_storage_t<4, 4>, 
 std::aligned_storage_t<8, 4>, 
@@ -28,13 +29,12 @@ std::aligned_storage_t<44, 4>,
 std::aligned_storage_t<48, 4>, 
 std::aligned_storage_t<52, 4>, 
 std::aligned_storage_t<56, 4>, 
-std::aligned_storage_t<60, 4>, 
-std::aligned_storage_t<64, 4>
+std::aligned_storage_t<60, 4>
 >;
 
 using RegisteredTypesDescendingAlignedTo4 = hope::type_list
 <
-std::aligned_storage_t<64, 4>, 
+std::aligned_storage_t<0, 4>,
 std::aligned_storage_t<60, 4>, 
 std::aligned_storage_t<56, 4>, 
 std::aligned_storage_t<52, 4>, 
@@ -55,6 +55,7 @@ std::aligned_storage_t<1, 4>
 
 using RegisteredTypesShuffledAlignedTo4 = hope::type_list
 <
+std::aligned_storage_t<0, 4>,
 std::aligned_storage_t<16, 4>, 
 std::aligned_storage_t<56, 4>, 
 std::aligned_storage_t<52, 4>, 
@@ -66,7 +67,6 @@ std::aligned_storage_t<20, 4>,
 std::aligned_storage_t<1, 4>, 
 std::aligned_storage_t<40, 4>, 
 std::aligned_storage_t<24, 4>, 
-std::aligned_storage_t<64, 4>, 
 std::aligned_storage_t<28, 4>, 
 std::aligned_storage_t<4, 4>, 
 std::aligned_storage_t<8, 4>, 

@@ -68,9 +68,9 @@ namespace hope::memory::testing {
     constexpr auto OverflowCount{ 300 };
     TEST(validation, on_string_chunk_overflow_test)
     {
+        constexpr auto list = RegisteredTypesShuffledAlignedTo1{};
         apply_and_validate_string(
-            [](auto&& sm_list) {
-                constexpr auto list = RegisteredTypesShuffledAlignedTo1{};
+            [=](auto&& sm_list) {
                 constexpr auto sequence = std::make_index_sequence<size(list)>();
                 for (std::size_t i{ 0 }; i < OverflowCount; ++i)
                     fill_vector<simple_sm_object>(sequence, list, sm_list);

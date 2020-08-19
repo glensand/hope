@@ -65,7 +65,13 @@ namespace hope::memory {
          */
         void clear();
 
-        small_object_allocator() = default;
+        /**
+         * \brief initializes all necessary fixed allocators, this method can be called only if memory saving mode is disabled,
+         * otherwise the application will exit with assert. Early initialization saves allocation time, but requires a little more memory
+         */
+        void initialize_allocators();
+
+        small_object_allocator();
         ~small_object_allocator();
 
         allocator_list m_allocator_list;                         // sorted vector (ascending), contains all available allocators

@@ -36,6 +36,10 @@ namespace hope::memory {
                 return nullptr;
             }
         }
+        if constexpr(!config::MemoryReductionMode)
+            return m_allocator_list[size / config::PointerAlignment - 1].allocate();
+        if (m_allocator_list.size() == m_max_object_size / config::PointerAlignment) [[likely]]
+            return m_allocator_list[size / config::PointerAlignment - 1].allocate();
         auto alloc = find_allocator(size);
         if (alloc == nullptr) [[unlikely]]
             alloc = create_allocator(size);
@@ -61,7 +65,19 @@ namespace hope::memory {
     }
 
     void small_object_allocator::clear() {
+        assert(config::TestMode);
         m_allocator_list.clear();
+    }
+
+    void small_object_allocator::initialize_allocators() {
+        m_allocator_list.reserve(m_max_object_size / config::PointerAlignment);
+        for (std::size_t i{ 0 }; i < m_max_object_size / config::PointerAlignment; ++i)
+            m_allocator_list.emplace_back(m_chunk_size, (i + 1) * config::PointerAlignment);
+    }
+
+    small_object_allocator::small_object_allocator(){
+        if constexpr (!config::MemoryReductionMode)
+            initialize_allocators();
     }
 
     small_object_allocator::~small_object_allocator() {
