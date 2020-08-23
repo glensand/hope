@@ -11,8 +11,8 @@
 #include "../concurrency/spin_lock.h"
 #include <mutex>
 
-#ifdef THREADING_POLICY
-#   ifdef SPINLOCK
+#ifdef MULTITHREADING
+#   if THREADING_POLICY == SPINLOCK
 #       define LOCK const std::lock_guard lock(SpinLock);
 #   else
 #       define LOCK const std::lock_guard lock(Mutex);

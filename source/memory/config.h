@@ -81,7 +81,7 @@ namespace hope::memory::config{
   * \brief Defines what kind of synchronization(block) will be use. If you threads rarely meets in critical section i recommend to use
   * spin lock, otherwise mutex.
   */
-#define THREADING_POLICY
+#define THREADING_POLICY SPINLOCK
 
 /**
  * \brief If multi threading mode is currently enabled. If this value is set to true, this mean if you try to create or delete an object
