@@ -70,3 +70,23 @@ namespace hope::memory::config{
      */
     constexpr EThreadingPolicy ThreadingPolicy{ EThreadingPolicy::SpinLock };
 }
+
+/**
+ * \brief Enumeration of available threading policies, there are no reason to use it, if MultiTreading mode configured as false
+ */
+#define SPINLOCK 1
+#define MUTEX 2
+
+ /**
+  * \brief Defines what kind of synchronization(block) will be use. If you threads rarely meets in critical section i recommend to use
+  * spin lock, otherwise mutex.
+  */
+#define THREADING_POLICY
+
+/**
+ * \brief If multi threading mode is currently enabled. If this value is set to true, this mean if you try to create or delete an object
+ * via new or delete, then a mutex would be locked.  do not recommend using this option if your application is running in single threaded mode,
+ * or if all small objects will be created in the same thread. If you need multithreading support,
+ * it is better to use multiple allocators with thread-local-storage inside.
+ */
+#define MULTITHREADING 1

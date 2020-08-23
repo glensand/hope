@@ -11,12 +11,15 @@
 #include "../concurrency/spin_lock.h"
 #include <mutex>
 
-#define Lock    if constexpr (hope::memory::config::MultiTreading) {\
-                if constexpr (hope::memory::config::ThreadingPolicy == hope::memory::config::EThreadingPolicy::SpinLock)\
-                const std::lock_guard lock(SpinLock);\
-                else\
-                const std::lock_guard lock(Mutex);\
-                }\
+#ifdef THREADING_POLICY
+#   ifdef SPINLOCK
+#       define LOCK const std::lock_guard lock(SpinLock);
+#   else
+#       define LOCK const std::lock_guard lock(Mutex);
+#   endif
+#else 
+#   define LOCK   
+#endif
 
 namespace
 {
@@ -26,12 +29,12 @@ hope::concurrency::spin_lock SpinLock;
 
 namespace hope::memory {
     void* small_object::operator new(std::size_t size) {
-        Lock
+        LOCK
         return small_object_allocator::instance().allocate(size);
     }
 
     void small_object::operator delete(void* ptr, std::size_t size) {
-        Lock
+        LOCK
         small_object_allocator::instance().deallocate(ptr, size);
     }
 }
