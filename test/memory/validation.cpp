@@ -71,7 +71,7 @@ namespace hope::memory::testing {
         constexpr auto list = RegisteredTypesShuffledAlignedTo1{};
         apply_and_validate_string(
             [=](auto&& sm_list) {
-                constexpr auto sequence = std::make_index_sequence<size(list)>();
+                constexpr auto sequence = std::make_index_sequence<size(RegisteredTypesShuffledAlignedTo1{})>();
                 for (std::size_t i{ 0 }; i < OverflowCount; ++i)
                     fill_vector<simple_sm_object>(sequence, list, sm_list);
             },

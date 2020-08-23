@@ -9,14 +9,14 @@
 #pragma once
 
 #include "fixed_allocator.h"
-#include "sm_allocator_config.h"
+#include "config.h"
 
 namespace hope::memory {
 
     /**
      * \brief 
      */
-    class small_object_allocator {
+    class small_object_allocator final {
         using allocator_list = std::vector<fixed_allocator>;
     public:
         small_object_allocator(const small_object_allocator&) = delete;

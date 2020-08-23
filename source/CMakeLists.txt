@@ -15,6 +15,7 @@ file(GLOB HOPE_HEADERS
     variant/*.h*
     components/*.h*
     memory/*.h*
+    concurrency/*.h*
 )
 
 file(GLOB HOPE_SOURSES

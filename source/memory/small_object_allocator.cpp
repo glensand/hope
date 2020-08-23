@@ -20,9 +20,16 @@ namespace hope::memory {
         if (size > m_max_object_size) [[unlikely]] {
             delete[] static_cast<uint8_t*>(ptr);
         } else [[likely]] {
-            const auto alloc = find_allocator(size);
-            assert(alloc);
-            alloc->deallocate(ptr);
+            if constexpr (!config::MemoryReductionMode)
+            {
+                m_allocator_list[size / config::PointerAlignment - 1].deallocate(ptr);
+            }
+            else
+            {
+                const auto alloc = find_allocator(size);
+                assert(alloc);
+                alloc->deallocate(ptr);
+            }
         }
     }
 

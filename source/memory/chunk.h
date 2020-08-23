@@ -87,17 +87,17 @@ namespace hope::memory{
         assert(is_allocation_valid(block_size));
         const auto result = data + std::size_t(first_free_block) * block_size;
         first_free_block = *result;
-        free_blocks_count--;
+        --free_blocks_count;
         return result;
     }
 
     inline void chunk::deallocate(void* ptr, std::size_t block_size) noexcept {
         assert(is_deallocation_valid(ptr, block_size));
-        const auto byteIndex = std::size_t(static_cast<uint8_t*>(ptr) - data);
-        const auto block_index = uint8_t(byteIndex / block_size);
-        data[byteIndex] = first_free_block;
+        const auto byte_index = std::size_t(static_cast<uint8_t*>(ptr) - data);
+        const auto block_index = uint8_t(byte_index / block_size);
+        data[byte_index] = first_free_block;
         first_free_block = block_index;
-        free_blocks_count++;
+        ++free_blocks_count;
     }
 
     inline bool chunk::is_deallocation_valid(void* ptr, std::size_t block_size) const noexcept {

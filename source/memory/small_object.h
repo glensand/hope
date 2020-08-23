@@ -21,8 +21,8 @@ namespace hope::memory {
     public:
         virtual ~small_object() = default;
 
-        static void* operator new(std::size_t size);
-        static void operator delete(void* ptr, std::size_t size);
+        void* operator new(std::size_t size);
+        void operator delete(void* ptr, std::size_t size);
     };
 
 }
