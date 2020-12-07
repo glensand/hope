@@ -29,7 +29,7 @@ namespace hope::memory::testing {
 
 	TYPED_TEST_SUITE(stress_test, TestTypes);
 
-	TYPED_TEST(stress_test, sm_allocator_stress_simple)
+	TYPED_TEST(stress_test, DISABLED_sm_allocator_stress_simple)
 	{
 		apply_alloc_dealloc<simple_sm_object>(TypeParam{}, ObjectsCount);
 		apply_alloc_dealloc<simple_sm_object>(TypeParam{}, ObjectsCount);
@@ -38,7 +38,7 @@ namespace hope::memory::testing {
 		sm_allocator_reset::apply();
 	}
 
-	TYPED_TEST(stress_test, sm_allocator_stress_complicated)
+	TYPED_TEST(stress_test, DISABLED_sm_allocator_stress_complicated)
 	{
 		apply_alloc_dealloc<complicated_sm_object>(TypeParam{}, ObjectsCount);
 		apply_alloc_dealloc<complicated_sm_object>(TypeParam{}, ObjectsCount);
