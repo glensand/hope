@@ -44,6 +44,10 @@ namespace hope {
         return {};
     }
 
+    template <typename... Ts1, typename... Ts2>
+    constexpr type_list<Ts1..., Ts2...> concat(type_list<Ts1...>, type_list<Ts2...>) {
+        return {};
+    }
     template <typename T, typename... Ts>
     constexpr type_holder<T> back(type_list<Ts..., T>) {
         return {};
