@@ -39,6 +39,7 @@ namespace hope {
     template<std::size_t... Is, typename... Ts>
     class flat_tuple_impl<std::index_sequence<Is...>, Ts...> final : public detail::indexed_value <Ts, Is>... {
     public:
+
         constexpr flat_tuple_impl() = default;
         constexpr flat_tuple_impl(const flat_tuple_impl&) = default;
         constexpr flat_tuple_impl(flat_tuple_impl&&) = default;
@@ -79,6 +80,43 @@ namespace hope {
             static_assert(tuple_size > N);
             using NativeType = std::decay_t<typename decltype(get_nth_type<N>(types))::Type >;
             return get_impl<N, NativeType>();
+        }
+
+        struct flat_tuple_iterator final {
+
+            template <std::size_t I>
+            using Type = typename decltype(get_nth_type<I>(type_list<Ts...>{}))::Type;
+
+            constexpr flat_tuple_iterator(const flat_tuple_impl& _tuple, std::size_t _index)
+                : index(_index)
+                , tuple(_tuple)
+            { }
+
+            constexpr void operator++() { ++index; }
+            constexpr void operator--() { --index; }
+
+            // TODO:: implement true start op.
+            constexpr const Type<0>& operator* () const {
+                return tuple.get<0>();
+            }
+
+            constexpr bool operator==(const flat_tuple_iterator& rhs) const { return &tuple == &(rhs.tuple) && index == rhs.index; }
+            constexpr bool operator!=(const flat_tuple_iterator& rhs) const { return !(*this == rhs); }
+
+        private:
+
+            [[nodiscard]] constexpr std::size_t get_index() const { return 1; }
+
+            std::size_t index{ 0 };
+            const flat_tuple_impl& tuple;
+        };
+
+        [[nodiscard]] constexpr flat_tuple_iterator begin() const {
+            return flat_tuple_iterator{ *this, 0 };
+        }
+
+        [[nodiscard]] constexpr flat_tuple_iterator end() const {
+            return flat_tuple_iterator(*this, tuple_size);
         }
 
         friend constexpr std::ostream& operator<< (std::ostream& stream, const flat_tuple<Ts...>& tuple) {

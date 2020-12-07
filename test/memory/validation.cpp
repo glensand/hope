@@ -54,7 +54,7 @@ namespace hope::memory::testing {
                 delete sm_list.front();
                 sm_list.erase(std::begin(sm_list));
                 delete sm_list.back();
-                sm_list.erase(std::end(sm_list));
+                sm_list.erase(std::prev(std::end(sm_list)));
         },
             [](auto&& sm_list)  {
                 return std::equal(std::begin(sm_list), std::end(sm_list),
