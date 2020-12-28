@@ -10,6 +10,7 @@
 
 #include "tuple/generated.h"
 #include "tuple/flat_tuple.h"
+#include "tuple/tuple_from_struct.h"
 
 struct POD_imitator {
     constexpr static int DefaultInt{ 11 };
@@ -64,5 +65,13 @@ TEST(TupleTest, TupleFromStruct)
     //static_assert(ts3Tuple.get<3>() == ts3.b);
 
     //ASSERT_TRUE(std::abs(ts3Tuple.get<0>() - ts3.i) < std::numeric_limits<double>::epsilon());
+}
+
+TEST(TupleTest, TupleFromStructUnsafe)
+{
+    constexpr test_struct_3 ts3{ 0.1, 0.1f, 11, true };
+    auto ts3Tuple = hope::tuple_from_struct_unsafe(ts3);
+
+    ASSERT_TRUE(ts3Tuple.get<0>() == ts3.i);
 }
 
