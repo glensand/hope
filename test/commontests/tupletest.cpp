@@ -32,13 +32,6 @@ TEST(TupleTest, ConstexprInitialization)
     static_assert(tuple.get<2>().val2 == POD_imitator::DefaultInt);
 }
 
-TEST(TupleTest, IteratorTest)
-{
-    constexpr auto tuple = hope::make_flat_tuple(1.f, std::string_view("string"), POD_imitator{});
-
-    for (const auto& f : tuple)
-        std::cout << f;
-}
 
 TEST(TupleTest, ValueChanging)
 {
