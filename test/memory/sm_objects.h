@@ -9,6 +9,7 @@
 #pragma once
 
 #include <functional>
+#include <random>
 
 #include "memory/small_object.h"
 #include "typelist/type_list.h"
