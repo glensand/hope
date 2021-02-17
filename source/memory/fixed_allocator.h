@@ -10,6 +10,7 @@
 
 #include "chunk.h"
 #include <vector>
+#include <algorithm>
 
 namespace hope::memory {
 
