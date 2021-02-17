@@ -10,6 +10,7 @@
 
 #include "chunk.h"
 #include <vector>
+#include <algorithm>
 
 namespace hope::memory {
 
@@ -118,7 +119,7 @@ namespace hope::memory {
 
     inline void* fixed_allocator::allocate() noexcept {
         if (m_last_allocated->free_blocks_count == 0
-            && !update_alloc_chunk()) [[unlikely]] {
+            && !update_alloc_chunk()) {
             try {
                 m_chunk_list.push_back(create_new_chunk());
             } catch (const std::exception&) {
@@ -135,7 +136,7 @@ namespace hope::memory {
 
     inline void fixed_allocator::deallocate(void* ptr) noexcept {
         if (m_last_deallocated == nullptr 
-            || !can_be_deallocated(*m_last_deallocated, ptr)) [[unlikely]]
+            || !can_be_deallocated(*m_last_deallocated, ptr))
             update_dealloc_chunk(ptr);
         m_last_deallocated->deallocate(ptr, m_block_size);
         update_free_chunk();
@@ -160,10 +161,10 @@ namespace hope::memory {
                         return ch.free_blocks_count > 0;
         });
         const bool isFound = chunk_it != std::end(m_chunk_list);
-        if (isFound) [[likely]]
+        if (isFound)
         {
             m_last_allocated = &*chunk_it;
-            if (m_free_block == m_last_allocated) [[unlikely]]
+            if (m_free_block == m_last_allocated)
                 m_free_block = nullptr;
         }
         return isFound;
