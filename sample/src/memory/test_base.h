@@ -1,6 +1,4 @@
-//------------------------------------------------------------------------------
-// ITest.h
-/* Copyright (C) 2020 Gleb Bezborodov - All Rights Reserved
+/* Copyright (C) 2020 - 2021 Gleb Bezborodov - All Rights Reserved
  * You may use, distribute and modify this code under the
  * terms of the MIT license.
  *

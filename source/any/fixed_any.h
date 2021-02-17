@@ -1,4 +1,4 @@
-/* Copyright (C) 2020 Gleb Bezborodov - All Rights Reserved
+/* Copyright (C) 2020 - 2021 Gleb Bezborodov - All Rights Reserved
  * You may use, distribute and modify this code under the
  * terms of the MIT license.
  *
@@ -64,7 +64,7 @@ namespace hope {
 
         template <typename T>
         constexpr static uint8_t extract_type_index() noexcept  {
-            return uint8_t(get<std::decay_t<T>>(FixedAnyTypes));
+            return uint8_t(find<std::decay_t<T>>(FixedAnyTypes));
         }
 
         template <typename T>
