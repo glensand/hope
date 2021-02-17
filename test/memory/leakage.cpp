@@ -16,6 +16,7 @@ namespace hope::memory::testing{
 	template <typename RegisteredTypes>
 	class leakage_test : public ::testing::Test {
 	protected:
+#if defined(_WIN32) || defined(_WIN64)
 		void SetUp() override {
 			small_object_allocator::instance();
 			_CrtMemCheckpoint(&m_startup);
@@ -27,6 +28,7 @@ namespace hope::memory::testing{
 			ASSERT_EQ(0, _CrtMemDifference(&diff, &m_startup, &teardown)) << "Memory leaks detected";
 		}
 		_CrtMemState m_startup{ };
+#endif
 	};
 
 	constexpr std::size_t ObjectsCount{ 300u };
