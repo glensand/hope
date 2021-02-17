@@ -28,7 +28,8 @@ const struct_b_t& just_take(const struct_b_t& b) {
 
 TEST(AnyConertible, BaseTest1)
 {
-    struct_a_t a{ .index = 11 };
+    struct_a_t a{ };
+    a.index = 11;
     const auto b = just_take(a);
     ASSERT_TRUE(b.index == 11);
 }
@@ -45,7 +46,8 @@ TEST(AnyConertible, BaseTest2)
         int index;
     };     
 
-    struct_a_t a{ .index = 11 };
+    struct_a_t a{ };
+    a.index = 11;
     struct_b_inner_t b = a;
     ASSERT_TRUE(b.index == 11);
 }
