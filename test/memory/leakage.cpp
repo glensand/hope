@@ -33,13 +33,13 @@ namespace hope::memory::testing{
 
 	TYPED_TEST_SUITE(leakage_test, TestTypes);
 
-	TYPED_TEST(leakage_test, DISABLED_sm_allocator_leakage_simple)
+	TYPED_TEST(leakage_test, sm_allocator_leakage_simple)
 	{
 		apply_alloc_dealloc<simple_sm_object>(TypeParam{}, ObjectsCount);
 		sm_allocator_reset::apply();
 	}
 
-	TYPED_TEST(leakage_test, DISABLED_sm_allocator_leakage_complicated)
+	TYPED_TEST(leakage_test, sm_allocator_leakage_complicated)
 	{
 		apply_alloc_dealloc<complicated_sm_object>(TypeParam{}, ObjectsCount);
 		sm_allocator_reset::apply();

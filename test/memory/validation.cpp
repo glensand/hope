@@ -34,7 +34,7 @@ namespace hope::memory::testing {
             delete sm_ptr;
     }
 
-    TEST(validation, DISABLED_on_string_test)
+    TEST(validation, on_string_test)
     {
         apply_and_validate_string(
             [](auto&&) {},
@@ -47,7 +47,7 @@ namespace hope::memory::testing {
                 });
     }
 
-    TEST(validation, DISABLED_on_string_delete_test)
+    TEST(validation, on_string_delete_test)
     {
         apply_and_validate_string(
             [](auto&& sm_list) {
@@ -66,7 +66,7 @@ namespace hope::memory::testing {
     }
 
     constexpr auto OverflowCount{ 300 };
-    TEST(validation, DISABLED_on_string_chunk_overflow_test)
+    TEST(validation, on_string_chunk_overflow_test)
     {
         constexpr auto list = RegisteredTypesShuffledAlignedTo1{};
         apply_and_validate_string(
