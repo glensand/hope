@@ -15,11 +15,12 @@ file(GLOB HOPE_HEADERS
     variant/*.h*
     components/*.h*
     memory/*.h*
+    memory/small_object/*.h*
     concurrency/*.h*
 )
 
 file(GLOB HOPE_SOURSES
-    memory/*.cpp
+    memory/small_object/*.cpp
 )
 add_library(hope STATIC ${HOPE_HEADERS} ${HOPE_SOURSES})
 

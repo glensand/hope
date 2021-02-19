@@ -11,7 +11,7 @@
 #include <functional>
 #include <random>
 
-#include "memory/small_object.h"
+#include "memory/small_object/small_object.h"
 #include "typelist/type_list.h"
 
 struct empty_std {

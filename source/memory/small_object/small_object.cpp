@@ -8,7 +8,7 @@
 
 #include "small_object.h"
 #include "small_object_allocator.h"
-#include "../concurrency/spin_lock.h"
+#include "../../concurrency/spin_lock.h"
 #include <mutex>
 
 #ifdef MULTITHREADING

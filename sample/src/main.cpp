@@ -9,9 +9,9 @@
 #include <iostream>
 #include "memory/objects_aligned_to4.h"
 #include "typelist/type_list.h"
-#include "memory/small_object.h"
+#include "memory/small_object/small_object.h"
 #include "memory/sm_objects.h"
-#include "memory/small_object_allocator.h"
+#include "memory/small_object/small_object_allocator.h"
 
 #include <chrono>
 #include <iostream>
@@ -44,7 +44,7 @@ namespace hope::memory::testing {
     std::size_t... Is, typename... Ts>
 	void alloc_seq(std::index_sequence<Is...>, type_list<Ts...>list, std::size_t size) {
 		for(std::size_t i{ 0 }; i < size; ++i) {
-			bool br[] = { new T<typename decltype(get_nth_type<Is>(list))::Type>()... };
+			bool br[] = { bool(new T<typename decltype(get_nth_type<Is>(list))::Type>())... };
 			new Empty();
 		}
 	}
