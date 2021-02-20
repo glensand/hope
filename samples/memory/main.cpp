@@ -7,8 +7,8 @@
  */
 
 #include <iostream>
-#include "memory/objects_aligned_to4.h"
 #include "typelist/type_list.h"
+#include "memory/objects_aligned_to4.h"
 #include "memory/small_object/small_object.h"
 #include "memory/sm_objects.h"
 #include "memory/small_object/small_object_allocator.h"
