@@ -45,4 +45,5 @@ file(GLOB TEST_SOURSES
 add_executable(hopetest ${TEST_HEADERS} ${TEST_SOURSES})
 target_link_libraries(hopetest gtest_main hope)
 
-add_test(ALLTests unitTest COMMAND hopetest)
+enable_testing()
+add_test(ALLTests hopetest COMMAND hopetest)
