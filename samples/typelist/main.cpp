@@ -48,8 +48,8 @@ int main()
 	assert(remove_res1 == remove_res2 == remove_res3 == true);
 
 	assert(h.get<hope::sample::derived1>() == nullptr);
-	assert(h.get<hope::sample::derived1>() == nullptr);
-	assert(h.get<hope::sample::derived1>() == nullptr);
+	assert(h.get<hope::sample::derived2>() == nullptr);
+	assert(h.get<hope::sample::derived5>() == nullptr);
 
 	return 0;
 } 
