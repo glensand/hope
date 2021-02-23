@@ -67,4 +67,3 @@ TEST(TupleTest, TupleFromStructUnsafe)
 
     ASSERT_TRUE(ts3Tuple.get<0>() == ts3.i);
 }
-

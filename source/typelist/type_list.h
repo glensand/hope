@@ -8,16 +8,13 @@
 
 #pragma once
 
+#include "components/common.h"
+
 #include <type_traits>
 #include <algorithm>
 #include <array>
 
 namespace hope {
-
-    template <typename T>
-    struct type_holder {
-        using Type = T;
-    };
 
     template <typename... Types>
     class type_list {

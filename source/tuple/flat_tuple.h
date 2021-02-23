@@ -8,6 +8,8 @@
 
 #pragma once
 
+#include <utility>
+
 #include "typelist/type_list.h"
 
 namespace hope {
@@ -87,7 +89,12 @@ namespace hope {
             return stream;
         }
 
+        template <typename F>
+        friend constexpr void for_each(const flat_tuple<Ts...>& tuple, F&& f) {
+            (f(tuple.template get<Is>()), ...);
+        }
     private:
+
         template<std::size_t... VIs>
         friend void print_impl(std::ostream& stream, const flat_tuple<Ts...>& tuple, std::index_sequence<VIs...>) {
             stream << "{ ";
@@ -119,4 +126,5 @@ namespace hope {
     constexpr auto make_flat_tuple(Ts... args) {
         return flat_tuple<Ts...>(std::forward<Ts>(args)...);
     }
+
 }
