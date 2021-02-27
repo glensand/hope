@@ -16,7 +16,7 @@ struct named_field final {
 
     named_field(const hope::static_string<N>& _name, const T& _val = T{})
         : name(_name)
-        , val(_val) {
+        , value(_val) {
 
     }
 };
