@@ -1,4 +1,4 @@
-/* Copyright (C) 2020 - 2021 Gleb Bezborodov - All Rights Reserved
+/* Copyright (C) 2021 Gleb Bezborodov - All Rights Reserved
  * You may use, distribute and modify this code under the
  * terms of the MIT license.
  *
@@ -14,7 +14,7 @@
 #include <sstream>
 #include <vector>
 
-namespace hope::sample::struct_serializer {
+namespace hope::sample::simple_struct_serializer {
 
     enum class argument_type {  // for instance network receiver is needed in enumeration of the arg's
         Int,
@@ -23,7 +23,7 @@ namespace hope::sample::struct_serializer {
         String,
     };
 
-    class argument {
+    class argument { 
     public:
         virtual ~argument() = default;
 
@@ -38,31 +38,18 @@ namespace hope::sample::struct_serializer {
         virtual ~argument_base() = default;
     
         virtual void serialize(std::ostream& out) const override {
-            out << int(m_type) << " " << m_name << " " << m_value << std::endl;
+            out << int(m_type) << " " << m_value << std::endl;
         }
     
         virtual void deserealize(std::istream& in) override {
             int type;
-            in >> type >> m_name >> m_value; // if stream operation is allowed
+            in >> type >> m_value; // if stream operation is allowed
             m_type = argument_type(type);
-        }
-    
-        const T& value() const noexcept  {
-            return m_value;
-        }
-
-        argument_type type() const noexcept {
-            return m_type;
-        }
-
-        const std::string& name() const noexcept {
-            return m_name;
         }
 
     protected:
-        explicit argument_base(argument_type type, std::string_view name, const T& value)
+        explicit argument_base(argument_type type, const T& value)
             : m_value(value)
-            , m_name(name.data())
             , m_type(type){
 
         }
@@ -70,47 +57,37 @@ namespace hope::sample::struct_serializer {
         T m_value;
 
     private:
-        std::string m_name;
         argument_type m_type;
     };
 
     class argument_int final : public argument_base<int32_t> {
     public:
-        explicit argument_int(std::string_view name = "", int32_t v = 0)
-            : argument_base(argument_type::Int, name, v) {
+        explicit argument_int(int32_t v = 0)
+            : argument_base(argument_type::Int, v) {
 
         }
     };
 
     class argument_float final : public argument_base<float> {
     public:
-        explicit argument_float(std::string_view name = "", float v = 0.f)
-            : argument_base(argument_type::Float, name, v) {
+        explicit argument_float(float v = 0.f)
+            : argument_base(argument_type::Float, v) {
 
         }
     };
 
     class argument_bool final : public argument_base<bool> {
     public:
-        explicit argument_bool(std::string_view name = "", bool b = false)
-            : argument_base(argument_type::Bool, name, b) {
-
-        }
-    };
-
-    class argument_string final : public argument_base<std::string> {
-    public:
-        explicit argument_string(std::string_view name = "", std::string s = "")
-            : argument_base(argument_type::String, name, s) {
+        explicit argument_bool(bool b = false)
+            : argument_base(argument_type::Bool, b) {
 
         }
     };
 
     void arg_map_initializer() {
-        loophole::inject(int32_t{}, argument_int{});
-        loophole::inject(float{}, argument_float{});
-        loophole::inject(bool{}, argument_bool{});
-        loophole::inject(std::string{}, argument_string{});
+        loophole::inject<0>(int32_t{}, argument_int{});
+        loophole::inject<0>(float{}, argument_float{});
+        loophole::inject<0>(bool{}, argument_bool{});
     }
 
     class query final {
@@ -148,8 +125,8 @@ namespace hope::sample::struct_serializer {
 
         for_each(tuple, [&] (auto&& field) {
             using clean_t = std::decay_t<decltype(field)>;
-            using argument_t = decltype(loophole::get(clean_t{}));
-            arguments.emplace_back(new argument_t("Argument name", std::forward<decltype(field)>(field)));
+            using argument_t = decltype(loophole::get<0>(clean_t{}));
+            arguments.emplace_back(new argument_t(std::forward<decltype(field)>(field)));
             });
 
         return query(std::move(arguments));

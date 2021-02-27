@@ -1,4 +1,4 @@
-/* Copyright (C) 2020 - 2021 Gleb Bezborodov - All Rights Reserved
+/* Copyright (C) 2021 Gleb Bezborodov - All Rights Reserved
  * You may use, distribute and modify this code under the
  * terms of the MIT license.
  *
@@ -6,6 +6,7 @@
  * this file. If not, please write to: bezborodoff.gleb@gmail.com, or visit : https://github.com/glensand/hope
  */
 
-#include "gtest/gtest.h"
-
-#include "any/fixed_any.h"
+int main()
+{
+	return 0;
+} 

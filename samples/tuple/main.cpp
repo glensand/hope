@@ -7,7 +7,8 @@
  */
 
 #include "simple_for_each.h"
-#include "arguments.h"
+#include "simple_struct_serialization.h"
+#include "named_struct_serialization.h"
 
 template <typename F>
 void run_impl(const char* func_name, F&& func) {
@@ -21,7 +22,9 @@ void run_impl(const char* func_name, F&& func) {
 int main() {
 	RUN(hope::sample::tuple_for_each::simple_type_print)
 
-	RUN(hope::sample::struct_serializer::run)
+	RUN(hope::sample::simple_struct_serializer::run)
+
+	RUN(hope::sample::named_struct_serializer::run)
 
 	return 0;
 } 

@@ -14,7 +14,9 @@
 namespace hope{
 
     template <std::size_t N>
-    using static_string = std::array<const char, N>;
+    struct static_string final {
+        std::array<const char, N> str;
+    };
 
     namespace impl {
 
@@ -41,10 +43,11 @@ namespace hope{
     constexpr auto concat(const static_string<S1>& str1, const static_string<S2>& str2) noexcept {
         return impl::concat(str1, str2, std::make_index_sequence<S1 - 2>(), std::make_index_sequence<S2 - 2>());
     }
-}
 
-template <std::size_t N>
-std::ostream& operator<<(std::ostream& stream, const hope::static_string<N>& str) {
-    stream << str.data();
-    return stream;
+    template <std::size_t N>
+    std::ostream& operator<<(std::ostream& stream, const hope::static_string<N>& str) {
+        stream << str.data();
+        return stream;
+    }
+
 }
