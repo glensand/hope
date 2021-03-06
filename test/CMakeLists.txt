@@ -1,3 +1,6 @@
+project(hopetest)
+set(BINARY ${CMAKE_PROJECT_NAME})
+
 # Download and unpack googletest at configure time
 configure_file(CMakeLists.txt.in googletest-download/CMakeLists.txt)
 execute_process(COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" .
@@ -42,7 +45,6 @@ file(GLOB TEST_SOURSES
     memory/*.cpp
     commontests/*.cpp)
 
-add_executable(hopetest ${TEST_HEADERS} ${TEST_SOURSES})
-target_link_libraries(hopetest gtest_main hope)
-
-add_test(ALLTests unitTest COMMAND hopetest)
+add_executable(${BINARY} ${TEST_HEADERS} ${TEST_SOURSES})
+add_test(NAME ${BINARY} COMMAND ${BINARY})
+target_link_libraries(${BINARY} gtest_main hope)
