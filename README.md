@@ -1,5 +1,5 @@
 # Hope
-[![Actions Status](https://github.com/glensand/hope/workflows/Hope/badge.svg)](https://github.com/glensand/hope/actions)
+[![Actions Status](https://github.com/glensand/hope/workflows/BuildAndTest/badge.svg)](https://github.com/glensand/hope/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ![GitHub last commit](https://img.shields.io/github/last-commit/glensand/hope?color=red&style=plastic)
 ![GitHub stars](https://img.shields.io/github/stars/glensand/hope?style=social)
