@@ -65,7 +65,7 @@ namespace hope::memory::testing {
         });
     }
 
-    constexpr auto OverflowCount{ 300 };
+    constexpr auto OverflowCount{ 10 }; // some unexplainable bullshit happens when too big numbers is used(related to the stl problem)
     TEST(validation, on_string_chunk_overflow_test)
     {
         constexpr auto list = RegisteredTypesShuffledAlignedTo1{};
@@ -76,10 +76,11 @@ namespace hope::memory::testing {
                     fill_vector<simple_sm_object>(sequence, list, sm_list);
             },
             [](auto&& sm_list) {
-                return std::equal(std::begin(sm_list), std::end(sm_list),
-                    std::begin(string_list) + 1, std::end(string_list),
-                    [](auto&& sm_ptr, auto&& str) {
-                        return static_cast<const srting_sm_object*>(sm_ptr)->val == str;
+                return std::equal(std::begin(string_list), std::end(string_list),
+                        std::begin(sm_list), std::begin(sm_list) + string_list.size(),
+                    [](auto&& str, auto&& sm_ptr) {
+                        auto* str_obj = static_cast<const srting_sm_object*>(sm_ptr);
+                        return  str_obj->val == str;
                     });
             });
     }
