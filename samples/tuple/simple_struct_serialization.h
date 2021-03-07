@@ -136,7 +136,7 @@ namespace hope::sample::simple_struct_serializer {
 
         arg_map_initializer();
 
-        auto st1 = simple_struct_1{ 1, 0, "great value" };
+        auto st1 = simple_struct_1{ 1, 0, false };
         auto&& query1 = make_query(st1);
         std::stringstream out;
         query1.serialize(out);
