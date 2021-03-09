@@ -14,6 +14,7 @@ file(GLOB HOPE_HEADERS
     type_list/*.h
     variant/*.h*
     components/*.h*
+    components/singleton_holder/*.h*
     memory/*.h*
     memory/small_object/*.h*
     concurrency/*.h*
