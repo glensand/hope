@@ -1,5 +1,5 @@
 # Hope
-[![Actions Status](https://github.com/glensand/hope/workflows/Hope/badge.svg)](https://github.com/glensand/hope/actions)
+[![Actions Status](https://github.com/glensand/hope/workflows/BuildAndTest/badge.svg)](https://github.com/glensand/hope/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ![GitHub last commit](https://img.shields.io/github/last-commit/glensand/hope?color=red&style=plastic)
 ![GitHub stars](https://img.shields.io/github/stars/glensand/hope?style=social)
@@ -58,7 +58,7 @@ constexpr auto size = size(types);
 template <typename T, std::size_t... Is>
 std::size_t try_cast(T* object, std::index_sequence<Is...> seq){
     bool br[] = { (dynamic_cast<typename decltype(get_nth_type<Is>(types))::Type*>
-                (link) != nullptr)... };
+                (object) != nullptr)... };
     for (std::size_t i{ 0 }; i < holder_size; ++i) {
         if (br[i])
             return i;
@@ -67,6 +67,7 @@ std::size_t try_cast(T* object, std::index_sequence<Is...> seq){
 }
 
 constexpr auto seq = std::make_index_sequence<size>();
+auto* link = new der2;
 const auto index = try_cast(link, seq);
 ```
 [See](https://github.com/glensand/hope/tree/master/samples/typelist) for more typelst examples
