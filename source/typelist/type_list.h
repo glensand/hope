@@ -17,7 +17,7 @@
 namespace hope {
 
     template <typename... Types>
-    class type_list {
+    class type_list final {
 
     };
 

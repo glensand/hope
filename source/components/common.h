@@ -11,7 +11,7 @@
 namespace hope {
 
     template <typename T>
-    struct type_holder {
+    struct type_holder final {
         using Type = T;
     };
 
