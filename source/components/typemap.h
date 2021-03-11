@@ -23,7 +23,7 @@ namespace hope {
 
     template <typename... Types>
     class type_map final {
-        constexpr static type_list<Types...> m_types;
+        constexpr static type_list<Types...> m_types{ };
     public:
 
         template <typename Key>
