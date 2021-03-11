@@ -12,19 +12,18 @@
 
 #include <type_traits>
 #include <algorithm>
-#include <array>
 
 namespace hope {
 
-    template <typename _Key, typename _Value>
+    template <typename K, typename V>
     struct type_pair final {
-        using Key = _Key;
-        using Value = _Value;
+        using Key = K;
+        using Value = V;
     };
 
     template <typename... Types>
     class type_map final {
-        constexpr static type_list<Types...> m_types;
+        constexpr static type_list<Types...> m_types{ };
     public:
 
         template <typename Key>
@@ -32,19 +31,10 @@ namespace hope {
             constexpr auto index = index_of<Key>();
             static_assert(index < size(m_types));
             using pair = NthType<index, Types...>;
-            return type_holder<pair::Value>();
+            return type_holder<typename pair::Value>();
         }
 
     private:
-
-        template <typename T>
-        struct type_extractor final {};
-
-        template <typename K, typename V>
-        struct type_extractor<type_pair<K, V>> final {
-            using _Key = K;
-            using _Value = V;
-        };
 
         template <typename Key>
         constexpr static std::size_t index_of() {
@@ -54,16 +44,11 @@ namespace hope {
                 });
         }
 
-        template <typename K, typename V>
-        constexpr static auto key(type_pair<K, V>) {
-            return type_holder<K>{ };
-        }
-
         template <typename T>
-        struct type_checker final : public std::false_type {};
+        struct type_checker final : std::false_type {};
 
         template <typename Key, typename Value>
-        struct type_checker<type_pair<Key, Value>> final : public std::true_type {};
+        struct type_checker<type_pair<Key, Value>> final : std::true_type {};
 
         static_assert(all_of<type_checker>(m_types));
     };
