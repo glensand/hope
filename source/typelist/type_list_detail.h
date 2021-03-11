@@ -8,6 +8,7 @@
 
 #pragma once
 
+#include <cstddef>
 #include <utility>
 
 namespace hope::detail {
