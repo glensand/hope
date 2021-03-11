@@ -9,6 +9,7 @@
 #pragma once
 
 #include "components/common.h"
+#include "typelist/type_list_detail.h"
 
 #include <type_traits>
 #include <algorithm>
@@ -89,6 +90,20 @@ namespace hope {
         return std::find(bs, true) - bs;
     }
 
+    template <typename F, typename... Ts>
+    constexpr size_t find_if(type_list<Ts...> list, F f) {
+        constexpr bool bs[] = { f(Ts{})... };
+        /*return std::find(bs, true) - bs;*/ // available since cxx20
+        constexpr size_t list_size = size(list);
+
+        for (size_t i = 0; i < list_size; ++i) {
+            if (bs[i])
+                return i;
+        }
+
+        return list_size;
+    }
+
     // TODO:: maybe it is good idea to use value based approach every were
     template <template <typename...> typename F, typename... Ts>
     constexpr bool all_of(type_list<Ts...>) {
@@ -103,17 +118,6 @@ namespace hope {
     template <template <typename...> typename F, typename... Ts>
     constexpr bool none_of(type_list<Ts...> list) {
         return !any_of<F>(list);
-    }
-
-    namespace detail {
-        template <typename Is>
-        struct get;
-
-        template <size_t... Is>
-        struct get<std::index_sequence<Is...>> {
-            template <typename T>
-            static constexpr T extractor(decltype(Is, static_cast<void*>(0))..., T*, ...);
-        };
     }
 
     template<size_t I, typename... Ts>

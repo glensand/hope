@@ -36,22 +36,27 @@ namespace hope {
         }
 
     private:
-        template <typename Key>
-        constexpr static std::size_t index_of() {
-            constexpr bool bs[] = { std::is_same_v<Key, Types::Key>... };
-            constexpr size_t list_size = size(m_types);
-
-            for (size_t i = 0; i < list_size; ++i) {
-                if (bs[i])
-                    return i;
-            }
-
-            return list_size;
-        }
 
         template <typename T>
-        constexpr static auto key() {
-            return type_holder<T::Key>{ };
+        struct type_extractor final {};
+
+        template <typename K, typename V>
+        struct type_extractor<type_pair<K, V>> final {
+            using _Key = K;
+            using _Value = V;
+        };
+
+        template <typename Key>
+        constexpr static std::size_t index_of() {
+            return find_if(m_types, [](auto pair) {
+                using pair_t = decltype(pair);
+                return std::is_same_v<Key, typename pair_t::Key>;
+                });
+        }
+
+        template <typename K, typename V>
+        constexpr static auto key(type_pair<K, V>) {
+            return type_holder<K>{ };
         }
 
         template <typename T>

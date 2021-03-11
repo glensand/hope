@@ -6,20 +6,19 @@
  * this file. If not, please write to: bezborodoff.gleb@gmail.com, or visit : https://github.com/glensand/hope
  */
 
-#include <string_view>
-#include "components/typemap.h"
+#pragma once
 
-struct named_int final {
-	constexpr static std::string_view Name{ "Integer" };
-	int Value;
-};
+#include <utility>
 
-struct named_float final {
-	constexpr static std::string_view Name{ "Float" };
-	float Value;
-};
+namespace hope::detail {
 
-int main()
-{
-	return 0;
-} 
+    template <typename Is>
+    struct get;
+
+    template <size_t... Is>
+    struct get<std::index_sequence<Is...>> {
+        template <typename T>
+        static constexpr T extractor(decltype(Is, static_cast<void*>(0))..., T*, ...);
+    };
+
+}
