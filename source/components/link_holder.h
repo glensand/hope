@@ -1,4 +1,4 @@
-/* Copyright (C) 2020 - 2021 Gleb Bezborodov - All Rights Reserved
+/* Copyright (C) 2021 Gleb Bezborodov - All Rights Reserved
  * You may use, distribute and modify this code under the
  * terms of the MIT license.
  *
@@ -6,15 +6,19 @@
  * this file. If not, please write to: bezborodoff.gleb@gmail.com, or visit : https://github.com/glensand/hope
  */
 
+#pragma once
+
 #include "typelist/type_list.h"
 #include <array>
 
-namespace hope::sample {
+namespace hope {
 
     template<typename BaseType, typename... Links>
     class link_holder final {
     public:
         
+        using link_list = std::array<BaseType*, size(type_list<Links...>{})> ;
+
         link_holder() {
             for (auto& link : links)
                 link = nullptr;
@@ -48,6 +52,14 @@ namespace hope::sample {
             return false;
         }
 
+        link_list& get_links() noexcept {
+            return links;
+        }
+
+        const link_list& get_links() const noexcept {
+            return links;
+        }
+
         link_holder(const link_holder&) = delete;
         link_holder(link_holder&&) = delete;
         link_holder& operator=(const link_holder&) = delete;
@@ -68,18 +80,15 @@ namespace hope::sample {
 
         template <typename T, typename NativeT = std::decay_t<T>, std::size_t... Is>
         std::size_t try_cast(T* link, std::index_sequence<Is...> seq) noexcept {
-            bool br[] = { (dynamic_cast<typename decltype(get_nth_type<Is>(types))::Type*>
-                (link) != nullptr)... };
-            for (std::size_t i{ 0 }; i < holder_size; ++i) {
-                if (br[i])
-                    return i;
-            }
-            return holder_size;
+            return find_if(types, [&](auto holder) {
+                return dynamic_cast<typename decltype(holder)::Type*>
+                    (link) != nullptr;
+                });
         }
 
         constexpr static type_list<Links...> types{ };
         constexpr static std::size_t holder_size{ size(types) };
 
-        std::array<BaseType*, holder_size> links;
+        link_list links{ };
     };
 }

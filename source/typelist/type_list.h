@@ -66,6 +66,18 @@ namespace hope {
         return result;
     }
 
+    template <typename F, typename...Ts, std::size_t... Is>
+    constexpr void for_each_impl(type_list<Ts...> list, F&& f, std::index_sequence<Is...>) {
+        (f(get_nth_type<Is>(list)), ...);
+    }
+
+    template <typename... Ts, typename F>
+    constexpr void for_each(type_list<Ts...> list, F&& f) {
+        for_each_impl(list, std::forward<F>(f),
+            std::make_index_sequence<size(list)>()
+        );
+    }
+
     template <typename T, typename... Ts>
     constexpr std::size_t find(type_list<Ts...> list) {
         constexpr bool bs[] = { std::is_same_v<T, Ts>... };
@@ -92,7 +104,7 @@ namespace hope {
 
     template <typename F, typename... Ts>
     constexpr size_t find_if(type_list<Ts...> list, F f) {
-        constexpr bool bs[] = { f(Ts{})... };
+        bool bs[] = { f(type_holder<Ts>{})... };
         /*return std::find(bs, true) - bs;*/ // available since cxx20
         constexpr size_t list_size = size(list);
 

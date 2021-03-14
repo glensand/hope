@@ -39,7 +39,7 @@ namespace hope {
         template <typename Key>
         constexpr static std::size_t index_of() {
             return find_if(m_types, [](auto pair) {
-                using pair_t = decltype(pair);
+                using pair_t = typename decltype(pair)::Type;
                 return std::is_same_v<Key, typename pair_t::Key>;
                 });
         }
