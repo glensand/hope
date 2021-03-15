@@ -38,9 +38,7 @@ TEST(AnyConertible, BaseTest2)
 {
     struct struct_b_inner_t {
         static struct_b_inner_t from(const struct_a_t& s) {
-            struct_b_inner_t res;
-            res.index = s.index;
-            return res;
+            return { s.index };
         }
 
         int index;

@@ -6,10 +6,11 @@
  * this file. If not, please write to: bezborodoff.gleb@gmail.com, or visit : https://github.com/glensand/hope
  */
 
+#pragma once
+
 #include "components/loophole.h"
 #include "tuple/tuple_from_struct.h"
 
-#include <string_view>
 #include <iostream>
 #include <sstream>
 #include <vector>
@@ -84,6 +85,7 @@ namespace hope::sample::simple_struct_serializer {
         }
     };
 
+    inline
     void arg_map_initializer() {
         loophole::inject<0>(int32_t{}, argument_int{});
         loophole::inject<0>(float{}, argument_float{});
@@ -131,7 +133,8 @@ namespace hope::sample::simple_struct_serializer {
 
         return query(std::move(arguments));
     }
-    
+
+    inline
     void run() {
 
         arg_map_initializer();

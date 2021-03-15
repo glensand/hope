@@ -33,7 +33,7 @@ namespace hope {
 
         template <typename T, std::size_t... Is>
         constexpr std::size_t detect_fields_count_impl(const T& object, std::index_sequence<Is...> sequence) {
-            bool bs[] = { is_constructable_n(object, std::make_index_sequence<Is>())... };
+            bool bs[] = { is_constructable_n(object, std::make_index_sequence<Is>{ })... };
             // since cxx20... msvc sucks
             //return std::distance(std::begin(bs), std::find(
             //    std::begin(bs), std::end(bs), false)
