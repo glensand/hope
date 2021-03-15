@@ -8,30 +8,39 @@
 
 #pragma once
 
-#include "componens/loophole.h"
+#include <unordered_map>
+#include <functional>
+#include <string>
+#include <string_view>
+#include <stdexcept>
+#include <utility>
 
 namespace hope {
 
-    template <typename FactoryImpl>
-    class factory {
-        template <const char* Name, typename Type>
-        struct typename_holder final {
-
-        };
+    template <typename ReturnType,
+               typename NameClass = std::string_view>
+    class factory final {
+        using creator_map = std::unordered_map<NameClass, std::function<ReturnType*()>>;
     public:
         factory() = default;
         ~factory() = default;
 
-        template <const char* Name, typename Type>
-        constexpr static bool register_type() noexcept {
-            loophole::inject(typename_holder<Name, FactoryImpl>{ }, Type{ });
+        template <typename Type>
+        bool register_object(NameClass name) {
+            if (creators.count(name) != 0)
+                throw std::runtime_error(std::string("An attempt was made to register already registered type with name: ") + typeid(Type).name());
+            creators.emplace(std::move(name), [] { return new Type; });
         }
 
-        auto create(const char* name) const {
-            using object_t = decltype(loophole::get());
+        ReturnType* create(const NameClass& name) const {
+            const auto creatorIt = creators.find(name);
+            if (creatorIt == std::cend(creators))
+                throw std::runtime_error(std::string("Unregistered typename passed to factory of type: ")
+                    + typeid(ReturnType).name());
+            return creatorIt->second();
         }
 
     private:
-
+        creator_map creators;
     };
 }

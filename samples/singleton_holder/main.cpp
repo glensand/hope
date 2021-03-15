@@ -7,22 +7,21 @@
  */
 
 #include "components/singleton_holder/singleton_holder.h"
-#include <iostream>
+#include "object_factory.h"
+#include <cassert>
 
 namespace {
-	
-	struct simple_runner_impl final {
-		void run() {
-			std::cout << "simple_runner::run()" << std::endl;
-		}
-	};
-
-	using simple_runner = hope::singleton_holder<simple_runner_impl>;
+	void assert_runner_valid(std::string_view name) {
+		auto* instance = hope::sample::object_factory::object_factory::instance().create(name);
+		assert(instance->name() == name);
+	}
 }
 
 int main()
 {
-	simple_runner::instance().run();
+	assert_runner_valid("simple_runner");
+	assert_runner_valid("hope_runner");
+	assert_runner_valid("top_runner");
 
 	return 0;
 }
