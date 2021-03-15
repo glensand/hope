@@ -41,7 +41,7 @@ namespace hope::memory{
          * it is too expensive to store this value at the chunk struct (due to the allocators hierarchy, see fixed_allocator.h for more details)
          * this method extract first available block from linked list, and do other related work, it is easy to understand 
          * \param block_size - size of block to be allocated
-         * \return 
+         * \return pointer to the desired memory segment
          */
             [[nodiscard]] void* allocate(std::size_t block_size) noexcept;
 
@@ -78,14 +78,14 @@ namespace hope::memory{
         data = new(std::nothrow) uint8_t[block_size * std::size_t(blocks_count)];
         assert(data != nullptr);
         free_blocks_count = blocks_count;
-        auto begin = data;
+        auto* begin = data;
         for (uint8_t i{ 0 }; i < blocks_count; ++i, begin += block_size)
             *begin = i + 1;
     }
 
     inline void* chunk::allocate(std::size_t block_size) noexcept {
         assert(is_allocation_valid(block_size));
-        const auto result = data + std::size_t(first_free_block) * block_size;
+        auto* const result = data + std::size_t(first_free_block) * block_size;
         first_free_block = *result;
         --free_blocks_count;
         return result;

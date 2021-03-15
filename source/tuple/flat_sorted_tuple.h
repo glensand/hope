@@ -10,6 +10,7 @@
 
 #include "typelist/type_list.h"
 #include "typelist/typelistsort.h"
+#include "flat_tuple.h"
 
 namespace hope {
     namespace detail {

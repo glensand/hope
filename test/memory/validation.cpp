@@ -30,7 +30,7 @@ namespace hope::memory::testing {
             sm_list.push_back(new srting_sm_object(str.data()));
         modifier(sm_list);
         ASSERT_TRUE(validator(sm_list));
-        for (const auto sm_ptr : sm_list)
+        for (auto* const sm_ptr : sm_list)
             delete sm_ptr;
     }
 
@@ -79,7 +79,7 @@ namespace hope::memory::testing {
                 return std::equal(std::begin(string_list), std::end(string_list),
                         std::begin(sm_list), std::begin(sm_list) + string_list.size(),
                     [](auto&& str, auto&& sm_ptr) {
-                        auto* str_obj = static_cast<const srting_sm_object*>(sm_ptr);
+                        const auto* str_obj = static_cast<const srting_sm_object*>(sm_ptr);
                         return  str_obj->val == str;
                     });
             });

@@ -28,7 +28,7 @@ namespace hope {
 
     } 
 
-    struct nonesuch {
+    struct nonesuch final {
         nonesuch() = delete;
         ~nonesuch() = delete;
         nonesuch(nonesuch const&) = delete;
