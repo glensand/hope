@@ -34,7 +34,7 @@ namespace {
 int main()
 {
 	auto* legacy_vehicle_instance = hope::sample::typemap::vehicle_creator::create(vehicle_types_t{ }, legacy_tag{ });
-	auto* vehicle_instance = hope::sample::typemap::vehicle_creator::create(vehicle_types_t{ }, legacy_tag{ });
+	auto* vehicle_instance = hope::sample::typemap::vehicle_creator::create(vehicle_types_t{ }, vehicle_tag{ });
 
 	legacy_vehicle_instance->assert_vehicle_valid();
 	vehicle_instance->assert_vehicle_valid();
