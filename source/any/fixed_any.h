@@ -28,7 +28,7 @@ namespace hope {
     class fixed_any final {
     public:
         template <typename T>
-        fixed_any(T&& val) {
+        explicit fixed_any(T&& val) {
             assert_type_registered<T>();
             if constexpr (is_small<T>()){
                 build_small_pod(val);

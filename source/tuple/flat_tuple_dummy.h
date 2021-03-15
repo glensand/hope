@@ -11,6 +11,8 @@
 #include "core/unique_types.h"
 #include "typelist/type_list.h"
 
+#include <ostream>
+
 namespace hope {
 
     namespace detail {
@@ -51,7 +53,6 @@ namespace hope {
         template <typename... VTs, typename T>
         constexpr flat_tuple_dummy(T&& front, const flat_tuple_dummy< VTs...>& tuple) noexcept
             : detail::just_value<T>(std::forward<T>(front))
-            //, Detail::JustValue<VTs>(static_cast<const Detail::JustValue<VTs&>>(tuple).value)...
             , detail::just_value<VTs>(tuple.template get<VTs>())...
         {  }
 

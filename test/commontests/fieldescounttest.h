@@ -10,20 +10,14 @@
 
 #include "tuple/detect_fields_count.h"
 
-struct ZeroFields {
-    
-};
+struct fields_0 { };
+static_assert(hope::detect_fields_count(fields_0{ }) == 0);
 
-static_assert(hope::detect_fields_count(ZeroFields{}) == 0);
+struct fields_1 { int x; };
+static_assert(hope::detect_fields_count(fields_1{ }) == 1);
 
-struct OneField {
-    int x;
-};
+struct fields_3 { int a, b, c; };
+static_assert(hope::detect_fields_count(fields_3{ }) == 3);
 
-static_assert(hope::detect_fields_count(OneField{}) == 1);
-
-struct ThirdFields {
-    int a, b, c;
-};
-
-static_assert(hope::detect_fields_count(ThirdFields{}) == 3);
+struct fields_4 { int a, b, c, d; };
+static_assert(hope::detect_fields_count(fields_4{ }) == 4);
