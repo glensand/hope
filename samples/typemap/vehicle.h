@@ -8,7 +8,6 @@
 
 #pragma once
 
-#include "components/typemap.h"
 #include "components/singleton_holder/singleton_holder.h"
 #include "components/link_holder.h"
 
@@ -32,11 +31,11 @@ namespace hope::sample::typemap {
         }
 
     private:
-        using module_set_t = hope::link_holder<
-            hope::sample::typemap::vehicle_module,
-            hope::sample::typemap::graphics,
-            hope::sample::typemap::logic,
-            hope::sample::typemap::physics
+        using module_set_t = link_holder<
+            vehicle_module,
+            graphics,
+            logic,
+            physics
         >;
 
         module_set_t m_modules{ };

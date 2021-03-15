@@ -27,7 +27,7 @@ namespace hope {
         ~link_holder() = default;
 
         template <typename T>
-        constexpr T* get() const noexcept { 
+        [[nodiscard]] constexpr T* get() const noexcept { 
             return get_impl<T>();
         }
 
@@ -56,7 +56,7 @@ namespace hope {
             return links;
         }
 
-        const link_list& get_links() const noexcept {
+        [[nodiscard]] const link_list& get_links() const noexcept {
             return links;
         }
 
@@ -67,7 +67,7 @@ namespace hope {
     private:
     
         template <typename T, typename NativeT = std::decay_t<T>>
-        constexpr T* get_impl() const noexcept {
+        [[nodiscard]] constexpr T* get_impl() const noexcept {
             static_assert(contains<NativeT>(types));
             constexpr std::size_t Index = find<NativeT>(types);
             return static_cast<T*>(links[Index]);
@@ -79,7 +79,8 @@ namespace hope {
         }
 
         template <typename T, typename NativeT = std::decay_t<T>, std::size_t... Is>
-        std::size_t try_cast(T* link, std::index_sequence<Is...> seq) noexcept {
+        std::size_t try_cast(T* link, std::index_sequence<Is...>) noexcept {
+            // ReSharper disable once CppEntityUsedOnlyInUnevaluatedContext
             return find_if(types, [&](auto holder) {
                 return dynamic_cast<typename decltype(holder)::Type*>
                     (link) != nullptr;

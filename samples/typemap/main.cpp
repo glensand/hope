@@ -6,7 +6,6 @@
  * this file. If not, please write to: bezborodoff.gleb@gmail.com, or visit : https://github.com/glensand/hope
  */
 
-#include <string_view>
 #include "components/typemap.h"
 #include "vehicle.h"
 #include "vehicle_creator.h"
@@ -21,13 +20,13 @@ namespace {
 		hope::type_pair<legacy_tag, hope::type_list<
 			hope::sample::typemap::legacy_graphics,
 			hope::sample::typemap::legacy_logic,
-			hope::sample::typemap::legacy_physics
-		>>,
+			hope::sample::typemap::legacy_physics>
+        >,
 		hope::type_pair<vehicle_tag, hope::type_list<
 			hope::sample::typemap::vehicle_graphics,
 			hope::sample::typemap::vehicle_logic,
-			hope::sample::typemap::vehicle_physics
-		>>
+			hope::sample::typemap::vehicle_physics>
+        >
 	>;
 }
 

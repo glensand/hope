@@ -66,18 +66,6 @@ namespace hope {
         return result;
     }
 
-    template <typename F, typename...Ts, std::size_t... Is>
-    constexpr void for_each_impl(type_list<Ts...> list, F&& f, std::index_sequence<Is...>) {
-        (f(get_nth_type<Is>(list)), ...);
-    }
-
-    template <typename... Ts, typename F>
-    constexpr void for_each(type_list<Ts...> list, F&& f) {
-        for_each_impl(list, std::forward<F>(f),
-            std::make_index_sequence<size(list)>()
-        );
-    }
-
     template <typename T, typename... Ts>
     constexpr std::size_t find(type_list<Ts...> list) {
         constexpr bool bs[] = { std::is_same_v<T, Ts>... };
@@ -116,7 +104,6 @@ namespace hope {
         return list_size;
     }
 
-    // TODO:: maybe it is good idea to use value based approach every were
     template <template <typename...> typename F, typename... Ts>
     constexpr bool all_of(type_list<Ts...>) {
         return (... && F<Ts>::value);
@@ -135,11 +122,23 @@ namespace hope {
     template<size_t I, typename... Ts>
     constexpr auto get_nth_type(type_list<Ts...>) {
         return type_holder<decltype(
-            detail::get<std::make_index_sequence<I>>::extractor((Ts*)(0)...))>{};
+            detail::get<std::make_index_sequence<I>>::extractor(static_cast<Ts*>(nullptr)...))>{};
     }
 
     template<size_t I, typename... Ts>
     using NthType = typename decltype(get_nth_type<I>(type_list<Ts...>{}))::Type;
+
+    template <typename F, typename...Ts, std::size_t... Is>
+    constexpr void for_each_impl(type_list<Ts...> list, F&& f, std::index_sequence<Is...>) {
+        (f(get_nth_type<Is>(list)), ...);
+    }
+
+    template <typename... Ts, typename F>
+    constexpr void for_each(type_list<Ts...> list, F&& f) {
+        for_each_impl(list, std::forward<F>(f),
+            std::make_index_sequence<size(list)>()
+        );
+    }
 
     template <typename T, typename... Ts>
     constexpr size_t index_of(type_list<Ts...>) {

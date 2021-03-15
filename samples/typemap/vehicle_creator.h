@@ -15,10 +15,11 @@ namespace hope::sample::typemap {
     class vehicle_creator final {
     public:
         template <typename... Ts, typename Tag>
-        static vehicle* create(type_map<Ts...> modules, Tag type_tag) {
+        static vehicle* create(type_map<Ts...>, Tag) {
             using map = type_map<Ts...>;
-            using module_list = typename decltype(map::get<Tag>())::Type;
+            using module_list = typename decltype(map::template get<Tag>())::Type;
             auto* vehicle_instance = new vehicle;
+            // ReSharper disable once CppEntityUsedOnlyInUnevaluatedContext
             for_each(module_list{ }, [&] (auto type_tag) {
                 vehicle_instance->add_module(new typename decltype(type_tag)::Type);
                 });
