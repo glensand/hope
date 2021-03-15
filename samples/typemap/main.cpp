@@ -24,9 +24,9 @@ namespace {
 			hope::sample::typemap::legacy_physics
 		>>,
 		hope::type_pair<vehicle_tag, hope::type_list<
-		hope::sample::typemap::vehicle_graphics,
-		hope::sample::typemap::vehicle_logic,
-		hope::sample::typemap::vehicle_physics
+			hope::sample::typemap::vehicle_graphics,
+			hope::sample::typemap::vehicle_logic,
+			hope::sample::typemap::vehicle_physics
 		>>
 	>;
 }
