@@ -15,7 +15,6 @@ namespace hope {
 
         template <std::size_t I>
         struct any_convertible {
-            std::size_t fake;
             template <typename T>
             constexpr operator T& () const noexcept;
         };
@@ -49,6 +48,6 @@ namespace hope {
     template <typename T>
     constexpr std::size_t detect_fields_count(const T& object) {
         constexpr auto size = sizeof(T);
-        return detail::detect_fields_count_impl(object, std::make_index_sequence<size>());
+        return detail::detect_fields_count_impl(object, std::make_index_sequence<size + 2>());
     }
 }

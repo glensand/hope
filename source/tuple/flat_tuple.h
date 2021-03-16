@@ -9,6 +9,7 @@
 #pragma once
 
 #include <utility>
+#include <iostream>
 
 #include "typelist/type_list.h"
 
@@ -92,6 +93,10 @@ namespace hope {
         template <typename F>
         friend constexpr void for_each(const flat_tuple<Ts...>& tuple, F&& f) {
             (f(tuple.template get<Is>()), ...);
+        }
+
+        constexpr auto get_size() const noexcept {
+            return tuple_size;
         }
     private:
 
