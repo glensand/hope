@@ -7,7 +7,7 @@
  */
 
 #include "gtest/gtest.h"
-#include "core/static_string.h"
+#include "components/static_string.h"
 
 template<std::size_t N, typename T>
 struct named_field final {
