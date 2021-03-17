@@ -32,6 +32,15 @@ TEST(TupleTest, ConstexprInitialization)
     static_assert(tuple.get<2>().val2 == pod_imitator::DefaultInt);
 }
 
+TEST(TupleTest, DedactionGuide)
+{
+    constexpr hope::flat_tuple tuple(1.f, std::string_view("string"), pod_imitator{});
+
+    static_assert(tuple.get<0>() == tuple.get<float>());
+    static_assert(tuple.get<1>() == tuple.get<std::string_view>());
+    static_assert(tuple.get<2>().val2 == pod_imitator::DefaultInt);
+}
+
 TEST(TupleTest, ValueChanging)
 {
     auto tuple = hope::make_flat_tuple(pod_imitator{}, pod_imitator{ 0.1, 1 });
