@@ -8,9 +8,9 @@
 
 #include "gtest/gtest.h"
 
-#include "tuple/generated.h"
 #include "tuple/flat_tuple.h"
 #include "tuple/tuple_from_struct.h"
+#include "tuple/tuple_from_struct_safe.h"
 
 struct pod_imitator {
     constexpr static int DefaultInt{ 11 };
@@ -26,6 +26,15 @@ struct complicated_struct {
 TEST(TupleTest, ConstexprInitialization)
 {
     constexpr auto tuple = hope::make_flat_tuple(1.f, std::string_view("string"), pod_imitator{});
+
+    static_assert(tuple.get<0>() == tuple.get<float>());
+    static_assert(tuple.get<1>() == tuple.get<std::string_view>());
+    static_assert(tuple.get<2>().val2 == pod_imitator::DefaultInt);
+}
+
+TEST(TupleTest, DedactionGuide)
+{
+    constexpr hope::flat_tuple tuple(1.f, std::string_view("string"), pod_imitator{});
 
     static_assert(tuple.get<0>() == tuple.get<float>());
     static_assert(tuple.get<1>() == tuple.get<std::string_view>());

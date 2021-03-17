@@ -23,6 +23,8 @@ namespace hope {
         using creator_map = std::unordered_map<NameClass, std::function<ReturnType*()>>;
     public:
         factory() = default;
+        factory(const factory&) = delete;
+        factory& operator=(const factory&) = delete;
         ~factory() = default;
 
         template <typename Type>
@@ -30,9 +32,10 @@ namespace hope {
             if (creators.count(name) != 0)
                 throw std::runtime_error(std::string("An attempt was made to register already registered type with name: ") + typeid(Type).name());
             creators.emplace(std::move(name), [] { return new Type; });
+            return true;
         }
 
-        ReturnType* create(const NameClass& name) const {
+        [[nodiscard]] ReturnType* create(const NameClass& name) const {
             const auto creatorIt = creators.find(name);
             if (creatorIt == std::cend(creators))
                 throw std::runtime_error(std::string("Unregistered typename passed to factory of type: ")

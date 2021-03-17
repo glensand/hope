@@ -9,7 +9,6 @@
 #pragma once
 
 #include "tuple/flat_tuple.h"
-#include "tuple/detect_fields_count.h"
 
 namespace hope {
     namespace detail {
@@ -712,11 +711,4 @@ namespace hope {
             }
         }
     }
-
-    template <typename T>
-    constexpr auto tuple_from_struct(const T& object) {
-        constexpr auto fields_count = detect_fields_count(T{});
-        return detail::generated::tuple_from_struct(object, detail::Int<fields_count>{});
-    }
 }
-
