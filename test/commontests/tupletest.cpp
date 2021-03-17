@@ -8,9 +8,9 @@
 
 #include "gtest/gtest.h"
 
-#include "tuple/generated.h"
 #include "tuple/flat_tuple.h"
 #include "tuple/tuple_from_struct.h"
+#include "tuple/tuple_from_struct_safe.h"
 
 struct pod_imitator {
     constexpr static int DefaultInt{ 11 };

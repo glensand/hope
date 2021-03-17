@@ -38,16 +38,20 @@ namespace hope {
             //    std::begin(bs), std::end(bs), false)
             //);
 
-            for (std::size_t i{ 1 }; i < size(sequence); ++i) {
+            for (std::size_t i{ 1 }; i < sequence.size(); ++i) {
                 if (!bs[i]) return i - 1;
             }
             return 0;
         }
     }
 
-    template <typename T>
-    constexpr std::size_t detect_fields_count(const T& object) {
-        constexpr auto size = sizeof(T);
+    struct field_policy_bit final : std::true_type{ };
+    struct field_policy_byte final : std::false_type{ };
+
+    template <typename T, typename BitPolicy = field_policy_byte>
+    constexpr std::size_t detect_fields_count(const T& object, BitPolicy has_bit_field = BitPolicy{ }) {
+        constexpr std::size_t bit_multiplier = has_bit_field ? 8 : 1;
+        constexpr auto size = sizeof(T) * bit_multiplier;
         return detail::detect_fields_count_impl(object, std::make_index_sequence<size + 2>());
     }
 }
