@@ -34,10 +34,8 @@ namespace hope {
         bool add_link(BaseType* link) noexcept {
             const auto index = find_index(link);
             if (index < holder_size) {
-                if (links[index] == nullptr) {
-                    links[index] = link;
-                    return true;
-                }
+                links[index] = link;
+                return true;
             }
             return false;
         }
@@ -74,16 +72,11 @@ namespace hope {
         }
 
         std::size_t find_index(BaseType* link) noexcept {
-            constexpr auto seq = std::make_index_sequence<holder_size>();
-            return try_cast(link, seq);
-        }
-
-        template <typename T, typename NativeT = std::decay_t<T>, std::size_t... Is>
-        std::size_t try_cast(T* link, std::index_sequence<Is...>) noexcept {
             // ReSharper disable once CppEntityUsedOnlyInUnevaluatedContext
-            return find_if(types, [&](auto holder) {
-                return dynamic_cast<typename decltype(holder)::Type*>
-                    (link) != nullptr;
+            return find_if(types, [&](auto&& holder) {
+                using type = typename std::decay_t<decltype(holder)>::Type;
+                constexpr std::size_t index = find<type>(types);
+                return links[index] == nullptr &&  dynamic_cast<type*>(link) != nullptr;
                 });
         }
 
