@@ -16,35 +16,11 @@
 namespace hope {
 
     template <typename... Ts>
-    class any final {
-    public:
-        template<typename... Vs,
-            typename = std::enable_if_t<std::is_same_v<type_list<Vs...>, type_list<Ts...>>>>
-        constexpr explicit any(Vs&&... args) noexcept
-            : tuple(std::forward<Vs>(args)...){ }
-
-        template <typename T>
-        constexpr bool operator==(const T& rhs) const noexcept {
-            bool res = false;
-            for_each(tuple, [&](const auto& lhs) {
-                res |= lhs == rhs;
-                });
-            return res;
-        }
-
-    private:
-        flat_tuple<Ts...> tuple;
-    };
-
-    template <typename... Ts>
-    any(Ts...)->any<Ts...>;
-
-    template <typename... Ts>
     class all final {
     public:
         template<typename... Vs,
             typename = std::enable_if_t<std::is_same_v<type_list<Vs...>, type_list<Ts...>>>>
-            constexpr explicit all(Vs&&... args) noexcept
+        constexpr explicit all(Vs&&... args) noexcept
             : tuple(std::forward<Vs>(args)...) { }
 
         template <typename T>
@@ -57,12 +33,18 @@ namespace hope {
         }
 
         template <typename T>
+        friend constexpr bool operator==(const T& lhs, const all& rhs) const noexcept {
+            return rhs == lhs;
+        }
+
+        template <typename T>
         constexpr bool operator!=(const T& rhs) const noexcept {
-            bool res = true;
-            for_each(tuple, [&](const auto& lhs) {
-                res &= lhs != rhs;
-                });
-            return res;
+            return !((*this) == rhs);
+        }
+
+        template <typename T>
+        friend constexpr bool operator=(const T& lhs, const all& rhs) const noexcept {
+            return rhs != lhs;
         }
 
     private:
@@ -71,4 +53,39 @@ namespace hope {
 
     template <typename... Ts>
     all(Ts...)->all<Ts...>;
+
+    template <typename... Ts>
+    class any final {
+    public:
+        template<typename... Vs,
+            typename = std::enable_if_t<std::is_same_v<type_list<Vs...>, type_list<Ts...>>>>
+            constexpr explicit any(Vs&&... args) noexcept
+            : all_impl(std::forward<Vs>(args)...) { }
+
+        template <typename T>
+        constexpr bool operator==(const T& rhs) const noexcept {
+            return !(all_impl != rhs)
+        }
+
+        template <typename T>
+        friend constexpr bool operator==(const T& lhs, const any& rhs) const noexcept {
+            return rhs == lhs;
+        }
+
+        template <typename T>
+        constexpr bool operator!=(const T& rhs) const noexcept {
+            return !(all_impl == rhs)
+        }
+
+        template <typename T>
+        friend constexpr bool operator!=(const T& lhs, const any& rhs) const noexcept {
+            return rhs != lhs;
+        }
+
+    private:
+        all<Ts...> all_impl;
+    };
+
+    template <typename... Ts>
+    any(Ts...)->any<Ts...>;
 }

@@ -20,6 +20,13 @@ enum test_enum_1 : unsigned {
 static_assert(any(val_0, val_1, val_2) == val_1);
 static_assert(!(any(val_0, val_1, val_2) == val_3));
 
+static_assert(val_1 == any(val_0, val_1, val_2));
+static_assert(!(val_3 == any(val_0, val_1, val_2)));
+
 static_assert(!(all(val_0, val_1, val_2) == val_3));
 static_assert(all(val_3, val_3, val_3) == val_3);
 static_assert(all(val_0, val_1, val_2) != val_3);
+
+static_assert(!(val_3 == all(val_0, val_1, val_2)));
+static_assert(val_3 == all(val_3, val_3, val_3));
+static_assert(val_3 != all(val_0, val_1, val_2));
