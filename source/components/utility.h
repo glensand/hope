@@ -33,7 +33,7 @@ namespace hope {
         }
 
         template <typename T>
-        friend constexpr bool operator==(const T& lhs, const all& rhs) const noexcept {
+        friend constexpr bool operator==(const T& lhs, const all& rhs) noexcept {
             return rhs == lhs;
         }
 
@@ -43,7 +43,7 @@ namespace hope {
         }
 
         template <typename T>
-        friend constexpr bool operator=(const T& lhs, const all& rhs) const noexcept {
+        friend constexpr bool operator!=(const T& lhs, const all& rhs) noexcept {
             return rhs != lhs;
         }
 
@@ -59,31 +59,35 @@ namespace hope {
     public:
         template<typename... Vs,
             typename = std::enable_if_t<std::is_same_v<type_list<Vs...>, type_list<Ts...>>>>
-            constexpr explicit any(Vs&&... args) noexcept
-            : all_impl(std::forward<Vs>(args)...) { }
+        constexpr explicit any(Vs&&... args) noexcept
+            : tuple(std::forward<Vs>(args)...) { }
 
         template <typename T>
         constexpr bool operator==(const T& rhs) const noexcept {
-            return !(all_impl != rhs)
+            bool res = false;
+            for_each(tuple, [&](const auto& lhs) {
+                res |= lhs == rhs;
+                });
+            return res;
         }
 
         template <typename T>
-        friend constexpr bool operator==(const T& lhs, const any& rhs) const noexcept {
+        friend constexpr bool operator==(const T& lhs, const any& rhs) noexcept {
             return rhs == lhs;
         }
 
         template <typename T>
         constexpr bool operator!=(const T& rhs) const noexcept {
-            return !(all_impl == rhs)
+            return !(all_impl == rhs);
         }
 
         template <typename T>
-        friend constexpr bool operator!=(const T& lhs, const any& rhs) const noexcept {
+        friend constexpr bool operator!=(const T& lhs, const any& rhs) noexcept {
             return rhs != lhs;
         }
 
     private:
-        all<Ts...> all_impl;
+        flat_tuple<Ts...> tuple;
     };
 
     template <typename... Ts>
