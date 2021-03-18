@@ -78,7 +78,7 @@ namespace hope {
 
         template <typename T>
         constexpr bool operator!=(const T& rhs) const noexcept {
-            return !(all_impl == rhs);
+            return !(tuple == rhs);
         }
 
         template <typename T>
