@@ -55,17 +55,15 @@ struct der3 : base{};
 constexpr auto types = hope::typelist<der1, der2, der3>;
 constexpr auto size = size(types);
 
-template <typename T, std::size_t... Is>
-std::size_t try_cast(T* object, std::index_sequence<Is...> seq){
-    bool br[] = { (dynamic_cast<typename decltype(get_nth_type<Is>(types))::Type*>
-                (object) != nullptr)... };
-    for (std::size_t i{ 0 }; i < holder_size; ++i) {
-        if (br[i])
-            return i;
-    }
-    return size;
+std::size_t find_index(BaseType* link) noexcept {
+    // ReSharper disable once CppEntityUsedOnlyInUnevaluatedContext
+    return find_if(types, [&](auto&& holder) {
+        using type = typename std::decay_t<decltype(holder)>::Type;
+        constexpr std::size_t index = find<type>(types);
+        return links[index] == nullptr &&  dynamic_cast<type*>(link) != nullptr;
+    });
 }
-
+      
 constexpr auto seq = std::make_index_sequence<size>();
 auto* link = new der2;
 const auto index = try_cast(link, seq);
