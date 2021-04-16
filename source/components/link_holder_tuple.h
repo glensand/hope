@@ -42,7 +42,7 @@ namespace hope {
             for_each(links, [&](auto&& field) {
                 if (added) return;
                 using self_native_t = native_t<decltype(field)>;
-                if(auto* self_link = dynamic_cast<self_native_t*>(link)) {
+                if (auto* self_link = dynamic_cast<self_native_t*>(link)) {
                     field = self_link;
                     added = true;
                 }
@@ -56,12 +56,13 @@ namespace hope {
 
             bool removed = false;
             for_each(links, [&](auto&& field) {
-                if(!removed && field == link) {
-                    removed = true;
+                if (removed) return;
+                using self_native_t = native_t<decltype(field)>;
+                if (auto* self_link = dynamic_cast<self_native_t*>(link)) {
                     field = nullptr;
+                    removed = true;
                 }
             });
-
             return removed;
         }
 
@@ -78,7 +79,7 @@ namespace hope {
         link_holder_tuple& operator=(const link_holder_tuple&) = delete;
         link_holder_tuple& operator=(link_holder_tuple&&) = delete;
     private:
-    
+
         template <typename T, typename NativeT = std::decay_t<T>>
         [[nodiscard]] constexpr T* get_impl() const noexcept {
             static_assert(contains<NativeT>(types));
