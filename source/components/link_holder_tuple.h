@@ -13,7 +13,7 @@
 
 namespace hope {
 
-    template<typename BaseType, typename... Links>
+    template<typename... Links>
     class link_holder_tuple final {
     public:
         using links_t = flat_tuple<Links*...>;
@@ -34,7 +34,8 @@ namespace hope {
             return get_impl<T>();
         }
 
-        bool add_link(BaseType* link) noexcept {
+        template <typename T>
+        bool add_link(T* link) noexcept {
             if (link == nullptr)
                 return false;
 
@@ -50,7 +51,8 @@ namespace hope {
             return added;
         }
 
-        bool remove_link(BaseType* link) noexcept {
+        template <typename T>
+        bool remove_link(T* link) noexcept {
             if (link == nullptr) 
                 return false;
 
