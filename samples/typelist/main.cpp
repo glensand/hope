@@ -6,13 +6,13 @@
  * this file. If not, please write to: bezborodoff.gleb@gmail.com, or visit : https://github.com/glensand/hope
  */
 
-#include "components/link_holder.h"
+#include "components/link_holder_tuple.h"
 #include "test_classes.h"
 #include <iostream>
 #include <cassert>
 
 namespace {
-	using holder = hope::link_holder<
+	using holder = hope::link_holder_tuple<
 		hope::sample::base,
 		hope::sample::derived1,
 		hope::sample::derived2,

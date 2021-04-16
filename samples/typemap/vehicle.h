@@ -9,7 +9,7 @@
 #pragma once
 
 #include "components/singleton_holder/singleton_holder.h"
-#include "components/link_holder.h"
+#include "components/link_holder_array.h"
 
 #include <cassert>
 
@@ -31,7 +31,7 @@ namespace hope::sample::typemap {
         }
 
     private:
-        using module_set_t = link_holder<
+        using module_set_t = link_holder_array<
             vehicle_module,
             graphics,
             logic,

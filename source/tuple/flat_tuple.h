@@ -91,6 +91,11 @@ namespace hope {
                 (f(tuple.template get<Is>()), ...);
             }
 
+            template <typename F>
+            friend constexpr void for_each(flat_tuple& tuple, F&& f) {
+                (f(tuple.template get<Is>()), ...);
+            }
+
             [[nodiscard]] static constexpr auto get_size() noexcept {
                 return tuple_size;
             }

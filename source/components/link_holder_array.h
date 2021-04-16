@@ -14,20 +14,20 @@
 namespace hope {
 
     template<typename BaseType, typename... Links>
-    class link_holder final {
+    class link_holder_array final {
     public:
-        
-        using link_list = std::array<BaseType*, size(type_list<Links...>{})> ;
 
-        link_holder() {
+        using link_list = std::array < BaseType*, size(type_list<Links...>{}) > ;
+
+        link_holder_array() {
             for (auto& link : links)
                 link = nullptr;
         }
 
-        ~link_holder() = default;
+        ~link_holder_array() = default;
 
         template <typename T>
-        [[nodiscard]] constexpr T* get() const noexcept { 
+        [[nodiscard]] constexpr T* get() const noexcept {
             return get_impl<T>();
         }
 
@@ -58,17 +58,20 @@ namespace hope {
             return links;
         }
 
-        link_holder(const link_holder&) = delete;
-        link_holder(link_holder&&) = delete;
-        link_holder& operator=(const link_holder&) = delete;
-        link_holder& operator=(link_holder&&) = delete;
+        link_holder_array(const link_holder_array&) = delete;
+        link_holder_array(link_holder_array&&) = delete;
+        link_holder_array& operator=(const link_holder_array&) = delete;
+        link_holder_array& operator=(link_holder_array&&) = delete;
     private:
-    
+
         template <typename T, typename NativeT = std::decay_t<T>>
         [[nodiscard]] constexpr T* get_impl() const noexcept {
             static_assert(contains<NativeT>(types));
             constexpr std::size_t Index = find<NativeT>(types);
-            return static_cast<T*>(links[Index]);
+            if constexpr (std::is_convertible_v<BaseType*, NativeT*>)
+                return static_cast<T*>(links[Index]);   // in case if NativeT inherit BaseType via virtual (just virtual inheritance) 
+            else                                        // Base cannot be unambiguous converted to the derived
+                return dynamic_cast<T*>(links[Index]);
         }
 
         std::size_t find_index(BaseType* link) noexcept {
@@ -76,7 +79,7 @@ namespace hope {
             return find_if(types, [&](auto&& holder) {
                 using type = typename std::decay_t<decltype(holder)>::Type;
                 constexpr std::size_t index = find<type>(types);
-                return links[index] == nullptr &&  dynamic_cast<type*>(link) != nullptr;
+                return links[index] == nullptr && dynamic_cast<type*>(link) != nullptr;
                 });
         }
 
