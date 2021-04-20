@@ -13,25 +13,23 @@
 
 namespace hope {
 
-    template<typename... Links>
+    template<
+        template<typename> typename InnerHolderPolicy,
+        typename... Links
+    >
     class link_holder_tuple final {
     public:
-        using links_t = flat_tuple<Links*...>;
+        using links_t = flat_tuple<InnerHolderPolicy<Links>...>;
 
         template <typename T>
         using native_t = std::remove_pointer_t<std::decay_t<T>>;
 
-        link_holder_tuple() {
-            for_each(links, [](auto&& field) {
-                field = nullptr;
-            });
-        }
-
+        link_holder_tuple() = default;
         ~link_holder_tuple() = default;
 
-        template <typename T>
-        [[nodiscard]] constexpr T* get() const noexcept {
-            return get_impl<T>();
+        template <typename T, typename NativeT = std::decay_t<T>>
+        [[nodiscard]] constexpr decltype(auto) get() const noexcept {
+            return get_impl<NativeT>();
         }
 
         template <typename T>
@@ -42,11 +40,7 @@ namespace hope {
             bool added = false;
             for_each(links, [&](auto&& field) {
                 if (added) return;
-                using self_native_t = native_t<decltype(field)>;
-                if (auto* self_link = dynamic_cast<self_native_t*>(link)) {
-                    field = self_link;
-                    added = true;
-                }
+                added = field.add(link);
             });
             return added;
         }
@@ -59,23 +53,9 @@ namespace hope {
             bool removed = false;
             for_each(links, [&](auto&& field) {
                 if (removed) return;
-                using self_native_t = native_t<decltype(field)>;
-                if (auto* self_link = dynamic_cast<self_native_t*>(link)) {
-                    if(field == self_link) {
-                        field = nullptr;
-                        removed = true;
-                    }
-                }
+                removed = field.remove(link);
             });
             return removed;
-        }
-
-        [[nodiscard]] links_t& get_links() noexcept {
-            return links;
-        }
-
-        [[nodiscard]] const links_t& get_links() const noexcept {
-            return links;
         }
 
         link_holder_tuple(const link_holder_tuple&) = delete;
@@ -84,10 +64,10 @@ namespace hope {
         link_holder_tuple& operator=(link_holder_tuple&&) = delete;
     private:
 
-        template <typename T, typename NativeT = std::decay_t<T>>
-        [[nodiscard]] constexpr T* get_impl() const noexcept {
-            static_assert(contains<NativeT>(types));
-            return links.template get<NativeT*>();
+        template <typename T>
+        [[nodiscard]] constexpr decltype(auto) get_impl() const noexcept {
+            static_assert(contains<T>(types));
+            return links.template get<InnerHolderPolicy<T>>().get();
         }
 
         constexpr static type_list<Links...> types{ };

@@ -9,7 +9,7 @@
 #pragma once
 
 #include "hope/components/singleton_holder/singleton_holder.h"
-#include "hope/components/link_holder_array.h"
+#include "hope/components/link_holder/link_holder_array.h"
 
 #include <cassert>
 
