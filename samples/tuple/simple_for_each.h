@@ -6,14 +6,16 @@
  * this file. If not, please write to: bezborodoff.gleb@gmail.com, or visit : https://github.com/glensand/hope
  */
 
-#include <string_view>
+#pragma once
+
 #include <vector>
 #include <iostream>
 
-#include "tuple/flat_tuple.h"
+#include "hope/tuple/flat_tuple.h"
 
 namespace hope::sample::tuple_for_each {
 
+    inline
     void simple_type_print() {
 
         // create small tuple, constexpr cv may be removed, it is no'r nessesery

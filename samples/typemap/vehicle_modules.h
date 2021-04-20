@@ -8,6 +8,8 @@
 
 #pragma once
 
+#include <string_view>
+
 namespace hope::sample::typemap {
 
     class vehicle_module {

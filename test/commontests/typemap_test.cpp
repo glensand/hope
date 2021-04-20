@@ -6,7 +6,7 @@
  * this file. If not, please write to: bezborodoff.gleb@gmail.com, or visit : https://github.com/glensand/hope
  */
 
-#include "components/typemap.h"
+#include "hope/components/typemap.h"
 #include <string_view>
 
 namespace {

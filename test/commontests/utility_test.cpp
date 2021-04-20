@@ -6,7 +6,7 @@
  * this file. If not, please write to: bezborodoff.gleb@gmail.com, or visit : https://github.com/glensand/hope
  */
 
-#include "components/utility.h"
+#include "hope/components/utility.h"
 
 using namespace hope;
 

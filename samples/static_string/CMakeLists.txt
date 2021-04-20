@@ -11,5 +11,5 @@ file(GLOB SAMPLE_SOURSES
     *.cpp)
 
 add_executable(static_string_sample ${SAMPLE_HEADERS} ${SAMPLE_SOURSES})
-target_include_directories(static_string_sample PUBLIC ../../source ../../test)
+target_include_directories(static_string_sample PUBLIC ../../hope ../../test)
 target_link_libraries(static_string_sample hope)

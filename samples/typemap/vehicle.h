@@ -8,8 +8,8 @@
 
 #pragma once
 
-#include "components/singleton_holder/singleton_holder.h"
-#include "components/link_holder_array.h"
+#include "hope/components/singleton_holder/singleton_holder.h"
+#include "hope/components/link_holder_array.h"
 
 #include <cassert>
 
@@ -22,7 +22,7 @@ namespace hope::sample::typemap {
         vehicle() = default;
     
         void add_module(vehicle_module* link) {
-            (void)m_modules.add_link(link);
+            (void)m_modules.add(link);
         }
 
         void assert_vehicle_valid() const noexcept{

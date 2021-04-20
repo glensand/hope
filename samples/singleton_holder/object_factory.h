@@ -8,8 +8,8 @@
 
 #pragma once 
 
-#include "components/singleton_holder/singleton_holder.h"
-#include "components/factory.h"
+#include "hope/components/singleton_holder/singleton_holder.h"
+#include "hope/components/factory.h"
 
 namespace hope::sample::object_factory {
 	

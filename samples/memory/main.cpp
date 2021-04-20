@@ -6,17 +6,17 @@
  * this file. If not, please write to: bezborodoff.gleb@gmail.com, or visit : https://github.com/glensand/hope
  */
 
-#include <iostream>
-#include "typelist/type_list.h"
-#include "memory/objects_aligned_to4.h"
-#include "memory/small_object/small_object.h"
-#include "memory/sm_objects.h"
-#include "memory/small_object/small_object_allocator.h"
-
 #include <chrono>
 #include <iostream>
 #include <fstream>
 #include <functional>
+#include <iostream>
+
+#include "hope/typelist/type_list.h"
+#include "hope/memory/small_object/small_object.h"
+
+#include "memory/sm_objects.h"
+#include "memory/objects_aligned_to4.h"
 
 namespace hope::memory::testing {
 

@@ -11,5 +11,5 @@ file(GLOB SAMPLE_SOURSES
     *.cpp)
 
 add_executable(struct_bitfield_inverter ${SAMPLE_HEADERS} ${SAMPLE_SOURSES})
-target_include_directories(struct_bitfield_inverter PUBLIC ../../source)
+target_include_directories(struct_bitfield_inverter PUBLIC ../../lib)
 target_link_libraries(struct_bitfield_inverter hope)

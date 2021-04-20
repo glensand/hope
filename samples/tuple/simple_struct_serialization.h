@@ -8,8 +8,8 @@
 
 #pragma once
 
-#include "components/loophole.h"
-#include "tuple/tuple_from_struct.h"
+#include "hope/components/loophole.h"
+#include "hope/tuple/tuple_from_struct.h"
 
 #include <iostream>
 #include <sstream>

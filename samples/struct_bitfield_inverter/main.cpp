@@ -6,8 +6,8 @@
  * this file. If not, please write to: bezborodoff.gleb@gmail.com, or visit : https://github.com/glensand/hope
  */
 
-#include "tuple/tuple_from_struct_safe.h"
-#include "components/bit_utils.h"
+#include "hope/tuple/tuple_from_struct_safe.h"
+#include "hope/components/bit_utils.h"
 
 #include <cassert>
 #include <utility>

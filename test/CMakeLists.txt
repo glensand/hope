@@ -32,7 +32,7 @@ if (CMAKE_VERSION VERSION_LESS 2.8.11)
   include_directories("${gtest_SOURCE_DIR}/include" )
 endif()
 
-include_directories("../source")
+include_directories("../lib")
 add_definitions(-D_ENABLE_EXTENDED_ALIGNED_STORAGE=1)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 

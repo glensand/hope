@@ -8,7 +8,7 @@
 
 #include "gtest/gtest.h"
 
-#include "components/bit_utils.h"
+#include "hope/components/bit_utils.h"
 
 namespace {
     

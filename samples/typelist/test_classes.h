@@ -6,6 +6,8 @@
  * this file. If not, please write to: bezborodoff.gleb@gmail.com, or visit : https://github.com/glensand/hope
  */
 
+#pragma once
+
 #include <string_view>
 
 namespace hope::sample {

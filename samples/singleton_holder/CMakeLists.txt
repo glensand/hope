@@ -11,5 +11,5 @@ file(GLOB SAMPLE_SOURSES
     *.cpp)
 
 add_executable(singleton_holder_sample ${SAMPLE_HEADERS} ${SAMPLE_SOURSES})
-target_include_directories(singleton_holder_sample PUBLIC ../../source ../../test)
+target_include_directories(singleton_holder_sample PUBLIC ../../lib ../../test)
 target_link_libraries(singleton_holder_sample hope)

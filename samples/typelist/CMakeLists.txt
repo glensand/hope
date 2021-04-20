@@ -11,5 +11,5 @@ file(GLOB SAMPLE_SOURSES
     *.cpp)
 
 add_executable(typelist_sample ${SAMPLE_HEADERS} ${SAMPLE_SOURSES})
-target_include_directories(typelist_sample PUBLIC ../../source ../../test)
+target_include_directories(typelist_sample PUBLIC ../../lib ../../test)
 target_link_libraries(typelist_sample hope)

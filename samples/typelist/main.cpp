@@ -6,14 +6,13 @@
  * this file. If not, please write to: bezborodoff.gleb@gmail.com, or visit : https://github.com/glensand/hope
  */
 
-#include "components/link_holder_tuple.h"
+#include "hope/components/link_holder_tuple.h"
 #include "test_classes.h"
 #include <iostream>
 #include <cassert>
 
 namespace {
 	using holder = hope::link_holder_tuple<
-		hope::sample::base,
 		hope::sample::derived1,
 		hope::sample::derived2,
 		hope::sample::derived3,
@@ -31,10 +30,10 @@ int main()
 	hope::sample::base* d5 = new hope::sample::derived5;
 	hope::sample::base* d7 = new hope::sample::derived7;
 
-	bool add_res1 = h.add_link(d1);
-	bool add_res2 = h.add_link(d2);
-	bool add_res3 = h.add_link(d5);
-	bool add_res4 = h.add_link(d7);
+	bool add_res1 = h.add(d1);
+	bool add_res2 = h.add(d2);
+	bool add_res3 = h.add(d5);
+	bool add_res4 = h.add(d7);
 	assert(add_res4 == false);
 	assert(add_res1 == add_res2 == add_res3 == true);
 
@@ -42,9 +41,9 @@ int main()
 		<< h.get<hope::sample::derived2>()->name() << std::endl
 		<< h.get<hope::sample::derived5>()->name() << std::endl;
 
-	bool remove_res1 = h.remove_link(d1);
-	bool remove_res2 = h.remove_link(d2);
-	bool remove_res3 = h.remove_link(d5);
+	bool remove_res1 = h.remove(d1);
+	bool remove_res2 = h.remove(d2);
+	bool remove_res3 = h.remove(d5);
 	assert(remove_res1 == remove_res2 == remove_res3 == true);
 
 	assert(h.get<hope::sample::derived1>() == nullptr);

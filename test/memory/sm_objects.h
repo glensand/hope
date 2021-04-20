@@ -11,8 +11,8 @@
 #include <functional>
 #include <random>
 
-#include "memory/small_object/small_object.h"
-#include "typelist/type_list.h"
+#include "hope/memory/small_object/small_object.h"
+#include "hope/typelist/type_list.h"
 
 struct empty_std {
 	virtual ~empty_std() = default;

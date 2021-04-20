@@ -6,7 +6,7 @@
  * this file. If not, please write to: bezborodoff.gleb@gmail.com, or visit : https://github.com/glensand/hope
  */
 
-#include "components/singleton_holder/singleton_holder.h"
+#include "hope/components/singleton_holder/singleton_holder.h"
 #include "object_factory.h"
 #include <cassert>
 

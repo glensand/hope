@@ -11,5 +11,5 @@ file(GLOB SAMPLE_SOURSES
     *.cpp)
 
 add_executable(tuple_sample ${SAMPLE_HEADERS} ${SAMPLE_SOURSES})
-target_include_directories(tuple_sample PUBLIC ../../source)
+target_include_directories(tuple_sample PUBLIC ../../lib)
 target_link_libraries(tuple_sample hope)

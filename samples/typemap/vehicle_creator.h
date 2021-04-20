@@ -9,6 +9,7 @@
 #pragma once
 
 #include "vehicle.h"
+#include "hope/components/typemap.h"
 
 namespace hope::sample::typemap {
 

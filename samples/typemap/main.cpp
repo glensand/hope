@@ -6,10 +6,9 @@
  * this file. If not, please write to: bezborodoff.gleb@gmail.com, or visit : https://github.com/glensand/hope
  */
 
-#include "components/typemap.h"
-#include "vehicle.h"
 #include "vehicle_creator.h"
 #include "vehicle_modules.h"
+#include "hope/components/typemap.h"
 
 namespace {
 
@@ -17,17 +16,17 @@ namespace {
 	struct vehicle_tag final {};
 
 	using vehicle_types_t = hope::type_map<
-		hope::type_pair<legacy_tag, hope::type_list<
-			hope::sample::typemap::legacy_graphics,
-			hope::sample::typemap::legacy_logic,
-			hope::sample::typemap::legacy_physics>
+        hope::type_pair<legacy_tag, hope::type_list<
+                            hope::sample::typemap::legacy_graphics,
+                            hope::sample::typemap::legacy_logic,
+                            hope::sample::typemap::legacy_physics>
         >,
-		hope::type_pair<vehicle_tag, hope::type_list<
-			hope::sample::typemap::vehicle_graphics,
-			hope::sample::typemap::vehicle_logic,
-			hope::sample::typemap::vehicle_physics>
+        hope::type_pair<vehicle_tag, hope::type_list<
+                            hope::sample::typemap::vehicle_graphics,
+                            hope::sample::typemap::vehicle_logic,
+                            hope::sample::typemap::vehicle_physics>
         >
-	>;
+    >;
 }
 
 int main()

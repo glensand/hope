@@ -6,7 +6,7 @@
  * this file. If not, please write to: bezborodoff.gleb@gmail.com, or visit : https://github.com/glensand/hope
  */
 
-#include "tuple/detect_fields_count.h"
+#include "hope/tuple/detect_fields_count.h"
 
 struct fields_0 { };
 static_assert(hope::detect_fields_count(fields_0{ }) == 0);
