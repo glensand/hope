@@ -21,9 +21,6 @@ namespace hope {
     public:
         using links_t = flat_tuple<InnerHolderPolicy<Links>...>;
 
-        template <typename T>
-        using native_t = std::remove_pointer_t<std::decay_t<T>>;
-
         link_holder_tuple() = default;
         ~link_holder_tuple() = default;
 

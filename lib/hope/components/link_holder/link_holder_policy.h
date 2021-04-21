@@ -16,14 +16,13 @@ namespace hope::link_holder_policy {
     struct single_value final
     {
         using pointer_t = T*;
-        using value_t = T*;
 
-        [[nodiscard]] const value_t& get() const noexcept {
+        [[nodiscard]] constexpr pointer_t get() const noexcept {
             return pointer;
         }
 
         template <typename Link>
-        bool add(Link* raw_link) {
+        [[nodiscard]] bool add(Link* raw_link) {
             if (pointer != nullptr)
                 return false;
             if(auto* link = dynamic_cast<T*>(raw_link))
@@ -32,7 +31,7 @@ namespace hope::link_holder_policy {
         }
 
         template <typename Link>
-        bool remove(Link* raw_link) {
+        [[nodiscard]] bool remove(Link* raw_link) {
             if (pointer == nullptr)
                 return false;
             if(auto* link = dynamic_cast<T*>(raw_link)) {
@@ -50,18 +49,18 @@ namespace hope::link_holder_policy {
 
         using value_t = std::vector<T*>;
 
-        const value_t& get() const noexcept {
+        [[nodiscard]] constexpr const value_t& get() const noexcept {
             return value;
         }
 
         template <typename Link>
-        bool add(Link* raw_link) {
+        [[nodiscard]] bool add(Link* raw_link) {
             auto* link = dynamic_cast<T*>(raw_link);
             return link != nullptr ? add_impl(link) : false;
         }
 
         template <typename Link>
-        bool remove(Link* raw_link) {
+        [[nodiscard]] bool remove(Link* raw_link) {
             if (value.empty())
                 return false;
             auto* link = dynamic_cast<T*>(raw_link);
