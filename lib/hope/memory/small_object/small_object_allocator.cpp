@@ -31,7 +31,7 @@ namespace hope::memory {
             try {
                 return new uint8_t[size];
             }
-            catch (const std::bad_alloc& ex) {
+            catch (const std::bad_alloc&) {
                 assert(false);
                 return nullptr;
             }
@@ -60,7 +60,7 @@ namespace hope::memory {
             [=](const auto& allocator) {
                 return allocator.block_size() > size;
             });
-        return &*m_allocator_list.emplace(forwardIt, m_chunk_size, size);
+        return &*m_allocator_list.emplace(forwardIt, static_cast<uint8_t>(m_chunk_size), size);
     }
 
     void small_object_allocator::clear() {
@@ -71,7 +71,7 @@ namespace hope::memory {
     void small_object_allocator::initialize_allocators() {
         m_allocator_list.reserve(m_max_object_size / config::PointerAlignment);
         for (std::size_t i{ 0 }; i < m_max_object_size / config::PointerAlignment; ++i)
-            m_allocator_list.emplace_back(m_chunk_size, (i + 1) * config::PointerAlignment);
+            m_allocator_list.emplace_back(static_cast<uint8_t>(m_chunk_size), (i + 1) * config::PointerAlignment);
     }
 
     small_object_allocator::small_object_allocator(){

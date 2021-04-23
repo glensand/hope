@@ -9,6 +9,7 @@
 #pragma once
 
 #include <vector>
+#include <algorithm>
 
 namespace hope::link_holder_policy {
 
