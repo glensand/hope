@@ -51,7 +51,7 @@ namespace hope {
             { }
         public:
             template <typename T, typename NativeT = std::decay_t<T>>
-            [[nodiscard]] constexpr decltype(auto)
+            [[nodiscard]] constexpr NativeT&
                 get() noexcept {
                 static_assert(contains<T>(types));
                 return get_impl < find<NativeT>(types), NativeT >;
@@ -108,7 +108,7 @@ namespace hope {
             }
 
             template<std::size_t N, typename NativeT>
-            [[nodiscard]] constexpr decltype(auto)
+            [[nodiscard]] constexpr const NativeT&
                 get_impl() const noexcept {
                 return static_cast<const NativeT&>(
                     static_cast<const indexed_value < NativeT, N >&> (*this).value
@@ -116,7 +116,7 @@ namespace hope {
             }
 
             template<std::size_t N, typename NativeT>
-            constexpr decltype(auto)
+            constexpr NativeT&
                 get_impl() noexcept {
                 return static_cast<NativeT&>(
                     static_cast<indexed_value < NativeT, N >&> (*this).value

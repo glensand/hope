@@ -24,7 +24,11 @@ namespace hope {
     >
     class singleton_holder final {
     public:
-        
+
+        singleton_holder() = default;
+        singleton_holder(singleton_holder&&) = delete;
+        singleton_holder& operator=(singleton_holder&&) = delete;
+
         static SingletonImpl& instance() {
             if(m_instance == nullptr)
                 initialize();
@@ -35,9 +39,6 @@ namespace hope {
         using VolatileType = typename ThreadingModel<SingletonImpl>::VolatileType;
         using Lock = typename ThreadingModel<SingletonImpl>::Lock;
 
-        singleton_holder() = default;
-        singleton_holder(singleton_holder&&) = delete;
-        singleton_holder& operator=(singleton_holder&&) = delete;
         ~singleton_holder() = default;
 
         static void initialize() {
@@ -62,7 +63,7 @@ namespace hope {
         inline static VolatileType* m_instance{ nullptr };
         inline static bool m_destroyed{ false };
 
-        friend class LifetimeModel<SingletonImpl>;
+        friend struct LifetimeModel<SingletonImpl>;
     };
 
 }
