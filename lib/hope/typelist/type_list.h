@@ -78,8 +78,23 @@ namespace hope {
         return list_size;
     }
 
+    template <typename T, std::size_t I, typename... Ts>
+    constexpr std::size_t find_nth_of(type_list<Ts...> list) {
+        constexpr bool bs[] = { std::is_same_v<T, Ts>... };
+        constexpr size_t list_size = size(list);
+        std::size_t index{ 0 };
+        for (size_t i = 0; i < list_size; ++i) {
+            if (bs[i]) {
+                if (index == I)
+                    return i;
+                ++index;
+            }
+        }
+        return list_size;
+    }
+
     template <typename T, typename... Ts>
-    constexpr std::size_t Find20(type_list<Ts...>) {
+    constexpr std::size_t find_cxx20(type_list<Ts...>) {
         constexpr bool bs[] = { std::is_same_v<T, Ts>... };
         return std::find(bs, true) - bs;
     }
