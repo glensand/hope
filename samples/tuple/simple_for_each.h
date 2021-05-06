@@ -19,7 +19,7 @@ namespace hope::sample::tuple_for_each {
     void simple_type_print() {
 
         // create small tuple, constexpr cv may be removed, it is no'r nessesery
-        constexpr auto tuple = hope::make_flat_tuple("hello word...", 42, 1001.0);
+        constexpr auto tuple = make_flat_tuple("hello word...", 42, 1001.0);
         
         std::vector<std::string> names; // names will be filled with tuple's types obtained from typeid
         

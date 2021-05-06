@@ -36,6 +36,11 @@ namespace hope {
 
         template<std::size_t... Is, typename... Ts>
         class flat_tuple_impl<std::index_sequence<Is...>, Ts...> : public indexed_value <Ts, Is>... {
+            using self_t = flat_tuple_impl<std::index_sequence<Is...>, Ts...>;
+            constexpr static type_list<std::decay_t<Ts>...> types{ }; // only clear types might be used, thus make it clear here
+
+            template <std::size_t I>
+            using native_t = std::decay_t<typename decltype(get_nth_type<I>(types))::Type>;
         protected:
             using flat_tuple = flat_tuple_impl<std::index_sequence<Is...>, Ts...>;
             constexpr flat_tuple_impl() = default;
@@ -44,44 +49,45 @@ namespace hope {
 
             ~flat_tuple_impl() = default;
 
-            template <typename... VTs,
-                typename = std::enable_if_t<std::is_same_v<type_list<VTs...>, type_list<Ts...>>>>
-                constexpr flat_tuple_impl(VTs&&... elems) noexcept
-                : indexed_value<VTs, Is>(std::forward<VTs>(elems))...
+            template <typename... VTs>
+            constexpr flat_tuple_impl(VTs&&... elems) noexcept
+                : indexed_value<Ts, Is>(std::forward<VTs>(elems))...
             { }
         public:
+            constexpr static std::size_t size{ size(types) };
+
             template <typename T, typename NativeT = std::decay_t<T>>
             [[nodiscard]] constexpr decltype(auto)
-                get() noexcept {
-                static_assert(contains<T>(types));
-                return get_impl < find<NativeT>(types), NativeT >;
+            get() noexcept {
+                static_assert(contains<NativeT>(types));
+                return get_impl < find<T>(types), T >;
             }
 
             template <typename T, typename NativeT = std::decay_t<T>>
             [[nodiscard]] constexpr const NativeT&
-                get() const noexcept {
-                static_assert(contains<T>(types));
+            get() const noexcept {
+                static_assert(contains<NativeT>(types));
                 return get_impl<find<NativeT>(types), NativeT>();
             }
 
             template <size_t N>
             [[nodiscard]] constexpr decltype(auto)
-                get() noexcept {
-                static_assert(tuple_size > N);
-                using NativeType = std::decay_t<typename decltype(get_nth_type<N>(types))::Type>;
-                return get_impl<N, NativeType>();
+            get() noexcept {
+                static_assert(size > N);
+                using value_t = typename decltype(deduce_type<N>())::Type;
+                return get_impl<N, value_t>();
             }
 
             template <size_t N>
             [[nodiscard]] constexpr decltype(auto)
-                get() const noexcept {
-                static_assert(tuple_size > N);
-                using NativeType = std::decay_t<typename decltype(get_nth_type<N>(types))::Type >;
-                return get_impl<N, NativeType>();
+            get() const noexcept {
+                static_assert(size > N);
+                using value_t = typename decltype(deduce_type<N>())::Type;
+                return get_impl<N, value_t>();
             }
 
             friend constexpr std::ostream& operator<< (std::ostream& stream, const flat_tuple& tuple) {
-                print_impl(stream, tuple, std::make_index_sequence<tuple_size>());
+                print_impl(stream, tuple, std::make_index_sequence<size>());
                 return stream;
             }
 
@@ -96,7 +102,7 @@ namespace hope {
             }
 
             [[nodiscard]] static constexpr auto get_size() noexcept {
-                return tuple_size;
+                return size;
             }
         private:
 
@@ -123,8 +129,17 @@ namespace hope {
                     );
             }
 
-            constexpr static type_list<Ts...> types{ };
-            constexpr static std::size_t tuple_size{ size(types) };
+            template<std::size_t N>
+            [[nodiscard]] constexpr auto deduce_type() const noexcept {
+                // we cannot unambiguous determine holding type, thus try to cast to value and ref, and const ref...
+                if constexpr (std::is_base_of_v<indexed_value<native_t<N>, N>, self_t>)
+                    return type_holder<native_t<N>>{};
+                else if constexpr (std::is_base_of_v<indexed_value<native_t<N>&, N>, self_t>)
+                    return type_holder<native_t<N>&>{};
+                else
+                    return type_holder<const native_t<N>&>{};
+            }
+
         };
 
         template <typename... Ts>
@@ -135,7 +150,7 @@ namespace hope {
     class flat_tuple final : public detail::flat_tuple_t<Ts...> {
     public:
         template <typename... VTs,
-            typename = std::enable_if_t<std::is_same_v<type_list<VTs...>, type_list<Ts...>>>>
+            typename = std::enable_if_t<std::is_same_v<type_list<std::decay_t<VTs>...>, type_list<std::decay_t<Ts>...>>>>
             constexpr flat_tuple(VTs&&... elems) noexcept
             : detail::flat_tuple_t<Ts...>(std::forward<VTs>(elems)...)
         { }
@@ -148,7 +163,17 @@ namespace hope {
     flat_tuple(Ts...)->flat_tuple<Ts...>;
 
     template <typename... Ts>
-    constexpr auto make_flat_tuple(Ts... args) {
+    constexpr auto make_flat_tuple(Ts&&... args) {
+        return flat_tuple<std::decay_t<Ts>...>(std::forward<Ts>(args)...);
+    }
+
+    template <typename... Ts>
+    constexpr auto make_flat_tuple_bitfield_friendly(Ts... args) {
+        return flat_tuple<std::decay_t<Ts>...>(std::forward<Ts>(args)...);
+    }
+
+    template <typename... Ts>
+    constexpr auto make_flat_ref_tuple(Ts&&... args) {
         return flat_tuple<Ts...>(std::forward<Ts>(args)...);
     }
 

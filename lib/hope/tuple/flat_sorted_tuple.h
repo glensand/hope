@@ -1,4 +1,4 @@
-/* Copyright (C) 2020 Gleb Bezborodov - All Rights Reserved
+/* Copyright (C) 2020 - 2021 Gleb Bezborodov - All Rights Reserved
  * You may use, distribute and modify this code under the
  * terms of the MIT license.
  *
@@ -17,12 +17,12 @@ namespace hope {
 
         template<typename... Ts, typename... Vs>
         constexpr auto make_flat_tuple_from_type_list(type_list<Ts...>, Vs&&... args) {
-            return flat_tuple<Ts...>();
+            return flat_tuple<Ts...>(std::forward<Vs>(args)...);
         }
     }
 
     template<typename... Ts>
-    constexpr auto make_sorted_tuple(Ts... args) {
+    constexpr auto make_sorted_tuple(Ts&&... args) {
         constexpr auto typeList = sort(type_list<Ts...>{});
         return detail::make_flat_tuple_from_type_list(typeList, std::forward<Ts>(args)...);
     }

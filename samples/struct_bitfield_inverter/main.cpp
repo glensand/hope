@@ -6,11 +6,8 @@
  * this file. If not, please write to: bezborodoff.gleb@gmail.com, or visit : https://github.com/glensand/hope
  */
 
-#include "hope/tuple/tuple_from_struct_safe.h"
+#include "hope/tuple/tuple_from_struct.h"
 #include "hope/components/bit_utils.h"
-
-#include <cassert>
-#include <utility>
 
 struct bit_struct_3 final {
 	unsigned _0 : 3, _1 : 5;

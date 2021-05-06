@@ -10,7 +10,7 @@
 
 #include "hope/tuple/flat_tuple.h"
 #include "hope/tuple/tuple_from_struct.h"
-#include "hope/tuple/tuple_from_struct_safe.h"
+#include "hope/tuple/tuple_from_struct_unsafe.h"
 
 struct pod_imitator {
     constexpr static int DefaultInt{ 11 };
@@ -43,7 +43,7 @@ TEST(TupleTest, DedactionGuide)
 
 TEST(TupleTest, ValueChanging)
 {
-    auto tuple = hope::make_flat_tuple(pod_imitator{}, pod_imitator{ 0.1, 1 });
+    auto tuple = hope::make_flat_tuple(pod_imitator{}, pod_imitator{ 0.1f, 1 });
     auto&& secondInt = tuple.get<1>().val2;
     ASSERT_EQ(secondInt, 1);
     secondInt = 12;
@@ -85,7 +85,7 @@ TEST(TupleTest, BitfieldTest)
     st._0 = 7; // 111
     st._1 = 1;
 
-    auto bit_tuple_2 = hope::tuple_from_struct(st);
+    auto bit_tuple_2 = tuple_from_struct(st, hope::field_policy::bit{});
 
     ASSERT_TRUE(bit_tuple_2.get<0>() == st._0);
     ASSERT_TRUE(bit_tuple_2.get<1>() == st._1);

@@ -7,6 +7,7 @@
  */
 
 #include "hope/tuple/detect_fields_count.h"
+#include "hope/tuple/tuple_policy.h"
 
 struct fields_0 { };
 static_assert(hope::detect_fields_count(fields_0{ }) == 0);
@@ -27,7 +28,7 @@ static_assert(hope::detect_fields_count(fields_4<int>{ }) == 4);
 static_assert(hope::detect_fields_count(fields_4<bool>{ }) == 4);
 
 struct bit_field_3 { unsigned _0 : 3, _1 : 2, _2 : 7; };
-static_assert(hope::detect_fields_count(bit_field_3{ }, hope::field_policy_bit{ }) == 3);
+static_assert(hope::detect_fields_count(bit_field_3{ }, hope::field_policy::bit{ }) == 3);
 
 struct bit_field_4 { unsigned _0 : 1, _1 : 1, _2 : 1, _3 : 1; };
-static_assert(hope::detect_fields_count(bit_field_4{ }, hope::field_policy_bit{ }) == 4);
+static_assert(hope::detect_fields_count(bit_field_4{ }, hope::field_policy::bit{ }) == 4);
