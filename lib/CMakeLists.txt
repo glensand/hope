@@ -9,6 +9,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 file(GLOB HOPE_HEADERS
     hope/*.h
+    hope/fsm/*.h
     hope/core/*.h
     hope/function/*.h
     hope/tuple/*.h
