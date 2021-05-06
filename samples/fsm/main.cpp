@@ -13,20 +13,19 @@ struct disabled final{};
 struct change_state final{};
 
 int main() {
-    auto fsm = hope::make_fsm<enabled, disabled>(
-        [](enabled, change_state) -> hope::transit_to<disabled> {
+    auto fsm = hope::fsm::make<enabled, disabled>(
+        [](enabled, change_state) -> hope::fsm::transit_to<disabled> {
+            std::cout << "Transition: Enabled -> Disabled" << std::endl;
             return {};
         },
-        [](disabled, change_state) -> hope::transit_to<enabled> {
+        [](disabled, change_state) -> hope::fsm::transit_to<enabled> {
+            std::cout << "Transition: Disabled -> Enabled" << std::endl;
             return {};
         }
         );
 
-    std::cout << "State: " << fsm.get_cur_state() << std::endl;
     fsm.on_event(change_state{});
-    std::cout << "State: " << fsm.get_cur_state() << std::endl;
     fsm.on_event(change_state{});
-    std::cout << "State: " << fsm.get_cur_state() << std::endl;
 
 	return 0;
 } 

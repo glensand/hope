@@ -11,15 +11,15 @@
 #include "hope/tuple/flat_tuple.h"
 #include <variant>
 
-namespace hope {
-
-    template <typename, typename... Ts>
-    class fsm;
+namespace hope::fsm {
 
     template <typename State>
     struct transit_to final {
         using target_state_t = State;
     };
+
+    template <typename, typename... Ts>
+    class fsm;
 
     template <typename... States, typename... Handlers>
     class fsm<flat_tuple<States...>, Handlers...> final : public Handlers... {
@@ -59,7 +59,7 @@ namespace hope {
     };
 
     template <typename... States, typename... Handlers>
-    constexpr auto make_fsm(Handlers&&... handlers) {
+    constexpr auto make(Handlers&&... handlers) {
         return fsm<flat_tuple<States...>, Handlers...>(std::forward<Handlers>(handlers)...);
     }
 
