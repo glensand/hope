@@ -13,7 +13,7 @@
 namespace hope::serialization {
 
     class package final {
-        using buffer_t = std::vector<uint8_t>;
+        using buffer_t = std::vector<unsigned char>;
     public:
         package() = default;
 
