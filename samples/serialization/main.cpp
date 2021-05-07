@@ -23,8 +23,8 @@ int main()
 {
     sample_struct instance_to_serialize;
     sample_struct instance_to_deserialize;
-    hope::serialization::pod_serializer<sample_struct> serializer(instance_to_serialize);
-    hope::serialization::pod_serializer<sample_struct> deserializer(instance_to_deserialize);
+    hope::serialization::pod_serializer serializer(instance_to_serialize);
+    hope::serialization::pod_serializer deserializer(instance_to_deserialize);
     hope::serialization::package pack;
 
     serializer.serialize(pack);

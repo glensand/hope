@@ -14,15 +14,15 @@
 namespace hope {
 
     template <typename T, typename BitPolicy = field_policy::byte>
-    constexpr auto tuple_from_struct(const T& object, BitPolicy has_bit_field = BitPolicy{ }) {
-        constexpr auto fields_count = detect_fields_count(T{ }, has_bit_field);
+    constexpr auto tuple_from_struct(const T& object, BitPolicy bit_policy = BitPolicy{ }) {
+        constexpr auto fields_count = detect_fields_count(T{ }, bit_policy);
         return detail::generated::tuple_from_struct(object, detail::Int<fields_count>{});
     }
 
-    template <typename T, typename BitPolicy = field_policy::byte>
-    constexpr auto ref_tuple_from_struct(T&& object, BitPolicy has_bit_field = BitPolicy{ }) {
-        constexpr auto fields_count = detect_fields_count(std::decay_t<T>{ }, has_bit_field);
-        return detail::generated::ref_tuple_from_struct(std::forward<T>(object), detail::Int<fields_count>{});
+    template <typename T>
+    constexpr auto ref_tuple_from_struct(T&& object) {
+        constexpr auto fields_count = detect_fields_count(std::decay_t<T>{ }, field_policy::byte{});
+        return detail::generated::tuple_from_struct(std::forward<T>(object), detail::Int<fields_count>{}, field_policy::reference{});
     }
 
 }
