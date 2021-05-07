@@ -1,5 +1,7 @@
 #include "hope/serialization/package.h"
 
+#include <algorithm>
+
 namespace hope::serialization {
 
 void package::write(const void* data, std::size_t count) {
