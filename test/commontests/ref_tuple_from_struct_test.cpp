@@ -21,9 +21,15 @@ namespace detail {
 
 TEST(StructToRefTuple, AllCvModifiedTypesAreEqual)
 {
+    // for some undefined reason gcc compiler does not support ref qualifiers at the constexpr context  
     constexpr detail::test_struct instance{ 1, 1.1f, 1.3 };
+
+#if _MSC_VER && !__INTEL_COMPILER
     constexpr auto ref = hope::ref_tuple_from_struct(instance);
-// for some undefined reason gcc compiler does not support ref qualifiers at the constexpr context  
+#else
+    auto ref = hope::ref_tuple_from_struct(instance);
+#endif
+
 #undef HOPE_ASSERT
 #if _MSC_VER && !__INTEL_COMPILER
 #   define HOPE_ASSERT(EXPR) static_assert(EXPR)
