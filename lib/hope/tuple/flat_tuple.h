@@ -54,7 +54,7 @@ namespace hope {
                 : indexed_value<Ts, Is>(std::forward<VTs>(elems))...
             { }
         public:
-            constexpr static std::size_t size{ size(types) };
+            constexpr static unsigned tuple_size{ size(types) };
 
             /**
              * \brief Tries to find element of specified type, fails on static assert if element had not been found; method is not sensitive to the
@@ -72,7 +72,7 @@ namespace hope {
             get() noexcept {
                 static_assert(contains<NativeT>(types));
                 constexpr auto TypeIndex = find<NativeT>(types);
-                using value_t = typename decltype(deduce_type<T, TypeIndex>())::Type;
+                using value_t = typename decltype(deduce_type<NativeT, TypeIndex>())::Type;
                 return get_impl<TypeIndex, value_t>();
             }
 
@@ -92,7 +92,7 @@ namespace hope {
             get() const noexcept {
                 static_assert(contains<NativeT>(types));
                 constexpr auto TypeIndex = find<NativeT>(types);
-                using value_t = typename decltype(deduce_type<T, TypeIndex>())::Type;
+                using value_t = typename decltype(deduce_type<NativeT, TypeIndex>())::Type;
                 return get_impl<TypeIndex, value_t>();
             }
 
@@ -105,7 +105,7 @@ namespace hope {
             template <size_t N>
             [[nodiscard]] constexpr decltype(auto)
             get() noexcept {
-                static_assert(size > N);
+                static_assert(tuple_size > N);
                 using value_t = typename decltype(deduce_type<native_t<N>, N>())::Type;
                 return get_impl<N, value_t>();
             }
@@ -119,7 +119,7 @@ namespace hope {
             template <size_t N>
             [[nodiscard]] constexpr decltype(auto)
             get() const noexcept {
-                static_assert(size > N);
+                static_assert(tuple_size > N);
                 using value_t = typename decltype(deduce_type<native_t<N>, N>())::Type;
                 return get_impl<N, value_t>();
             }
@@ -147,37 +147,37 @@ namespace hope {
             }
 
             /**
-             * \brief 
-             * \return 
+             * \brief just returns the size of the tuple (means number of fields)
+             * \return number of fields
              */
             [[nodiscard]] static constexpr auto get_size() noexcept {
-                return size;
+                return tuple_size;
             }
         private:
 
             /**
-             * \brief 
-             * \tparam N 
-             * \tparam NativeT 
-             * \return 
+             * \brief Cast self to the specified type (indexed value instantiated with N and NativeT) 
+             * \tparam N index of value to be returned
+             * \tparam NativeT final type of value to be returned
+             * \return reference of the containing value
              */
             template<std::size_t N, typename NativeT>
-            [[nodiscard]] constexpr const NativeT&
-                get_impl() const noexcept {
+            [[nodiscard]] constexpr decltype(auto)
+            get_impl() const noexcept {
                 return static_cast<const NativeT&>(
                     static_cast<const indexed_value < NativeT, N >&> (*this).value
                     );
             }
 
             /**
-             * \brief 
-             * \tparam N 
-             * \tparam NativeT 
-             * \return 
+             * \brief Cast self to the specified type (indexed value instantiated with N and NativeT)
+             * \tparam N index of value to be returned
+             * \tparam NativeT final type of value to be returned
+             * \return reference of the containing value
              */
             template<std::size_t N, typename NativeT>
-            constexpr NativeT&
-                get_impl() noexcept {
+            constexpr decltype(auto)
+            get_impl() noexcept {
                 return static_cast<NativeT&>(
                     static_cast<indexed_value < NativeT, N >&> (*this).value
                     );
@@ -227,10 +227,11 @@ namespace hope {
     flat_tuple(Ts...)->flat_tuple<Ts...>;
 
     /**
-     * \brief 
-     * \tparam Ts 
-     * \param args 
-     * \return 
+     * \brief Helper function, which should be used to create flat tuple with given arguments
+     * all given values will be forwarded to the tuple instance
+     * \tparam Ts type pack to be propagate to the flat tuple
+     * \param args arguments are used to initialize each field of the tuple
+     * \return created tuple
      */
     template <typename... Ts>
     constexpr auto make_flat_tuple(Ts&&... args) {
@@ -238,10 +239,10 @@ namespace hope {
     }
 
     /**
-     * \brief 
-     * \tparam Ts 
-     * \param args 
-     * \return 
+     * \brief Helper function, should be used to create tuple of elements with specified bit size
+     * \tparam Ts type pack to be propagate to the flat tuple
+     * \param args arguments are used to initialize each field of the tuple
+     * \return created tuple
      */
     template <typename... Ts>
     constexpr auto make_flat_tuple_bitfield_friendly(Ts... args) {
@@ -249,10 +250,10 @@ namespace hope {
     }
 
     /**
-     * \brief 
-     * \tparam Ts 
-     * \param args 
-     * \return 
+     * \brief Helper function, creates tuple with references to the given arguments; const quality of arguments do not changes
+     * \tparam Ts type pack to be propagate to the flat tuple
+     * \param args arguments to create references for
+     * \return tuple of references to given objects
      */
     template <typename... Ts>
     constexpr auto make_flat_ref_tuple(Ts&&... args) {

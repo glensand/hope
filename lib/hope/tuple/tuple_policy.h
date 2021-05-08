@@ -10,10 +10,30 @@
 
 namespace hope {
 
+    /**
+     * \brief struct used as namespace to policies which is used for tuple creation functions
+     */
     struct field_policy final {
+        /**
+         * \brief Policy, used to specify how to convert struct to tuple. If instance of this structure is used,
+         * all the fields from an object will be copied to the tuple
+         */
         struct value final {};
+
+        /**
+         * \brief Policy, used to specify how to convert struct to tuple. If instance of this structure is used,
+         * all the fields of resulting tuple will be references to the related fields of initial object(POD)
+         */
         struct reference final {};
+
+        /**
+         * \brief 
+         */
         struct bit final { };
+
+        /**
+         * \brief 
+         */
         struct byte final { };
     };
 
