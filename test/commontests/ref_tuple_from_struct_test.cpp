@@ -23,15 +23,23 @@ TEST(StructToRefTuple, AllCvModifiedTypesAreEqual)
 {
     constexpr detail::test_struct instance{ 1, 1.1f, 1.3 };
     constexpr auto ref = hope::ref_tuple_from_struct(instance);
-    static_assert(ref.get<0>() == ref.get<int>());
-    static_assert(ref.get<0>() == ref.get<int&>());
-    static_assert(ref.get<0>() == ref.get<const int&>());
-    static_assert(ref.get<0>() == ref.get<const int>());
+// for some undefined reason gcc compiler does not support ref qualifiers at the constexpr context  
+#undef HOPE_ASSERT
+#if _MSC_VER && !__INTEL_COMPILER
+#   define HOPE_ASSERT(EXPR) static_assert(EXPR)
+#else
+#   define HOPE_ASSERT(EXPR) ASSERT_TRUE(EXPR)
+#endif
 
-    static_assert(ref.get<1>() == ref.get<float>());
-    static_assert(ref.get<1>() == ref.get<float&>());
-    static_assert(ref.get<1>() == ref.get<const float&>());
-    static_assert(ref.get<1>() == ref.get<const float>());
+    HOPE_ASSERT(ref.get<0>() == ref.get<int>());
+    HOPE_ASSERT(ref.get<0>() == ref.get<int&>());
+    HOPE_ASSERT(ref.get<0>() == ref.get<const int&>());
+    HOPE_ASSERT(ref.get<0>() == ref.get<const int>());
+
+    HOPE_ASSERT(ref.get<1>() == ref.get<float>());
+    HOPE_ASSERT(ref.get<1>() == ref.get<float&>());
+    HOPE_ASSERT(ref.get<1>() == ref.get<const float&>());
+    HOPE_ASSERT(ref.get<1>() == ref.get<const float>());
 }
 
 TEST(StructToRefTuple, StructureCanBeModifiedViaTuple)
@@ -43,5 +51,4 @@ TEST(StructToRefTuple, StructureCanBeModifiedViaTuple)
 
     ASSERT_TRUE(42 == instance._0 == ref.get<0>() == ref.get<int>());
     ASSERT_TRUE(42.f == instance._1 == ref.get<1>() == ref.get<float>());
-
 }

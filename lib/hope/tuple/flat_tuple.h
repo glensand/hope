@@ -99,7 +99,7 @@ namespace hope {
             /**
              * \brief Tries to find element with given index
              * \tparam N Index of the element to be found
-             * \return Reference to the containing element, const and ref qualifiers of the containing one are do not change,
+             * \return Reference to the containing element, const and ref qualifiers of the containing one are not change,
              * ref will be returned "as is"
              */
             template <size_t N>
@@ -113,7 +113,7 @@ namespace hope {
             /**
              * \brief Tries to find element with given index
              * \tparam N Index of the element to be found
-             * \return Reference to the containing element, const and ref qualifiers of the containing one are do not change,
+             * \return Reference to the containing element, const and ref qualifiers of the containing one do not change,
              * ref will be returned "as is"
              */
             template <size_t N>
