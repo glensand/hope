@@ -25,9 +25,9 @@ TEST(StructToRefTuple, AllCvModifiedTypesAreEqual)
     constexpr detail::test_struct instance{ 1, 1.1f, 1.3 };
 
 #if _MSC_VER && !__INTEL_COMPILER
-    constexpr auto ref = hope::ref_tuple_from_struct(instance);
+    constexpr auto ref = hope::tuple_from_struct(instance, hope::field_policy::reference{});
 #else
-    auto ref = hope::ref_tuple_from_struct(instance);
+    auto ref = hope::tuple_from_struct(instance, hope::field_policy::reference{});
 #endif
 
 #undef HOPE_ASSERT
@@ -51,10 +51,10 @@ TEST(StructToRefTuple, AllCvModifiedTypesAreEqual)
 TEST(StructToRefTuple, StructureCanBeModifiedViaTuple)
 {
     detail::test_struct instance{ 1, 1.1f, 1.3 };
-    auto&& ref = hope::ref_tuple_from_struct(instance);
+    auto&& ref = hope::tuple_from_struct(instance, hope::field_policy::reference{});
     ref.get<0>() = 42;
     ref.get<1>() = 42.f;
 
-    ASSERT_TRUE(42 == instance._0 == ref.get<0>() == ref.get<int>());
-    ASSERT_TRUE(42.f == instance._1 == ref.get<1>() == ref.get<float>());
+    ASSERT_TRUE(42 == instance._0);
+    ASSERT_TRUE(abs(42.f - instance._1) < FLT_EPSILON);
 }

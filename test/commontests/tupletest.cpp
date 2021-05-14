@@ -74,19 +74,3 @@ TEST(TupleTest, TupleFromStructUnsafe)
 
     ASSERT_TRUE(ts3Tuple.get<0>() == ts3._0);
 }
-
-TEST(TupleTest, BitfieldTest)
-{
-    struct bit_field_2 {
-        unsigned _0 : 3, _1 : 5;
-    };
-
-    bit_field_2 st{ };
-    st._0 = 7; // 111
-    st._1 = 1;
-
-    auto bit_tuple_2 = tuple_from_struct(st, hope::field_policy::bit{});
-
-    ASSERT_TRUE(bit_tuple_2.get<0>() == st._0);
-    ASSERT_TRUE(bit_tuple_2.get<1>() == st._1);
-}
