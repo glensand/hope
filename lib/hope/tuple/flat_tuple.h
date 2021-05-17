@@ -159,7 +159,7 @@ namespace hope {
              * \brief Cast self to the specified type (indexed value instantiated with N and NativeT) 
              * \tparam N index of value to be returned
              * \tparam NativeT final type of value to be returned
-             * \return reference of the containing value
+             * \return reference to the containing value
              */
             template<std::size_t N, typename NativeT>
             [[nodiscard]] constexpr decltype(auto)

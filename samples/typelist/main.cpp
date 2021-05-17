@@ -8,11 +8,13 @@
 
 #include "single_value.h"
 #include "multiple_value.h"
+#include "map_policy.h"
 
 int main()
 {
 	hope::sample::single_value::run();
 	hope::sample::multiple_value::run();
+	hope::sample::map_policy::run();
 
 	return 0;
 } 

@@ -8,33 +8,56 @@
 
 #pragma once
 
-namespace hope {
+#include "hope/components/policy_map/policy_map.h"
+
+namespace hope::tuple_policy {
 
     /**
-     * \brief struct used as namespace to policies which is used for tuple creation functions
+     * \brief base class to the tuple's policies
      */
-    struct field_policy final {
-        /**
-         * \brief Policy, used to specify how to convert struct to tuple. If instance of this structure is used,
-         * all the fields from an object will be copied to the tuple
-         */
-        struct value final {};
+    struct base{};
 
-        /**
-         * \brief Policy, used to specify how to convert struct to tuple. If instance of this structure is used,
-         * all the fields of resulting tuple will be references to the related fields of initial object(POD)
-         */
-        struct reference final {};
+    /**
+    * \brief Policy, used to specify how to convert struct to tuple. If instance of this structure is used,
+    * all the fields from an object will be copied to the tuple
+    */
+    struct value final : base{};
 
-        /**
-         * \brief 
-         */
-        struct bit final { };
+    /**
+    * \brief Policy, used to specify how to convert struct to tuple. If instance of this structure is used,
+    * all the fields of resulting tuple will be references to the related fields of initial object(POD)
+    */
+    struct reference final : base{};
 
-        /**
-         * \brief 
-         */
-        struct byte final { };
-    };
+    /**
+     * \brief
+     */
+    struct bit final : base{ };
 
+    /**
+     * \brief
+     */
+    struct byte final : base{ };
+
+    /**
+     * \brief
+     */
+    struct recursive final : base { };
+
+    /**
+    * \brief
+    */
+    struct non_recursive final : base { };
+
+    template<typename... Ps>
+    using tuple = policy::map<
+        policy::variant_list<
+            policy::variant<bit, byte>,
+            policy::variant<bit, reference>,
+            policy::variant<value, reference>,
+            policy::variant<recursive, non_recursive>
+        >,
+        base,
+        Ps...
+    >;
 }

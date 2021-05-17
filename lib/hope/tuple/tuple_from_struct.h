@@ -24,9 +24,12 @@ namespace hope {
      * \param bit_policy just used to determine bit policy (type)
      * \return created tuple
      */
-    template <typename T, typename BitPolicy = field_policy::byte>
-    constexpr auto tuple_from_struct(const T& object, BitPolicy bit_policy = BitPolicy{ }) {
-        constexpr auto fields_count = detect_fields_count(T{ }, bit_policy);
+    template <typename T, typename... Ps>
+    constexpr auto tuple_from_struct(const T& object, Ps...) {
+        using map = tuple_policy::tuple<Ps...>;
+        constexpr auto fields_count = detect_fields_count(T{ }, 
+            map::template has<tuple_policy::bit>() ? std::true_type{} : std::false_type{});
+
         return detail::generated::tuple_from_struct(object, detail::Int<fields_count>{});
     }
 

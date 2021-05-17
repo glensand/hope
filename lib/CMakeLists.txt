@@ -17,6 +17,7 @@ file(GLOB HOPE_HEADERS
     hope/variant/*.h*
     hope/components/*.h*
     hope/components/singleton_holder/*.h*
+    hope/components/policy_map/*.h*
     hope/memory/*.h*
     hope/memory/small_object/*.h*
     hope/concurrency/*.h*

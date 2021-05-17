@@ -9,7 +9,7 @@
 #pragma once
 
 #include "hope/components/loophole.h"
-#include "hope/tuple/tuple_from_struct.h"
+#include "hope/tuple/tuple_from_struct_unsafe.h"
 
 #include <iostream>
 #include <sstream>
@@ -36,7 +36,7 @@ namespace hope::sample::simple_struct_serializer {
     template <typename T>
     class argument_base : public argument {
     public:
-        virtual ~argument_base() = default;
+        virtual ~argument_base() override = default;
     
         virtual void serialize(std::ostream& out) const override {
             out << int(m_type) << " " << m_value << std::endl;

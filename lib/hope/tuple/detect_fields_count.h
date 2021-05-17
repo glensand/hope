@@ -8,9 +8,7 @@
 
 #pragma once
 
-#include <utility>
-
-#include "tuple_policy.h"
+#include <type_traits>
 
 namespace hope {
     namespace detail {
@@ -47,10 +45,9 @@ namespace hope {
         }
     }
 
-    template <typename T, typename BitPolicy = field_policy::byte>
-    constexpr std::size_t detect_fields_count(const T& object, BitPolicy = {}) {
-
-        constexpr std::size_t bit_multiplier{ std::is_same_v <BitPolicy, field_policy::bit> ? 8 : 1 };
+    template <typename T, bool HasBitField>
+    constexpr std::size_t detect_fields_count(const T& object, std::integral_constant<bool, HasBitField>) {
+        constexpr unsigned bit_multiplier{ HasBitField ? 8 : 1 };
         constexpr auto size = sizeof(T) * bit_multiplier;
         return detail::detect_fields_count_impl(object, std::make_index_sequence<size + 2>());
     }
