@@ -58,5 +58,5 @@ namespace hope {
 
 template <typename TStruct>
 constexpr bool operator==(const TStruct& left, const TStruct& right) {
-    return hope::ref_tuple_from_struct(left) == hope::ref_tuple_from_struct(right);
+    return hope::tuple_from_struct(left, hope::field_policy::reference{}) == hope::tuple_from_struct(right, hope::field_policy::reference{});
 }

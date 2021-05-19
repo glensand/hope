@@ -26,9 +26,3 @@ template <typename T>
 struct fields_4 { T a, b, c, d; };
 static_assert(hope::detect_fields_count(fields_4<int>{ }) == 4);
 static_assert(hope::detect_fields_count(fields_4<bool>{ }) == 4);
-
-struct bit_field_3 { unsigned _0 : 3, _1 : 2, _2 : 7; };
-static_assert(hope::detect_fields_count(bit_field_3{ }, hope::field_policy::bit{ }) == 3);
-
-struct bit_field_4 { unsigned _0 : 1, _1 : 1, _2 : 1, _3 : 1; };
-static_assert(hope::detect_fields_count(bit_field_4{ }, hope::field_policy::bit{ }) == 4);

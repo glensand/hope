@@ -25,8 +25,8 @@ namespace hope::serialization {
             , fp_accuracy(_fp_accuracy) {}
 
         void serialize(package& pack) {
-            auto&& tuple = ref_tuple_from_struct(value);
-            auto&& prev_tuple = ref_tuple_from_struct(prev_value);
+            auto&& tuple = tuple_from_struct(value, field_policy::reference{});
+            auto&& prev_tuple = tuple_from_struct(prev_value, field_policy::reference{});
 
             auto&& mask = first_pack ? get_equal_mask() : compute_mask(tuple, prev_tuple, std::make_index_sequence<fields_count>());
             first_pack = false;
@@ -43,7 +43,7 @@ namespace hope::serialization {
         }
 
         void deserialize(package& pack) {
-            auto&& tuple = ref_tuple_from_struct(value);
+            auto&& tuple = tuple_from_struct(value, field_policy::reference{});
 
             auto mask = read_mask(pack);
 

@@ -25,16 +25,6 @@ namespace hope {
          * all the fields of resulting tuple will be references to the related fields of initial object(POD)
          */
         struct reference final {};
-
-        /**
-         * \brief 
-         */
-        struct bit final { };
-
-        /**
-         * \brief 
-         */
-        struct byte final { };
     };
 
 }

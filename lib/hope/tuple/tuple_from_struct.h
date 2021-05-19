@@ -14,32 +14,17 @@
 namespace hope {
 
     /**
-     * \brief Creates tuple from the given struct, copies each field ot the object to the related one of the result tuple
+     * \brief Creates tuple from the given struct, type of each field of the result tuple depends on specified field policy (value or reference)
      * \tparam T type of the passed struct
-     * \tparam BitPolicy Policy of the struct's fields which have to be used to compute fields count of the structure
-     * if field_policy::byte is used, the compilation will be a little faster then field_policy::bit, but this one is not suitable
-     * for structures with fields of small bit size (i mean if structure has bit field which size less then 1 byte,
-     * compilation with field_policy::byte will be failed
+     * \tparam FieldPolicy Policy of the struct's fields which have to be used to determine result type of each field of the result tuple
      * \param object instance of the structure to be converted
-     * \param bit_policy just used to determine bit policy (type)
+     * \param p just used to determine field ppolicy (type)
      * \return created tuple
      */
-    template <typename T, typename BitPolicy = field_policy::byte>
-    constexpr auto tuple_from_struct(const T& object, BitPolicy bit_policy = BitPolicy{ }) {
-        constexpr auto fields_count = detect_fields_count(T{ }, bit_policy);
-        return detail::generated::tuple_from_struct(object, detail::Int<fields_count>{});
-    }
-
-    /**
-     * \brief Creates tuple of references to the given structure fields
-     * \tparam T object type to be processed
-     * \param object just instance
-     * \return tuple with references to the structure's fields
-     */
-    template <typename T>
-    constexpr auto ref_tuple_from_struct(T&& object) {
-        constexpr auto fields_count = detect_fields_count(std::decay_t<T>{ }, field_policy::byte{});
-        return detail::generated::tuple_from_struct(std::forward<T>(object), detail::Int<fields_count>{}, field_policy::reference{});
+    template <typename T, typename FieldPolicy = field_policy::value>
+    constexpr auto tuple_from_struct(T&& object, FieldPolicy p = FieldPolicy{}) {
+        constexpr auto fields_count = detect_fields_count(std::decay_t<T>{ });
+        return detail::generated::tuple_from_struct(std::forward<T>(object), detail::Int<fields_count>{}, FieldPolicy{});
     }
 
 }

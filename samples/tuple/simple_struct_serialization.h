@@ -9,7 +9,7 @@
 #pragma once
 
 #include "hope/components/loophole.h"
-#include "hope/tuple/tuple_from_struct.h"
+#include "hope/tuple/tuple_from_struct_unsafe.h"
 
 #include <iostream>
 #include <sstream>
@@ -121,7 +121,7 @@ namespace hope::sample::simple_struct_serializer {
 
     template <typename T>
     query make_query(const T& st) {
-        auto tuple = hope::tuple_from_struct_unsafe<T>(st);
+        auto tuple = hope::tuple_from_struct_unsafe(st);
 
         std::vector<argument*> arguments;
 
