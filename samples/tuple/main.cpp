@@ -10,6 +10,7 @@
 #include "simple_struct_serialization.h"
 #include "named_struct_serialization.h"
 #include "recursive_structure_print.h"
+#include "compute_fields_count_recursive.h"
 
 template <typename F>
 void run_impl(const char* func_name, F&& func) {
@@ -28,6 +29,8 @@ int main() {
 	RUN(hope::sample::named_struct_serializer::run);
 
 	RUN(hope::sample::recursive_structure_print::run);
+
+	RUN(hope::sample::compute_fields_count_recursive::run);
 
 	return 0;
 } 

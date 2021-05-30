@@ -9,28 +9,10 @@
 #pragma once
 
 #include "hope/tuple/tuple_from_struct.h"
+#include "recursive_structure.h"
 #include <iostream>
 
 namespace hope::sample::recursive_structure_print {
-
-    struct recursive_structure final {
-
-        int field0;
-        float field2;
-
-        struct inner_structure1 final {
-            int field1;
-            int field2;
-
-            struct inner_structure2 final {
-                int field1;
-                bool field2;
-            };
-
-            inner_structure2 field3;
-        };
-        inner_structure1 field3;
-    };
 
     template<typename T>
     std::enable_if_t<!std::is_class_v<T>, void>
