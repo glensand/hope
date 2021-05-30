@@ -9,6 +9,7 @@
 #include "simple_for_each.h"
 #include "simple_struct_serialization.h"
 #include "named_struct_serialization.h"
+#include "recursive_structure_print.h"
 
 template <typename F>
 void run_impl(const char* func_name, F&& func) {
@@ -20,11 +21,13 @@ void run_impl(const char* func_name, F&& func) {
 #define RUN(Name) run_impl(#Name, Name);  
 
 int main() {
-	RUN(hope::sample::tuple_for_each::simple_type_print)
+	RUN(hope::sample::tuple_for_each::simple_type_print);
 
-	RUN(hope::sample::simple_struct_serializer::run)
+	RUN(hope::sample::simple_struct_serializer::run);
 
-	RUN(hope::sample::named_struct_serializer::run)
+	RUN(hope::sample::named_struct_serializer::run);
+
+	RUN(hope::sample::recursive_structure_print::run);
 
 	return 0;
 } 
