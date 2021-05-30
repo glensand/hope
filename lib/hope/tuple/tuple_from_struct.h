@@ -18,7 +18,7 @@ namespace hope {
      * \tparam T type of the passed struct
      * \tparam FieldPolicy Policy of the struct's fields which have to be used to determine result type of each field of the result tuple
      * \param object instance of the structure to be converted
-     * \param p just used to determine field ppolicy (type)
+     * \param p just used to determine field policy (type)
      * \return created tuple
      */
     template <typename T, typename FieldPolicy = field_policy::value>
