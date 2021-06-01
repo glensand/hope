@@ -17,13 +17,28 @@ namespace hope::serialization {
     public:
         package() = default;
 
+        /**
+         * \brief writes data to the inner buffer, automatically enlarge size of them
+         * \tparam T type of the pod to be written
+         * \param val given value
+         */
         template <typename T>
-        void write(T val) {
+        void write(const T& val) {
             write(&val, sizeof val);
         }
 
+        /**
+         * \brief writes sequence of raw data to the inner buffer, automatically enlarge those if it is required
+         * \param data pointer to very beginning of the memory segment to be written
+         * \param count count of BYTES in the memory segment
+         */
         void write(const void* data, std::size_t count);
 
+        /**
+         * \brief reads object of specified type, the type should be POD
+         * \tparam T type to be read
+         * \return result object
+         */
         template <typename T>
         T read() {
             T val;
@@ -31,14 +46,41 @@ namespace hope::serialization {
             return val;
         }
 
+        /**
+         * \brief reads specified amount of data to the given buffer, throws exception if buffer size is 
+         * \param data pointer to very beginning of read buffer
+         * \param count count of bytes to be read
+         */
         void read(void* data, std::size_t count);
 
+        /**
+         * \brief 
+         * \param position 
+         * \return 
+         */
+        std::size_t seek(std::size_t position);
+
+        /**
+         * \brief 
+         * \param count 
+         * \return 
+         */
+        std::size_t reserve(std::size_t count);
+
+        /**
+         * \brief 
+         * \return 
+         */
         [[nodiscard]] const buffer_t& get_buffer() const noexcept { return buffer; }
 
-        void clear() { buffer.clear(); }
+        /**
+         * \brief 
+         */
+        void clear();
     private:
         buffer_t buffer;
-        std::size_t buffer_pos{ 0u };
+        std::size_t write_pos{ 0u };
+        std::size_t read_pos{ 0u };
     };
 
 }

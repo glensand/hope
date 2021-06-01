@@ -135,6 +135,11 @@ namespace hope {
                 (f(tuple.template get<Is>()), ...);
             }
 
+            template <typename F>
+            friend constexpr void for_each(const flat_tuple& tuple1, const flat_tuple& tuple2, F&& f) {
+                (f(tuple1.template get<Is>(), tuple2.template get<Is>()), ...);
+            }
+
             /**
              * \brief Applies given functor to each value of given tuple, more useful analogue of std::apply
              * \tparam F type of functional object
@@ -144,6 +149,11 @@ namespace hope {
             template <typename F>
             friend constexpr void for_each(flat_tuple& tuple, F&& f) {
                 (f(tuple.template get<Is>()), ...);
+            }
+
+            template <typename F>
+            friend constexpr void for_each(flat_tuple& tuple1, flat_tuple& tuple2, F&& f) {
+                (f(tuple1.template get<Is>(), tuple2.template get<Is>()), ...);
             }
 
             /**

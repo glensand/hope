@@ -16,12 +16,18 @@ namespace {
         int field_1{ 0 };
         float field_2{ 0.0f };
         bool field_3{ false };
-    };    
+    };
+
+    struct recursive_struct final {
+        int field_1{ 0 };
+        float field_2{ 0.0f };
+        sample_struct field_3{  };
+    };
 }
 
 int main()
 {
-    sample_struct instance_to_serialize;
+    sample_struct instance_to_serialize{14, 0.2423f, true };
     sample_struct instance_to_deserialize;
     hope::serialization::pod_serializer serializer(instance_to_serialize);
     hope::serialization::pod_serializer deserializer(instance_to_deserialize);
@@ -31,6 +37,7 @@ int main()
     deserializer.deserialize(pack);
 
     assert(instance_to_deserialize == instance_to_serialize);
+    pack.clear();
 
     instance_to_serialize.field_1 = 11;
     instance_to_serialize.field_2 = 0.42f;
@@ -39,6 +46,10 @@ int main()
     deserializer.deserialize(pack);
 
     assert(instance_to_deserialize == instance_to_serialize);
+
+    pack.clear();
+    recursive_struct recursive_instance_to_serialize;
+    recursive_struct recursive_instance_to_deserialize;
 
 	return 0;
 } 
