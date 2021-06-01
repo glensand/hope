@@ -50,6 +50,20 @@ int main()
     pack.clear();
     recursive_struct recursive_instance_to_serialize;
     recursive_struct recursive_instance_to_deserialize;
+    hope::serialization::pod_serializer recursive_serializer(recursive_instance_to_serialize);
+    hope::serialization::pod_serializer recursive_deserializer(recursive_instance_to_deserialize);
+    recursive_serializer.serialize(pack);
+    recursive_deserializer.deserialize(pack);
+
+    assert(recursive_instance_to_serialize == recursive_instance_to_deserialize);
+
+    recursive_instance_to_serialize.field_1 = 11;
+    recursive_instance_to_serialize.field_2 = 111111.f;
+    recursive_instance_to_serialize.field_3.field_1 = 116451111.f;
+    recursive_instance_to_serialize.field_3.field_3 = true;
+    recursive_serializer.serialize(pack);
+    recursive_deserializer.deserialize(pack);
+    assert(recursive_instance_to_serialize == recursive_instance_to_deserialize);
 
 	return 0;
 } 

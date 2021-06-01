@@ -16,9 +16,21 @@ namespace hope {
 
     namespace detail {
 
+        template<typename T>
+        constexpr std::enable_if_t<!std::is_class_v<T>, bool>
+        is_equal(const T& left, const T& right) {
+            return left == right;
+        }
+
         template<typename... Ts, std::size_t... Is>
         constexpr bool is_equal(const flat_tuple<Ts...>& left, const flat_tuple<Ts...>& right, std::index_sequence<Is...>) {
-            return ((left.template get<Is>() == right.template get<Is>()) && ...);
+            return (is_equal(left.template get<Is>(), right.template get<Is>()) && ...);
+        }
+
+        template<typename T>
+        constexpr std::enable_if_t<std::is_class_v<T>, bool>
+        is_equal(const T& left, const T& right) {
+            return tuple_from_struct(left, field_policy::reference{}) == tuple_from_struct(right, field_policy::reference{});
         }
 
         template<typename T>
@@ -57,6 +69,7 @@ namespace hope {
 }
 
 template <typename TStruct>
-constexpr bool operator==(const TStruct& left, const TStruct& right) {
+constexpr std::enable_if_t<std::is_class_v<TStruct>, bool>
+operator==(const TStruct& left, const TStruct& right) {
     return hope::tuple_from_struct(left, hope::field_policy::reference{}) == hope::tuple_from_struct(right, hope::field_policy::reference{});
 }
