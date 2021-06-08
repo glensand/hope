@@ -18,6 +18,17 @@ namespace hope {
 
         template<typename T>
         constexpr std::enable_if_t<!std::is_class_v<T>, bool>
+        is_equal(const T& left, const T& right);
+
+        template<typename... Ts, std::size_t... Is>
+        constexpr bool is_equal(const flat_tuple<Ts...>& left, const flat_tuple<Ts...>& right, std::index_sequence<Is...>);
+
+        template<typename T>
+        constexpr std::enable_if_t<std::is_class_v<T>, bool>
+        is_equal(const T& left, const T& right);
+
+        template<typename T>
+        constexpr std::enable_if_t<!std::is_class_v<T>, bool>
         is_equal(const T& left, const T& right) {
             return left == right;
         }
