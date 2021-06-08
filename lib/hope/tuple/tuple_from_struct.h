@@ -23,7 +23,7 @@ namespace hope {
      */
     template <typename T, typename FieldPolicy = field_policy::value>
     constexpr auto tuple_from_struct(T&& object, FieldPolicy p = FieldPolicy{}) {
-        constexpr auto fields_count = detect_fields_count(std::decay_t<T>{ });
+        constexpr auto fields_count = detect_fields_count<std::decay_t<T>>();
         return detail::generated::tuple_from_struct(std::forward<T>(object), detail::Int<fields_count>{}, FieldPolicy{});
     }
 

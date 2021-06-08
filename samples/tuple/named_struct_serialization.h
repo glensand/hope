@@ -127,7 +127,7 @@ namespace hope::sample::named_struct_serializer {
 
     template <typename T>
     query make_query(const T& st) {
-        using tuple_type = decltype(hope::make_tuple(st));
+        using tuple_type = decltype(hope::make_tuple<T>());
         auto&& tuple = reinterpret_cast<const tuple_type&>(st);
         std::vector<named_argument*> arguments;
 

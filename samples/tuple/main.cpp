@@ -11,6 +11,7 @@
 #include "named_struct_serialization.h"
 #include "recursive_structure_print.h"
 #include "compute_fields_count_recursive.h"
+#include "not_pod_to_tuple.h"
 
 template <typename F>
 void run_impl(const char* func_name, F&& func) {
@@ -23,14 +24,11 @@ void run_impl(const char* func_name, F&& func) {
 
 int main() {
 	RUN(hope::sample::tuple_for_each::simple_type_print);
-
 	RUN(hope::sample::simple_struct_serializer::run);
-
 	RUN(hope::sample::named_struct_serializer::run);
-
 	RUN(hope::sample::recursive_structure_print::run);
-
 	RUN(hope::sample::compute_fields_count_recursive::run);
+	RUN(hope::sample::not_pod_to_tuple::run);
 
 	return 0;
 } 

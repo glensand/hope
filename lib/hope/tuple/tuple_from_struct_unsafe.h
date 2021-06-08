@@ -40,24 +40,24 @@ namespace hope {
         }
 
         template <typename T, std::size_t... Is>
-        constexpr auto extract_types(const T&, std::index_sequence<Is...> sequence) {
+        constexpr auto extract_types(std::index_sequence<Is...> sequence) {
             constexpr auto length = size(sequence);
             constexpr T object{ any_convertible_s<T, Is>{}... };
-            return type_list<decltype(loophole::get<Is>(T{}))...>{};
+            return type_list<decltype(loophole::get<Is>(std::declval<T>()))...>{};
         }
     }
 
     template <typename T>
-    constexpr auto make_tuple(const T&) {
-        constexpr auto fields_count = detect_fields_count(T{});
-        constexpr auto types = detail::extract_types(T{}, std::make_index_sequence<fields_count>());
-        constexpr auto tuple = detail::tuple_from_type_list(types);
+    constexpr auto make_tuple() {
+        constexpr auto fields_count = detect_fields_count<T>();
+        constexpr auto types = detail::extract_types<T>(std::make_index_sequence<fields_count>());
+        auto tuple = detail::tuple_from_type_list(types);
         return tuple;
     }
 
     template <typename T>
     auto tuple_from_struct_unsafe(const T& object) {
-        constexpr auto tuple = make_tuple(T{});
+        constexpr auto tuple = make_tuple<T>();
         (T&)tuple = object;
         return tuple;
     }

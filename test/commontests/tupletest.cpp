@@ -12,16 +12,31 @@
 #include "hope/tuple/tuple_from_struct.h"
 #include "hope/tuple/tuple_from_struct_unsafe.h"
 
+namespace {
+
 struct pod_imitator {
     constexpr static int DefaultInt{ 11 };
     float val1{ 10.f };
     int val2{ DefaultInt };
 };
 
-struct complicated_struct {
-    std::string_view name;
+struct struct_string {
+    std::string name;
     int index;
 };
+
+struct struct_int_vector {
+    std::string name;
+    std::vector<int> vec_i;
+};
+
+struct complicated_struct3 {
+    std::string name;
+    std::vector<int> vec_i;
+    std::vector<std::string> vec_s;
+};
+
+}
 
 TEST(TupleTest, ConstexprInitialization)
 {
@@ -73,4 +88,112 @@ TEST(TupleTest, TupleFromStructUnsafe)
     auto ts3Tuple = hope::tuple_from_struct_unsafe(ts3);
 
     ASSERT_TRUE(ts3Tuple.get<0>() == ts3._0);
+}
+
+TEST(TupleTest, StructStringValue)
+{
+    struct_string s{ "field1", 11 };
+    auto&& tuple = hope::tuple_from_struct(s);
+
+    auto&& first = tuple.get<0>();
+    auto&& second = tuple.get<1>();
+
+    ASSERT_TRUE(s.name == first);
+    ASSERT_TRUE(s.index == second);
+}
+
+TEST(TupleTest, StructVectorIntValue)
+{
+    const struct_int_vector s{ "field1", {11, 12, 13} };
+    auto&& tuple = hope::tuple_from_struct(s);
+
+    auto&& first = tuple.get<0>();
+    auto&& second = tuple.get<1>();
+
+    ASSERT_TRUE(s.name == first);
+
+    for (std::size_t i{ 0 }; i < second.size(); ++i)
+        ASSERT_TRUE(second[i] == s.vec_i[i]);
+}
+
+TEST(TupleTest, StructVectorStringValue)
+{
+    complicated_struct3 s{ "field1", {11, 12, 13}, {"first", "second", "third"} };
+    auto&& tuple = hope::tuple_from_struct(s, hope::field_policy::reference{});
+
+    auto&& first = tuple.get<0>();
+    auto&& second = tuple.get<1>();
+    auto&& third = tuple.get<2>();
+
+    ASSERT_TRUE(s.name == first);
+
+    for (std::size_t i{ 0 }; i < second.size(); ++i)
+        ASSERT_TRUE(second[i] == s.vec_i[i]);
+
+    for (std::size_t i{ 0 }; i < third.size(); ++i)
+        ASSERT_TRUE(third[i] == s.vec_s[i]);
+}
+
+TEST(TupleTest, StructStringReference)
+{
+    struct_string s{ "field1", 11 };
+    auto&& tuple = hope::tuple_from_struct(s, hope::field_policy::reference{});
+
+    auto&& first = tuple.get<0>();
+    auto&& second = tuple.get<1>();
+
+    ASSERT_TRUE(s.name == first);
+    ASSERT_TRUE(s.index == second);
+
+    first = "field1_modified";
+    second = 12;
+
+    ASSERT_TRUE(s.name == "field1_modified");
+    ASSERT_TRUE(s.index == 12);
+}
+
+TEST(TupleTest, StructVectorIntReference)
+{
+    struct_int_vector s{ "field1", {11, 12, 13} };
+    auto&& tuple = hope::tuple_from_struct(s, hope::field_policy::reference{});
+
+    auto&& first = tuple.get<0>();
+    auto&& second = tuple.get<1>();
+
+    ASSERT_TRUE(s.name == first);
+
+    for(std::size_t i{ 0 }; i < second.size(); ++i)
+        ASSERT_TRUE(second[i] == s.vec_i[i]);
+
+    first = "field1_modified";
+    second.push_back(144);
+
+    ASSERT_TRUE(s.name == "field1_modified");
+    ASSERT_TRUE(s.vec_i.back() == 144);
+}
+
+TEST(TupleTest, StructVectorStringReference)
+{
+    complicated_struct3 s{ "field1", {11, 12, 13}, {"first", "second", "third"} };
+    auto&& tuple = hope::tuple_from_struct(s, hope::field_policy::reference{});
+
+    auto&& first = tuple.get<0>();
+    auto&& second = tuple.get<1>();
+    auto&& third = tuple.get<2>();
+
+    ASSERT_TRUE(s.name == first);
+
+    for (std::size_t i{ 0 }; i < second.size(); ++i)
+        ASSERT_TRUE(second[i] == s.vec_i[i]);
+
+    for (std::size_t i{ 0 }; i < third.size(); ++i)
+        ASSERT_TRUE(third[i] == s.vec_s[i]);
+
+    first = "field1_modified";
+    second.push_back(144);
+    third.emplace_back("last");
+
+    ASSERT_TRUE(s.name == "field1_modified");
+    ASSERT_TRUE(s.vec_i.back() == 144);
+    ASSERT_TRUE(s.vec_s.back() == "last");
 }
