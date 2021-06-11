@@ -7,7 +7,7 @@
  */
 
 #pragma once
-#include "hope/tuple/tuple_from_struct.h"
+#include "hope/tuple/tuple_from_struct_unsafe.h"
 
 namespace hope {
 
@@ -15,25 +15,28 @@ namespace hope {
 
         template<typename T>
         constexpr std::enable_if_t<!std::is_class_v<T>, std::size_t>
-        compute(T) {
+        compute() {
             return 1;
         }
 
         template<typename T>
         constexpr std::enable_if_t<std::is_class_v<T>, std::size_t>
-            compute(T) {
-            constexpr auto tuple = tuple_from_struct(T{}, field_policy::value{});
+        compute() {
+            constexpr auto fields_count = detect_fields_count<T>();
+            constexpr auto types = detail::extract_types<T>(std::make_index_sequence<fields_count>());
             std::size_t count{ 0 };
-            for_each(tuple, [&](auto field) {
-                count += compute(field);
-                });
+            for_each(types, [&] (auto field) {
+                using type_t = typename decltype(field)::Type;
+                count += compute<type_t>();
+            });
+            
             return count;
         }
 
     }
 
     template<typename T>
-    constexpr std::size_t compute_field_count_recursive(T) {
-        return detail::compute(T{});
+    constexpr std::size_t compute_field_count_recursive() {
+        return detail::compute<T>();
     }
 }

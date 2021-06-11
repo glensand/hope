@@ -38,6 +38,6 @@ namespace hope::sample::compute_fields_count_recursive {
         recursive_structure s{1, 1.f,{511, 2354, { -111, true}}};
 
         std::cout << compute(s) << std::endl;
-        std::cout << compute_field_count_recursive(s) << std::endl;
+        std::cout << compute_field_count_recursive<recursive_structure>() << std::endl;
     }
 }
