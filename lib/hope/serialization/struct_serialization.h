@@ -20,7 +20,7 @@ namespace hope::serialization {
 
     template <typename T>
     class pod_serializer final {
-        constexpr static std::size_t fields_count{ compute_field_count_recursive<T>() };
+        constexpr static std::size_t fields_count{ compute_field_count_recursive_constexpr<T>() };
         using bit_mask = std::bitset <fields_count>;
     public:
         pod_serializer(T& serializable_struct, double _fp_accuracy = std::numeric_limits<double>::epsilon())

@@ -7,36 +7,65 @@
  */
 
 #pragma once
+
+#include "hope/tuple/tuple_from_struct.h"
 #include "hope/tuple/tuple_from_struct_unsafe.h"
+#include "hope/tuple/tuple_policy.h"
+#include "hope/components/user_defined_types.h"
+#include "hope/components/detector.h"
 
 namespace hope {
 
     namespace detail {
 
         template<typename T>
-        constexpr std::enable_if_t<!std::is_class_v<T>, std::size_t>
-        compute() {
+        constexpr std::enable_if_t<!is_user_defined_type<T>, std::size_t>
+        compute_via_type_list() {
             return 1;
         }
 
         template<typename T>
-        constexpr std::enable_if_t<std::is_class_v<T>, std::size_t>
-        compute() {
+        constexpr std::enable_if_t<is_user_defined_type<T>, std::size_t>
+        compute_via_type_list() {
             constexpr auto fields_count = detect_fields_count<T>();
             constexpr auto types = detail::extract_types<T>(std::make_index_sequence<fields_count>());
             std::size_t count{ 0 };
             for_each(types, [&] (auto field) {
                 using type_t = typename decltype(field)::Type;
-                count += compute<type_t>();
+                count += compute_via_type_list<type_t>();
             });
             
+            return count;
+        }
+
+        template<typename T>
+        std::enable_if_t<!is_user_defined_type<T>, std::size_t>
+        compute_via_tuple() {
+            return 1;
+        }
+
+        template<typename T>
+        std::enable_if_t<is_user_defined_type<T>, std::size_t>
+        compute_via_tuple() {
+            auto tuple = tuple_from_struct(T{}, field_policy::value{});
+            std::size_t count{ 0 };
+            for_each(tuple, [&](auto field) {
+                using type_t = decltype(field);
+                count += compute_via_tuple<type_t>();
+            });
             return count;
         }
 
     }
 
     template<typename T>
-    constexpr std::size_t compute_field_count_recursive() {
-        return detail::compute<T>();
+    constexpr std::size_t compute_field_count_recursive_constexpr() {
+        return detail::compute_via_type_list<T>();
     }
+
+    template<typename T>
+    constexpr std::size_t compute_field_count_recursive() {
+            return detail::compute_via_tuple<T>();
+    }
+
 }

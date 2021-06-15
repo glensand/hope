@@ -43,4 +43,8 @@ namespace hope {
 
     template <class Default, template<class...> class Op, class... Args>
     using detected_or = detail::detector<Default, void, Op, Args...>;
+
+    template<class Lambda, int = (Lambda{}(), 0) >
+    constexpr bool is_constexpr(Lambda) { return true; }
+    constexpr bool is_constexpr(...) { return false; }
 }
