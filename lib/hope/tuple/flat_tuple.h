@@ -8,12 +8,15 @@
 
 #pragma once
 
-#include <iostream>
-
 #include "hope/typelist/type_list.h"
 
 namespace hope {
     namespace detail {
+
+        /**
+         * \brief Tag is used to identify whether object of provided type is tuple or not
+         */
+        struct tuple_tag { };
 
         template<typename T, size_t I>
         struct indexed_value {
@@ -35,7 +38,7 @@ namespace hope {
         class flat_tuple_impl;
 
         template<std::size_t... Is, typename... Ts>
-        class flat_tuple_impl<std::index_sequence<Is...>, Ts...> : public indexed_value <Ts, Is>... {
+        class flat_tuple_impl<std::index_sequence<Is...>, Ts...> : public tuple_tag, public indexed_value <Ts, Is>... {
             using self_t = flat_tuple_impl<std::index_sequence<Is...>, Ts...>;
             constexpr static type_list<std::decay_t<Ts>...> types{ }; // only clear types might be used, thus make it clear here
 
@@ -125,35 +128,33 @@ namespace hope {
             }
 
             /**
-             * \brief Applies given functor to each value of given tuple, more useful analogue of std::apply 
+             * \brief Applies given functor to each value of tuple, more useful analogue of std::apply 
              * \tparam F type of functional object 
-             * \param tuple the object, functor to be iterated for
              * \param f functional object to be sequentially applied to each field of tuple
              */
             template <typename F>
-            friend constexpr void for_each(const flat_tuple& tuple, F&& f) {
-                (f(tuple.template get<Is>()), ...);
+            constexpr void for_each(F&& f) const {
+                (f(get<Is>()), ...);
             }
 
             template <typename F>
-            friend constexpr void for_each(const flat_tuple& tuple1, const flat_tuple& tuple2, F&& f) {
-                (f(tuple1.template get<Is>(), tuple2.template get<Is>()), ...);
+            constexpr void for_each(const flat_tuple& tuple2, F&& f) const {
+                (f(get<Is>(), tuple2.template get<Is>()), ...);
             }
 
             /**
              * \brief Applies given functor to each value of given tuple, more useful analogue of std::apply
              * \tparam F type of functional object
-             * \param tuple the object, functor to be iterated for
              * \param f functional object to be sequentially applied to each field of tuple
              */
             template <typename F>
-            friend constexpr void for_each(flat_tuple& tuple, F&& f) {
-                (f(tuple.template get<Is>()), ...);
+            constexpr void for_each(F&& f) {
+                (f(get<Is>()), ...);
             }
 
             template <typename F>
-            friend constexpr void for_each(flat_tuple& tuple1, flat_tuple& tuple2, F&& f) {
-                (f(tuple1.template get<Is>(), tuple2.template get<Is>()), ...);
+            constexpr void for_each(flat_tuple& tuple2, F&& f) {
+                (f(get<Is>(), tuple2.template get<Is>()), ...);
             }
 
             /**
@@ -270,4 +271,15 @@ namespace hope {
         return flat_tuple<Ts...>(std::forward<Ts>(args)...);
     }
 
+    template<typename Tuple, typename F>
+    constexpr std::enable_if_t<std::is_base_of_v<detail::tuple_tag, std::decay_t<Tuple>>>
+    for_each(Tuple&& tuple, F&& f) {
+        tuple.for_each(std::forward<F>(f));
+    }
+
+    template<typename Tuple, typename F>
+    constexpr std::enable_if_t<std::is_base_of_v<detail::tuple_tag, std::decay_t<Tuple>>>
+    for_each(Tuple&& tuple1, Tuple&& tuple2, F&& f) {
+        tuple1.for_each(std::forward<Tuple>(tuple2), std::forward<F>(f));
+    }
 }

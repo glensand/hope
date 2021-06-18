@@ -9,7 +9,7 @@
 #pragma once
 
 #include <cassert>
-
+#include <iostream>
 #include "test_classes.h"
 #include "hope/components/link_holder/link_holder_policy.h"
 #include "hope/components/link_holder/link_holder_tuple.h"

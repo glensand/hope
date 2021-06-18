@@ -13,6 +13,7 @@
 #include <type_traits>
 #include <string>
 #include <vector>
+#include <array>
 
 namespace hope {
 
@@ -35,9 +36,19 @@ namespace hope {
     constexpr static bool is_vector_v = is_vector<T>::value;
 
     template<typename T>
-    constexpr static bool is_user_defined_type =
+    struct is_array final : std::false_type{};
+
+    template<typename T, std::size_t S>
+    struct is_array<std::array<T, S>> final : std::true_type {};
+
+    template<typename T>
+    constexpr static bool is_array_v = is_array<T>::value;
+
+    template<typename T>
+    constexpr static bool is_user_defined_type_v =
         std::is_class_v<T> &&
         !is_string_v<T> &&
-        !is_vector_v<T>;
+        !is_vector_v<T> && 
+        !is_array_v<T>;
 
 }

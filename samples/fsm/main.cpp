@@ -7,6 +7,7 @@
  */
 
 #include "hope/fsm/fsm.h"
+#include <iostream>
 
 struct enabled final {};
 struct disabled final{};

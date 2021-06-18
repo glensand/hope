@@ -10,6 +10,7 @@
 
 #include "hope/tuple/flat_tuple.h"
 #include "hope/tuple/tuple_from_struct.h"
+#include "hope/components/user_defined_types.h"
 #include <functional>
 
 namespace hope {
@@ -17,19 +18,19 @@ namespace hope {
     namespace detail {
 
         template<typename T>
-        constexpr std::enable_if_t<!std::is_class_v<T>, bool>
-        is_equal(const T& left, const T& right);
+        constexpr std::enable_if_t<!is_user_defined_type_v<T>, bool>
+            is_equal(const T& left, const T& right);
 
         template<typename... Ts, std::size_t... Is>
         constexpr bool is_equal(const flat_tuple<Ts...>& left, const flat_tuple<Ts...>& right, std::index_sequence<Is...>);
 
         template<typename T>
-        constexpr std::enable_if_t<std::is_class_v<T>, bool>
-        is_equal(const T& left, const T& right);
+        constexpr std::enable_if_t<is_user_defined_type_v<T>, bool>
+            is_equal(const T& left, const T& right);
 
         template<typename T>
-        constexpr std::enable_if_t<!std::is_class_v<T>, bool>
-        is_equal(const T& left, const T& right) {
+        constexpr std::enable_if_t<!is_user_defined_type_v<T>, bool>
+            is_equal(const T& left, const T& right) {
             return left == right;
         }
 
@@ -39,8 +40,8 @@ namespace hope {
         }
 
         template<typename T>
-        constexpr std::enable_if_t<std::is_class_v<T>, bool>
-        is_equal(const T& left, const T& right) {
+        constexpr std::enable_if_t<is_user_defined_type_v<T>, bool>
+            is_equal(const T& left, const T& right) {
             return tuple_from_struct(left, field_policy::reference{}) == tuple_from_struct(right, field_policy::reference{});
         }
 
@@ -74,13 +75,13 @@ namespace hope {
     template <typename... Ts>
     struct hash final {
         constexpr std::size_t operator()(const flat_tuple<Ts...>& tuple) {
-            return detail::hash(tuple, std::make_index_sequence<size(type_list<Ts...>{})()>());
+            return detail::hash(tuple, std::make_index_sequence < size(type_list<Ts...>{})() > ());
         }
     };
 }
 
 template <typename TStruct>
-constexpr std::enable_if_t<std::is_class_v<TStruct>, bool>
+constexpr std::enable_if_t<hope::is_user_defined_type_v<TStruct>, bool>
 operator==(const TStruct& left, const TStruct& right) {
     return hope::tuple_from_struct(left, hope::field_policy::reference{}) == hope::tuple_from_struct(right, hope::field_policy::reference{});
 }

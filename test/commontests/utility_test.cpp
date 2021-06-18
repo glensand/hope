@@ -7,6 +7,7 @@
  */
 
 #include "hope/components/utility.h"
+#include "hope/components/user_defined_types.h"
 
 using namespace hope;
 
@@ -30,3 +31,16 @@ static_assert(all(val_0, val_1, val_2) != val_3);
 static_assert(!(val_3 == all(val_0, val_1, val_2)));
 static_assert(val_3 == all(val_3, val_3, val_3));
 static_assert(val_3 != all(val_0, val_1, val_2));
+
+static_assert(hope::is_string_v<std::string>);
+static_assert(hope::is_string_v<std::wstring>);
+static_assert(hope::is_vector_v<std::vector<bool>>);
+static_assert(hope::is_vector_v<std::vector<int>>);
+static_assert(hope::is_array_v<std::array<int, 1>>);
+static_assert(hope::is_array_v<std::array<int, 0>>);
+
+struct user_type final {
+    std::string string;
+};
+
+static_assert(hope::is_user_defined_type_v<user_type>);

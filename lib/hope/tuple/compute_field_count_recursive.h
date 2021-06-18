@@ -19,13 +19,13 @@ namespace hope {
     namespace detail {
 
         template<typename T>
-        constexpr std::enable_if_t<!is_user_defined_type<T>, std::size_t>
+        constexpr std::enable_if_t<!is_user_defined_type_v<T>, std::size_t>
         compute_via_type_list() {
             return 1;
         }
 
         template<typename T>
-        constexpr std::enable_if_t<is_user_defined_type<T>, std::size_t>
+        constexpr std::enable_if_t<is_user_defined_type_v<T>, std::size_t>
         compute_via_type_list() {
             constexpr auto fields_count = detect_fields_count<T>();
             constexpr auto types = detail::extract_types<T>(std::make_index_sequence<fields_count>());
@@ -39,13 +39,13 @@ namespace hope {
         }
 
         template<typename T>
-        std::enable_if_t<!is_user_defined_type<T>, std::size_t>
+        std::enable_if_t<!is_user_defined_type_v<T>, std::size_t>
         compute_via_tuple() {
             return 1;
         }
 
         template<typename T>
-        std::enable_if_t<is_user_defined_type<T>, std::size_t>
+        std::enable_if_t<is_user_defined_type_v<T>, std::size_t>
         compute_via_tuple() {
             auto tuple = tuple_from_struct(T{}, field_policy::value{});
             std::size_t count{ 0 };
