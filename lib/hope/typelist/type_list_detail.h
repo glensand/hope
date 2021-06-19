@@ -9,6 +9,7 @@
 #pragma once
 
 #include <utility>
+#include <cstddef> // NOTE: do not remove dis header, it is required for successful g++ compilation (size_t definition) 
 
 namespace hope::detail {
 
