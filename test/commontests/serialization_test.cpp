@@ -92,3 +92,47 @@ TEST(SerializationTest, DeepStructSerialization)
 
     test_set<deep_recursive_struct> test_set_instance;
 }
+
+DECLARE_SERIALIZER(simple_struct) {
+    const bool changed = value.field_3 != prev_value.field_3; // serialize only third field
+    if (changed)
+        pack.write(value.field_3);
+    return changed;
+}
+
+DECLARE_DESERIALIZER(simple_struct) {
+        value.field_3 = pack.read<bool>();
+}
+
+TEST(SerializationTest, CustomSerialization)
+{
+    recursive_struct instance_to_serialize;
+    recursive_struct instance_to_deserialize;
+    hope::serialization::package pack;
+
+    using serializer_t = hope::serialization::pod_serializer<
+        recursive_struct,
+        hope::serialization::entity<simple_struct, simple_struct_serializer, simple_struct_deserializer>
+    >;
+
+    serializer_t serializer{ instance_to_serialize };
+    serializer_t deserializer{ instance_to_deserialize };
+
+    serializer.serialize(pack);
+    deserializer.deserialize(pack);
+    ASSERT_TRUE(instance_to_deserialize == instance_to_serialize);
+
+    pack.clear();
+    instance_to_serialize.field_3.field_3 = true;
+    serializer.serialize(pack);
+    deserializer.deserialize(pack);
+
+    ASSERT_TRUE(instance_to_deserialize == instance_to_serialize);
+
+    pack.clear();
+    instance_to_serialize.field_3.field_1 = 111;
+    serializer.serialize(pack);
+    deserializer.deserialize(pack);
+
+    ASSERT_TRUE(!(instance_to_deserialize == instance_to_serialize));
+}
