@@ -28,7 +28,7 @@ namespace hope {
             bool res = true;
             for_each(tuple, [&](const auto& lhs) {
                 res &= lhs == rhs;
-                });
+            });
             return res;
         }
 

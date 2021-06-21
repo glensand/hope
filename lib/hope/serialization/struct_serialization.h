@@ -51,11 +51,10 @@ namespace hope::serialization {
     private:
         template<typename TValue>
         void serialize(const TValue& value, const TValue& prev_value, package& pack, std::size_t& cur_index) {
-            if constexpr (serializer_holder_t::template has<TValue>()) {
+            if constexpr (serializer_holder_t::template has<TValue>())
                 serialize_custom_type(value, prev_value, pack, cur_index);
-            } else {
+            else 
                 serialize_impl(value, prev_value, pack, cur_index);
-            }
         }
 
         template <typename TValue>
@@ -90,12 +89,10 @@ namespace hope::serialization {
 
         template<typename TValue>
         void deserialize(TValue& value, package& pack, std::size_t& cur_index) {
-            if constexpr (serializer_holder_t::template has<TValue>()) {
+            if constexpr (serializer_holder_t::template has<TValue>())
                 deserialize_custom_type(value, pack, cur_index);
-            }
-            else {
+            else
                 deserialize_impl(value, pack, cur_index);
-            }
         }
 
         template <typename TValue>
