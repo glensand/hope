@@ -73,15 +73,3 @@ namespace hope::serialization {
     };
 
 }
-
-#define DECLARE_SERIALIZER(ClassName) \
-    struct ClassName##_serializer final{ \
-        bool operator()(const ClassName& value, const ClassName& prev_value, hope::serialization::package& pack) const; \
-}; \
-bool ClassName##_serializer::operator()(const ClassName& value, const ClassName& prev_value, hope::serialization::package& pack) const\
-
-#define DECLARE_DESERIALIZER(ClassName) \
-    struct ClassName##_deserializer final{ \
-        void operator()(ClassName& value, hope::serialization::package& pack) const; \
-}; \
-void ClassName##_deserializer::operator()(ClassName& value, hope::serialization::package& pack) const\
