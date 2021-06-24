@@ -47,7 +47,6 @@ struct struct_with_sting final {
 };
 
 static_assert(hope::detect_fields_count<struct_with_sting>() == 6);
-//static_assert(hope::compute_field_count_recursive<struct_with_sting>() == 6);
 
 struct recursive_struct_string final {
     struct_with_sting s1;
@@ -56,4 +55,15 @@ struct recursive_struct_string final {
 };
 
 static_assert(hope::detect_fields_count<recursive_struct_string>() == 3);
-//static_assert(hope::compute_field_count_recursive<recursive_struct_string>() == 13);
+
+struct struct_with_virtual_method {
+    int _1;
+    int _2;
+    int _3;
+    int _4;
+    int _5;
+
+    virtual void method() {}
+};
+
+static_assert(hope::detect_fields_count<struct_with_virtual_method>() == 1);

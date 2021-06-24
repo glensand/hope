@@ -18,8 +18,7 @@ namespace hope {
     template <typename... Ts>
     class all final {
     public:
-        template<typename... Vs,
-            typename = std::enable_if_t<std::is_same_v<type_list<Vs...>, type_list<Ts...>>>>
+        template<typename... Vs>
         constexpr explicit all(Vs&&... args) noexcept
             : tuple(std::forward<Vs>(args)...) { }
 
@@ -57,8 +56,7 @@ namespace hope {
     template <typename... Ts>
     class any final {
     public:
-        template<typename... Vs,
-            typename = std::enable_if_t<std::is_same_v<type_list<Vs...>, type_list<Ts...>>>>
+        template<typename... Vs>
         constexpr explicit any(Vs&&... args) noexcept
             : tuple(std::forward<Vs>(args)...) { }
 

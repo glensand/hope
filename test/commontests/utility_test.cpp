@@ -6,6 +6,8 @@
  * this file. If not, please write to: bezborodoff.gleb@gmail.com, or visit : https://github.com/glensand/hope
  */
 
+#include "gtest/gtest.h"
+
 #include "hope/components/utility.h"
 #include "hope/components/user_defined_types.h"
 
@@ -44,3 +46,12 @@ struct user_type final {
 };
 
 static_assert(hope::is_user_defined_type_v<user_type>);
+
+TEST(AnyTest, String)
+{
+    const std::string value{ "Variant" };
+    const std::string value2{ "Va riant" };
+    ASSERT_TRUE(hope::any("Variant", "Variant2", "Variant3") == value);
+    ASSERT_TRUE(hope::all("Variant", "Variant2", "Variant3") != value2);
+    ASSERT_TRUE(!(hope::all("Variant", "Variant2", "Variant3") == value2));
+}
