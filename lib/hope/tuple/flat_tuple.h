@@ -57,7 +57,7 @@ namespace hope {
                 : indexed_value<Ts, Is>(std::forward<VTs>(elems))...
             { }
         public:
-            constexpr static unsigned tuple_size{ size(types) };
+            constexpr static std::size_t tuple_size{ size(types) };
 
             /**
              * \brief Tries to find element of specified type, fails on static assert if element had not been found; method is not sensitive to the

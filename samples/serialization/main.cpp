@@ -59,7 +59,7 @@ int main()
 
     recursive_instance_to_serialize.field_1 = 11;
     recursive_instance_to_serialize.field_2 = 111111.f;
-    recursive_instance_to_serialize.field_3.field_1 = 116451111.f;
+    recursive_instance_to_serialize.field_3.field_1 = 116451111;
     recursive_instance_to_serialize.field_3.field_3 = true;
     recursive_serializer.serialize(pack);
     recursive_deserializer.deserialize(pack);

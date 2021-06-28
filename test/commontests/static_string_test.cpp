@@ -20,13 +20,3 @@ struct named_field final {
 
     }
 };
-
-struct test_query final {
-    /*named_field<5, int> protocol_version{ "protocol_version"_ss };*/
-};
-
-TEST(StaticStringTest, ConstexprInitialization)
-{
- /*   constexpr auto name = "protocol_version"_ss;*/
-    test_query query;
-}

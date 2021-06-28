@@ -65,7 +65,7 @@ namespace
         
         test_set_instance.instance_to_serialize.field_1 = 11;
         test_set_instance.instance_to_serialize.field_2 = 111111.f;
-        test_set_instance.instance_to_serialize.field_3.field_1 = 116451111.f;
+        test_set_instance.instance_to_serialize.field_3.field_1 = 116451111;
         test_set_instance.instance_to_serialize.field_3.field_3 = true;
         test_set_instance.serializer.serialize(test_set_instance.pack);
         test_set_instance.deserializer.deserialize(test_set_instance.pack);

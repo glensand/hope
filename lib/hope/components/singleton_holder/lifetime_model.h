@@ -19,7 +19,8 @@ namespace hope {
     }
 
     template <typename SingletonImpl>
-    struct lifetime_auto final {
+    class lifetime_auto final {
+    public:
         static void on_dead_reference() {
             throw std::runtime_error(
                 std::string(detail::OnErrorMessage) + typeid(SingletonImpl).name());
@@ -31,7 +32,8 @@ namespace hope {
     };
 
     template <typename SingletonImpl>
-    struct phoenix final {
+    class phoenix final {
+    public:
         static void on_dead_reference() {
             // ignore 
         }
@@ -42,7 +44,8 @@ namespace hope {
     };
 
     template <typename SingletonImpl>
-    struct immortal final {
+    class immortal final {
+    public:
         static void on_dead_reference() {
             throw std::runtime_error(
                 std::string(detail::OnErrorMessage) + typeid(SingletonImpl).name());
@@ -54,7 +57,8 @@ namespace hope {
     };
 
     template <typename SingletonImpl>
-    struct life_controller final {
+    class life_controller final {
+    public:
         static void on_dead_reference() {
             throw std::runtime_error(
                 std::string(detail::OnErrorMessage) + typeid(SingletonImpl).name());

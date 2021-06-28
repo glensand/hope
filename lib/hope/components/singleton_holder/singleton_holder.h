@@ -63,7 +63,7 @@ namespace hope {
         inline static VolatileType* m_instance{ nullptr };
         inline static bool m_destroyed{ false };
 
-        friend struct LifetimeModel<SingletonImpl>;
+        friend class LifetimeModel<SingletonImpl>;
     };
 
 }
