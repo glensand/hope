@@ -51,6 +51,7 @@ namespace hope {
         key_value_pair operator[](const Key& key) {
             const auto it = m_switch.find(key);
             assert(it == std::cend(m_switch));
+            (void)it; // remove clang unused variable warning
             auto&& [elementIt, _] = m_switch.emplace(key, functor_t{});
             return { *this, elementIt->first };
         }

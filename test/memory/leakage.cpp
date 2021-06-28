@@ -23,9 +23,11 @@ namespace hope::memory::testing{
 		}
 
 		void TearDown() override {
-			_CrtMemState teardown, diff;
+			_CrtMemState teardown{}, diff{};
 			_CrtMemCheckpoint(&teardown);
 			ASSERT_EQ(0, _CrtMemDifference(&diff, &m_startup, &teardown)) << "Memory leaks detected";
+			(void)teardown;
+			(void)diff;
 		}
 		_CrtMemState m_startup{ };
 #endif

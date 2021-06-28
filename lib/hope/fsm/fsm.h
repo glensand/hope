@@ -39,6 +39,7 @@ namespace hope::fsm {
                     if constexpr (std::is_invocable_v<fsm, state_t, Event&&>) {
                         using result_t = std::invoke_result_t<fsm, state_t, Event&&>;
                         auto transition_res = this->operator()(state, std::forward<Event>(e));
+                        (void)transition_res; // remove unused variable warning (var is handled 'cause it may be used later)
                         if constexpr (!std::is_same_v<result_t, void>) { // move to next state
                             cur_state = find<typename result_t::target_state_t>(type_list<States...>{});
                             transition_done = true;

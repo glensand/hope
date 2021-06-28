@@ -48,8 +48,13 @@ namespace hope::sample {
 			bool add_res4 = h.add(d7);
 			assert(add_res4 == false);
 			assert(add_res1 == add_res2 == add_res3 == true);
+			(void)add_res1;
+			(void)add_res2;
+			(void)add_res3;
+			(void)add_res4;
 
 			auto* p = h.get<derived1>();
+			(void)p;
 
 			std::cout << h.get<derived1>()->name() << std::endl
 				<< h.get<derived2>()->name() << std::endl
@@ -59,6 +64,9 @@ namespace hope::sample {
 			bool remove_res2 = h.remove(d2);
 			bool remove_res3 = h.remove(d5);
 			assert(remove_res1 == remove_res2 == remove_res3 == true);
+			(void)remove_res1;
+			(void)remove_res2;
+			(void)remove_res3;
 
 			assert(h.get<derived1>() == nullptr);
 			assert(h.get<derived2>() == nullptr);

@@ -95,13 +95,6 @@ TEST(TupleTest, TupleFromStruct)
     ASSERT_TRUE(std::abs(ts3Tuple.get<0>() - ts3._0) < std::numeric_limits<double>::epsilon());
 }
 
-TEST(TupleTest, StructDerived)
-{
-    const pod_imitator_derived d{};
-
-    //auto&& tuple = hope::tuple_from_struct(d);
-}
-
 TEST(TupleTest, TupleFromStructUnsafe)
 {
     constexpr test_struct_3 ts3{ 0.1, 0.1f, 11, true };

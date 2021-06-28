@@ -52,7 +52,9 @@ namespace hope::sample {
 			base* d1_0 = new derived1;
 			base* d1_1 = new derived1;
 			base* d1_2 = new derived1;
-
+			(void)d1_0;
+			(void)d1_1;
+			(void)d1_2;
 			assert(h.add(d1_0) && h.add(d1_1) && h.add(d1_2));
 			assert(h.get<derived1>()[0] == d1_0);
 			assert(h.get<derived1>()[1] == d1_1);

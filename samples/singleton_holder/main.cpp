@@ -14,6 +14,7 @@ namespace {
 	void assert_runner_valid(std::string_view name) {
 		auto* instance = hope::sample::object_factory::object_factory::instance().create(name);
 		assert(instance->name() == name);
+		(void)instance;
 	}
 }
 

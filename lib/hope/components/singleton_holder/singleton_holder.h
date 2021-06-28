@@ -51,6 +51,7 @@ namespace hope {
                 m_instance = CreationModel<SingletonImpl>::create();
                 LifetimeModel<SingletonImpl>::register_deleter(&destroy);
             }
+            (void)lock;
         }
         
         static void destroy() {

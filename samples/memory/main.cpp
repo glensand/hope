@@ -37,6 +37,7 @@ namespace hope::memory::testing {
 	void alloc_seq_by_all(std::index_sequence<Is...>, type_list<Ts...>list, std::size_t size) {
 		// so, my msvc cant use fold expressions properly, thus i have to do such shitty trick with curly braces
 		bool br[] = { alloc_impl<T<typename decltype(get_nth_type<Is>(list))::Type>>(size)... };
+		(void)br; // br is needed for pack expansion
 		alloc_impl<Empty>();
 	}
 
@@ -45,6 +46,7 @@ namespace hope::memory::testing {
 	void alloc_seq(std::index_sequence<Is...>, type_list<Ts...>list, std::size_t size) {
 		for(std::size_t i{ 0 }; i < size; ++i) {
 			bool br[] = { bool(new T<typename decltype(get_nth_type<Is>(list))::Type>())... };
+			(void)br; // br is needed for pack expansion
 			new Empty();
 		}
 	}

@@ -41,8 +41,8 @@ namespace hope {
 
         template <typename T, std::size_t... Is>
         constexpr auto extract_types(std::index_sequence<Is...> sequence) {
-            constexpr auto length = size(sequence);
             constexpr T object{ any_convertible_s<T, Is>{}... };
+            (void)object;
             return type_list<decltype(loophole::get<Is>(std::declval<T>()))...>{};
         }
     }

@@ -27,7 +27,11 @@ namespace hope::sample::typemap {
 
         void assert_vehicle_valid() const noexcept{
             for (auto* link : m_modules.get_links())
+            {
                 assert(link != nullptr);
+                (void)link; // remove clang unused variable warning
+            }
+                
         }
 
     private:
