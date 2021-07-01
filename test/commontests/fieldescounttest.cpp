@@ -37,13 +37,13 @@ static_assert(hope::detect_fields_count< fields_4<bool>>() == 4);
 static_assert(hope::compute_field_count_recursive_constexpr<fields_4<int>>() == 4);
 static_assert(hope::compute_field_count_recursive_constexpr< fields_4<bool>>() == 4);
 
-struct struct_with_sting final {
+struct struct_with_sting {
     std::string s1;
     std::string s2;
     std::string s3;
-    bool b1;
-    float f1;
-    int i1;
+    bool b1 = true;
+    float f1 = 1.f;
+    int i1 = 0;
 };
 
 static_assert(hope::detect_fields_count<struct_with_sting>() == 6);
@@ -56,14 +56,3 @@ struct recursive_struct_string final {
 
 static_assert(hope::detect_fields_count<recursive_struct_string>() == 3);
 
-struct struct_with_virtual_method {
-    int _1;
-    int _2;
-    int _3;
-    int _4;
-    int _5;
-
-    virtual void method() {}
-};
-
-static_assert(hope::detect_fields_count<struct_with_virtual_method>() == 1);

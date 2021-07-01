@@ -47,10 +47,11 @@ namespace hope {
         template<typename T>
         std::enable_if_t<is_user_defined_type_v<T>, std::size_t>
         compute_via_tuple() {
-            auto tuple = tuple_from_struct(T{}, field_policy::value{});
+            const T object{ };
+            auto tuple = tuple_from_struct(object, field_policy::reference{ });
             std::size_t count{ 0 };
-            for_each(tuple, [&](auto field) {
-                using type_t = decltype(field);
+            for_each(tuple, [&](auto &&field) {
+                using type_t = std::decay_t<decltype(field)>;
                 count += compute_via_tuple<type_t>();
             });
             return count;

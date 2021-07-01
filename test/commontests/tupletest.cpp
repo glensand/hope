@@ -47,15 +47,6 @@ struct struct_string_vector final {
     std::vector<std::string> vec_s;
 };
 
-struct struct_virtual_method {
-    std::string name1;
-    virtual void do_stuff() { std::cout << "struct_virtual_method"; }
-};
-
-struct struct_virtual_derived final : struct_virtual_method {
-    std::string name2;
-    virtual void do_stuff() override { std::cout << "struct_virtual_method"; }
-};
 }
 
 TEST(TupleTest, ConstexprInitialization)
@@ -209,52 +200,4 @@ TEST(TupleTest, StructVectorStringReference)
     ASSERT_TRUE(s.name == "field1_modified");
     ASSERT_TRUE(s.vec_i.back() == 144);
     ASSERT_TRUE(s.vec_s.back() == "last");
-}
-
-TEST(TupleTest, StructVirtualMethodValue)
-{
-    struct_virtual_method s;
-    s.name1 = "name1";
-    auto&& tuple = hope::tuple_from_struct(s);
-    auto&& first = tuple.get<0>();
-    ASSERT_TRUE(s.name1 == first);
-}
-
-TEST(TupleTest, StructVirtualMethodDerivedValue)
-{
-    //struct_virtual_derived s;
-    //s.name1 = "name1";
-    //s.name2 = "name2";
-    //auto&& tuple = hope::tuple_from_struct(s);
-    //auto&& first = tuple.get<0>();
-    //auto&& second = tuple.get<1>();
-    //ASSERT_TRUE(s.name1 == first);
-    //ASSERT_TRUE(s.name2 == second);
-}
-
-TEST(TupleTest, StructVirtualMethodReference)
-{
-    //struct_virtual_method s;
-    //s.name1 = "name1";
-    //auto&& tuple = hope::tuple_from_struct(s, hope::field_policy::reference{});
-    //auto&& first = tuple.get<0>();
-    //ASSERT_TRUE(s.name1 == first);
-    //first = "name1changed";
-    //ASSERT_TRUE(s.name1 == "name1changed");
-}
-
-TEST(TupleTest, StructVirtualMethodDerivedReference)
-{
-    //struct_virtual_derived s;
-    //s.name1 = "name1";
-    //s.name2 = "name2";
-    //auto&& tuple = hope::tuple_from_struct(s, hope::field_policy::reference{});
-    //auto&& first = tuple.get<0>();
-    //auto&& second = tuple.get<1>();
-    //ASSERT_TRUE(s.name1 == first);
-    //ASSERT_TRUE(s.name2 == second);
-    //first = "name1changed";
-    //second = "name2changed";
-    //ASSERT_TRUE(s.name1 == "name1changed");
-    //ASSERT_TRUE(s.name2 == "name2changed");
 }

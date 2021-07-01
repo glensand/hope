@@ -13,15 +13,16 @@
 namespace hope {
     namespace detail {
 
-        template <std::size_t I>
+        template <typename TStruct, std::size_t I>
         struct any_convertible {
-            template <typename T>
+
+            template <typename T, typename = std::enable_if_t<!std::is_base_of_v<T, TStruct>>>
             constexpr operator T& () const noexcept;
         };
 
         template <typename T, std::size_t... Is>
         constexpr auto is_constructable_n(std::index_sequence<Is...>)
-            ->decltype(T{ any_convertible<Is>{}... }, bool()) {
+            ->decltype(T{ any_convertible<T, Is>{}... }, bool()) {
             return true;
         }
 
@@ -47,6 +48,10 @@ namespace hope {
 
     template <typename T>
     constexpr std::size_t detect_fields_count() {
+
+        static_assert(!std::is_polymorphic_v<T>, "---- hope ---- Polymorphic types are not allowed");
+        static_assert(std::is_aggregate_v<T>, "---- hope ---- Only aggregate initializable types are allowed");
+
         constexpr auto size = sizeof(T);
         return detail::detect_fields_count_impl<T>(std::make_index_sequence<size + 2>());
     }
