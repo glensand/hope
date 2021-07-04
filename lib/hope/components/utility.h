@@ -47,7 +47,7 @@ namespace hope {
         }
 
     private:
-        flat_tuple<Ts...> tuple;
+        flat_tuple<std::decay_t<Ts>...> tuple;
     };
 
     template <typename... Ts>
@@ -65,7 +65,7 @@ namespace hope {
             bool res = false;
             for_each(tuple, [&](const auto& lhs) {
                 res |= lhs == rhs;
-                });
+            });
             return res;
         }
 
@@ -85,7 +85,7 @@ namespace hope {
         }
 
     private:
-        flat_tuple<Ts...> tuple;
+        flat_tuple<std::decay_t<Ts>...> tuple;
     };
 
     template <typename... Ts>
