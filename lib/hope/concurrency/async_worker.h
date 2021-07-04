@@ -11,6 +11,7 @@
 #include "hope/concurrency/queue.h"
 #include "hope/concurrency/event.h"
 #include <functional>
+#include <thread>
 
 namespace hope::concurrency {
 
