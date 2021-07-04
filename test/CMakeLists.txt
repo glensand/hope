@@ -37,12 +37,15 @@ add_definitions(-D_ENABLE_EXTENDED_ALIGNED_STORAGE=1)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 file(GLOB TEST_HEADERS
-    *.h)
+    *.h
+    )
 	
 file(GLOB TEST_SOURSES
     *.cpp
     memory/*.cpp
-    commontests/*.cpp)
+    commontests/*.cpp
+    concurrency/*.cpp
+    )
 
 add_executable(${BINARY} ${TEST_HEADERS} ${TEST_SOURSES})
 add_test(NAME ${BINARY} COMMAND ${BINARY})

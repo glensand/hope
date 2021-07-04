@@ -9,6 +9,7 @@
 #pragma once
 
 #include "hope/concurrency/async_worker.h"
+#include <array>
 
 namespace hope::concurrency {
 
@@ -27,6 +28,7 @@ namespace hope::concurrency {
 
         void add_job(Job&& task) noexcept;
 
+        void wait();
     private:
         WorkersPool m_pool;
     };
@@ -51,7 +53,14 @@ namespace hope::concurrency {
 
     template <std::size_t ThreadCount>
     void async_worker_pool<ThreadCount>::add_job(Job&& task) noexcept {
-        std::size_t thread_index = std::rand() / ThreadCount;
+        std::size_t thread_index = (1 + ThreadCount) * std::rand() / RAND_MAX;
+        thread_index = thread_index % ThreadCount;
         m_pool[thread_index].add_job(std::move(task));
+    }
+
+    template <std::size_t ThreadCount>
+    void async_worker_pool<ThreadCount>::wait() {
+        for (auto&& thread : m_pool)
+            thread.wait();
     }
 }

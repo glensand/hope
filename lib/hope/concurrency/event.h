@@ -41,12 +41,9 @@ namespace hope::concurrency {
 
     class auto_reset_event final : public synchronization_event {
     public:
-        explicit auto_reset_event()
-            : synchronization_event(policy::Auto) {
-            
-        }
+        explicit auto_reset_event();
 
-        ~auto_reset_event() = default;
+        ~auto_reset_event();
 
         auto_reset_event(auto_reset_event&&) = delete;
         auto_reset_event(const auto_reset_event&) = delete;
@@ -56,12 +53,9 @@ namespace hope::concurrency {
 
     class manual_reset_event final : public synchronization_event {
     public:
-        explicit manual_reset_event()
-            : synchronization_event(policy::Manual) {
+        explicit manual_reset_event();
 
-        }
-
-        ~manual_reset_event() = default;
+        ~manual_reset_event();
 
         manual_reset_event(manual_reset_event&&) = delete;
         manual_reset_event(const manual_reset_event&) = delete;

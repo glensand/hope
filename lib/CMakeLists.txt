@@ -26,6 +26,7 @@ file(GLOB HOPE_HEADERS
 file(GLOB HOPE_SOURSES
     hope/memory/small_object/*.cpp
     hope/serialization/*.cpp
+    hope/concurrency/*.cpp
 )
 
 add_library(hope STATIC ${HOPE_HEADERS} ${HOPE_SOURSES})

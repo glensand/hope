@@ -8,7 +8,7 @@
 
 #pragma once
 
-#include <queue>
+#include <deque>
 #include "hope/concurrency/spin_lock.h"
 #include <mutex>
 
@@ -25,24 +25,26 @@ namespace hope::concurrency {
         ~queue() = default;
 
         template <typename... Args>
-        void emplace(Args&& args...) {
-            std::lock_guard lock(m_lock);
-            m_queue_impl.emplace(std::forward<Args>(args...));
+        void push(Args&&... args) {
+            const std::lock_guard lock(m_lock);
+            m_queue_impl.emplace_back(std::forward<Args...>(args...));
         }
 
         T pop() {
-            std::lock_guard lock(m_lock);
-            return m_queue_impl.pop();
+            const std::lock_guard lock(m_lock);
+            auto top = m_queue_impl.front();
+            m_queue_impl.pop_front();
+            return top;
         }
 
         bool empty() const noexcept {
-            std::lock_guard lock(m_lock);
+            const std::lock_guard lock(m_lock);
             return m_queue_impl.empty();
         }
 
     private:
-        spin_lock m_lock;
-        std::queue<T> m_queue_impl;
+        mutable spin_lock m_lock;
+        std::deque<T> m_queue_impl;
     };
 
 }

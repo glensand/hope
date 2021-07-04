@@ -23,4 +23,22 @@ namespace hope::concurrency {
     bool synchronization_event::wait(long waiting_time) const noexcept {
         return  WaitForSingleObject(m_event, waiting_time) != WAIT_TIMEOUT;
     }
+
+    auto_reset_event::auto_reset_event()
+        : synchronization_event(policy::Auto) {
+
+    }
+
+    auto_reset_event::~auto_reset_event() {
+
+    }
+
+    manual_reset_event::manual_reset_event()
+        : synchronization_event(policy::Manual) {
+
+    }
+
+    manual_reset_event::~manual_reset_event() {
+
+    }
 }
