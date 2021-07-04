@@ -39,6 +39,7 @@ namespace hope::concurrency {
 #else
         std::unique_lock lk(m_mutex);
         m_cv.wait(lk);
+        return true;
 #endif
     }
 
