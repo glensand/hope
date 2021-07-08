@@ -27,10 +27,6 @@ struct test_struct_3 {
     bool _3;
 };
 
-struct pod_imitator_derived final : pod_imitator {
-    bool b;
-};
-
 struct struct_string final {
     std::string name;
     int index;
@@ -200,4 +196,21 @@ TEST(TupleTest, StructVectorStringReference)
     ASSERT_TRUE(s.name == "field1_modified");
     ASSERT_TRUE(s.vec_i.back() == 144);
     ASSERT_TRUE(s.vec_s.back() == "last");
+}
+
+TEST(TupleTest, TupleLikeHolder)
+{
+    struct s final
+    {
+        hope::flat_tuple<struct_int_vector, struct_string, struct_string_vector> t;
+
+        const struct_int_vector& get1() const { return t.get<struct_int_vector>(); }
+        struct_int_vector& get1() { return t.get<struct_int_vector>(); }
+    };
+
+    const s test_struct1;
+    s test_struct2;
+
+    auto&& res1 = test_struct1.get1();
+    auto&& res2 = test_struct2.get1();
 }
