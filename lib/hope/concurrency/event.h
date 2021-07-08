@@ -7,7 +7,13 @@
  */
 
 #pragma once
+
 #include <limits>
+
+#if !defined(_WIN32) && !defined(_WIN64)
+#include <condition_variable>
+#include <mutex>
+#endif
 
 namespace hope::concurrency {
 
@@ -35,18 +41,20 @@ namespace hope::concurrency {
         synchronization_event& operator=(const synchronization_event&) = delete;
 
     private:
+#if defined(_WIN32) || defined(_WIN64)
         using handle = void*;
         handle m_event;
+#else
+        mutable std::condition_variable m_cv;
+        mutable std::mutex m_mutex;
+#endif
     };
 
     class auto_reset_event final : public synchronization_event {
     public:
-        explicit auto_reset_event()
-            : synchronization_event(policy::Auto) {
-            
-        }
+        explicit auto_reset_event();
 
-        ~auto_reset_event() = default;
+        ~auto_reset_event();
 
         auto_reset_event(auto_reset_event&&) = delete;
         auto_reset_event(const auto_reset_event&) = delete;
@@ -56,12 +64,9 @@ namespace hope::concurrency {
 
     class manual_reset_event final : public synchronization_event {
     public:
-        explicit manual_reset_event()
-            : synchronization_event(policy::Manual) {
+        explicit manual_reset_event();
 
-        }
-
-        ~manual_reset_event() = default;
+        ~manual_reset_event();
 
         manual_reset_event(manual_reset_event&&) = delete;
         manual_reset_event(const manual_reset_event&) = delete;

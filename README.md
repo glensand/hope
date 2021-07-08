@@ -69,3 +69,10 @@ auto* link = new der2;
 const auto index = try_cast(link, seq);
 ```
 [See](https://github.com/glensand/hope/tree/master/samples/typelist) for more typelst examples
+### Serialization
+If you want to serialize aggregate - like structure using change mask (for instance). You can use hope::serialization::pod_serializer. 
+Basic principles:
+On first step serializer/deserealizer create tuple of references to the each field of specified structure, then iterate through fields and call special method to each of them.
+Serializer compares each field and fill bit mask. After all writes it before main data.
+Deserializer operates in reverse order.
+You have the ability to specify custom serializers as template arguments, this is useful for additional compression of custom structures.

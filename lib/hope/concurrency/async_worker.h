@@ -11,6 +11,7 @@
 #include "hope/concurrency/queue.h"
 #include "hope/concurrency/event.h"
 #include <functional>
+#include <thread>
 
 namespace hope::concurrency {
 
@@ -18,7 +19,7 @@ namespace hope::concurrency {
     {
         using job = std::function<void()>;
     public:
-        async_worker() noexcept = default;
+        async_worker() noexcept;
 
         void run() noexcept;
 
@@ -28,15 +29,18 @@ namespace hope::concurrency {
 
         void add_job(job&& task) noexcept;
 
+        void wait() const noexcept;
     private:
         void run_impl() noexcept;
 
         std::atomic_flag m_shut_down;
+        std::atomic_bool m_wait;
         std::atomic_bool m_launched;
         queue<job> m_job_queue;
         std::thread m_thread_impl;
 
         auto_reset_event m_job_added;
+        auto_reset_event m_jobs_complete;
     };
 
 }

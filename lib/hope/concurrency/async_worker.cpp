@@ -14,30 +14,43 @@ namespace hope::concurrency {
         stop();
     }
 
+    async_worker::async_worker() noexcept {
+        m_wait.store(false, std::memory_order_release);
+    }
+
     void async_worker::run() noexcept {
         m_launched.store(true, std::memory_order_release);
         m_shut_down.test_and_set(std::memory_order_release);
         m_thread_impl = std::thread([=] {
             run_impl();
-            });
+        });
     }
 
     void async_worker::run_impl () noexcept {
         for(; m_launched.load(std::memory_order_acquire);) {
+            m_wait.store(false, std::memory_order_release);
             while(!m_job_queue.empty()) {
-                auto&& job = m_job_queue.pop();
-                job();
+                if(auto && job = m_job_queue.pop(); job)
+                    job();
             }
 
             if (!m_shut_down.test_and_set(std::memory_order_acquire))
                 return;
 
+            m_wait.store(true, std::memory_order_release);
+            m_jobs_complete.set();
             (void)m_job_added.wait();
         }
     }
 
     void async_worker::add_job(job&& task) noexcept {
-        m_job_queue.emplace(std::move(task));
+        m_job_queue.push(std::move(task));
         m_job_added.set();
+    }
+
+    void async_worker::wait() const noexcept {
+        if(!m_wait.load(std::memory_order_acquire)) {
+            (void)m_jobs_complete.wait();
+        }
     }
 }
