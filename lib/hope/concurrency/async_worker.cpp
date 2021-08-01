@@ -21,7 +21,7 @@ namespace hope::concurrency {
     void async_worker::run() noexcept {
         m_launched.store(true, std::memory_order_release);
         m_shut_down.test_and_set(std::memory_order_release);
-        m_thread_impl = std::thread([=] {
+        m_thread_impl = std::thread([this] {
             run_impl();
         });
     }

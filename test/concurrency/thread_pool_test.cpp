@@ -28,7 +28,7 @@ TEST(WorkerPoolTest, ChangeTest)
         test_v.emplace_back(false);
     }
 
-    hope::concurrency::async_worker_pool<9> pool;
+    hope::concurrency::async_worker_pool pool;
     pool.run();
     for(auto&& c : test_v) {
         pool.add_job([&] { c.changed = true; });
@@ -46,7 +46,7 @@ TEST(WorkerPoolTest, Stress)
     for (auto i = 0; i < 1000; ++i)
         ints.push_back(i);
 
-    hope::concurrency::async_worker_pool<9> pool;
+    hope::concurrency::async_worker_pool pool;
     pool.run();
     for (auto i = 0; i < 300; ++i)
         pool.add_job([&] {

@@ -9,58 +9,47 @@
 #pragma once
 
 #include "hope/concurrency/async_worker.h"
-#include <array>
+#include <vector>
 
 namespace hope::concurrency {
 
-    template<std::size_t ThreadCount>
     class async_worker_pool final {
-        using WorkersPool = std::array<async_worker, ThreadCount>;
+        using WorkersPool = std::vector<async_worker>;
     public:
         using Job = async_worker::job;
-        async_worker_pool() noexcept = default;
 
+        explicit async_worker_pool(std::size_t thread_count = std::thread::hardware_concurrency() + 1);
+
+        /**
+         * \brief Runs all the recently created threads
+         */
         void run() noexcept;
 
+        /**
+         * \brief Stops all the controlled threads, completes jobs 
+         */
         void stop() noexcept;
 
+        /**
+         * \brief Stops all the controlled threads, when this method will be called
+         * all jobs will bve discarded
+         */
         void shutdown() noexcept;
 
+        /**
+         * \brief Adds given job to the random controlled thread
+         * \param task Job to be added
+         */
         void add_job(Job&& task) noexcept;
 
+        /**
+         * \brief Synchronous operation, wait while all recently added jobs will be completed.
+         * This method is not intended to be called from workers
+         */
         void wait();
     private:
+        const std::size_t m_thread_count;
         WorkersPool m_pool;
     };
 
-    template <std::size_t ThreadCount>
-    void async_worker_pool<ThreadCount>::run() noexcept {
-        for (auto&& thread : m_pool)
-            thread.run();
-    }
-
-    template <std::size_t ThreadCount>
-    void async_worker_pool<ThreadCount>::stop() noexcept {
-        for (auto&& thread : m_pool)
-            thread.stop();
-    }
-
-    template <std::size_t ThreadCount>
-    void async_worker_pool<ThreadCount>::shutdown() noexcept {
-        for (auto&& thread : m_pool)
-            thread.shutdown();
-    }
-
-    template <std::size_t ThreadCount>
-    void async_worker_pool<ThreadCount>::add_job(Job&& task) noexcept {
-        std::size_t thread_index = (1 + ThreadCount) * std::rand() / RAND_MAX;
-        thread_index = thread_index % ThreadCount;
-        m_pool[thread_index].add_job(std::move(task));
-    }
-
-    template <std::size_t ThreadCount>
-    void async_worker_pool<ThreadCount>::wait() {
-        for (auto&& thread : m_pool)
-            thread.wait();
-    }
 }

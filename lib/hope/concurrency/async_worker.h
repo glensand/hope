@@ -21,14 +21,34 @@ namespace hope::concurrency {
         using job = std::function<void()>;
         async_worker() noexcept;
 
+        /**
+         * \brief Starts the asynchronous worker, after calling this method you can add new job
+         * via add_job
+         */
         void run() noexcept;
 
+        /**
+         * \brief Synchronously wait while all recently added jobs will be completed, and after it shut down
+         * inner thread
+         */
         void stop() noexcept;
 
+        /**
+         * \brief Unlike method "Stop" this method does not wait any operation, and stops worker's activity
+         * as soon as possible, all the remaining jobs will be discarded
+         */
         void shut_down() noexcept;
 
+        /**
+         * \brief Adds new job to the operation queue, the job may be an empty function, in this case it will be
+         * just ignored..
+         * \param task the job to be added
+         */
         void add_job(job&& task) noexcept;
 
+        /**
+         * \brief Waits while all the recently added jobs will be completed
+         */
         void wait() const noexcept;
     private:
         void run_impl() noexcept;
