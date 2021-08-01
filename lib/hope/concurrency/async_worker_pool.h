@@ -16,8 +16,8 @@ namespace hope::concurrency {
     template<std::size_t ThreadCount>
     class async_worker_pool final {
         using WorkersPool = std::array<async_worker, ThreadCount>;
-        using Job = std::function<void()>;
     public:
+        using Job = async_worker::job;
         async_worker_pool() noexcept = default;
 
         void run() noexcept;

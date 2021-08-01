@@ -17,8 +17,8 @@ namespace hope::concurrency {
 
     class async_worker final
     {
-        using job = std::function<void()>;
     public:
+        using job = std::function<void()>;
         async_worker() noexcept;
 
         void run() noexcept;
