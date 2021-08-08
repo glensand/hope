@@ -67,6 +67,13 @@ namespace hope::concurrency {
             return false;
         }
 
+        // stub
+        T* dequeue() {
+            T value;
+            try_dequeue(value);
+            return nullptr;
+        }
+
     private:
         // internal node structure 
         struct node final {
