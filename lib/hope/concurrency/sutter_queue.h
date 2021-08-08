@@ -13,52 +13,44 @@
 namespace hope::concurrency {
 
     template <typename T>
-	class sutter_queue final
-	{
-	private:
-		struct Node
-		{
+	class sutter_queue final {
+
+		struct node final {
 			template<typename TVal>
-			Node(TVal&& val) : value(std::forward<TVal>(val)), next(nullptr) { }
-			T value;
-			Node* next;
+			explicit node(TVal&& val)
+		        : value(std::forward<TVal>(val)), next(nullptr) { }
+
+		    T value;
+
+			node* next{ nullptr };
 		};
 	
-		Node* m_first;	// Producer Only
-		std::atomic<Node*> 	m_divider;	// Producer / Consumer
-		std::atomic<Node*> 	m_last;		// Producer / Consumer
-	
 	public:
+
 		// This queue must be fully constructed before being used in another thread.
-		sutter_queue(std::size_t pre_alloc = 0)
-		{
-			m_first = m_divider = m_last = new Node(T());
+		sutter_queue() {
+			m_first = m_divider = m_last = new node(T());
 		}
 	
-		~sutter_queue()
-		{
-			while (m_first != nullptr)
-			{
-				Node* temp = m_first;
+		~sutter_queue() {
+			while (m_first != nullptr) {
+				node* temp = m_first;
 				m_first = temp->next;
 				delete temp;
 			}
 		}
 	
 		template<typename TVal>
-		void enqueue(TVal&& item)
-		{
-			Node* tmpLast = m_last.load();
-			tmpLast->next = new Node(std::forward<TVal>(item));
+		void enqueue(TVal&& item) {
+			auto* last = m_last.load();
+			last->next = new node(std::forward<TVal>(item));
 	
-			ProduceImpl(tmpLast);
+			produce_impl(last);
 		}
 	
-		bool Consume(T& item)
-		{
-			Node* divNode = m_divider.load();
-			Node* lastNode = m_last.load();
-			if (divNode != lastNode)
+		bool dequeue(T& item) {
+			auto* divNode = m_divider.load();
+            if (auto * lastNode = m_last.load(); divNode != lastNode)
 			{
 				item = std::move(divNode->next->value);
 				divNode = divNode->next;
@@ -68,42 +60,33 @@ namespace hope::concurrency {
 			}
 			return false;
 		}
-
-		T* dequeue()
-		{
-			T value;
-			Consume(value);
-			return nullptr;
-		}
-
-		bool Peek(T& item)
-		{
-			Node* divNode = m_divider.load();
-			Node* lastNode = m_last.load();
-			if (divNode != lastNode)
-			{
-				item = divNode->next->value;
-				return true;
-			}
-			return false;
-		}
 	
 	private:
-		void ProduceImpl(Node* tmpLast)
-		{
+		void produce_impl(node* tmpLast) {
 			tmpLast = tmpLast->next;
 	
 			m_last.store(tmpLast);
 	
-			Node* div = m_divider.load();
-			while (m_first != div)
-			{
-				Node* temp = m_first;
+			node* div = m_divider.load();
+			while (m_first != div) {
+				node* temp = m_first;
 				m_first = m_first->next;
 				delete temp;
 	
 				div = m_divider.load();
 			}
 		}
+
+		constexpr static std::size_t CacheLineSize{ 64 };
+
+		node* m_first;	// Producer Only
+
+		uint8_t m_cache_padding1[CacheLineSize]{ };
+
+		std::atomic<node*> 	m_divider;	// Producer / Consumer
+
+		uint8_t m_cache_padding2[CacheLineSize]{ };
+
+		std::atomic<node*> 	m_last;		// Producer / Consumer
 	};
 }
