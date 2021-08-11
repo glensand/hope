@@ -10,6 +10,14 @@
 
 #include <atomic>
 
+#undef mm_pause
+#if defined(_MSC_VER) || defined(__INTEL_COMPILER)
+#   include <immintrin.h>
+#   define mm_pause _mm_pause()
+#else
+#   define mm_pause
+#endif
+
 namespace hope::concurrency{
 
     class spin_lock {
@@ -28,8 +36,7 @@ namespace hope::concurrency{
                 while (m_lock.load(std::memory_order_relaxed)) {
                     // Issue X86 PAUSE or ARM YIELD instruction to reduce contention between
                     // hyper-threads
-                    // TODO: add correct compiler independent wait
-                    // __builtin_ia32_pause(); 
+                    mm_pause;
                 }
             }
         }
