@@ -41,7 +41,7 @@ namespace hope::concurrency {
 
         ~spsc_queue() {
             for(auto* cur_node = m_first; cur_node != nullptr;) {
-                auto* next = cur_node->m_next;
+                auto* next = cur_node->next;
                 delete cur_node;
                 cur_node = next;
             }
@@ -51,27 +51,20 @@ namespace hope::concurrency {
         void enqueue(Args&&... v)
         {
             auto* n = alloc_node(std::forward<Args>(v)...);
-            n->next_ = 0;
-            store_release(&m_head->next_, n);
+            n->next = nullptr;
+            store_release(&m_head->next, n);
             m_head = n;
         }
 
         bool try_dequeue(T& v) {
-            if (load_consume(&m_tail->next_))
+            if (load_consume(&m_tail->next))
             {
-                v = m_tail->next_->value_;
-                store_release(&m_tail, m_tail->next_);
+                v = m_tail->next->value;
+                store_release(&m_tail, m_tail->next);
                 return true;
             }
 
             return false;
-        }
-
-        // stub
-        T* dequeue() {
-            T value;
-            try_dequeue(value);
-            return nullptr;
         }
 
     private:
@@ -79,10 +72,10 @@ namespace hope::concurrency {
         struct node final {
             template<typename... Args>
             node(Args&&... args)
-                : m_value(std::forward<Args>(args)...) { }
+                : value(std::forward<Args>(args)...) { }
 
-            node* m_next = nullptr;
-            T m_value;
+            node* next = nullptr;
+            T value;
         };
 
         // consumer part 
@@ -94,7 +87,7 @@ namespace hope::concurrency {
 
         // delimiter between consumer part and producer part
         // is needed to put this parts to the different cache lines
-        constexpr uint8_t m_cache_line_pad_[CacheLineSize]{};
+        const uint8_t m_cache_line_pad_[CacheLineSize]{};
 
         // producer part 
         // accessed only by producer 
@@ -105,8 +98,8 @@ namespace hope::concurrency {
         template<typename... Args>
         node* create_from_internal(Args&&... args) {
             node* n = m_first;
-            m_first = m_first->next_;
-            n->value_ = T(std::forward<Args>(args)...);
+            m_first = m_first->next;
+            n->value = T(std::forward<Args>(args)...);
             return n;
         }
 
@@ -116,12 +109,12 @@ namespace hope::concurrency {
             // if attempt fails, allocates node via ::operator new() 
 
             if (m_first != m_m_tail_copy)
-                return create_from_internal(std::forward<Args>(args));
+                return create_from_internal(std::forward<Args>(args)...);
 
             m_m_tail_copy = load_consume(&m_tail);
 
             if (m_first != m_m_tail_copy)
-                return create_from_internal(std::forward<Args>(args));
+                return create_from_internal(std::forward<Args>(args)...);
 
             return new node(std::forward<Args>(args)...);
         }
