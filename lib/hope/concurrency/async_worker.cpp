@@ -29,8 +29,9 @@ namespace hope::concurrency {
     void async_worker::run_impl () noexcept {
         for(; m_launched.load(std::memory_order_acquire);) {
             m_wait.store(false, std::memory_order_release);
-            while(!m_job_queue.empty()) {
-                if(auto && job = m_job_queue.pop(); job)
+            job_t job;
+            while(m_job_queue.try_dequeue(job)) {
+                if(job)
                     job();
             }
 
@@ -43,8 +44,8 @@ namespace hope::concurrency {
         }
     }
 
-    void async_worker::add_job(job&& task) noexcept {
-        m_job_queue.push(std::move(task));
+    void async_worker::add_job(job_t&& task) noexcept {
+        m_job_queue.enqueue(std::move(task));
         m_job_added.set();
     }
 

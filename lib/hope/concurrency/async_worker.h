@@ -8,7 +8,7 @@
 
 #pragma once
 
-#include "hope/concurrency/queue.h"
+#include "hope/concurrency/spsc_queue.h"
 #include "hope/concurrency/event.h"
 #include <functional>
 #include <thread>
@@ -18,7 +18,7 @@ namespace hope::concurrency {
     class async_worker final
     {
     public:
-        using job = std::function<void()>;
+        using job_t = std::function<void()>;
         async_worker() noexcept;
 
         /**
@@ -44,7 +44,7 @@ namespace hope::concurrency {
          * just ignored..
          * \param task the job to be added
          */
-        void add_job(job&& task) noexcept;
+        void add_job(job_t&& task) noexcept;
 
         /**
          * \brief Waits while all the recently added jobs will be completed
@@ -56,7 +56,7 @@ namespace hope::concurrency {
         std::atomic_flag m_shut_down;
         std::atomic_bool m_wait;
         std::atomic_bool m_launched;
-        queue<job> m_job_queue;
+        spsc_queue<job_t> m_job_queue;
         std::thread m_thread_impl;
 
         auto_reset_event m_job_added;

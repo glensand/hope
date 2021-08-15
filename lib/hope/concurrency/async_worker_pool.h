@@ -16,7 +16,7 @@ namespace hope::concurrency {
     class async_worker_pool final {
         using WorkersPool = std::vector<async_worker>;
     public:
-        using Job = async_worker::job;
+        using job_t = async_worker::job_t;
 
         explicit async_worker_pool(std::size_t thread_count = std::thread::hardware_concurrency() + 1);
 
@@ -40,7 +40,7 @@ namespace hope::concurrency {
          * \brief Adds given job to the random controlled thread
          * \param task Job to be added
          */
-        void add_job(Job&& task) noexcept;
+        void add_job(job_t&& task) noexcept;
 
         /**
          * \brief Synchronous operation, wait while all recently added jobs will be completed.

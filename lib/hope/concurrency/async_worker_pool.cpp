@@ -24,7 +24,7 @@ namespace hope::concurrency {
             thread.shut_down();
     }
 
-    void async_worker_pool::add_job(Job&& task) noexcept {
+    void async_worker_pool::add_job(job_t&& task) noexcept {
         auto thread_index = std::size_t((1 + m_thread_count) * (double)std::rand() / RAND_MAX);
         thread_index = thread_index % m_thread_count;
         m_pool[thread_index].add_job(std::move(task));
