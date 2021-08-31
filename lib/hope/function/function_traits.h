@@ -15,11 +15,18 @@ namespace hope {
     template <typename T>
     struct function_traits final : function_traits<decltype(&T::operator())> {};
 
-    template <typename ClassType, typename ReturnType, typename... Args>
-    struct function_traits<ReturnType(ClassType::*)(Args...) const> {
-        using result_t = ReturnType;
-        static constexpr type_list<Args...> arg_types;
-        static constexpr auto arity = sizeof...(Args);
+    template <typename TClass, typename TReturn, typename... Ts>
+    struct function_traits<TReturn(TClass::*)(Ts...) const> {
+        using result_t = TReturn;
+        static constexpr type_list<Ts...> arg_types;
+        static constexpr auto arity = sizeof...(Ts);
+    };
+
+    template <typename TClass, typename TReturn, typename... Ts>
+    struct function_traits<TReturn(TClass::*)(Ts...)> {
+        using result_t = TReturn;
+        static constexpr type_list<Ts...> arg_types;
+        static constexpr auto arity = sizeof...(Ts);
     };
 
 }
