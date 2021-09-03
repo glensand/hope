@@ -20,7 +20,7 @@ namespace hope {
     public:
         template<typename... Vs>
         constexpr explicit all(Vs&&... args) noexcept
-            : tuple(std::forward<Vs>(args)...) { }
+            : tuple(args...) { } // do not forward vals
 
         template <typename T>
         constexpr bool operator==(const T& rhs) const noexcept {
@@ -58,7 +58,7 @@ namespace hope {
     public:
         template<typename... Vs>
         constexpr explicit any(Vs&&... args) noexcept
-            : tuple(std::forward<Vs>(args)...) { }
+            : tuple(args...) { } // do not forward vals
 
         template <typename T>
         constexpr bool operator==(const T& rhs) const noexcept {
