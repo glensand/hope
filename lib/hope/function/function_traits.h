@@ -18,14 +18,14 @@ namespace hope {
     template <typename TClass, typename TReturn, typename... Ts>
     struct function_traits<TReturn(TClass::*)(Ts...) const> {
         using result_t = TReturn;
-        static constexpr type_list<Ts...> arg_types;
+        static constexpr type_list<Ts...> arg_types{};
         static constexpr auto arity = sizeof...(Ts);
     };
 
     template <typename TClass, typename TReturn, typename... Ts>
     struct function_traits<TReturn(TClass::*)(Ts...)> {
         using result_t = TReturn;
-        static constexpr type_list<Ts...> arg_types;
+        static constexpr type_list<Ts...> arg_types{};
         static constexpr auto arity = sizeof...(Ts);
     };
 

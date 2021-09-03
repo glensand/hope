@@ -21,7 +21,7 @@ namespace {
 
 TEST(BitFieldTest, Bit4Test)
 {
-    st_bit_4 st;
+    st_bit_4 st{};
     st._0 = ~0;
     st._1 = ~0;
     st._2 = ~0;
