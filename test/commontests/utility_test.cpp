@@ -20,6 +20,8 @@ enum test_enum_1 : unsigned {
     val_3,
 };
 
+#if defined(_MSC_VER) || defined(__INTEL_COMPILER)
+
 static_assert(any(val_0, val_1, val_2) == val_1);
 static_assert(!(any(val_0, val_1, val_2) == val_3));
 
@@ -50,9 +52,11 @@ static_assert(hope::is_user_defined_type_v<user_type>);
 TEST(AnyTest, String)
 {
     // TODO:: make code compilable on gcc
-    //const std::string value{ "Variant" };
-    //const std::string value2{ "Va riant" };
-    //ASSERT_TRUE(hope::any("Variant", "Variant2", "Variant3") == value);
-    //ASSERT_TRUE(hope::all("Variant", "Variant2", "Variant3") != value2);
-    //ASSERT_TRUE(!(hope::all("Variant", "Variant2", "Variant3") == value2));
+    const std::string value{ "Variant" };
+    const std::string value2{ "Va riant" };
+    ASSERT_TRUE(hope::any("Variant", "Variant2", "Variant3") == value);
+    ASSERT_TRUE(hope::all("Variant", "Variant2", "Variant3") != value2);
+    ASSERT_TRUE(!(hope::all("Variant", "Variant2", "Variant3") == value2));
 }
+
+#endif
