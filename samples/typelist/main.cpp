@@ -11,8 +11,8 @@
 
 int main()
 {
-	hope::sample::single_value::run();
-	hope::sample::multiple_value::run();
+    hope::sample::single_value::run();
+    hope::sample::multiple_value::run();
 
-	return 0;
+    return 0;
 } 

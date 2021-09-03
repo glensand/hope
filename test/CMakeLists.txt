@@ -39,7 +39,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 file(GLOB TEST_HEADERS
     *.h
     )
-	
+
 file(GLOB TEST_SOURSES
     *.cpp
     memory/*.cpp

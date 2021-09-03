@@ -11,25 +11,25 @@
 
 namespace {
 
-	struct int_value final { int value; };
-	struct float_value final { float value; };
-	struct string_value final { std::string_view value; };
-	struct bool_value final { bool value; };
+    struct int_value final { int value; };
+    struct float_value final { float value; };
+    struct string_value final { std::string_view value; };
+    struct bool_value final { bool value; };
 
-	using map = hope::type_map<
-		hope::type_pair<int, int_value>,
-		hope::type_pair<float, float_value>,
-		hope::type_pair<std::string_view, string_value>,
-		hope::type_pair<bool, bool_value>
-	>;
+    using map = hope::type_map<
+        hope::type_pair<int, int_value>,
+        hope::type_pair<float, float_value>,
+        hope::type_pair<std::string_view, string_value>,
+        hope::type_pair<bool, bool_value>
+    >;
 
-	template <typename T1, typename T2>
-	constexpr bool is_same(hope::type_holder<T1>, T2) {
-		return std::is_same_v<T1, T2>;
-	}
+    template <typename T1, typename T2>
+    constexpr bool is_same(hope::type_holder<T1>, T2) {
+        return std::is_same_v<T1, T2>;
+    }
 
-	static_assert(is_same(map::get<int>(), int_value{ }));
-	static_assert(is_same(map::get<float>(), float_value{ }));
-	static_assert(is_same(map::get<std::string_view>(), string_value{ }));
-	static_assert(is_same(map::get<bool>(), bool_value{ }));
+    static_assert(is_same(map::get<int>(), int_value{ }));
+    static_assert(is_same(map::get<float>(), float_value{ }));
+    static_assert(is_same(map::get<std::string_view>(), string_value{ }));
+    static_assert(is_same(map::get<bool>(), bool_value{ }));
 }

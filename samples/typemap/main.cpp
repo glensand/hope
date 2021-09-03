@@ -12,10 +12,10 @@
 
 namespace {
 
-	struct legacy_tag final {};
-	struct vehicle_tag final {};
+    struct legacy_tag final {};
+    struct vehicle_tag final {};
 
-	using vehicle_types_t = hope::type_map<
+    using vehicle_types_t = hope::type_map<
         hope::type_pair<legacy_tag, hope::type_list<
                             hope::sample::typemap::legacy_graphics,
                             hope::sample::typemap::legacy_logic,
@@ -31,11 +31,11 @@ namespace {
 
 int main()
 {
-	auto* legacy_vehicle_instance = hope::sample::typemap::vehicle_creator::create(vehicle_types_t{ }, legacy_tag{ });
-	auto* vehicle_instance = hope::sample::typemap::vehicle_creator::create(vehicle_types_t{ }, vehicle_tag{ });
+    auto* legacy_vehicle_instance = hope::sample::typemap::vehicle_creator::create(vehicle_types_t{ }, legacy_tag{ });
+    auto* vehicle_instance = hope::sample::typemap::vehicle_creator::create(vehicle_types_t{ }, vehicle_tag{ });
 
-	legacy_vehicle_instance->assert_vehicle_valid();
-	vehicle_instance->assert_vehicle_valid();
+    legacy_vehicle_instance->assert_vehicle_valid();
+    vehicle_instance->assert_vehicle_valid();
 
-	return 0;
+    return 0;
 } 

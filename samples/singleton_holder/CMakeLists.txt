@@ -6,7 +6,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 file(GLOB SAMPLE_HEADERS
     *.h)
-	
+
 file(GLOB SAMPLE_SOURSES
     *.cpp)
 

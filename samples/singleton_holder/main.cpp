@@ -11,18 +11,18 @@
 #include <cassert>
 
 namespace {
-	void assert_runner_valid(std::string_view name) {
-		auto* instance = hope::sample::object_factory::object_factory::instance().create(name);
-		assert(instance->name() == name);
-		(void)instance;
-	}
+    void assert_runner_valid(std::string_view name) {
+        auto* instance = hope::sample::object_factory::object_factory::instance().create(name);
+        assert(instance->name() == name);
+        (void)instance;
+    }
 }
 
 int main()
 {
-	assert_runner_valid("simple_runner");
-	assert_runner_valid("hope_runner");
-	assert_runner_valid("top_runner");
+    assert_runner_valid("simple_runner");
+    assert_runner_valid("hope_runner");
+    assert_runner_valid("top_runner");
 
-	return 0;
+    return 0;
 }

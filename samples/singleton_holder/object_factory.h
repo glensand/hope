@@ -12,19 +12,19 @@
 #include "hope/components/factory.h"
 
 namespace hope::sample::object_factory {
-	
-	class object {
-	public:
-		virtual ~object() = default;
-		virtual std::string_view name() const noexcept = 0;
-	};
+    
+    class object {
+    public:
+        virtual ~object() = default;
+        virtual std::string_view name() const noexcept = 0;
+    };
 
-	using object_factory = singleton_holder<factory<object>>;
+    using object_factory = singleton_holder<factory<object>>;
 
 #define REGISTER_OBJECT(ClassName) static const auto registered_##ClassName = object_factory::instance().register_object<ClassName>(#ClassName);
 #define DECLARE_OBJECT(ClassName) class ClassName final : public object { \
-		virtual std::string_view name() const noexcept { return #ClassName; } \
-	};\
+        virtual std::string_view name() const noexcept { return #ClassName; } \
+    };\
 
 DECLARE_OBJECT(simple_runner)
 REGISTER_OBJECT(simple_runner)

@@ -14,37 +14,37 @@
 
 namespace hope::memory::testing {
 
-	template <typename RegisteredTypes>
-	class stress_test : public ::testing::Test {
-	protected:
-		void SetUp() override {
-			small_object_allocator::instance();
-		}
+    template <typename RegisteredTypes>
+    class stress_test : public ::testing::Test {
+    protected:
+        void SetUp() override {
+            small_object_allocator::instance();
+        }
 
-		void TearDown() override {
-		}
-	};
+        void TearDown() override {
+        }
+    };
 
-	constexpr std::size_t ObjectsCount{ 3000u };
+    constexpr std::size_t ObjectsCount{ 3000u };
 
-	TYPED_TEST_SUITE(stress_test, TestTypes);
+    TYPED_TEST_SUITE(stress_test, TestTypes);
 
-	TYPED_TEST(stress_test, sm_allocator_stress_simple)
-	{
-		apply_alloc_dealloc<simple_sm_object>(TypeParam{}, ObjectsCount);
-		apply_alloc_dealloc<simple_sm_object>(TypeParam{}, ObjectsCount);
-		apply_alloc_dealloc<simple_sm_object>(TypeParam{}, ObjectsCount);
-		apply_alloc_dealloc<simple_sm_object>(TypeParam{}, ObjectsCount);
-		sm_allocator_reset::apply();
-	}
+    TYPED_TEST(stress_test, sm_allocator_stress_simple)
+    {
+        apply_alloc_dealloc<simple_sm_object>(TypeParam{}, ObjectsCount);
+        apply_alloc_dealloc<simple_sm_object>(TypeParam{}, ObjectsCount);
+        apply_alloc_dealloc<simple_sm_object>(TypeParam{}, ObjectsCount);
+        apply_alloc_dealloc<simple_sm_object>(TypeParam{}, ObjectsCount);
+        sm_allocator_reset::apply();
+    }
 
-	TYPED_TEST(stress_test, sm_allocator_stress_complicated)
-	{
-		apply_alloc_dealloc<complicated_sm_object>(TypeParam{}, ObjectsCount);
-		apply_alloc_dealloc<complicated_sm_object>(TypeParam{}, ObjectsCount);
-		apply_alloc_dealloc<complicated_sm_object>(TypeParam{}, ObjectsCount);
-		apply_alloc_dealloc<complicated_sm_object>(TypeParam{}, ObjectsCount);
-		sm_allocator_reset::apply();
-	}
+    TYPED_TEST(stress_test, sm_allocator_stress_complicated)
+    {
+        apply_alloc_dealloc<complicated_sm_object>(TypeParam{}, ObjectsCount);
+        apply_alloc_dealloc<complicated_sm_object>(TypeParam{}, ObjectsCount);
+        apply_alloc_dealloc<complicated_sm_object>(TypeParam{}, ObjectsCount);
+        apply_alloc_dealloc<complicated_sm_object>(TypeParam{}, ObjectsCount);
+        sm_allocator_reset::apply();
+    }
 
 }

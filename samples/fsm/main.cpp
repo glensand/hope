@@ -28,5 +28,5 @@ int main() {
     fsm.on_event(change_state{});
     fsm.on_event(change_state{});
 
-	return 0;
+    return 0;
 } 

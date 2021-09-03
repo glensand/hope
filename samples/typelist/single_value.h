@@ -18,59 +18,59 @@ namespace hope::sample {
 
     class single_value final
     {
-		template <typename... Ts>
-		using link_holder_tuple = link_holder_tuple<link_holder_policy::single_value, Ts...>;
+        template <typename... Ts>
+        using link_holder_tuple = link_holder_tuple<link_holder_policy::single_value, Ts...>;
 
-		using holder = link_holder_tuple<
-			derived1,
-			derived2,
-			derived3,
-			derived4,
-			derived5,
-			derived6
-		>;
+        using holder = link_holder_tuple<
+            derived1,
+            derived2,
+            derived3,
+            derived4,
+            derived5,
+            derived6
+        >;
 
     public:
         single_value() = default;
         ~single_value() = default;
 
-		static void run() {
+        static void run() {
 
-			holder h;
-			base* d1 = new derived1;
-			base* d2 = new derived2;
-			base* d5 = new derived5;
-			base* d7 = new derived7;
+            holder h;
+            base* d1 = new derived1;
+            base* d2 = new derived2;
+            base* d5 = new derived5;
+            base* d7 = new derived7;
 
-			bool add_res1 = h.add(d1);
-			bool add_res2 = h.add(d2);
-			bool add_res3 = h.add(d5);
-			bool add_res4 = h.add(d7);
-			assert(add_res4 == false);
-			assert(add_res1 == add_res2 == add_res3 == true);
-			(void)add_res1;
-			(void)add_res2;
-			(void)add_res3;
-			(void)add_res4;
+            bool add_res1 = h.add(d1);
+            bool add_res2 = h.add(d2);
+            bool add_res3 = h.add(d5);
+            bool add_res4 = h.add(d7);
+            assert(add_res4 == false);
+            assert(add_res1 == add_res2 == add_res3 == true);
+            (void)add_res1;
+            (void)add_res2;
+            (void)add_res3;
+            (void)add_res4;
 
-			auto* p = h.get<derived1>();
-			(void)p;
+            auto* p = h.get<derived1>();
+            (void)p;
 
-			std::cout << h.get<derived1>()->name() << std::endl
-				<< h.get<derived2>()->name() << std::endl
-				<< h.get<derived5>()->name() << std::endl;
+            std::cout << h.get<derived1>()->name() << std::endl
+                << h.get<derived2>()->name() << std::endl
+                << h.get<derived5>()->name() << std::endl;
 
-			bool remove_res1 = h.remove(d1);
-			bool remove_res2 = h.remove(d2);
-			bool remove_res3 = h.remove(d5);
-			assert(remove_res1 == remove_res2 == remove_res3 == true);
-			(void)remove_res1;
-			(void)remove_res2;
-			(void)remove_res3;
+            bool remove_res1 = h.remove(d1);
+            bool remove_res2 = h.remove(d2);
+            bool remove_res3 = h.remove(d5);
+            assert(remove_res1 == remove_res2 == remove_res3 == true);
+            (void)remove_res1;
+            (void)remove_res2;
+            (void)remove_res3;
 
-			assert(h.get<derived1>() == nullptr);
-			assert(h.get<derived2>() == nullptr);
-			assert(h.get<derived5>() == nullptr);
-		}
+            assert(h.get<derived1>() == nullptr);
+            assert(h.get<derived2>() == nullptr);
+            assert(h.get<derived5>() == nullptr);
+        }
     };
 }
