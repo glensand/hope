@@ -59,7 +59,8 @@ namespace hope {
 
     template <typename... Ts>
     constexpr bool operator==(const flat_tuple<Ts...>& left, const flat_tuple<Ts...>& right) {
-        return detail::is_equal(left, right, std::make_index_sequence<left.get_size()>());
+        using tuple_t = flat_tuple<Ts...>;
+        return detail::is_equal(left, right, std::make_index_sequence<tuple_t::get_size()>());
     }
 
     template <typename... Ts>

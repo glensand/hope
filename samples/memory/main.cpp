@@ -53,7 +53,7 @@ namespace hope::memory::testing {
 
     template<template<typename Inner> typename T, typename Empty,
         std::size_t... Is, typename... Ts>
-        void fill_seq(std::index_sequence<Is...>, type_list<Ts...>list, std::size_t size, ptr_list_t& ptr_list) {
+    void fill_seq(std::index_sequence<Is...>, type_list<Ts...> list, size_t size, ptr_list_t &ptr_list) {
         for (std::size_t i{ 0 }; i < size; ++i) {
             void* br[] = { new T<typename decltype(get_nth_type<Is>(list))::Type>()... };
             ptr_list.insert(std::end(ptr_list), std::begin(br), std::end(br));
