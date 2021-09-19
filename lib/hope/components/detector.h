@@ -39,6 +39,9 @@ namespace hope {
     using is_detected = typename detail::detector<nonesuch, void, Op, Args...>::value_t;
 
     template <template<class...> class Op, class... Args>
+    constexpr bool is_detected_v = detail::detector<nonesuch, void, Op, Args...>::value_t::value;
+
+    template <template<class...> class Op, class... Args>
     using detected_t = typename detail::detector<nonesuch, void, Op, Args...>::type;
 
     template <class Default, template<class...> class Op, class... Args>

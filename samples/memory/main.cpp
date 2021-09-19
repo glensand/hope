@@ -139,8 +139,7 @@ void print_size(hope::type_list<Ts...> list, std::index_sequence<Is...> seq){
         std::cout << i << " ";
 }
 
-int main()
-{
+int main() {
     hope::memory::testing::perform_alloc_test(RegisteredTypesAscendingAlignedTo4{}, "AllocAscending4.csv");
     hope::memory::testing::perform_alloc_test(RegisteredTypesDescendingAlignedTo4{}, "AllocDescending4.csv");
     hope::memory::testing::perform_alloc_test(RegisteredTypesShuffledAlignedTo4{}, "AllocShuffled4.csv");

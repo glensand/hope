@@ -38,6 +38,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 file(GLOB TEST_HEADERS
     *.h
+        logger_test/*.h
     )
 
 file(GLOB TEST_SOURSES
@@ -45,6 +46,7 @@ file(GLOB TEST_SOURSES
     memory/*.cpp
     commontests/*.cpp
     concurrency/*.cpp
+    logger_test/*.cpp
     )
 
 add_executable(${BINARY} ${TEST_HEADERS} ${TEST_SOURSES})
