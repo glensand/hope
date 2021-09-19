@@ -19,7 +19,8 @@ namespace hope {
     class stack_buffer final
     {
     public:
-	    static constexpr std::size_t BufferSize = 1024;	// Size in bytes of the inner buffer this value assumed to be never reached
+        // Size in bytes of the inner buffer this value assumed to be never reached
+	    static constexpr std::size_t BufferSize = 1023;
 	    using buffer_t = std::array<char, BufferSize>;
 	
 	    stack_buffer() = default;

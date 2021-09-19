@@ -9,7 +9,7 @@
 #include "hope/logger/stack_buffer.h"
 #include <gtest/gtest.h>
 
-namespace hope::logger::testing{
+namespace hope::log::testing{
 
     void test_heap_buffer(std::size_t bytes_count){
         std::vector<char> heap_test_buffer;

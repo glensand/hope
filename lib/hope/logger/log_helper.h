@@ -43,7 +43,7 @@ namespace hope {
          * Or explicitly declare type of the variable
          */
         template<typename T>
-        using write_function_t = decltype(write(std::declval<log_helper&>(), std::declval<const T&>));
+        using write_function_t = decltype(write(std::declval<log_helper&>(), std::declval<const T&>()));
 
         /**
          * Pseudonym to the enum writing function. To use special rule for enums declare:
@@ -51,7 +51,7 @@ namespace hope {
          * void write_enum(log_helper&, TEnum enum_instance);
          */
         template<typename T>
-        using write_enum_function_t = decltype(write_enum(std::declval<log_helper&>(), std::declval<const T&>));
+        using write_enum_function_t = decltype(write_enum(std::declval<log_helper&>(), std::declval<const T&>()));
 
         /**
          * Thin wrapper around object of specified class; Is used to write value in this fprm
@@ -67,24 +67,22 @@ namespace hope {
 	    };
 
         /**
-         * Central point of writing operation, provide type dispatch and call desired write method.
-         * If the type is enum and write_enum had been detected, thus it will be called
-         * If member function with signature void write(log_helper&) detected, it will be called
-         * If global function with signature void write(log_helper, const T&) detected, it will be called
-         * @tparam T Type of th eobject to be written
-         * @param helper Self
-         * @param value Instance of the object to be written
-         * @return Self
-         */
-	    template<typename T>
-	    friend log_helper& operator<<(log_helper& helper, const T& value) {
+        * Central point of writing operation, provide type dispatch and call desired write method.
+        * If the type is enum and write_enum had been detected, thus it will be called
+        * If member function with signature void write(log_helper&) detected, it will be called
+        * If global function with signature void write(log_helper, const T&) detected, it will be called
+        * @tparam T Type of th eobject to be written
+        * @param helper Self
+        * @param value Instance of the object to be written
+        * @return Self
+        */
+        template<typename T>
+        friend log_helper& operator<<(log_helper& helper, const T& value){
             if constexpr (is_detected_v<write_method_t, T>) {
                 value.write(helper);
-            }
-            if constexpr (is_detected_v<write_function_t, T>) {
+            } else if constexpr (is_detected_v<write_function_t, T>) {
                 write(helper, value);
-            }
-            if constexpr ( std::is_enum_v<T>){
+            } else if constexpr ( std::is_enum_v<T>){
                 if constexpr(is_detected_v<write_enum_function_t, T>)
                     write_enum(helper, value);
                 else
@@ -92,8 +90,23 @@ namespace hope {
             } else {
                 helper.write_impl(value);
             }
+            return helper;
         }
 
+        /**
+         *  Function needed to delegate call to the same operator<<, but with a little different semantic
+         *  On MSVC it does not need, but another compilers can not call function with non const
+         *  reference parameter with rvalue
+         */
+        template<typename T>
+        friend log_helper& operator<<(log_helper&& helper, const T& value) {
+            helper << value;
+            return helper;
+        }
+
+        /**
+         * Wrap value to store it with pretty form: [VALUE]
+         */
 	    template <typename T>
 	    static value_wrapper<T> build_value(const T& value) {
 		    return value_wrapper<T>(value);
@@ -129,6 +142,6 @@ namespace hope {
 
 }
 
-#define INTERIOR_LOG(PRIORITY, logger) if((logger).should_write(PRIORITY)) hope::log_helper(logger, PRIORITY) <<
-#define INTERIOR_LOG_TRACE(PRIORITY, logger) if((logger).should_write(PRIORITY)) hope::log_helper(logger, PRIORITY) <<  __FUNCTION__ << " "
-#define VAL(V) hope::log_helper::build_value(V)
+#define HOPE_INTERIOR_LOG(PRIORITY, logger) if((logger).should_write(PRIORITY)) hope::log_helper(logger, PRIORITY) <<
+#define HOPE_INTERIOR_LOG_TRACE(PRIORITY, logger) if((logger).should_write(PRIORITY)) hope::log_helper(logger, PRIORITY) <<  __FUNCTION__ << " "
+#define HOPE_VAL(V) hope::log_helper::build_value(V)
