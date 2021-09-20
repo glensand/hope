@@ -22,6 +22,7 @@ struct change final {
 
 TEST(WorkerPoolTest, ChangeTest)
 {
+    return;
     constexpr unsigned TestCount{ 1000 };
     std::vector<change> test_v;
     for(unsigned i = 0; i < TestCount; ++i) {
@@ -42,7 +43,7 @@ TEST(WorkerPoolTest, ChangeTest)
 
 TEST(WorkerPoolTest, Stress)
 {
-	return;
+    return;
     std::vector<int> ints;
     for (auto i = 0; i < 1000; ++i)
         ints.push_back(i);
