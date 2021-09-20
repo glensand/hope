@@ -4,7 +4,7 @@ namespace hope {
 
     ofstream::ofstream(std::string_view file_name) {
         // assumed binary append mode is best choise for defaul stream
-        m_stream_impl.open(file_name, std::ios::binary | std::ios::app);
+        m_stream_impl.open(file_name.data(), std::ios::binary | std::ios::app);
     }
 
     ofstream::~ofstream() {
