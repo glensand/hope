@@ -1,6 +1,8 @@
 #include "log_helper.h"
 #include "hope/logger/logger.h"
 
+#include <cstring>
+
 namespace hope {
 
     namespace {
