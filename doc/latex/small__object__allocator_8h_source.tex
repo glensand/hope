@@ -1,0 +1,55 @@
+\hypertarget{small__object__allocator_8h_source}{}\doxysection{small\+\_\+object\+\_\+allocator.\+h}
+\label{small__object__allocator_8h_source}\index{lib/hope/memory/small\_object/small\_object\_allocator.h@{lib/hope/memory/small\_object/small\_object\_allocator.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* Copyright (C) 2020 -\/ 2021 Gleb Bezborodov -\/ All Rights Reserved}}
+\DoxyCodeLine{2 \textcolor{comment}{ * You may use, distribute and modify this code under the}}
+\DoxyCodeLine{3 \textcolor{comment}{ * terms of the MIT license.}}
+\DoxyCodeLine{4 \textcolor{comment}{ *}}
+\DoxyCodeLine{5 \textcolor{comment}{ * You should have received a copy of the MIT license with}}
+\DoxyCodeLine{6 \textcolor{comment}{ * this file. If not, please write to: bezborodoff.gleb@gmail.com, or visit : https://github.com/glensand/hope}}
+\DoxyCodeLine{7 \textcolor{comment}{ */}}
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#include "{}hope/memory/small\_object/fixed\_allocator.h"{}}}
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#include "{}hope/memory/small\_object/config.h"{}}}
+\DoxyCodeLine{13 }
+\DoxyCodeLine{14 \textcolor{keyword}{namespace }hope::memory \{}
+\DoxyCodeLine{15 }
+\DoxyCodeLine{19     \textcolor{keyword}{class }\mbox{\hyperlink{classhope_1_1memory_1_1small__object__allocator}{small\_object\_allocator}} final \{}
+\DoxyCodeLine{20         \textcolor{keyword}{using} allocator\_list = std::vector<fixed\_allocator>;}
+\DoxyCodeLine{21     \textcolor{keyword}{public}:}
+\DoxyCodeLine{22         \mbox{\hyperlink{classhope_1_1memory_1_1small__object__allocator}{small\_object\_allocator}}(\textcolor{keyword}{const} \mbox{\hyperlink{classhope_1_1memory_1_1small__object__allocator}{small\_object\_allocator}}\&) = \textcolor{keyword}{delete};}
+\DoxyCodeLine{23         \mbox{\hyperlink{classhope_1_1memory_1_1small__object__allocator}{small\_object\_allocator}}(\mbox{\hyperlink{classhope_1_1memory_1_1small__object__allocator}{small\_object\_allocator}}\&\&) = \textcolor{keyword}{delete};}
+\DoxyCodeLine{24         \mbox{\hyperlink{classhope_1_1memory_1_1small__object__allocator}{small\_object\_allocator}}\& operator=(\textcolor{keyword}{const} \mbox{\hyperlink{classhope_1_1memory_1_1small__object__allocator}{small\_object\_allocator}}\&) = \textcolor{keyword}{delete};}
+\DoxyCodeLine{25         \mbox{\hyperlink{classhope_1_1memory_1_1small__object__allocator}{small\_object\_allocator}}\& operator=(\mbox{\hyperlink{classhope_1_1memory_1_1small__object__allocator}{small\_object\_allocator}}\&\&) = \textcolor{keyword}{delete};}
+\DoxyCodeLine{26 }
+\DoxyCodeLine{31         \textcolor{keyword}{static} \mbox{\hyperlink{classhope_1_1memory_1_1small__object__allocator}{small\_object\_allocator}}\& \mbox{\hyperlink{classhope_1_1memory_1_1small__object__allocator_a498abc57a482a829955140987efd9f13}{instance}}();}
+\DoxyCodeLine{32 }
+\DoxyCodeLine{38         \textcolor{keywordtype}{void} \mbox{\hyperlink{classhope_1_1memory_1_1small__object__allocator_ac4b99e6684984b32ae3495509404786f}{deallocate}}(\textcolor{keywordtype}{void}* ptr, std::size\_t size) \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{39 }
+\DoxyCodeLine{44         [[nodiscard]] \textcolor{keywordtype}{void}* \mbox{\hyperlink{classhope_1_1memory_1_1small__object__allocator_ae75db68defbe1e90fec4936a62d011b2}{allocate}}(std::size\_t size) \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{45 }
+\DoxyCodeLine{46     \textcolor{keyword}{private}:}
+\DoxyCodeLine{53         \mbox{\hyperlink{classhope_1_1memory_1_1fixed__allocator}{fixed\_allocator}}* find\_allocator(std::size\_t size) \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{54 }
+\DoxyCodeLine{60         \mbox{\hyperlink{classhope_1_1memory_1_1fixed__allocator}{fixed\_allocator}}* create\_allocator(std::size\_t size) \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{61 }
+\DoxyCodeLine{66         \textcolor{keywordtype}{void} clear();}
+\DoxyCodeLine{67 }
+\DoxyCodeLine{72         \textcolor{keywordtype}{void} initialize\_allocators();}
+\DoxyCodeLine{73 }
+\DoxyCodeLine{74         \mbox{\hyperlink{classhope_1_1memory_1_1small__object__allocator}{small\_object\_allocator}}();}
+\DoxyCodeLine{75         \mbox{\hyperlink{classhope_1_1memory_1_1small__object__allocator}{\string~small\_object\_allocator}}();}
+\DoxyCodeLine{76 }
+\DoxyCodeLine{77         allocator\_list m\_allocator\_list;                         \textcolor{comment}{// sorted vector (ascending), contains all available allocators}}
+\DoxyCodeLine{78         std::size\_t m\_chunk\_size\{ config::ChunkSize \};           \textcolor{comment}{// the number of blocks that one chunk contains}}
+\DoxyCodeLine{79         std::size\_t m\_max\_object\_size\{ config::MaxObjectSize \};  \textcolor{comment}{// the max size of object, that is considered small}}
+\DoxyCodeLine{80 }
+\DoxyCodeLine{81         \textcolor{keyword}{friend} \textcolor{keyword}{class }sm\_allocator\_reset;}
+\DoxyCodeLine{82     \};}
+\DoxyCodeLine{83 }
+\DoxyCodeLine{84 \}}
+
+\end{DoxyCode}

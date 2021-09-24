@@ -1,0 +1,52 @@
+\hypertarget{async__worker__pool_8h_source}{}\doxysection{async\+\_\+worker\+\_\+pool.\+h}
+\label{async__worker__pool_8h_source}\index{lib/hope/concurrency/async\_worker\_pool.h@{lib/hope/concurrency/async\_worker\_pool.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* Copyright (C) 2020 -\/ 2021 Gleb Bezborodov -\/ All Rights Reserved}}
+\DoxyCodeLine{2 \textcolor{comment}{ * You may use, distribute and modify this code under the}}
+\DoxyCodeLine{3 \textcolor{comment}{ * terms of the MIT license.}}
+\DoxyCodeLine{4 \textcolor{comment}{ *}}
+\DoxyCodeLine{5 \textcolor{comment}{ * You should have received a copy of the MIT license with}}
+\DoxyCodeLine{6 \textcolor{comment}{ * this file. If not, please write to: bezborodoff.gleb@gmail.com, or visit : https://github.com/glensand/hope}}
+\DoxyCodeLine{7 \textcolor{comment}{ */}}
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#include "{}hope/concurrency/async\_worker.h"{}}}
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#include <vector>}}
+\DoxyCodeLine{13 }
+\DoxyCodeLine{14 \textcolor{keyword}{namespace }hope::concurrency \{}
+\DoxyCodeLine{15 }
+\DoxyCodeLine{16     \textcolor{keyword}{class }\mbox{\hyperlink{classhope_1_1concurrency_1_1async__worker__pool}{async\_worker\_pool}} final \{}
+\DoxyCodeLine{17         \textcolor{keyword}{using} WorkersPool = std::vector<async\_worker>;}
+\DoxyCodeLine{18     \textcolor{keyword}{public}:}
+\DoxyCodeLine{19 }
+\DoxyCodeLine{20         \textcolor{keyword}{enum class} job\_add\_policy : std::size\_t \{}
+\DoxyCodeLine{21             sequential = 0,}
+\DoxyCodeLine{22             random,}
+\DoxyCodeLine{23             count,}
+\DoxyCodeLine{24         \};}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26         \textcolor{keyword}{using} job\_t = async\_worker::job\_t;}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28         \textcolor{keyword}{explicit} \mbox{\hyperlink{classhope_1_1concurrency_1_1async__worker__pool}{async\_worker\_pool}}(std::size\_t thread\_count = std::thread::hardware\_concurrency() + 1);}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{33         \textcolor{keywordtype}{void} \mbox{\hyperlink{classhope_1_1concurrency_1_1async__worker__pool_ac9299b50128c235c94cc0ef587250c09}{run}}() \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{38         \textcolor{keywordtype}{void} \mbox{\hyperlink{classhope_1_1concurrency_1_1async__worker__pool_a97e4f314acb78d19c4df2e99f9403cf5}{stop}}() \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{39 }
+\DoxyCodeLine{44         \textcolor{keywordtype}{void} \mbox{\hyperlink{classhope_1_1concurrency_1_1async__worker__pool_a963c5d3c03d7bac7fa4c87b8ac89101f}{shutdown}}() \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{45 }
+\DoxyCodeLine{51         \textcolor{keywordtype}{void} \mbox{\hyperlink{classhope_1_1concurrency_1_1async__worker__pool_a8d0d364ddaf627d6eaa9c4b8269a9b56}{add\_job}}(job\_t\&\& task, job\_add\_policy add\_policy = job\_add\_policy::random) \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{52 }
+\DoxyCodeLine{57         \textcolor{keywordtype}{void} \mbox{\hyperlink{classhope_1_1concurrency_1_1async__worker__pool_ac1e1c98db7aebb442aef18109d16f3ee}{wait}}();}
+\DoxyCodeLine{58     \textcolor{keyword}{private}:}
+\DoxyCodeLine{59         WorkersPool m\_pool;}
+\DoxyCodeLine{60 }
+\DoxyCodeLine{61         std::size\_t m\_last\_thread\_index = 0;}
+\DoxyCodeLine{62         \textcolor{keyword}{const} std::size\_t m\_thread\_count;}
+\DoxyCodeLine{63     \};}
+\DoxyCodeLine{64 }
+\DoxyCodeLine{65 \}}
+
+\end{DoxyCode}

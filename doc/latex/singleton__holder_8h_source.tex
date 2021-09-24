@@ -1,0 +1,76 @@
+\hypertarget{singleton__holder_8h_source}{}\doxysection{singleton\+\_\+holder.\+h}
+\label{singleton__holder_8h_source}\index{lib/hope/components/singleton\_holder/singleton\_holder.h@{lib/hope/components/singleton\_holder/singleton\_holder.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* Copyright (C) 2021 Gleb Bezborodov -\/ All Rights Reserved}}
+\DoxyCodeLine{2 \textcolor{comment}{ * You may use, distribute and modify this code under the}}
+\DoxyCodeLine{3 \textcolor{comment}{ * terms of the MIT license.}}
+\DoxyCodeLine{4 \textcolor{comment}{ *}}
+\DoxyCodeLine{5 \textcolor{comment}{ * You should have received a copy of the MIT license with}}
+\DoxyCodeLine{6 \textcolor{comment}{ * this file. If not, please write to: bezborodoff.gleb@gmail.com, or visit : https://github.com/glensand/hope}}
+\DoxyCodeLine{7 \textcolor{comment}{ */}}
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#include <cassert>}}
+\DoxyCodeLine{12 }
+\DoxyCodeLine{13 \textcolor{preprocessor}{\#include "{}hope/components/singleton\_holder/creation\_model.h"{}}}
+\DoxyCodeLine{14 \textcolor{preprocessor}{\#include "{}hope/components/singleton\_holder/threading\_model.h"{}}}
+\DoxyCodeLine{15 \textcolor{preprocessor}{\#include "{}hope/components/singleton\_holder/lifetime\_model.h"{}}}
+\DoxyCodeLine{16 }
+\DoxyCodeLine{17 \textcolor{keyword}{namespace }hope \{}
+\DoxyCodeLine{18 }
+\DoxyCodeLine{19     \textcolor{keyword}{template}<}
+\DoxyCodeLine{20         \textcolor{keyword}{typename} SingletonImpl,}
+\DoxyCodeLine{21         \textcolor{keyword}{template} <\textcolor{keyword}{typename}> \textcolor{keyword}{typename} CreationModel = create\_static,}
+\DoxyCodeLine{22         \textcolor{keyword}{template} <\textcolor{keyword}{typename}> \textcolor{keyword}{typename} ThreadingModel = single\_threaded,}
+\DoxyCodeLine{23         \textcolor{keyword}{template} <\textcolor{keyword}{typename}> \textcolor{keyword}{typename} LifetimeModel = lifetime\_auto}
+\DoxyCodeLine{24     >}
+\DoxyCodeLine{25     \textcolor{keyword}{class }\mbox{\hyperlink{classhope_1_1singleton__holder}{singleton\_holder}} final \{}
+\DoxyCodeLine{26     \textcolor{keyword}{public}:}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28         \mbox{\hyperlink{classhope_1_1singleton__holder}{singleton\_holder}}() = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{29         \mbox{\hyperlink{classhope_1_1singleton__holder}{singleton\_holder}}(\mbox{\hyperlink{classhope_1_1singleton__holder}{singleton\_holder}}\&\&) = \textcolor{keyword}{delete};}
+\DoxyCodeLine{30         \mbox{\hyperlink{classhope_1_1singleton__holder}{singleton\_holder}}\& operator=(\mbox{\hyperlink{classhope_1_1singleton__holder}{singleton\_holder}}\&\&) = \textcolor{keyword}{delete};}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32         \textcolor{keyword}{static} SingletonImpl\& instance() \{}
+\DoxyCodeLine{33             \textcolor{keywordflow}{if}(m\_instance == \textcolor{keyword}{nullptr})}
+\DoxyCodeLine{34                 initialize();}
+\DoxyCodeLine{35             \textcolor{keywordflow}{return} *m\_instance;}
+\DoxyCodeLine{36         \}}
+\DoxyCodeLine{37 }
+\DoxyCodeLine{38     \textcolor{keyword}{private}:}
+\DoxyCodeLine{39         \textcolor{keyword}{using} VolatileType = \textcolor{keyword}{typename} ThreadingModel<SingletonImpl>::VolatileType;}
+\DoxyCodeLine{40         \textcolor{keyword}{using} Lock = \textcolor{keyword}{typename} ThreadingModel<SingletonImpl>::Lock;}
+\DoxyCodeLine{41 }
+\DoxyCodeLine{42         \mbox{\hyperlink{classhope_1_1singleton__holder}{\string~singleton\_holder}}() = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{43 }
+\DoxyCodeLine{44         \textcolor{keyword}{static} \textcolor{keywordtype}{void} initialize() \{}
+\DoxyCodeLine{45             \textcolor{keyword}{const} Lock lock\{ \};}
+\DoxyCodeLine{46             \textcolor{keywordflow}{if} (m\_instance == \textcolor{keyword}{nullptr}) \{}
+\DoxyCodeLine{47                 \textcolor{keywordflow}{if} (m\_destroyed) \{}
+\DoxyCodeLine{48                     LifetimeModel<SingletonImpl>::on\_dead\_reference();}
+\DoxyCodeLine{49                     m\_destroyed = \textcolor{keyword}{false};}
+\DoxyCodeLine{50                 \}}
+\DoxyCodeLine{51                 m\_instance = CreationModel<SingletonImpl>::create();}
+\DoxyCodeLine{52                 LifetimeModel<SingletonImpl>::register\_deleter(\&destroy);}
+\DoxyCodeLine{53             \}}
+\DoxyCodeLine{54             (void)lock;}
+\DoxyCodeLine{55         \}}
+\DoxyCodeLine{56         }
+\DoxyCodeLine{57         \textcolor{keyword}{static} \textcolor{keywordtype}{void} destroy() \{}
+\DoxyCodeLine{58             assert(!m\_destroyed);}
+\DoxyCodeLine{59             CreationModel<SingletonImpl>::destroy(m\_instance);}
+\DoxyCodeLine{60             m\_instance = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{61             m\_destroyed = \textcolor{keyword}{false};}
+\DoxyCodeLine{62         \}}
+\DoxyCodeLine{63 }
+\DoxyCodeLine{64         \textcolor{keyword}{inline} \textcolor{keyword}{static} VolatileType* m\_instance\{ \textcolor{keyword}{nullptr} \};}
+\DoxyCodeLine{65         \textcolor{keyword}{inline} \textcolor{keyword}{static} \textcolor{keywordtype}{bool} m\_destroyed\{ \textcolor{keyword}{false} \};}
+\DoxyCodeLine{66 }
+\DoxyCodeLine{67         \textcolor{keyword}{friend} \textcolor{keyword}{class }LifetimeModel<SingletonImpl>;}
+\DoxyCodeLine{68     \};}
+\DoxyCodeLine{69 }
+\DoxyCodeLine{70 \}}
+
+\end{DoxyCode}

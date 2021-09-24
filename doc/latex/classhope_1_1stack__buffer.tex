@@ -1,0 +1,44 @@
+\hypertarget{classhope_1_1stack__buffer}{}\doxysection{hope\+::stack\+\_\+buffer Class Reference}
+\label{classhope_1_1stack__buffer}\index{hope::stack\_buffer@{hope::stack\_buffer}}
+\doxysubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classhope_1_1stack__buffer_aac968e8675acd5fa487f24162d7e07a6}\label{classhope_1_1stack__buffer_aac968e8675acd5fa487f24162d7e07a6}} 
+using {\bfseries buffer\+\_\+t} = std\+::array$<$ char, Buffer\+Size $>$
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classhope_1_1stack__buffer_af331eb2b9ac7c80ad78d38d1c59003cd}\label{classhope_1_1stack__buffer_af331eb2b9ac7c80ad78d38d1c59003cd}} 
+{\bfseries DECLARE\+\_\+\+NON\+\_\+\+MOVABLE} (\mbox{\hyperlink{classhope_1_1stack__buffer}{stack\+\_\+buffer}})
+\item 
+\mbox{\Hypertarget{classhope_1_1stack__buffer_a7d06b3fd403746624c043e7368b05e4b}\label{classhope_1_1stack__buffer_a7d06b3fd403746624c043e7368b05e4b}} 
+{\bfseries DECLARE\+\_\+\+NON\+\_\+\+COPYABLE} (\mbox{\hyperlink{classhope_1_1stack__buffer}{stack\+\_\+buffer}})
+\item 
+\mbox{\Hypertarget{classhope_1_1stack__buffer_a98849026c3347b48fe5d3255bd76bdd9}\label{classhope_1_1stack__buffer_a98849026c3347b48fe5d3255bd76bdd9}} 
+void {\bfseries put} (const void $\ast$data, std\+::size\+\_\+t size) noexcept
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classhope_1_1stack__buffer_ad6d20dfd6313b39b859cb2895ba1f7bb}\label{classhope_1_1stack__buffer_ad6d20dfd6313b39b859cb2895ba1f7bb}} 
+std\+::size\+\_\+t {\bfseries bytes\+\_\+written} = 0
+\item 
+\mbox{\Hypertarget{classhope_1_1stack__buffer_a1c02bb6157cf83c72465c16908b91e1e}\label{classhope_1_1stack__buffer_a1c02bb6157cf83c72465c16908b91e1e}} 
+buffer\+\_\+t {\bfseries buffer}
+\item 
+\mbox{\Hypertarget{classhope_1_1stack__buffer_a8db8c66460d5d370bed0c8460d2d47cf}\label{classhope_1_1stack__buffer_a8db8c66460d5d370bed0c8460d2d47cf}} 
+std\+::vector$<$ char $>$ {\bfseries additional\+\_\+buffer}
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classhope_1_1stack__buffer_a9ec621339f8e041eade20a572e0823ac}\label{classhope_1_1stack__buffer_a9ec621339f8e041eade20a572e0823ac}} 
+static constexpr std\+::size\+\_\+t {\bfseries Buffer\+Size} = 1023
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+lib/hope/logger/stack\+\_\+buffer.\+h\item 
+lib/hope/logger/stack\+\_\+buffer.\+cpp\end{DoxyCompactItemize}

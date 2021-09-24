@@ -1,0 +1,113 @@
+\hypertarget{structhope_1_1log__helper}{}\doxysection{hope\+::log\+\_\+helper Struct Reference}
+\label{structhope_1_1log__helper}\index{hope::log\_helper@{hope::log\_helper}}
+
+
+{\ttfamily \#include $<$log\+\_\+helper.\+h$>$}
+
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structhope_1_1log__helper_1_1value__wrapper}{value\+\_\+wrapper}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$typename T $>$ }\\using \mbox{\hyperlink{structhope_1_1log__helper_ab33c4bb0d46beb7fa2593010b5edafd7}{write\+\_\+method\+\_\+t}} = decltype(std\+::declval$<$ T $>$().write(std\+::declval$<$ \mbox{\hyperlink{structhope_1_1log__helper}{log\+\_\+helper}} \& $>$()))
+\item 
+{\footnotesize template$<$typename T $>$ }\\using \mbox{\hyperlink{structhope_1_1log__helper_a68b7f639f238711381b6f63727d88669}{write\+\_\+function\+\_\+t}} = decltype(write(std\+::declval$<$ \mbox{\hyperlink{structhope_1_1log__helper}{log\+\_\+helper}} \& $>$(), std\+::declval$<$ const T \& $>$()))
+\item 
+{\footnotesize template$<$typename T $>$ }\\using \mbox{\hyperlink{structhope_1_1log__helper_a74e21dd76d65db23c6334400fe704258}{write\+\_\+enum\+\_\+function\+\_\+t}} = decltype(write\+\_\+enum(std\+::declval$<$ \mbox{\hyperlink{structhope_1_1log__helper}{log\+\_\+helper}} \& $>$(), std\+::declval$<$ const T \& $>$()))
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{structhope_1_1log__helper_a3d882b83f8707bf22eda10fb008cf90d}\label{structhope_1_1log__helper_a3d882b83f8707bf22eda10fb008cf90d}} 
+{\bfseries log\+\_\+helper} (\mbox{\hyperlink{classhope_1_1logger}{logger}} \&logger\+\_\+instance, log\+\_\+priority priority)
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$typename T $>$ }\\static \mbox{\hyperlink{structhope_1_1log__helper_1_1value__wrapper}{value\+\_\+wrapper}}$<$ T $>$ \mbox{\hyperlink{structhope_1_1log__helper_adc45074e2526a8b310d6d4c0647d010f}{build\+\_\+value}} (const T \&value)
+\end{DoxyCompactItemize}
+\doxysubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$typename T $>$ }\\\mbox{\hyperlink{structhope_1_1log__helper}{log\+\_\+helper}} \& \mbox{\hyperlink{structhope_1_1log__helper_af353a103ac837a3e395120bbcf20b9eb}{operator$<$$<$}} (\mbox{\hyperlink{structhope_1_1log__helper}{log\+\_\+helper}} \&helper, const T \&value)
+\item 
+{\footnotesize template$<$typename T $>$ }\\\mbox{\hyperlink{structhope_1_1log__helper}{log\+\_\+helper}} \& \mbox{\hyperlink{structhope_1_1log__helper_a321424629802282b7274c80521166e00}{operator$<$$<$}} (\mbox{\hyperlink{structhope_1_1log__helper}{log\+\_\+helper}} \&\&helper, const T \&value)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Helper class for log writing, provide dispatch of the writing value according their type 
+
+\doxysubsection{Member Typedef Documentation}
+\mbox{\Hypertarget{structhope_1_1log__helper_a74e21dd76d65db23c6334400fe704258}\label{structhope_1_1log__helper_a74e21dd76d65db23c6334400fe704258}} 
+\index{hope::log\_helper@{hope::log\_helper}!write\_enum\_function\_t@{write\_enum\_function\_t}}
+\index{write\_enum\_function\_t@{write\_enum\_function\_t}!hope::log\_helper@{hope::log\_helper}}
+\doxysubsubsection{\texorpdfstring{write\_enum\_function\_t}{write\_enum\_function\_t}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+using \mbox{\hyperlink{structhope_1_1log__helper_a74e21dd76d65db23c6334400fe704258}{hope\+::log\+\_\+helper\+::write\+\_\+enum\+\_\+function\+\_\+t}} =  decltype(write\+\_\+enum(std\+::declval$<$\mbox{\hyperlink{structhope_1_1log__helper}{log\+\_\+helper}}\&$>$(), std\+::declval$<$const T\&$>$()))}
+
+Pseudonym to the enum writing function. To use special rule for enums declare\+: template$<$typename TEnum$>$ void write\+\_\+enum(log\+\_\+helper\&, TEnum enum\+\_\+instance); \mbox{\Hypertarget{structhope_1_1log__helper_a68b7f639f238711381b6f63727d88669}\label{structhope_1_1log__helper_a68b7f639f238711381b6f63727d88669}} 
+\index{hope::log\_helper@{hope::log\_helper}!write\_function\_t@{write\_function\_t}}
+\index{write\_function\_t@{write\_function\_t}!hope::log\_helper@{hope::log\_helper}}
+\doxysubsubsection{\texorpdfstring{write\_function\_t}{write\_function\_t}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+using \mbox{\hyperlink{structhope_1_1log__helper_a68b7f639f238711381b6f63727d88669}{hope\+::log\+\_\+helper\+::write\+\_\+function\+\_\+t}} =  decltype(write(std\+::declval$<$\mbox{\hyperlink{structhope_1_1log__helper}{log\+\_\+helper}}\&$>$(), std\+::declval$<$const T\&$>$()))}
+
+Pseudonym to the global write function. Template and even are suitable. To use custom write rule to the desired type, create function with next signature\+: template$<$typename T$>$ void write(log\+\_\+helper\&, const T\&); Or explicitly declare type of the variable \mbox{\Hypertarget{structhope_1_1log__helper_ab33c4bb0d46beb7fa2593010b5edafd7}\label{structhope_1_1log__helper_ab33c4bb0d46beb7fa2593010b5edafd7}} 
+\index{hope::log\_helper@{hope::log\_helper}!write\_method\_t@{write\_method\_t}}
+\index{write\_method\_t@{write\_method\_t}!hope::log\_helper@{hope::log\_helper}}
+\doxysubsubsection{\texorpdfstring{write\_method\_t}{write\_method\_t}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+using \mbox{\hyperlink{structhope_1_1log__helper_ab33c4bb0d46beb7fa2593010b5edafd7}{hope\+::log\+\_\+helper\+::write\+\_\+method\+\_\+t}} =  decltype(std\+::declval$<$T$>$().write(std\+::declval$<$\mbox{\hyperlink{structhope_1_1log__helper}{log\+\_\+helper}}\&$>$()))}
+
+Pseudonym of the method which might be used to write log in specific form To use specific rules, create method of desired class with this signature\+: void write(log\+\_\+helper\&) 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{structhope_1_1log__helper_adc45074e2526a8b310d6d4c0647d010f}\label{structhope_1_1log__helper_adc45074e2526a8b310d6d4c0647d010f}} 
+\index{hope::log\_helper@{hope::log\_helper}!build\_value@{build\_value}}
+\index{build\_value@{build\_value}!hope::log\_helper@{hope::log\_helper}}
+\doxysubsubsection{\texorpdfstring{build\_value()}{build\_value()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+static \mbox{\hyperlink{structhope_1_1log__helper_1_1value__wrapper}{value\+\_\+wrapper}}$<$ T $>$ hope\+::log\+\_\+helper\+::build\+\_\+value (\begin{DoxyParamCaption}\item[{const T \&}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+Wrap value to store it with pretty form\+: \mbox{[}VALUE\mbox{]} 
+
+\doxysubsection{Friends And Related Function Documentation}
+\mbox{\Hypertarget{structhope_1_1log__helper_a321424629802282b7274c80521166e00}\label{structhope_1_1log__helper_a321424629802282b7274c80521166e00}} 
+\index{hope::log\_helper@{hope::log\_helper}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!hope::log\_helper@{hope::log\_helper}}
+\doxysubsubsection{\texorpdfstring{operator$<$$<$}{operator<<}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+\mbox{\hyperlink{structhope_1_1log__helper}{log\+\_\+helper}} \& operator$<$$<$ (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structhope_1_1log__helper}{log\+\_\+helper}} \&\&}]{helper,  }\item[{const T \&}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [friend]}}
+
+Function needed to delegate call to the same operator\texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<}, but with a little different semantic On MSVC it does not need, but another compilers can not call function with non const reference parameter with rvalue \mbox{\Hypertarget{structhope_1_1log__helper_af353a103ac837a3e395120bbcf20b9eb}\label{structhope_1_1log__helper_af353a103ac837a3e395120bbcf20b9eb}} 
+\index{hope::log\_helper@{hope::log\_helper}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!hope::log\_helper@{hope::log\_helper}}
+\doxysubsubsection{\texorpdfstring{operator$<$$<$}{operator<<}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+\mbox{\hyperlink{structhope_1_1log__helper}{log\+\_\+helper}} \& operator$<$$<$ (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structhope_1_1log__helper}{log\+\_\+helper}} \&}]{helper,  }\item[{const T \&}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [friend]}}
+
+Central point of writing operation, provide type dispatch and call desired write method. If the type is enum and write\+\_\+enum had been detected, thus it will be called If member function with signature void write(log\+\_\+helper\&) detected, it will be called If global function with signature void write(log\+\_\+helper, const T\&) detected, it will be called 
+\begin{DoxyTemplParams}{Template Parameters}
+{\em T} & Type of th eobject to be written \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em helper} & Self \\
+\hline
+{\em value} & Instance of the object to be written \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Self 
+\end{DoxyReturn}
+
+
+The documentation for this struct was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+lib/hope/logger/log\+\_\+helper.\+h\item 
+lib/hope/logger/log\+\_\+helper.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,138 @@
+\hypertarget{structhope_1_1memory_1_1chunk}{}\doxysection{hope\+::memory\+::chunk Struct Reference}
+\label{structhope_1_1memory_1_1chunk}\index{hope::memory::chunk@{hope::memory::chunk}}
+
+
+Low level chunk allocator, is made such as tricky linked list first byte of the chunks block stores position of the next available element, thus we try to avoid extra memory utilization, also chunk knows nothing about it\textquotesingle{}s block size, therefore alloc and dealloc methods looks so strange (their signature contain related params...) but it is worth remembering that chunk can\textquotesingle{}t allocate blocks with different sizes.  
+
+
+
+
+{\ttfamily \#include $<$chunk.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{structhope_1_1memory_1_1chunk_acf928e403f88bb938e90dbf2d689b6ed}{init}} (std\+::size\+\_\+t block\+\_\+size, uint8\+\_\+t blocks\+\_\+count) noexcept
+\begin{DoxyCompactList}\small\item\em I decide to do not use RAII principle, to avoid any explicit constructors chunk should be as simple struct as possible, btw it is lowest level in allocation hierarchy. \end{DoxyCompactList}\item 
+void $\ast$ \mbox{\hyperlink{structhope_1_1memory_1_1chunk_a206a4519e9dff7d8d54f8650446f350d}{allocate}} (std\+::size\+\_\+t block\+\_\+size) noexcept
+\begin{DoxyCompactList}\small\item\em Allocation of chunks block, block\+\_\+size is passed throw methods parameter, because it is too expensive to store this value at the chunk struct (due to the allocators hierarchy, see \mbox{\hyperlink{fixed__allocator_8h_source}{fixed\+\_\+allocator.\+h}} for more details) this method extract first available block from linked list, and do other related work, it is easy to understand. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{structhope_1_1memory_1_1chunk_a67127097fa2f304eb663b867b63007e6}{deallocate}} (void $\ast$ptr, std\+::size\+\_\+t block\+\_\+size) noexcept
+\begin{DoxyCompactList}\small\item\em freed passed memory witch is related by the passed pointer \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{structhope_1_1memory_1_1chunk_a128474f2b0f4ae41f2d3e46f607f63b7}{is\+\_\+deallocation\+\_\+valid}} (void $\ast$ptr, std\+::size\+\_\+t block\+\_\+size) const noexcept
+\begin{DoxyCompactList}\small\item\em checks if deallocation of passed ptr with passed value is available, otherwise we just cough memory corruption ot other invalid activity \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{structhope_1_1memory_1_1chunk_aee824910780f0562c431cecabb958781}{is\+\_\+allocation\+\_\+valid}} (std\+::size\+\_\+t block\+\_\+size) const noexcept
+\begin{DoxyCompactList}\small\item\em check if allocation of block currently available \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{structhope_1_1memory_1_1chunk_ab24f7c3e19c4f0d4eab43e89eaf68708}\label{structhope_1_1memory_1_1chunk_ab24f7c3e19c4f0d4eab43e89eaf68708}} 
+uint8\+\_\+t $\ast$ {\bfseries data} \{ nullptr \}
+\item 
+\mbox{\Hypertarget{structhope_1_1memory_1_1chunk_a29d704ff31dd3714a812c9d012d70fb6}\label{structhope_1_1memory_1_1chunk_a29d704ff31dd3714a812c9d012d70fb6}} 
+uint8\+\_\+t {\bfseries free\+\_\+blocks\+\_\+count} \{ 0 \}
+\item 
+\mbox{\Hypertarget{structhope_1_1memory_1_1chunk_a0c06e17d26cf8377da79091e274722c6}\label{structhope_1_1memory_1_1chunk_a0c06e17d26cf8377da79091e274722c6}} 
+uint8\+\_\+t {\bfseries first\+\_\+free\+\_\+block} \{ 0 \}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Low level chunk allocator, is made such as tricky linked list first byte of the chunks block stores position of the next available element, thus we try to avoid extra memory utilization, also chunk knows nothing about it\textquotesingle{}s block size, therefore alloc and dealloc methods looks so strange (their signature contain related params...) but it is worth remembering that chunk can\textquotesingle{}t allocate blocks with different sizes. 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{structhope_1_1memory_1_1chunk_a206a4519e9dff7d8d54f8650446f350d}\label{structhope_1_1memory_1_1chunk_a206a4519e9dff7d8d54f8650446f350d}} 
+\index{hope::memory::chunk@{hope::memory::chunk}!allocate@{allocate}}
+\index{allocate@{allocate}!hope::memory::chunk@{hope::memory::chunk}}
+\doxysubsubsection{\texorpdfstring{allocate()}{allocate()}}
+{\footnotesize\ttfamily void $\ast$ hope\+::memory\+::chunk\+::allocate (\begin{DoxyParamCaption}\item[{std\+::size\+\_\+t}]{block\+\_\+size }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+Allocation of chunks block, block\+\_\+size is passed throw methods parameter, because it is too expensive to store this value at the chunk struct (due to the allocators hierarchy, see \mbox{\hyperlink{fixed__allocator_8h_source}{fixed\+\_\+allocator.\+h}} for more details) this method extract first available block from linked list, and do other related work, it is easy to understand. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em block\+\_\+size} & -\/ size of block to be allocated \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+pointer to the desired memory segment 
+\end{DoxyReturn}
+\mbox{\Hypertarget{structhope_1_1memory_1_1chunk_a67127097fa2f304eb663b867b63007e6}\label{structhope_1_1memory_1_1chunk_a67127097fa2f304eb663b867b63007e6}} 
+\index{hope::memory::chunk@{hope::memory::chunk}!deallocate@{deallocate}}
+\index{deallocate@{deallocate}!hope::memory::chunk@{hope::memory::chunk}}
+\doxysubsubsection{\texorpdfstring{deallocate()}{deallocate()}}
+{\footnotesize\ttfamily void hope\+::memory\+::chunk\+::deallocate (\begin{DoxyParamCaption}\item[{void $\ast$}]{ptr,  }\item[{std\+::size\+\_\+t}]{block\+\_\+size }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+freed passed memory witch is related by the passed pointer 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ptr} & pointer to the memory block to be allocated, value should be in range of \mbox{[}data, data + block\+\_\+size $\ast$ blocks\+\_\+count\mbox{]} in other words this memory should be recently allocated from this chunk \\
+\hline
+{\em block\+\_\+size} & size of block to be freed \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{structhope_1_1memory_1_1chunk_acf928e403f88bb938e90dbf2d689b6ed}\label{structhope_1_1memory_1_1chunk_acf928e403f88bb938e90dbf2d689b6ed}} 
+\index{hope::memory::chunk@{hope::memory::chunk}!init@{init}}
+\index{init@{init}!hope::memory::chunk@{hope::memory::chunk}}
+\doxysubsubsection{\texorpdfstring{init()}{init()}}
+{\footnotesize\ttfamily void hope\+::memory\+::chunk\+::init (\begin{DoxyParamCaption}\item[{std\+::size\+\_\+t}]{block\+\_\+size,  }\item[{uint8\+\_\+t}]{blocks\+\_\+count }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+I decide to do not use RAII principle, to avoid any explicit constructors chunk should be as simple struct as possible, btw it is lowest level in allocation hierarchy. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em block\+\_\+size} & size of single block to be stored at the chunk; this is only one lock size which is available for allocation \\
+\hline
+{\em blocks\+\_\+count} & count of chunk\textquotesingle{}s blocks to be allocated, value in range of \mbox{[}0, 255\mbox{]} this is most appropriate interval to avoid memory alignment falls (maximum available index of chunk block is 255 due to byte size) \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{structhope_1_1memory_1_1chunk_aee824910780f0562c431cecabb958781}\label{structhope_1_1memory_1_1chunk_aee824910780f0562c431cecabb958781}} 
+\index{hope::memory::chunk@{hope::memory::chunk}!is\_allocation\_valid@{is\_allocation\_valid}}
+\index{is\_allocation\_valid@{is\_allocation\_valid}!hope::memory::chunk@{hope::memory::chunk}}
+\doxysubsubsection{\texorpdfstring{is\_allocation\_valid()}{is\_allocation\_valid()}}
+{\footnotesize\ttfamily bool hope\+::memory\+::chunk\+::is\+\_\+allocation\+\_\+valid (\begin{DoxyParamCaption}\item[{std\+::size\+\_\+t}]{block\+\_\+size }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+check if allocation of block currently available 
+
+
+\begin{DoxyParams}{Parameters}
+{\em block\+\_\+size} & size of block to be allocated \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if allocation is possible 
+\end{DoxyReturn}
+\mbox{\Hypertarget{structhope_1_1memory_1_1chunk_a128474f2b0f4ae41f2d3e46f607f63b7}\label{structhope_1_1memory_1_1chunk_a128474f2b0f4ae41f2d3e46f607f63b7}} 
+\index{hope::memory::chunk@{hope::memory::chunk}!is\_deallocation\_valid@{is\_deallocation\_valid}}
+\index{is\_deallocation\_valid@{is\_deallocation\_valid}!hope::memory::chunk@{hope::memory::chunk}}
+\doxysubsubsection{\texorpdfstring{is\_deallocation\_valid()}{is\_deallocation\_valid()}}
+{\footnotesize\ttfamily bool hope\+::memory\+::chunk\+::is\+\_\+deallocation\+\_\+valid (\begin{DoxyParamCaption}\item[{void $\ast$}]{ptr,  }\item[{std\+::size\+\_\+t}]{block\+\_\+size }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+checks if deallocation of passed ptr with passed value is available, otherwise we just cough memory corruption ot other invalid activity 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ptr} & pointer to the block to be deallocated \\
+\hline
+{\em block\+\_\+size} & size of deallocating block ~\newline
+ \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true id deallocation may be successful, otherwise false 
+\end{DoxyReturn}
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+lib/hope/memory/small\+\_\+object/chunk.\+h\end{DoxyCompactItemize}

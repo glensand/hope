@@ -1,0 +1,55 @@
+\hypertarget{package_8h_source}{}\doxysection{package.\+h}
+\label{package_8h_source}\index{lib/hope/serialization/package.h@{lib/hope/serialization/package.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* Copyright (C) 2021 Gleb Bezborodov -\/ All Rights Reserved}}
+\DoxyCodeLine{2 \textcolor{comment}{ * You may use, distribute and modify this code under the}}
+\DoxyCodeLine{3 \textcolor{comment}{ * terms of the MIT license.}}
+\DoxyCodeLine{4 \textcolor{comment}{ *}}
+\DoxyCodeLine{5 \textcolor{comment}{ * You should have received a copy of the MIT license with}}
+\DoxyCodeLine{6 \textcolor{comment}{ * this file. If not, please write to: bezborodoff.gleb@gmail.com, or visit : https://github.com/glensand/hope}}
+\DoxyCodeLine{7 \textcolor{comment}{ */}}
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#include <vector>}}
+\DoxyCodeLine{12 }
+\DoxyCodeLine{13 \textcolor{keyword}{namespace }hope::serialization \{}
+\DoxyCodeLine{14 }
+\DoxyCodeLine{15     \textcolor{keyword}{class }\mbox{\hyperlink{classhope_1_1serialization_1_1package}{package}} final \{}
+\DoxyCodeLine{16         \textcolor{keyword}{using} buffer\_t = std::vector<unsigned char>;}
+\DoxyCodeLine{17     \textcolor{keyword}{public}:}
+\DoxyCodeLine{18         \mbox{\hyperlink{classhope_1_1serialization_1_1package}{package}}() = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{19 }
+\DoxyCodeLine{25         \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{26         \textcolor{keywordtype}{void} \mbox{\hyperlink{classhope_1_1serialization_1_1package_a521179e63d94a77b209def5308068af0}{write}}(\textcolor{keyword}{const} T\& val) \{}
+\DoxyCodeLine{27             \mbox{\hyperlink{classhope_1_1serialization_1_1package_a521179e63d94a77b209def5308068af0}{write}}(\&val, \textcolor{keyword}{sizeof} val);}
+\DoxyCodeLine{28         \}}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{35         \textcolor{keywordtype}{void} \mbox{\hyperlink{classhope_1_1serialization_1_1package_a521179e63d94a77b209def5308068af0}{write}}(\textcolor{keyword}{const} \textcolor{keywordtype}{void}* data, std::size\_t count);}
+\DoxyCodeLine{36 }
+\DoxyCodeLine{42         \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{43         T \mbox{\hyperlink{classhope_1_1serialization_1_1package_a8ea2a404ba8b2bad77bc8a87499e5e07}{read}}() \{}
+\DoxyCodeLine{44             T val;}
+\DoxyCodeLine{45             \mbox{\hyperlink{classhope_1_1serialization_1_1package_a8ea2a404ba8b2bad77bc8a87499e5e07}{read}}(\&val, \textcolor{keyword}{sizeof} val);}
+\DoxyCodeLine{46             \textcolor{keywordflow}{return} val;}
+\DoxyCodeLine{47         \}}
+\DoxyCodeLine{48 }
+\DoxyCodeLine{54         \textcolor{keywordtype}{void} \mbox{\hyperlink{classhope_1_1serialization_1_1package_a8ea2a404ba8b2bad77bc8a87499e5e07}{read}}(\textcolor{keywordtype}{void}* data, std::size\_t count);}
+\DoxyCodeLine{55 }
+\DoxyCodeLine{61         std::size\_t \mbox{\hyperlink{classhope_1_1serialization_1_1package_ac0106745853599af982d229f4202fbcc}{seek}}(std::size\_t position);}
+\DoxyCodeLine{62 }
+\DoxyCodeLine{68         std::size\_t \mbox{\hyperlink{classhope_1_1serialization_1_1package_a1a39b40936a5908b095c9e0f112ae629}{reserve}}(std::size\_t count);}
+\DoxyCodeLine{69 }
+\DoxyCodeLine{74         [[nodiscard]] \textcolor{keyword}{const} buffer\_t\& \mbox{\hyperlink{classhope_1_1serialization_1_1package_a4d0dc0ba5fb9a1261281ceac74f9c5b7}{get\_buffer}}() const noexcept \{ \textcolor{keywordflow}{return} buffer; \}}
+\DoxyCodeLine{75 }
+\DoxyCodeLine{79         \textcolor{keywordtype}{void} clear();}
+\DoxyCodeLine{80     \textcolor{keyword}{private}:}
+\DoxyCodeLine{81         buffer\_t buffer;}
+\DoxyCodeLine{82         std::size\_t write\_pos\{ 0u \};}
+\DoxyCodeLine{83         std::size\_t read\_pos\{ 0u \};}
+\DoxyCodeLine{84     \};}
+\DoxyCodeLine{85 }
+\DoxyCodeLine{86 \}}
+
+\end{DoxyCode}

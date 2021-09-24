@@ -1,0 +1,29 @@
+\hypertarget{small__object_8h_source}{}\doxysection{small\+\_\+object.\+h}
+\label{small__object_8h_source}\index{lib/hope/memory/small\_object/small\_object.h@{lib/hope/memory/small\_object/small\_object.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* Copyright (C) 2020 -\/ 2021 Gleb Bezborodov -\/ All Rights Reserved}}
+\DoxyCodeLine{2 \textcolor{comment}{ * You may use, distribute and modify this code under the}}
+\DoxyCodeLine{3 \textcolor{comment}{ * terms of the MIT license.}}
+\DoxyCodeLine{4 \textcolor{comment}{ *}}
+\DoxyCodeLine{5 \textcolor{comment}{ * You should have received a copy of the MIT license with}}
+\DoxyCodeLine{6 \textcolor{comment}{ * this file. If not, please write to: bezborodoff.gleb@gmail.com, or visit : https://github.com/glensand/hope}}
+\DoxyCodeLine{7 \textcolor{comment}{ */}}
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#include "{}hope/memory/small\_object/small\_object\_allocator.h"{}}}
+\DoxyCodeLine{12 }
+\DoxyCodeLine{13 \textcolor{keyword}{namespace }hope::memory \{}
+\DoxyCodeLine{14 }
+\DoxyCodeLine{20     \textcolor{keyword}{class }\mbox{\hyperlink{classhope_1_1memory_1_1small__object}{small\_object}} \{}
+\DoxyCodeLine{21     \textcolor{keyword}{public}:}
+\DoxyCodeLine{22         \textcolor{keyword}{virtual} \mbox{\hyperlink{classhope_1_1memory_1_1small__object}{\string~small\_object}}() = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{23 }
+\DoxyCodeLine{24         \textcolor{keywordtype}{void}* \textcolor{keyword}{operator} \textcolor{keyword}{new}(std::size\_t size);}
+\DoxyCodeLine{25         \textcolor{keywordtype}{void} \textcolor{keyword}{operator} \textcolor{keyword}{delete}(\textcolor{keywordtype}{void}* ptr, std::size\_t size);}
+\DoxyCodeLine{26     \};}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28 \}}
+
+\end{DoxyCode}

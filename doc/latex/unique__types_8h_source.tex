@@ -1,0 +1,29 @@
+\hypertarget{unique__types_8h_source}{}\doxysection{unique\+\_\+types.\+h}
+\label{unique__types_8h_source}\index{lib/hope/components/unique\_types.h@{lib/hope/components/unique\_types.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* Copyright (C) 2020 -\/ 2021 Gleb Bezborodov -\/ All Rights Reserved}}
+\DoxyCodeLine{2 \textcolor{comment}{ * You may use, distribute and modify this code under the}}
+\DoxyCodeLine{3 \textcolor{comment}{ * terms of the MIT license.}}
+\DoxyCodeLine{4 \textcolor{comment}{ *}}
+\DoxyCodeLine{5 \textcolor{comment}{ * You should have received a copy of the MIT license with}}
+\DoxyCodeLine{6 \textcolor{comment}{ * this file. If not, please write to: bezborodoff.gleb@gmail.com, or visit : https://github.com/glensand/hope}}
+\DoxyCodeLine{7 \textcolor{comment}{ */}}
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#include <type\_traits>}}
+\DoxyCodeLine{12 }
+\DoxyCodeLine{13 \textcolor{keyword}{template} <\textcolor{keyword}{typename} ... Ts>}
+\DoxyCodeLine{14 \textcolor{keyword}{struct }\mbox{\hyperlink{structunique__types}{unique\_types}};}
+\DoxyCodeLine{15 }
+\DoxyCodeLine{16 \textcolor{keyword}{template} <\textcolor{keyword}{typename} T1, \textcolor{keyword}{typename} T2, \textcolor{keyword}{typename} ... Ts>}
+\DoxyCodeLine{17 \textcolor{keyword}{struct }\mbox{\hyperlink{structunique__types}{unique\_types}}<T1, T2, Ts ...>}
+\DoxyCodeLine{18     : \mbox{\hyperlink{structunique__types}{unique\_types}}<T1, T2>, \mbox{\hyperlink{structunique__types}{unique\_types}}<T1, Ts ...>, \mbox{\hyperlink{structunique__types}{unique\_types}}<T2, Ts ...> \{\};}
+\DoxyCodeLine{19 }
+\DoxyCodeLine{20 \textcolor{keyword}{template} <\textcolor{keyword}{typename} T1, \textcolor{keyword}{typename} T2>}
+\DoxyCodeLine{21 \textcolor{keyword}{struct }\mbox{\hyperlink{structunique__types}{unique\_types}}<T1, T2> \{}
+\DoxyCodeLine{22     \textcolor{keyword}{static\_assert}(!std::is\_same\_v<T1, T2>, \textcolor{stringliteral}{"{}Types must be unique."{}});}
+\DoxyCodeLine{23 \};}
+
+\end{DoxyCode}

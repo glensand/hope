@@ -1,0 +1,142 @@
+\hypertarget{classhope_1_1serialization_1_1package}{}\doxysection{hope\+::serialization\+::package Class Reference}
+\label{classhope_1_1serialization_1_1package}\index{hope::serialization::package@{hope::serialization::package}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$typename T $>$ }\\void \mbox{\hyperlink{classhope_1_1serialization_1_1package_a521179e63d94a77b209def5308068af0}{write}} (const T \&val)
+\begin{DoxyCompactList}\small\item\em writes data to the inner buffer, automatically enlarge size of them \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classhope_1_1serialization_1_1package_ac5b87d84dec0d3de601d8635cf3199cc}{write}} (const void $\ast$data, std\+::size\+\_\+t count)
+\begin{DoxyCompactList}\small\item\em writes sequence of raw data to the inner buffer, automatically enlarge those if it is required \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T $>$ }\\T \mbox{\hyperlink{classhope_1_1serialization_1_1package_a8ea2a404ba8b2bad77bc8a87499e5e07}{read}} ()
+\begin{DoxyCompactList}\small\item\em reads object of specified type, the type should be POD \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classhope_1_1serialization_1_1package_abdc0e3e5e8bc7ebe5ad18129139b9044}{read}} (void $\ast$data, std\+::size\+\_\+t count)
+\begin{DoxyCompactList}\small\item\em reads specified amount of data to the given buffer, throws exception if buffer size is \end{DoxyCompactList}\item 
+std\+::size\+\_\+t \mbox{\hyperlink{classhope_1_1serialization_1_1package_ac0106745853599af982d229f4202fbcc}{seek}} (std\+::size\+\_\+t position)
+\item 
+std\+::size\+\_\+t \mbox{\hyperlink{classhope_1_1serialization_1_1package_a1a39b40936a5908b095c9e0f112ae629}{reserve}} (std\+::size\+\_\+t count)
+\item 
+const buffer\+\_\+t \& \mbox{\hyperlink{classhope_1_1serialization_1_1package_a4d0dc0ba5fb9a1261281ceac74f9c5b7}{get\+\_\+buffer}} () const noexcept
+\item 
+\mbox{\Hypertarget{classhope_1_1serialization_1_1package_a22e36b58f4adb5839f6d6ca44f3a1cf9}\label{classhope_1_1serialization_1_1package_a22e36b58f4adb5839f6d6ca44f3a1cf9}} 
+void {\bfseries clear} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classhope_1_1serialization_1_1package_a4d0dc0ba5fb9a1261281ceac74f9c5b7}\label{classhope_1_1serialization_1_1package_a4d0dc0ba5fb9a1261281ceac74f9c5b7}} 
+\index{hope::serialization::package@{hope::serialization::package}!get\_buffer@{get\_buffer}}
+\index{get\_buffer@{get\_buffer}!hope::serialization::package@{hope::serialization::package}}
+\doxysubsubsection{\texorpdfstring{get\_buffer()}{get\_buffer()}}
+{\footnotesize\ttfamily const buffer\+\_\+t \& hope\+::serialization\+::package\+::get\+\_\+buffer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{classhope_1_1serialization_1_1package_a8ea2a404ba8b2bad77bc8a87499e5e07}\label{classhope_1_1serialization_1_1package_a8ea2a404ba8b2bad77bc8a87499e5e07}} 
+\index{hope::serialization::package@{hope::serialization::package}!read@{read}}
+\index{read@{read}!hope::serialization::package@{hope::serialization::package}}
+\doxysubsubsection{\texorpdfstring{read()}{read()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+T hope\+::serialization\+::package\+::read (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+reads object of specified type, the type should be POD 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em T} & type to be read \\
+\hline
+\end{DoxyTemplParams}
+\begin{DoxyReturn}{Returns}
+result object 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classhope_1_1serialization_1_1package_abdc0e3e5e8bc7ebe5ad18129139b9044}\label{classhope_1_1serialization_1_1package_abdc0e3e5e8bc7ebe5ad18129139b9044}} 
+\index{hope::serialization::package@{hope::serialization::package}!read@{read}}
+\index{read@{read}!hope::serialization::package@{hope::serialization::package}}
+\doxysubsubsection{\texorpdfstring{read()}{read()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void hope\+::serialization\+::package\+::read (\begin{DoxyParamCaption}\item[{void $\ast$}]{data,  }\item[{std\+::size\+\_\+t}]{count }\end{DoxyParamCaption})}
+
+
+
+reads specified amount of data to the given buffer, throws exception if buffer size is 
+
+
+\begin{DoxyParams}{Parameters}
+{\em data} & pointer to very beginning of read buffer \\
+\hline
+{\em count} & count of bytes to be read \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classhope_1_1serialization_1_1package_a1a39b40936a5908b095c9e0f112ae629}\label{classhope_1_1serialization_1_1package_a1a39b40936a5908b095c9e0f112ae629}} 
+\index{hope::serialization::package@{hope::serialization::package}!reserve@{reserve}}
+\index{reserve@{reserve}!hope::serialization::package@{hope::serialization::package}}
+\doxysubsubsection{\texorpdfstring{reserve()}{reserve()}}
+{\footnotesize\ttfamily std\+::size\+\_\+t hope\+::serialization\+::package\+::reserve (\begin{DoxyParamCaption}\item[{std\+::size\+\_\+t}]{count }\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em count} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{classhope_1_1serialization_1_1package_ac0106745853599af982d229f4202fbcc}\label{classhope_1_1serialization_1_1package_ac0106745853599af982d229f4202fbcc}} 
+\index{hope::serialization::package@{hope::serialization::package}!seek@{seek}}
+\index{seek@{seek}!hope::serialization::package@{hope::serialization::package}}
+\doxysubsubsection{\texorpdfstring{seek()}{seek()}}
+{\footnotesize\ttfamily std\+::size\+\_\+t hope\+::serialization\+::package\+::seek (\begin{DoxyParamCaption}\item[{std\+::size\+\_\+t}]{position }\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em position} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{classhope_1_1serialization_1_1package_a521179e63d94a77b209def5308068af0}\label{classhope_1_1serialization_1_1package_a521179e63d94a77b209def5308068af0}} 
+\index{hope::serialization::package@{hope::serialization::package}!write@{write}}
+\index{write@{write}!hope::serialization::package@{hope::serialization::package}}
+\doxysubsubsection{\texorpdfstring{write()}{write()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+void hope\+::serialization\+::package\+::write (\begin{DoxyParamCaption}\item[{const T \&}]{val }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+writes data to the inner buffer, automatically enlarge size of them 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em T} & type of the pod to be written \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em val} & given value \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classhope_1_1serialization_1_1package_ac5b87d84dec0d3de601d8635cf3199cc}\label{classhope_1_1serialization_1_1package_ac5b87d84dec0d3de601d8635cf3199cc}} 
+\index{hope::serialization::package@{hope::serialization::package}!write@{write}}
+\index{write@{write}!hope::serialization::package@{hope::serialization::package}}
+\doxysubsubsection{\texorpdfstring{write()}{write()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void hope\+::serialization\+::package\+::write (\begin{DoxyParamCaption}\item[{const void $\ast$}]{data,  }\item[{std\+::size\+\_\+t}]{count }\end{DoxyParamCaption})}
+
+
+
+writes sequence of raw data to the inner buffer, automatically enlarge those if it is required 
+
+
+\begin{DoxyParams}{Parameters}
+{\em data} & pointer to very beginning of the memory segment to be written \\
+\hline
+{\em count} & count of BYTES in the memory segment \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+lib/hope/serialization/package.\+h\item 
+lib/hope/serialization/package.\+cpp\end{DoxyCompactItemize}

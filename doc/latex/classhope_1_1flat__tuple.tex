@@ -1,0 +1,40 @@
+\hypertarget{classhope_1_1flat__tuple}{}\doxysection{hope\+::flat\+\_\+tuple\texorpdfstring{$<$}{<} Ts \texorpdfstring{$>$}{>} Class Template Reference}
+\label{classhope_1_1flat__tuple}\index{hope::flat\_tuple$<$ Ts $>$@{hope::flat\_tuple$<$ Ts $>$}}
+
+
+Implementation of the struct like non recursive tuple which might be used to directly cast to struct with same fields because alignment of the structs\textquotesingle{}s fields and tuple\textquotesingle{}s fields are match.  
+
+
+
+
+{\ttfamily \#include $<$flat\+\_\+tuple.\+h$>$}
+
+Inheritance diagram for hope\+::flat\+\_\+tuple\texorpdfstring{$<$}{<} Ts \texorpdfstring{$>$}{>}\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classhope_1_1flat__tuple}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classhope_1_1flat__tuple_adc44381c3be1d67f5d34eda909ea4ecc}\label{classhope_1_1flat__tuple_adc44381c3be1d67f5d34eda909ea4ecc}} 
+{\footnotesize template$<$typename... VTs, typename  = std\+::enable\+\_\+if\+\_\+t$<$std\+::is\+\_\+same\+\_\+v$<$type\+\_\+list$<$std\+::decay\+\_\+t$<$\+VTs$>$...$>$, type\+\_\+list$<$std\+::decay\+\_\+t$<$\+Ts$>$...$>$$>$$>$$>$ }\\constexpr {\bfseries flat\+\_\+tuple} (VTs \&\&... elems) noexcept
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$typename... Ts$>$\newline
+class hope\+::flat\+\_\+tuple$<$ Ts $>$}
+Implementation of the struct like non recursive tuple which might be used to directly cast to struct with same fields because alignment of the structs\textquotesingle{}s fields and tuple\textquotesingle{}s fields are match. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em Ts} & types which might be stored in the tuple \\
+\hline
+\end{DoxyTemplParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+lib/hope/tuple/flat\+\_\+tuple.\+h\end{DoxyCompactItemize}

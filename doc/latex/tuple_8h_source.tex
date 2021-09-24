@@ -1,0 +1,114 @@
+\hypertarget{tuple_8h_source}{}\doxysection{tuple.\+h}
+\label{tuple_8h_source}\index{lib/hope/tuple/tuple.h@{lib/hope/tuple/tuple.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* Copyright (C) 2020 -\/ 2021 Gleb Bezborodov -\/ All Rights Reserved}}
+\DoxyCodeLine{2 \textcolor{comment}{ * You may use, distribute and modify this code under the}}
+\DoxyCodeLine{3 \textcolor{comment}{ * terms of the MIT license.}}
+\DoxyCodeLine{4 \textcolor{comment}{ *}}
+\DoxyCodeLine{5 \textcolor{comment}{ * You should have received a copy of the MIT license with}}
+\DoxyCodeLine{6 \textcolor{comment}{ * this file. If not, please write to: bezborodoff.gleb@gmail.com, or visit : https://github.com/glensand/hope}}
+\DoxyCodeLine{7 \textcolor{comment}{ */}}
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#include <type\_traits>}}
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#include <ostream>}}
+\DoxyCodeLine{13 }
+\DoxyCodeLine{14 \textcolor{keyword}{namespace }hope \{}
+\DoxyCodeLine{15 }
+\DoxyCodeLine{16     \textcolor{keyword}{template} <\textcolor{keyword}{typename}... Ts>}
+\DoxyCodeLine{17     \textcolor{keyword}{class }\mbox{\hyperlink{classhope_1_1tuple}{tuple}};}
+\DoxyCodeLine{18 }
+\DoxyCodeLine{19     \textcolor{keyword}{template}<\textcolor{keyword}{typename} Head, \textcolor{keyword}{typename}... Tail>}
+\DoxyCodeLine{20     \textcolor{keyword}{class }\mbox{\hyperlink{classhope_1_1tuple}{tuple}}<Head, Tail...> \{}
+\DoxyCodeLine{21     \textcolor{keyword}{public}:}
+\DoxyCodeLine{22         \mbox{\hyperlink{classhope_1_1tuple}{tuple}}() = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{23 }
+\DoxyCodeLine{24         \textcolor{keyword}{template} <\textcolor{keyword}{typename} HeadRef, \textcolor{keyword}{typename}... TailRef,}
+\DoxyCodeLine{25             \textcolor{keyword}{typename} = std::enable\_if\_t<std::is\_same\_v<HeadRef, Head>}
+\DoxyCodeLine{26             \&\& std::is\_same\_v<TailRef, Tail>...>>}
+\DoxyCodeLine{27             \mbox{\hyperlink{classhope_1_1tuple}{tuple}}(Head\&\& head, \mbox{\hyperlink{classhope_1_1tuple}{tuple<Tail...>}}\&\& tail)}
+\DoxyCodeLine{28             : m\_head(std::forward<Head>(head))}
+\DoxyCodeLine{29             , m\_tail(std::forward<Tail>(tail)...) \{ \}}
+\DoxyCodeLine{30 }
+\DoxyCodeLine{31         \textcolor{keyword}{template} <\textcolor{keyword}{typename} HeadRef, \textcolor{keyword}{typename}... TailRef,}
+\DoxyCodeLine{32             \textcolor{keyword}{typename} = std::enable\_if\_t<std::is\_same\_v<HeadRef, Head>}
+\DoxyCodeLine{33             \&\& std::is\_same\_v<TailRef, Tail>...>>}
+\DoxyCodeLine{34             \mbox{\hyperlink{classhope_1_1tuple}{tuple}}(Head\&\& head, Tail\&\&... tail)}
+\DoxyCodeLine{35             : m\_head(std::forward<Head>(head))}
+\DoxyCodeLine{36             , m\_tail(std::forward<Tail>(tail)...) \{\}}
+\DoxyCodeLine{37 }
+\DoxyCodeLine{38         Head\& head() \{}
+\DoxyCodeLine{39             \textcolor{keywordflow}{return} m\_head;}
+\DoxyCodeLine{40         \}}
+\DoxyCodeLine{41 }
+\DoxyCodeLine{42         \textcolor{keyword}{const} Head\& head()\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{43             \textcolor{keywordflow}{return} m\_head;}
+\DoxyCodeLine{44         \}}
+\DoxyCodeLine{45 }
+\DoxyCodeLine{46         \mbox{\hyperlink{classhope_1_1tuple}{tuple}}<Tail...>\& tail() \{}
+\DoxyCodeLine{47             \textcolor{keywordflow}{return} m\_tail;}
+\DoxyCodeLine{48         \}}
+\DoxyCodeLine{49 }
+\DoxyCodeLine{50         \textcolor{keyword}{const} \mbox{\hyperlink{classhope_1_1tuple}{tuple}}<Tail...>\& tail()\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{51             \textcolor{keywordflow}{return} m\_tail;}
+\DoxyCodeLine{52         \}}
+\DoxyCodeLine{53     \textcolor{keyword}{private}:}
+\DoxyCodeLine{54         Head            m\_head;}
+\DoxyCodeLine{55         \mbox{\hyperlink{classhope_1_1tuple}{tuple}}<Tail...>  m\_tail;}
+\DoxyCodeLine{56     \};}
+\DoxyCodeLine{57 }
+\DoxyCodeLine{58     \textcolor{keyword}{template} <>}
+\DoxyCodeLine{59     \textcolor{keyword}{class }\mbox{\hyperlink{classhope_1_1tuple}{tuple}}<> \{}
+\DoxyCodeLine{60 }
+\DoxyCodeLine{61     \};}
+\DoxyCodeLine{62 }
+\DoxyCodeLine{63     \textcolor{keyword}{namespace }detail}
+\DoxyCodeLine{64     \{}
+\DoxyCodeLine{65         \textcolor{keyword}{template} <\textcolor{keywordtype}{unsigned} N>}
+\DoxyCodeLine{66         \textcolor{keyword}{struct }\mbox{\hyperlink{structhope_1_1detail_1_1tuple__get}{tuple\_get}} \{}
+\DoxyCodeLine{67             \textcolor{keyword}{template} <\textcolor{keyword}{typename} Head, \textcolor{keyword}{typename}... Tail>}
+\DoxyCodeLine{68             \textcolor{keyword}{static} \textcolor{keyword}{auto} apply(\textcolor{keyword}{const} \mbox{\hyperlink{classhope_1_1tuple_3_01_head_00_01_tail_8_8_8_01_4}{tuple<Head, Tail...>}}\& \mbox{\hyperlink{classhope_1_1tuple}{tuple}}) \{}
+\DoxyCodeLine{69                 \textcolor{keywordflow}{return} \mbox{\hyperlink{structhope_1_1detail_1_1tuple__get}{tuple\_get<N -\/ 1>::apply}}(\mbox{\hyperlink{classhope_1_1tuple}{tuple}}.GetTail());}
+\DoxyCodeLine{70             \}}
+\DoxyCodeLine{71         \};}
+\DoxyCodeLine{72     }
+\DoxyCodeLine{73         \textcolor{keyword}{template} <>}
+\DoxyCodeLine{74         \textcolor{keyword}{struct }\mbox{\hyperlink{structhope_1_1detail_1_1tuple__get}{tuple\_get}}<0> \{}
+\DoxyCodeLine{75             \textcolor{keyword}{template}<\textcolor{keyword}{typename} Head, \textcolor{keyword}{typename}... Tail>}
+\DoxyCodeLine{76             \textcolor{keyword}{static} \textcolor{keyword}{const} Head\& apply(\textcolor{keyword}{const} \mbox{\hyperlink{classhope_1_1tuple_3_01_head_00_01_tail_8_8_8_01_4}{tuple<Head, Tail...>}}\& \mbox{\hyperlink{classhope_1_1tuple}{tuple}}) \{}
+\DoxyCodeLine{77                 \textcolor{keywordflow}{return} \mbox{\hyperlink{classhope_1_1tuple}{tuple}}.GetHead();}
+\DoxyCodeLine{78             \}}
+\DoxyCodeLine{79         \};}
+\DoxyCodeLine{80     }
+\DoxyCodeLine{81         \textcolor{keyword}{inline} \textcolor{keywordtype}{void} print\_tuple(std::ostream\& stream, \mbox{\hyperlink{classhope_1_1tuple_3_4}{tuple<>}} \textcolor{keyword}{const}\&, \textcolor{keywordtype}{bool} isFirst = \textcolor{keyword}{true}) \{}
+\DoxyCodeLine{82             stream << (isFirst ? \textcolor{charliteral}{'('} : \textcolor{charliteral}{')'});}
+\DoxyCodeLine{83         \}}
+\DoxyCodeLine{84     }
+\DoxyCodeLine{85         \textcolor{keyword}{template} <\textcolor{keyword}{typename} Head, \textcolor{keyword}{typename}... Tail>}
+\DoxyCodeLine{86         \textcolor{keywordtype}{void} print\_tuple(std::ostream\& stream, \mbox{\hyperlink{classhope_1_1tuple_3_01_head_00_01_tail_8_8_8_01_4}{tuple<Head, Tail...>}} \textcolor{keyword}{const}\& \mbox{\hyperlink{classhope_1_1tuple}{tuple}}, \textcolor{keywordtype}{bool} isFirst = \textcolor{keyword}{true}) \{}
+\DoxyCodeLine{87             stream << \textcolor{charliteral}{'('};}
+\DoxyCodeLine{88             stream << \mbox{\hyperlink{classhope_1_1tuple}{tuple}}.GetHead();}
+\DoxyCodeLine{89             print\_tuple(stream, \mbox{\hyperlink{classhope_1_1tuple}{tuple}}.GetTail(), \textcolor{keyword}{false});}
+\DoxyCodeLine{90         \}}
+\DoxyCodeLine{91     \}}
+\DoxyCodeLine{92 }
+\DoxyCodeLine{93     \textcolor{keyword}{template} <\textcolor{keywordtype}{unsigned} N, \textcolor{keyword}{typename}... Types>}
+\DoxyCodeLine{94     \textcolor{keyword}{auto} get(\textcolor{keyword}{const} tuple<Types...>\& tuple) \{}
+\DoxyCodeLine{95         \textcolor{keywordflow}{return} detail::tuple\_get<N>::apply(tuple);}
+\DoxyCodeLine{96     \}}
+\DoxyCodeLine{97 }
+\DoxyCodeLine{98     \textcolor{keyword}{template} <\textcolor{keyword}{typename}... Ts>}
+\DoxyCodeLine{99     \textcolor{keyword}{auto} make\_tuple(Ts\&\&... elems) \{}
+\DoxyCodeLine{100         \textcolor{keywordflow}{return} tuple<std::decay\_t<Ts>...>(std::forward<Ts>(elems)...);}
+\DoxyCodeLine{101     \}}
+\DoxyCodeLine{102 }
+\DoxyCodeLine{103     \textcolor{keyword}{template} <\textcolor{keyword}{typename}... Ts>}
+\DoxyCodeLine{104     std::ostream\& operator<<(std::ostream\& stream, tuple<Ts...> tuple) \{}
+\DoxyCodeLine{105         detail::print\_tuple(stream, tuple);}
+\DoxyCodeLine{106         \textcolor{keywordflow}{return} stream;}
+\DoxyCodeLine{107     \}}
+\DoxyCodeLine{108 \}}
+
+\end{DoxyCode}

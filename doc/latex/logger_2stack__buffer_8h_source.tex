@@ -1,0 +1,45 @@
+\hypertarget{logger_2stack__buffer_8h_source}{}\doxysection{stack\+\_\+buffer.\+h}
+\label{logger_2stack__buffer_8h_source}\index{lib/hope/logger/stack\_buffer.h@{lib/hope/logger/stack\_buffer.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* Copyright (C) 2021 Gleb Bezborodov -\/ All Rights Reserved}}
+\DoxyCodeLine{2 \textcolor{comment}{ * You may use, distribute and modify this code under the}}
+\DoxyCodeLine{3 \textcolor{comment}{ * terms of the MIT license.}}
+\DoxyCodeLine{4 \textcolor{comment}{ *}}
+\DoxyCodeLine{5 \textcolor{comment}{ * You should have received a copy of the MIT license with}}
+\DoxyCodeLine{6 \textcolor{comment}{ * this file. If not, please write to: bezborodoff.gleb@gmail.com, or visit : https://github.com/glensand/hope}}
+\DoxyCodeLine{7 \textcolor{comment}{ */}}
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#include <array>}}
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#include <string\_view>}}
+\DoxyCodeLine{13 \textcolor{preprocessor}{\#include <vector>}}
+\DoxyCodeLine{14 }
+\DoxyCodeLine{15 \textcolor{preprocessor}{\#include "{}hope/foundation.h"{}}}
+\DoxyCodeLine{16 }
+\DoxyCodeLine{17 \textcolor{keyword}{namespace }hope \{}
+\DoxyCodeLine{18 }
+\DoxyCodeLine{19     \textcolor{keyword}{class }\mbox{\hyperlink{classhope_1_1stack__buffer}{stack\_buffer}} final}
+\DoxyCodeLine{20     \{}
+\DoxyCodeLine{21     \textcolor{keyword}{public}:}
+\DoxyCodeLine{22         \textcolor{comment}{// Size in bytes of the inner buffer this value assumed to be never reached}}
+\DoxyCodeLine{23         \textcolor{keyword}{static} \textcolor{keyword}{constexpr} std::size\_t BufferSize = 1023;}
+\DoxyCodeLine{24         \textcolor{keyword}{using} buffer\_t = std::array<char, BufferSize>;}
+\DoxyCodeLine{25     }
+\DoxyCodeLine{26         \mbox{\hyperlink{classhope_1_1stack__buffer}{stack\_buffer}}() = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{27         \mbox{\hyperlink{classhope_1_1stack__buffer}{\string~stack\_buffer}}() = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{28 }
+\DoxyCodeLine{29         DECLARE\_NON\_MOVABLE(\mbox{\hyperlink{classhope_1_1stack__buffer}{stack\_buffer}});}
+\DoxyCodeLine{30         DECLARE\_NON\_COPYABLE(\mbox{\hyperlink{classhope_1_1stack__buffer}{stack\_buffer}});}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32         \textcolor{keywordtype}{void} put(\textcolor{keyword}{const} \textcolor{keywordtype}{void}* data, std::size\_t size) \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{33 }
+\DoxyCodeLine{34         std::size\_t bytes\_written = 0;}
+\DoxyCodeLine{35         buffer\_t buffer;}
+\DoxyCodeLine{36         std::vector<char> additional\_buffer;}
+\DoxyCodeLine{37     \};}
+\DoxyCodeLine{38 }
+\DoxyCodeLine{39 \}}
+
+\end{DoxyCode}

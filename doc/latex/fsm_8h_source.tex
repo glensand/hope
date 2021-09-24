@@ -1,0 +1,73 @@
+\hypertarget{fsm_8h_source}{}\doxysection{fsm.\+h}
+\label{fsm_8h_source}\index{lib/hope/fsm/fsm.h@{lib/hope/fsm/fsm.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* Copyright (C) 2021 Gleb Bezborodov -\/ All Rights Reserved}}
+\DoxyCodeLine{2 \textcolor{comment}{ * You may use, distribute and modify this code under the}}
+\DoxyCodeLine{3 \textcolor{comment}{ * terms of the MIT license.}}
+\DoxyCodeLine{4 \textcolor{comment}{ *}}
+\DoxyCodeLine{5 \textcolor{comment}{ * You should have received a copy of the MIT license with}}
+\DoxyCodeLine{6 \textcolor{comment}{ * this file. If not, please write to: bezborodoff.gleb@gmail.com, or visit : https://github.com/glensand/hope}}
+\DoxyCodeLine{7 \textcolor{comment}{ */}}
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#include "{}hope/tuple/flat\_tuple.h"{}}}
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#include <variant>}}
+\DoxyCodeLine{13 }
+\DoxyCodeLine{14 \textcolor{keyword}{namespace }hope::fsm \{}
+\DoxyCodeLine{15 }
+\DoxyCodeLine{16     \textcolor{keyword}{template} <\textcolor{keyword}{typename} State>}
+\DoxyCodeLine{17     \textcolor{keyword}{struct }\mbox{\hyperlink{structhope_1_1fsm_1_1transit__to}{transit\_to}} final \{}
+\DoxyCodeLine{18         \textcolor{keyword}{using} target\_state\_t = State;}
+\DoxyCodeLine{19     \};}
+\DoxyCodeLine{20 }
+\DoxyCodeLine{21     \textcolor{keyword}{template} <\textcolor{keyword}{typename}, \textcolor{keyword}{typename}... Ts>}
+\DoxyCodeLine{22     \textcolor{keyword}{class }\mbox{\hyperlink{classhope_1_1fsm_1_1fsm}{fsm}};}
+\DoxyCodeLine{23 }
+\DoxyCodeLine{24     \textcolor{keyword}{template} <\textcolor{keyword}{typename}... States, \textcolor{keyword}{typename}... Handlers>}
+\DoxyCodeLine{25     \textcolor{keyword}{class }\mbox{\hyperlink{classhope_1_1fsm_1_1fsm}{fsm}}<\mbox{\hyperlink{classhope_1_1flat__tuple}{flat\_tuple}}<States...>, Handlers...> final : \textcolor{keyword}{public} Handlers... \{}
+\DoxyCodeLine{26     \textcolor{keyword}{public}:}
+\DoxyCodeLine{27         \textcolor{keyword}{using} Handlers::operator()...;}
+\DoxyCodeLine{28 }
+\DoxyCodeLine{29         \textcolor{keyword}{constexpr} \textcolor{keyword}{explicit} \mbox{\hyperlink{classhope_1_1fsm_1_1fsm}{fsm}}(Handlers\&\&... handlers)}
+\DoxyCodeLine{30             : Handlers(std::forward<Handlers>(handlers))...\{ \}}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32         \textcolor{keyword}{template}<\textcolor{keyword}{typename} Event>}
+\DoxyCodeLine{33         \textcolor{keywordtype}{void} on\_event(Event\&\& e) \{}
+\DoxyCodeLine{34             std::size\_t state\_index\{ 0 \};}
+\DoxyCodeLine{35             \textcolor{keywordtype}{bool} transition\_done\{ \textcolor{keyword}{false} \};}
+\DoxyCodeLine{36             for\_each(states, [\&] (\textcolor{keyword}{auto}\&\& state)\{}
+\DoxyCodeLine{37                 \textcolor{keywordflow}{if}(!transition\_done \&\& state\_index == cur\_state) \{}
+\DoxyCodeLine{38                     \textcolor{keyword}{using} state\_t = std::decay\_t<\textcolor{keyword}{decltype}(state)>;}
+\DoxyCodeLine{39                     \textcolor{keywordflow}{if} \textcolor{keyword}{constexpr} (std::is\_invocable\_v<fsm, state\_t, Event\&\&>) \{}
+\DoxyCodeLine{40                         \textcolor{keyword}{using} result\_t = std::invoke\_result\_t<fsm, state\_t, Event\&\&>;}
+\DoxyCodeLine{41                         \textcolor{keyword}{auto} transition\_res = this-\/>operator()(state, std::forward<Event>(e));}
+\DoxyCodeLine{42                         (void)transition\_res; \textcolor{comment}{// remove unused variable warning (var is handled 'cause it may be used later)}}
+\DoxyCodeLine{43                         \textcolor{keywordflow}{if} \textcolor{keyword}{constexpr} (!std::is\_same\_v<result\_t, void>) \{ \textcolor{comment}{// move to next state}}
+\DoxyCodeLine{44                             cur\_state = find<typename result\_t::target\_state\_t>(type\_list<States...>\{\});}
+\DoxyCodeLine{45                             transition\_done = \textcolor{keyword}{true};}
+\DoxyCodeLine{46                         \}}
+\DoxyCodeLine{47                     \}}
+\DoxyCodeLine{48                 \}}
+\DoxyCodeLine{49                 ++state\_index;}
+\DoxyCodeLine{50             \});}
+\DoxyCodeLine{51         \}}
+\DoxyCodeLine{52 }
+\DoxyCodeLine{53         [[nodiscard]] std::size\_t get\_cur\_state() const noexcept \{}
+\DoxyCodeLine{54             \textcolor{keywordflow}{return} cur\_state;}
+\DoxyCodeLine{55         \}}
+\DoxyCodeLine{56 }
+\DoxyCodeLine{57     \textcolor{keyword}{private}:}
+\DoxyCodeLine{58         flat\_tuple<States...> states;}
+\DoxyCodeLine{59         std::size\_t cur\_state\{ 0 \};}
+\DoxyCodeLine{60     \};}
+\DoxyCodeLine{61 }
+\DoxyCodeLine{62     \textcolor{keyword}{template} <\textcolor{keyword}{typename}... States, \textcolor{keyword}{typename}... Handlers>}
+\DoxyCodeLine{63     \textcolor{keyword}{constexpr} \textcolor{keyword}{auto} make(Handlers\&\&... handlers) \{}
+\DoxyCodeLine{64         \textcolor{keywordflow}{return} fsm<flat\_tuple<States...>, Handlers...>(std::forward<Handlers>(handlers)...);}
+\DoxyCodeLine{65     \}}
+\DoxyCodeLine{66 }
+\DoxyCodeLine{67 \}}
+
+\end{DoxyCode}

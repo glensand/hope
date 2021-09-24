@@ -1,0 +1,40 @@
+\hypertarget{variant_8hpp_source}{}\doxysection{variant.\+hpp}
+\label{variant_8hpp_source}\index{lib/hope/variant/variant.hpp@{lib/hope/variant/variant.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* Copyright (C) 2020 Gleb Bezborodov -\/ All Rights Reserved}}
+\DoxyCodeLine{2 \textcolor{comment}{ * You may use, distribute and modify this code under the}}
+\DoxyCodeLine{3 \textcolor{comment}{ * terms of the MIT license.}}
+\DoxyCodeLine{4 \textcolor{comment}{ *}}
+\DoxyCodeLine{5 \textcolor{comment}{ * You should have received a copy of the MIT license with}}
+\DoxyCodeLine{6 \textcolor{comment}{ * this file. If not, please write to: bezborodoff.gleb@gmail.com, or visit : https://github.com/glensand/hope}}
+\DoxyCodeLine{7 \textcolor{comment}{ */}}
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#include "{}hope/components/unique\_types.h"{}}}
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#include "{}hope/variant/variant\_storage.h"{}}}
+\DoxyCodeLine{13 }
+\DoxyCodeLine{14 \textcolor{keyword}{namespace }hope \{}
+\DoxyCodeLine{15 }
+\DoxyCodeLine{16     \textcolor{keyword}{template} <\textcolor{keyword}{typename}... Ts>}
+\DoxyCodeLine{17     \textcolor{keyword}{class }\mbox{\hyperlink{classhope_1_1variant}{variant}} final}
+\DoxyCodeLine{18     \{}
+\DoxyCodeLine{19     \textcolor{keyword}{public}:}
+\DoxyCodeLine{20         \mbox{\hyperlink{classhope_1_1variant}{variant}}() = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{21 }
+\DoxyCodeLine{22         \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{23         \textcolor{keyword}{explicit} \mbox{\hyperlink{classhope_1_1variant}{variant}}(T\&\& type);}
+\DoxyCodeLine{24 }
+\DoxyCodeLine{25         \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{26         \mbox{\hyperlink{classhope_1_1variant}{variant}}\& operator=(T\&\& value);}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28         \textcolor{keyword}{template}<\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{29         T\& get();}
+\DoxyCodeLine{30     \textcolor{keyword}{private}:}
+\DoxyCodeLine{31         \textcolor{keyword}{constexpr} \textcolor{keyword}{static} \mbox{\hyperlink{structunique__types}{unique\_types}}<Ts...>     UniqueChecker\{ \};}
+\DoxyCodeLine{32         \mbox{\hyperlink{classhope_1_1detail_1_1variant__storage}{detail::variant\_storage}}<Ts...>           m\_storage;}
+\DoxyCodeLine{33     \};}
+\DoxyCodeLine{34 \}}
+
+\end{DoxyCode}

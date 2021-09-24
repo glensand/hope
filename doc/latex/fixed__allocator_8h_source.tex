@@ -1,0 +1,174 @@
+\hypertarget{fixed__allocator_8h_source}{}\doxysection{fixed\+\_\+allocator.\+h}
+\label{fixed__allocator_8h_source}\index{lib/hope/memory/small\_object/fixed\_allocator.h@{lib/hope/memory/small\_object/fixed\_allocator.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* Copyright (C) 2020 -\/ 2021 Gleb Bezborodov -\/ All Rights Reserved}}
+\DoxyCodeLine{2 \textcolor{comment}{ * You may use, distribute and modify this code under the}}
+\DoxyCodeLine{3 \textcolor{comment}{ * terms of the MIT license.}}
+\DoxyCodeLine{4 \textcolor{comment}{ *}}
+\DoxyCodeLine{5 \textcolor{comment}{ * You should have received a copy of the MIT license with}}
+\DoxyCodeLine{6 \textcolor{comment}{ * this file. If not, please write to: bezborodoff.gleb@gmail.com, or visit : https://github.com/glensand/hope}}
+\DoxyCodeLine{7 \textcolor{comment}{ */}}
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#include "{}hope/memory/small\_object/chunk.h"{}}}
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#include <vector>}}
+\DoxyCodeLine{13 \textcolor{preprocessor}{\#include <algorithm>}}
+\DoxyCodeLine{14 }
+\DoxyCodeLine{15 \textcolor{keyword}{namespace }hope::memory \{}
+\DoxyCodeLine{16 }
+\DoxyCodeLine{17     \textcolor{keyword}{class }\mbox{\hyperlink{classhope_1_1memory_1_1fixed__allocator}{fixed\_allocator}} final \{}
+\DoxyCodeLine{18         \textcolor{keyword}{using} chunk\_list = std::vector<chunk>;}
+\DoxyCodeLine{19     \textcolor{keyword}{public}:}
+\DoxyCodeLine{20         \mbox{\hyperlink{classhope_1_1memory_1_1fixed__allocator}{fixed\_allocator}}(uint8\_t max\_blocks\_count, std::size\_t \mbox{\hyperlink{classhope_1_1memory_1_1fixed__allocator_a6b5b1dd43dc603dc8ea1a29f04e6d735}{block\_size}}) \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{21         \mbox{\hyperlink{classhope_1_1memory_1_1fixed__allocator}{fixed\_allocator}}(\mbox{\hyperlink{classhope_1_1memory_1_1fixed__allocator}{fixed\_allocator}}\&\& rhs) \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{22         \mbox{\hyperlink{classhope_1_1memory_1_1fixed__allocator}{fixed\_allocator}}\& operator=(\mbox{\hyperlink{classhope_1_1memory_1_1fixed__allocator}{fixed\_allocator}}\&\& rhs) \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{23         \mbox{\hyperlink{classhope_1_1memory_1_1fixed__allocator}{\string~fixed\_allocator}}() \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{24 }
+\DoxyCodeLine{30         \mbox{\hyperlink{classhope_1_1memory_1_1fixed__allocator_a5721666db5d5274d3b274709538cccaa}{fixed\_allocator}}(\textcolor{keyword}{const} \mbox{\hyperlink{classhope_1_1memory_1_1fixed__allocator}{fixed\_allocator}}\& rhs) = \textcolor{keyword}{delete};}
+\DoxyCodeLine{31         \mbox{\hyperlink{classhope_1_1memory_1_1fixed__allocator}{fixed\_allocator}}\& operator=(\textcolor{keyword}{const} \mbox{\hyperlink{classhope_1_1memory_1_1fixed__allocator}{fixed\_allocator}}\& rhs) = \textcolor{keyword}{delete};}
+\DoxyCodeLine{32 }
+\DoxyCodeLine{36         \textcolor{keywordtype}{void}* \mbox{\hyperlink{classhope_1_1memory_1_1fixed__allocator_a65c6e85befbcaf87821a4dfcae301d26}{allocate}}() noexcept;}
+\DoxyCodeLine{37 }
+\DoxyCodeLine{43         \textcolor{keywordtype}{void} \mbox{\hyperlink{classhope_1_1memory_1_1fixed__allocator_afc0ab835b42ecd4504ba6942b0eb1387}{deallocate}}(\textcolor{keywordtype}{void}* ptr) noexcept;}
+\DoxyCodeLine{44 }
+\DoxyCodeLine{48         [[nodiscard]] std::\textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classhope_1_1memory_1_1fixed__allocator_a6b5b1dd43dc603dc8ea1a29f04e6d735}{block\_size}}() const noexcept;}
+\DoxyCodeLine{49     private:}
+\DoxyCodeLine{55         \textcolor{keywordtype}{void} update\_dealloc\_chunk(\textcolor{keywordtype}{void}* ptr) noexcept;}
+\DoxyCodeLine{56 }
+\DoxyCodeLine{61         [[nodiscard]] \textcolor{keywordtype}{bool} update\_alloc\_chunk() noexcept;}
+\DoxyCodeLine{62 }
+\DoxyCodeLine{66         [[nodiscard]] \textcolor{keywordtype}{bool} can\_be\_deallocated(const \mbox{\hyperlink{structhope_1_1memory_1_1chunk}{chunk}}\& \mbox{\hyperlink{structhope_1_1memory_1_1chunk}{chunk}}, \textcolor{keywordtype}{void}* ptr) const noexcept;}
+\DoxyCodeLine{67 }
+\DoxyCodeLine{72         [[nodiscard]] \mbox{\hyperlink{structhope_1_1memory_1_1chunk}{chunk}} create\_new\_chunk() const noexcept;}
+\DoxyCodeLine{73 }
+\DoxyCodeLine{77         \textcolor{keywordtype}{void} update\_free\_chunk() noexcept;}
+\DoxyCodeLine{78 }
+\DoxyCodeLine{83         \textcolor{keywordtype}{void} steal\_resources(\mbox{\hyperlink{classhope_1_1memory_1_1fixed__allocator}{fixed\_allocator}}\&\& rhs) noexcept;}
+\DoxyCodeLine{84 }
+\DoxyCodeLine{85         std::\textcolor{keywordtype}{size\_t}         m\_block\_size;                   \textcolor{comment}{// size of single block in the chunk}}
+\DoxyCodeLine{86         chunk\_list          m\_chunk\_list;                   \textcolor{comment}{// list of allocated chunks}}
+\DoxyCodeLine{87         \mbox{\hyperlink{structhope_1_1memory_1_1chunk}{chunk}}*              m\_last\_allocated\{ \textcolor{keyword}{nullptr} \};    \textcolor{comment}{// last allocation was held in this chunk, cannot be nullptr}}
+\DoxyCodeLine{88         \mbox{\hyperlink{structhope_1_1memory_1_1chunk}{chunk}}*              m\_last\_deallocated\{ \textcolor{keyword}{nullptr} \};  \textcolor{comment}{// last deallocation was held in this chunk, cannot be nullptr}}
+\DoxyCodeLine{89         chunk*              m\_free\_block\{ \textcolor{keyword}{nullptr} \};        \textcolor{comment}{// completely deallocated block, is used to recycle deallocated blocks and avoid new\(\backslash\)delete utilization}}
+\DoxyCodeLine{90         uint8\_t             m\_blocks\_in\_chunk;              \textcolor{comment}{// count of blocks, contains in one chunk}}
+\DoxyCodeLine{91     \};}
+\DoxyCodeLine{92 }
+\DoxyCodeLine{93     \textcolor{keyword}{inline} fixed\_allocator::fixed\_allocator(uint8\_t max\_blocks\_count, std::size\_t block\_size) noexcept}
+\DoxyCodeLine{94         : m\_block\_size(block\_size)}
+\DoxyCodeLine{95         , m\_blocks\_in\_chunk(max\_blocks\_count)}
+\DoxyCodeLine{96     \{}
+\DoxyCodeLine{97         \textcolor{keywordflow}{try} \{}
+\DoxyCodeLine{98             \textcolor{comment}{// thus, we remove one extra compare }}
+\DoxyCodeLine{99             m\_chunk\_list.push\_back(create\_new\_chunk());}
+\DoxyCodeLine{100             m\_last\_allocated = \&m\_chunk\_list.front();}
+\DoxyCodeLine{101         \} \textcolor{keywordflow}{catch}(\textcolor{keyword}{const} std::exception\&) \{}
+\DoxyCodeLine{102             assert(\textcolor{keyword}{false});}
+\DoxyCodeLine{103         \}}
+\DoxyCodeLine{104     \}}
+\DoxyCodeLine{105 }
+\DoxyCodeLine{106     \textcolor{keyword}{inline} fixed\_allocator::fixed\_allocator(fixed\_allocator\&\& rhs) \textcolor{keyword}{noexcept} \{  \textcolor{comment}{// NOLINT(cppcoreguidelines-\/pro-\/type-\/member-\/init)}}
+\DoxyCodeLine{107         steal\_resources(std::move(rhs));}
+\DoxyCodeLine{108     \}}
+\DoxyCodeLine{109 }
+\DoxyCodeLine{110     \textcolor{keyword}{inline} fixed\_allocator\& fixed\_allocator::operator=(fixed\_allocator\&\& rhs) \textcolor{keyword}{noexcept} \{}
+\DoxyCodeLine{111         steal\_resources(std::move(rhs));}
+\DoxyCodeLine{112         \textcolor{keywordflow}{return} *\textcolor{keyword}{this};}
+\DoxyCodeLine{113     \}}
+\DoxyCodeLine{114 }
+\DoxyCodeLine{115     \textcolor{keyword}{inline} fixed\_allocator::\string~fixed\_allocator() noexcept \{}
+\DoxyCodeLine{116         \textcolor{keywordflow}{for} (\textcolor{keyword}{auto}\& chunk : m\_chunk\_list)}
+\DoxyCodeLine{117             \textcolor{keyword}{delete}[] chunk.data;}
+\DoxyCodeLine{118     \}}
+\DoxyCodeLine{119 }
+\DoxyCodeLine{120     \textcolor{keyword}{inline} \textcolor{keywordtype}{void}* \mbox{\hyperlink{classhope_1_1memory_1_1fixed__allocator_a65c6e85befbcaf87821a4dfcae301d26}{fixed\_allocator::allocate}}() noexcept \{}
+\DoxyCodeLine{121         \textcolor{keywordflow}{if} (m\_last\_allocated-\/>free\_blocks\_count == 0}
+\DoxyCodeLine{122             \&\& !update\_alloc\_chunk()) \{}
+\DoxyCodeLine{123             \textcolor{keywordflow}{try} \{}
+\DoxyCodeLine{124                 m\_chunk\_list.push\_back(create\_new\_chunk());}
+\DoxyCodeLine{125             \} \textcolor{keywordflow}{catch} (\textcolor{keyword}{const} std::exception\&) \{}
+\DoxyCodeLine{126                 assert(\textcolor{keyword}{false});}
+\DoxyCodeLine{127                 \textcolor{keywordflow}{return} \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{128             \}    }
+\DoxyCodeLine{129             m\_last\_allocated = \&m\_chunk\_list.back();}
+\DoxyCodeLine{130             \textcolor{comment}{// If std::vector were reallocated m\_last\_deallocated could be invalid}}
+\DoxyCodeLine{131             \textcolor{comment}{// i decide to assign this var to the middle of vec is not bad idea}}
+\DoxyCodeLine{132             m\_last\_deallocated = \&m\_chunk\_list[m\_chunk\_list.size() / 2];}
+\DoxyCodeLine{133         \}}
+\DoxyCodeLine{134         \textcolor{keywordflow}{return} m\_last\_allocated-\/>\mbox{\hyperlink{structhope_1_1memory_1_1chunk_a206a4519e9dff7d8d54f8650446f350d}{allocate}}(m\_block\_size);}
+\DoxyCodeLine{135     \}}
+\DoxyCodeLine{136 }
+\DoxyCodeLine{137     \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{classhope_1_1memory_1_1fixed__allocator_afc0ab835b42ecd4504ba6942b0eb1387}{fixed\_allocator::deallocate}}(\textcolor{keywordtype}{void}* ptr) \textcolor{keyword}{noexcept} \{}
+\DoxyCodeLine{138         \textcolor{keywordflow}{if} (m\_last\_deallocated == \textcolor{keyword}{nullptr} }
+\DoxyCodeLine{139             || !can\_be\_deallocated(*m\_last\_deallocated, ptr))}
+\DoxyCodeLine{140             update\_dealloc\_chunk(ptr);}
+\DoxyCodeLine{141         m\_last\_deallocated-\/>deallocate(ptr, m\_block\_size);}
+\DoxyCodeLine{142         update\_free\_chunk();}
+\DoxyCodeLine{143     \}}
+\DoxyCodeLine{144 }
+\DoxyCodeLine{145     \textcolor{keyword}{inline} std::size\_t \mbox{\hyperlink{classhope_1_1memory_1_1fixed__allocator_a6b5b1dd43dc603dc8ea1a29f04e6d735}{fixed\_allocator::block\_size}}() const noexcept \{}
+\DoxyCodeLine{146         \textcolor{keywordflow}{return} m\_block\_size;}
+\DoxyCodeLine{147     \}}
+\DoxyCodeLine{148 }
+\DoxyCodeLine{149     \textcolor{keyword}{inline} \textcolor{keywordtype}{void} fixed\_allocator::update\_dealloc\_chunk(\textcolor{keywordtype}{void}* ptr) \textcolor{keyword}{noexcept} \{}
+\DoxyCodeLine{150         \textcolor{keyword}{const} \textcolor{keyword}{auto} chunk\_it = std::find\_if(std::begin(m\_chunk\_list), std::end(m\_chunk\_list),}
+\DoxyCodeLine{151             [=](\textcolor{keyword}{const} \textcolor{keyword}{auto}\& ch) \{}
+\DoxyCodeLine{152                         \textcolor{keywordflow}{return} can\_be\_deallocated(ch, ptr);}
+\DoxyCodeLine{153         \});}
+\DoxyCodeLine{154         assert(chunk\_it != std::end(m\_chunk\_list));}
+\DoxyCodeLine{155         m\_last\_deallocated = \&*chunk\_it;}
+\DoxyCodeLine{156     \}}
+\DoxyCodeLine{157 }
+\DoxyCodeLine{158     \textcolor{keyword}{inline} \textcolor{keywordtype}{bool} fixed\_allocator::update\_alloc\_chunk() noexcept \{}
+\DoxyCodeLine{159         \textcolor{keyword}{const} \textcolor{keyword}{auto} chunk\_it = std::find\_if(std::begin(m\_chunk\_list), std::end(m\_chunk\_list), }
+\DoxyCodeLine{160             [=](\textcolor{keyword}{const} \textcolor{keyword}{auto}\& ch) \{}
+\DoxyCodeLine{161                         \textcolor{keywordflow}{return} ch.free\_blocks\_count > 0;}
+\DoxyCodeLine{162         \});}
+\DoxyCodeLine{163         \textcolor{keyword}{const} \textcolor{keywordtype}{bool} isFound = chunk\_it != std::end(m\_chunk\_list);}
+\DoxyCodeLine{164         \textcolor{keywordflow}{if} (isFound)}
+\DoxyCodeLine{165         \{}
+\DoxyCodeLine{166             m\_last\_allocated = \&*chunk\_it;}
+\DoxyCodeLine{167             \textcolor{keywordflow}{if} (m\_free\_block == m\_last\_allocated)}
+\DoxyCodeLine{168                 m\_free\_block = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{169         \}}
+\DoxyCodeLine{170         \textcolor{keywordflow}{return} isFound;}
+\DoxyCodeLine{171     \}}
+\DoxyCodeLine{172 }
+\DoxyCodeLine{173     \textcolor{keyword}{inline} \textcolor{keywordtype}{bool} fixed\_allocator::can\_be\_deallocated(\textcolor{keyword}{const} chunk\& chunk, \textcolor{keywordtype}{void}* ptr) \textcolor{keyword}{const} \textcolor{keyword}{noexcept} \{}
+\DoxyCodeLine{174         \textcolor{keywordflow}{return} ptr >= chunk.data \&\& ptr < chunk.data + m\_block\_size * m\_blocks\_in\_chunk;}
+\DoxyCodeLine{175     \}}
+\DoxyCodeLine{176 }
+\DoxyCodeLine{177     \textcolor{keyword}{inline} chunk fixed\_allocator::create\_new\_chunk() const noexcept \{}
+\DoxyCodeLine{178         chunk ch;}
+\DoxyCodeLine{179         ch.init(m\_block\_size, m\_blocks\_in\_chunk);}
+\DoxyCodeLine{180         \textcolor{keywordflow}{return} ch;}
+\DoxyCodeLine{181     \}}
+\DoxyCodeLine{182 }
+\DoxyCodeLine{183     \textcolor{keyword}{inline} \textcolor{keywordtype}{void} fixed\_allocator::update\_free\_chunk() noexcept \{}
+\DoxyCodeLine{184         \textcolor{keywordflow}{if} (m\_last\_deallocated-\/>free\_blocks\_count != m\_blocks\_in\_chunk)}
+\DoxyCodeLine{185             \textcolor{keywordflow}{return};}
+\DoxyCodeLine{186         \textcolor{keywordflow}{if}(m\_free\_block != \textcolor{keyword}{nullptr} \&\& m\_chunk\_list.size() > 1)\{}
+\DoxyCodeLine{187             \textcolor{keyword}{const} std::size\_t dist = m\_last\_deallocated -\/ m\_chunk\_list.data();}
+\DoxyCodeLine{188             \textcolor{keyword}{const} \textcolor{keyword}{auto} begin = std::begin(m\_chunk\_list) + dist;}
+\DoxyCodeLine{189             \textcolor{keyword}{delete}[] begin-\/>data;}
+\DoxyCodeLine{190             m\_chunk\_list.erase(begin);}
+\DoxyCodeLine{191             m\_last\_allocated = m\_last\_deallocated = \&m\_chunk\_list[m\_chunk\_list.size() / 2];}
+\DoxyCodeLine{192         \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (m\_free\_block == \textcolor{keyword}{nullptr})\{}
+\DoxyCodeLine{193             m\_free\_block = m\_last\_deallocated;}
+\DoxyCodeLine{194         \}}
+\DoxyCodeLine{195     \}}
+\DoxyCodeLine{196 }
+\DoxyCodeLine{197     \textcolor{keyword}{inline} \textcolor{keywordtype}{void} fixed\_allocator::steal\_resources(fixed\_allocator\&\& rhs) \textcolor{keyword}{noexcept} \{}
+\DoxyCodeLine{198         m\_block\_size = rhs.m\_block\_size;}
+\DoxyCodeLine{199         m\_blocks\_in\_chunk = rhs.m\_blocks\_in\_chunk;}
+\DoxyCodeLine{200         m\_chunk\_list = std::move(rhs.m\_chunk\_list);}
+\DoxyCodeLine{201         assert(rhs.m\_chunk\_list.empty());}
+\DoxyCodeLine{202         m\_last\_allocated = rhs.m\_last\_allocated;}
+\DoxyCodeLine{203         m\_last\_deallocated = rhs.m\_last\_deallocated;}
+\DoxyCodeLine{204         m\_free\_block = rhs.m\_free\_block;}
+\DoxyCodeLine{205         rhs.m\_free\_block = rhs.m\_last\_allocated = rhs.m\_last\_deallocated = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{206     \}}
+\DoxyCodeLine{207 \}}
+
+\end{DoxyCode}

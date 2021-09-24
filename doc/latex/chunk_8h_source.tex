@@ -1,0 +1,81 @@
+\hypertarget{chunk_8h_source}{}\doxysection{chunk.\+h}
+\label{chunk_8h_source}\index{lib/hope/memory/small\_object/chunk.h@{lib/hope/memory/small\_object/chunk.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* Copyright (C) 2020 -\/ 2021 Gleb Bezborodov -\/ All Rights Reserved}}
+\DoxyCodeLine{2 \textcolor{comment}{ * You may use, distribute and modify this code under the}}
+\DoxyCodeLine{3 \textcolor{comment}{ * terms of the MIT license.}}
+\DoxyCodeLine{4 \textcolor{comment}{ *}}
+\DoxyCodeLine{5 \textcolor{comment}{ * You should have received a copy of the MIT license with}}
+\DoxyCodeLine{6 \textcolor{comment}{ * this file. If not, please write to: bezborodoff.gleb@gmail.com, or visit : https://github.com/glensand/hope}}
+\DoxyCodeLine{7 \textcolor{comment}{ */}}
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#include <cstdint>}}
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#include <new>}}
+\DoxyCodeLine{13 \textcolor{preprocessor}{\#include <cassert>}}
+\DoxyCodeLine{14 \textcolor{preprocessor}{\#include <limits>}}
+\DoxyCodeLine{15 \textcolor{preprocessor}{\#include <new>}}
+\DoxyCodeLine{16 }
+\DoxyCodeLine{17 \textcolor{keyword}{namespace }hope::memory\{}
+\DoxyCodeLine{18 }
+\DoxyCodeLine{26     \textcolor{keyword}{struct }\mbox{\hyperlink{structhope_1_1memory_1_1chunk}{chunk}} final\{}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{37             \textcolor{keywordtype}{void} \mbox{\hyperlink{structhope_1_1memory_1_1chunk_acf928e403f88bb938e90dbf2d689b6ed}{init}}(std::size\_t block\_size, uint8\_t blocks\_count) \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{38 }
+\DoxyCodeLine{46             [[nodiscard]] \textcolor{keywordtype}{void}* \mbox{\hyperlink{structhope_1_1memory_1_1chunk_a206a4519e9dff7d8d54f8650446f350d}{allocate}}(std::size\_t block\_size) \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{47 }
+\DoxyCodeLine{54             \textcolor{keywordtype}{void} \mbox{\hyperlink{structhope_1_1memory_1_1chunk_a67127097fa2f304eb663b867b63007e6}{deallocate}}(\textcolor{keywordtype}{void}* ptr, std::size\_t block\_size) \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{55 }
+\DoxyCodeLine{63             [[nodiscard]] \textcolor{keywordtype}{bool} \mbox{\hyperlink{structhope_1_1memory_1_1chunk_a128474f2b0f4ae41f2d3e46f607f63b7}{is\_deallocation\_valid}}(\textcolor{keywordtype}{void}* ptr, std::size\_t block\_size) \textcolor{keyword}{const} \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{64 }
+\DoxyCodeLine{70             [[nodiscard]] \textcolor{keywordtype}{bool} \mbox{\hyperlink{structhope_1_1memory_1_1chunk_aee824910780f0562c431cecabb958781}{is\_allocation\_valid}}(std::size\_t block\_size) \textcolor{keyword}{const} \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{71 }
+\DoxyCodeLine{72         uint8\_t*    data\{ \textcolor{keyword}{nullptr} \};        \textcolor{comment}{// Pointer to thr very beginning of the memory pool}}
+\DoxyCodeLine{73         uint8\_t     free\_blocks\_count\{ 0 \}; \textcolor{comment}{// Count of currently available blocks count, variables type is linked with alignment and other complicated things}}
+\DoxyCodeLine{74         uint8\_t     first\_free\_block\{ 0 \};  \textcolor{comment}{// Position of first available block}}
+\DoxyCodeLine{75     \};}
+\DoxyCodeLine{76 }
+\DoxyCodeLine{77     \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{structhope_1_1memory_1_1chunk_acf928e403f88bb938e90dbf2d689b6ed}{chunk::init}}(std::size\_t block\_size, uint8\_t blocks\_count) \textcolor{keyword}{noexcept} \{}
+\DoxyCodeLine{78         data = \textcolor{keyword}{new}(std::nothrow) uint8\_t[block\_size * std::size\_t(blocks\_count)];}
+\DoxyCodeLine{79         assert(data != \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{80         free\_blocks\_count = blocks\_count;}
+\DoxyCodeLine{81         \textcolor{keyword}{auto}* begin = data;}
+\DoxyCodeLine{82         \textcolor{keywordflow}{for} (uint8\_t i\{ 0 \}; i < blocks\_count; ++i, begin += block\_size)}
+\DoxyCodeLine{83             *begin = i + 1;}
+\DoxyCodeLine{84     \}}
+\DoxyCodeLine{85 }
+\DoxyCodeLine{86     \textcolor{keyword}{inline} \textcolor{keywordtype}{void}* \mbox{\hyperlink{structhope_1_1memory_1_1chunk_a206a4519e9dff7d8d54f8650446f350d}{chunk::allocate}}(std::size\_t block\_size) \textcolor{keyword}{noexcept} \{}
+\DoxyCodeLine{87         assert(is\_allocation\_valid(block\_size));}
+\DoxyCodeLine{88         \textcolor{keyword}{auto}* \textcolor{keyword}{const} result = data + std::size\_t(first\_free\_block) * block\_size;}
+\DoxyCodeLine{89         first\_free\_block = *result;}
+\DoxyCodeLine{90         -\/-\/free\_blocks\_count;}
+\DoxyCodeLine{91         \textcolor{keywordflow}{return} result;}
+\DoxyCodeLine{92     \}}
+\DoxyCodeLine{93 }
+\DoxyCodeLine{94     \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{structhope_1_1memory_1_1chunk_a67127097fa2f304eb663b867b63007e6}{chunk::deallocate}}(\textcolor{keywordtype}{void}* ptr, std::size\_t block\_size) \textcolor{keyword}{noexcept} \{}
+\DoxyCodeLine{95         assert(is\_deallocation\_valid(ptr, block\_size));}
+\DoxyCodeLine{96         \textcolor{keyword}{const} \textcolor{keyword}{auto} byte\_index = std::size\_t(\textcolor{keyword}{static\_cast<}uint8\_t*\textcolor{keyword}{>}(ptr) -\/ data);}
+\DoxyCodeLine{97         \textcolor{keyword}{const} \textcolor{keyword}{auto} block\_index = uint8\_t(byte\_index / block\_size);}
+\DoxyCodeLine{98         data[byte\_index] = first\_free\_block;}
+\DoxyCodeLine{99         first\_free\_block = block\_index;}
+\DoxyCodeLine{100         ++free\_blocks\_count;}
+\DoxyCodeLine{101     \}}
+\DoxyCodeLine{102 }
+\DoxyCodeLine{103     \textcolor{keyword}{inline} \textcolor{keywordtype}{bool} \mbox{\hyperlink{structhope_1_1memory_1_1chunk_a128474f2b0f4ae41f2d3e46f607f63b7}{chunk::is\_deallocation\_valid}}(\textcolor{keywordtype}{void}* ptr, std::size\_t block\_size) \textcolor{keyword}{const} \textcolor{keyword}{noexcept} \{}
+\DoxyCodeLine{104         \textcolor{keywordflow}{return} data != \textcolor{keyword}{nullptr}}
+\DoxyCodeLine{105             \&\& ptr != \textcolor{keyword}{nullptr}}
+\DoxyCodeLine{106             \&\& free\_blocks\_count < std::numeric\_limits<uint8\_t>::max()}
+\DoxyCodeLine{107             \&\& block\_size > 0}
+\DoxyCodeLine{108             \&\& (\textcolor{keyword}{static\_cast<}uint8\_t*\textcolor{keyword}{>}(ptr) -\/ data) \% block\_size == 0;}
+\DoxyCodeLine{109     \}}
+\DoxyCodeLine{110 }
+\DoxyCodeLine{111     \textcolor{keyword}{inline} \textcolor{keywordtype}{bool} \mbox{\hyperlink{structhope_1_1memory_1_1chunk_aee824910780f0562c431cecabb958781}{chunk::is\_allocation\_valid}}(std::size\_t block\_size) \textcolor{keyword}{const} \textcolor{keyword}{noexcept} \{}
+\DoxyCodeLine{112         \textcolor{keywordflow}{return} data != \textcolor{keyword}{nullptr}}
+\DoxyCodeLine{113             \&\& free\_blocks\_count > 0}
+\DoxyCodeLine{114             \&\& block\_size > 0;}
+\DoxyCodeLine{115     \}}
+\DoxyCodeLine{116 \}}
+
+\end{DoxyCode}

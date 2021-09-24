@@ -1,0 +1,61 @@
+\hypertarget{typemap_8h_source}{}\doxysection{typemap.\+h}
+\label{typemap_8h_source}\index{lib/hope/components/typemap.h@{lib/hope/components/typemap.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* Copyright (C) 2021 Gleb Bezborodov -\/ All Rights Reserved}}
+\DoxyCodeLine{2 \textcolor{comment}{ * You may use, distribute and modify this code under the}}
+\DoxyCodeLine{3 \textcolor{comment}{ * terms of the MIT license.}}
+\DoxyCodeLine{4 \textcolor{comment}{ *}}
+\DoxyCodeLine{5 \textcolor{comment}{ * You should have received a copy of the MIT license with}}
+\DoxyCodeLine{6 \textcolor{comment}{ * this file. If not, please write to: bezborodoff.gleb@gmail.com, or visit : https://github.com/glensand/hope}}
+\DoxyCodeLine{7 \textcolor{comment}{ */}}
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#include "{}hope/typelist/type\_list.h"{}}}
+\DoxyCodeLine{12 }
+\DoxyCodeLine{13 \textcolor{preprocessor}{\#include <type\_traits>}}
+\DoxyCodeLine{14 }
+\DoxyCodeLine{15 \textcolor{keyword}{namespace }hope \{}
+\DoxyCodeLine{16 }
+\DoxyCodeLine{17     \textcolor{keyword}{template} <\textcolor{keyword}{typename} K, \textcolor{keyword}{typename} V>}
+\DoxyCodeLine{18     \textcolor{keyword}{struct }\mbox{\hyperlink{structhope_1_1type__pair}{type\_pair}} final \{}
+\DoxyCodeLine{19         \textcolor{keyword}{using} Key = K;}
+\DoxyCodeLine{20         \textcolor{keyword}{using} Value = V;}
+\DoxyCodeLine{21     \};}
+\DoxyCodeLine{22 }
+\DoxyCodeLine{23     \textcolor{keyword}{template} <\textcolor{keyword}{typename}... Types>}
+\DoxyCodeLine{24     \textcolor{keyword}{class }\mbox{\hyperlink{classhope_1_1type__map}{type\_map}} final \{}
+\DoxyCodeLine{25         \textcolor{keyword}{constexpr} \textcolor{keyword}{static} \mbox{\hyperlink{classhope_1_1type__list}{type\_list}}<Types...> m\_types\{ \};}
+\DoxyCodeLine{26     \textcolor{keyword}{public}:}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28         \textcolor{keyword}{template} <\textcolor{keyword}{typename} Key>}
+\DoxyCodeLine{29         \textcolor{keyword}{static} \textcolor{keyword}{constexpr} \textcolor{keyword}{auto} get() \textcolor{keyword}{noexcept} \{}
+\DoxyCodeLine{30             \textcolor{keyword}{constexpr} \textcolor{keyword}{auto} index = index\_of<Key>();}
+\DoxyCodeLine{31             \textcolor{keyword}{static\_assert}(index < size(m\_types));}
+\DoxyCodeLine{32             \textcolor{keyword}{using} pair = NthType<index, Types...>;}
+\DoxyCodeLine{33             \textcolor{keywordflow}{return} \mbox{\hyperlink{structhope_1_1type__holder}{type\_holder<typename pair::Value>}}();}
+\DoxyCodeLine{34         \}}
+\DoxyCodeLine{35 }
+\DoxyCodeLine{36     \textcolor{keyword}{private}:}
+\DoxyCodeLine{37 }
+\DoxyCodeLine{38         \textcolor{keyword}{template} <\textcolor{keyword}{typename} Key>}
+\DoxyCodeLine{39         \textcolor{keyword}{constexpr} \textcolor{keyword}{static} std::size\_t index\_of() \{}
+\DoxyCodeLine{40             \textcolor{keywordflow}{return} find\_if(m\_types, [](\textcolor{keyword}{auto} pair) \{}
+\DoxyCodeLine{41                 \textcolor{keyword}{using} pair\_t = \textcolor{keyword}{typename} \textcolor{keyword}{decltype}(pair)::Type;}
+\DoxyCodeLine{42                 \textcolor{keywordflow}{return} std::is\_same\_v<Key, typename pair\_t::Key>;}
+\DoxyCodeLine{43                 \});}
+\DoxyCodeLine{44         \}}
+\DoxyCodeLine{45 }
+\DoxyCodeLine{46         \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{47         \textcolor{keyword}{struct }type\_checker final : std::false\_type \{\};}
+\DoxyCodeLine{48 }
+\DoxyCodeLine{49         \textcolor{keyword}{template} <\textcolor{keyword}{typename} Key, \textcolor{keyword}{typename} Value>}
+\DoxyCodeLine{50         \textcolor{keyword}{struct }type\_checker<\mbox{\hyperlink{structhope_1_1type__pair}{type\_pair}}<Key, Value>> final : std::true\_type \{\};}
+\DoxyCodeLine{51 }
+\DoxyCodeLine{52         \textcolor{keyword}{static\_assert}(all\_of<type\_checker>(m\_types));}
+\DoxyCodeLine{53     \};}
+\DoxyCodeLine{54 }
+\DoxyCodeLine{55 \}}
+
+\end{DoxyCode}

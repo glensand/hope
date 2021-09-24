@@ -1,0 +1,99 @@
+\hypertarget{utility_8h_source}{}\doxysection{utility.\+h}
+\label{utility_8h_source}\index{lib/hope/components/utility.h@{lib/hope/components/utility.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* Copyright (C) 2021 Gleb Bezborodov -\/ All Rights Reserved}}
+\DoxyCodeLine{2 \textcolor{comment}{ * You may use, distribute and modify this code under the}}
+\DoxyCodeLine{3 \textcolor{comment}{ * terms of the MIT license.}}
+\DoxyCodeLine{4 \textcolor{comment}{ *}}
+\DoxyCodeLine{5 \textcolor{comment}{ * You should have received a copy of the MIT license with}}
+\DoxyCodeLine{6 \textcolor{comment}{ * this file. If not, please write to: bezborodoff.gleb@gmail.com, or visit : https://github.com/glensand/hope}}
+\DoxyCodeLine{7 \textcolor{comment}{ *}}
+\DoxyCodeLine{8 \textcolor{comment}{ * The main idea of the utilities which are located here is honestly borrowed by Björn Fahller report form cpp Piter 2019 conference}}
+\DoxyCodeLine{9 \textcolor{comment}{ */}}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{12 }
+\DoxyCodeLine{13 \textcolor{preprocessor}{\#include <type\_traits>}}
+\DoxyCodeLine{14 \textcolor{preprocessor}{\#include "{}hope/tuple/flat\_tuple.h"{}}}
+\DoxyCodeLine{15 }
+\DoxyCodeLine{16 \textcolor{keyword}{namespace }hope \{}
+\DoxyCodeLine{17 }
+\DoxyCodeLine{18     \textcolor{keyword}{template} <\textcolor{keyword}{typename}... Ts>}
+\DoxyCodeLine{19     \textcolor{keyword}{class }\mbox{\hyperlink{classhope_1_1all}{all}} final \{}
+\DoxyCodeLine{20     \textcolor{keyword}{public}:}
+\DoxyCodeLine{21         \textcolor{keyword}{template}<\textcolor{keyword}{typename}... Vs>}
+\DoxyCodeLine{22         \textcolor{keyword}{constexpr} \textcolor{keyword}{explicit} \mbox{\hyperlink{classhope_1_1all}{all}}(Vs\&\&... args) noexcept}
+\DoxyCodeLine{23             : \mbox{\hyperlink{classhope_1_1tuple}{tuple}}(std::forward<Vs>(args)...) \{ \}}
+\DoxyCodeLine{24 }
+\DoxyCodeLine{25         \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{26         \textcolor{keyword}{constexpr} \textcolor{keywordtype}{bool} operator==(\textcolor{keyword}{const} T\& rhs) \textcolor{keyword}{const} \textcolor{keyword}{noexcept} \{}
+\DoxyCodeLine{27             \textcolor{keywordtype}{bool} res = \textcolor{keyword}{true};}
+\DoxyCodeLine{28             for\_each(\mbox{\hyperlink{classhope_1_1tuple}{tuple}}, [\&](\textcolor{keyword}{const} \textcolor{keyword}{auto}\& lhs) \{}
+\DoxyCodeLine{29                 res \&= lhs == rhs;}
+\DoxyCodeLine{30             \});}
+\DoxyCodeLine{31             \textcolor{keywordflow}{return} res;}
+\DoxyCodeLine{32         \}}
+\DoxyCodeLine{33 }
+\DoxyCodeLine{34         \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{35         \textcolor{keyword}{friend} \textcolor{keyword}{constexpr} \textcolor{keywordtype}{bool} operator==(\textcolor{keyword}{const} T\& lhs, \textcolor{keyword}{const} \mbox{\hyperlink{classhope_1_1all}{all}}\& rhs) \textcolor{keyword}{noexcept} \{}
+\DoxyCodeLine{36             \textcolor{keywordflow}{return} rhs == lhs;}
+\DoxyCodeLine{37         \}}
+\DoxyCodeLine{38 }
+\DoxyCodeLine{39         \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{40         \textcolor{keyword}{constexpr} \textcolor{keywordtype}{bool} operator!=(\textcolor{keyword}{const} T\& rhs) \textcolor{keyword}{const} \textcolor{keyword}{noexcept} \{}
+\DoxyCodeLine{41             \textcolor{keywordflow}{return} !((*this) == rhs);}
+\DoxyCodeLine{42         \}}
+\DoxyCodeLine{43 }
+\DoxyCodeLine{44         \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{45         \textcolor{keyword}{friend} \textcolor{keyword}{constexpr} \textcolor{keywordtype}{bool} operator!=(\textcolor{keyword}{const} T\& lhs, \textcolor{keyword}{const} \mbox{\hyperlink{classhope_1_1all}{all}}\& rhs) \textcolor{keyword}{noexcept} \{}
+\DoxyCodeLine{46             \textcolor{keywordflow}{return} rhs != lhs;}
+\DoxyCodeLine{47         \}}
+\DoxyCodeLine{48 }
+\DoxyCodeLine{49     \textcolor{keyword}{private}:}
+\DoxyCodeLine{50         \mbox{\hyperlink{classhope_1_1flat__tuple}{flat\_tuple<std::decay\_t<Ts>}}...> \mbox{\hyperlink{classhope_1_1tuple}{tuple}};}
+\DoxyCodeLine{51     \};}
+\DoxyCodeLine{52 }
+\DoxyCodeLine{53     \textcolor{keyword}{template} <\textcolor{keyword}{typename}... Ts>}
+\DoxyCodeLine{54     \mbox{\hyperlink{classhope_1_1all}{all}}(Ts...)-\/>all<Ts...>;}
+\DoxyCodeLine{55 }
+\DoxyCodeLine{56     \textcolor{keyword}{template} <\textcolor{keyword}{typename}... Ts>}
+\DoxyCodeLine{57     \textcolor{keyword}{class }\mbox{\hyperlink{classhope_1_1any}{any}} final \{}
+\DoxyCodeLine{58     \textcolor{keyword}{public}:}
+\DoxyCodeLine{59         \textcolor{keyword}{template}<\textcolor{keyword}{typename}... Vs>}
+\DoxyCodeLine{60         \textcolor{keyword}{constexpr} \textcolor{keyword}{explicit} \mbox{\hyperlink{classhope_1_1any}{any}}(Vs\&\&... args) noexcept}
+\DoxyCodeLine{61             : \mbox{\hyperlink{classhope_1_1tuple}{tuple}}(std::forward<Vs>(args)...) \{ \}}
+\DoxyCodeLine{62 }
+\DoxyCodeLine{63         \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{64         \textcolor{keyword}{constexpr} \textcolor{keywordtype}{bool} operator==(\textcolor{keyword}{const} T\& rhs) \textcolor{keyword}{const} \textcolor{keyword}{noexcept} \{}
+\DoxyCodeLine{65             \textcolor{keywordtype}{bool} res = \textcolor{keyword}{false};}
+\DoxyCodeLine{66             for\_each(\mbox{\hyperlink{classhope_1_1tuple}{tuple}}, [\&](\textcolor{keyword}{const} \textcolor{keyword}{auto}\& lhs) \{}
+\DoxyCodeLine{67                 res |= lhs == rhs;}
+\DoxyCodeLine{68             \});}
+\DoxyCodeLine{69             \textcolor{keywordflow}{return} res;}
+\DoxyCodeLine{70         \}}
+\DoxyCodeLine{71 }
+\DoxyCodeLine{72         \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{73         \textcolor{keyword}{friend} \textcolor{keyword}{constexpr} \textcolor{keywordtype}{bool} operator==(\textcolor{keyword}{const} T\& lhs, \textcolor{keyword}{const} \mbox{\hyperlink{classhope_1_1any}{any}}\& rhs) \textcolor{keyword}{noexcept} \{}
+\DoxyCodeLine{74             \textcolor{keywordflow}{return} rhs == lhs;}
+\DoxyCodeLine{75         \}}
+\DoxyCodeLine{76 }
+\DoxyCodeLine{77         \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{78         \textcolor{keyword}{constexpr} \textcolor{keywordtype}{bool} operator!=(\textcolor{keyword}{const} T\& rhs) \textcolor{keyword}{const} \textcolor{keyword}{noexcept} \{}
+\DoxyCodeLine{79             \textcolor{keywordflow}{return} !(\mbox{\hyperlink{classhope_1_1tuple}{tuple}} == rhs);}
+\DoxyCodeLine{80         \}}
+\DoxyCodeLine{81 }
+\DoxyCodeLine{82         \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{83         \textcolor{keyword}{friend} \textcolor{keyword}{constexpr} \textcolor{keywordtype}{bool} operator!=(\textcolor{keyword}{const} T\& lhs, \textcolor{keyword}{const} \mbox{\hyperlink{classhope_1_1any}{any}}\& rhs) \textcolor{keyword}{noexcept} \{}
+\DoxyCodeLine{84             \textcolor{keywordflow}{return} rhs != lhs;}
+\DoxyCodeLine{85         \}}
+\DoxyCodeLine{86 }
+\DoxyCodeLine{87     \textcolor{keyword}{private}:}
+\DoxyCodeLine{88         \mbox{\hyperlink{classhope_1_1flat__tuple}{flat\_tuple<std::decay\_t<Ts>}}...> \mbox{\hyperlink{classhope_1_1tuple}{tuple}};}
+\DoxyCodeLine{89     \};}
+\DoxyCodeLine{90 }
+\DoxyCodeLine{91     \textcolor{keyword}{template} <\textcolor{keyword}{typename}... Ts>}
+\DoxyCodeLine{92     \mbox{\hyperlink{classhope_1_1any}{any}}(Ts...)-\/>any<Ts...>;}
+\DoxyCodeLine{93 \}}
+
+\end{DoxyCode}

@@ -1,0 +1,42 @@
+\hypertarget{ofstream_8h_source}{}\doxysection{ofstream.\+h}
+\label{ofstream_8h_source}\index{lib/hope/logger/ofstream.h@{lib/hope/logger/ofstream.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* Copyright (C) 2021 Gleb Bezborodov -\/ All Rights Reserved}}
+\DoxyCodeLine{2 \textcolor{comment}{ * You may use, distribute and modify this code under the}}
+\DoxyCodeLine{3 \textcolor{comment}{ * terms of the MIT license.}}
+\DoxyCodeLine{4 \textcolor{comment}{ *}}
+\DoxyCodeLine{5 \textcolor{comment}{ * You should have received a copy of the MIT license with}}
+\DoxyCodeLine{6 \textcolor{comment}{ * this file. If not, please write to: bezborodoff.gleb@gmail.com, or visit : https://github.com/glensand/hope}}
+\DoxyCodeLine{7 \textcolor{comment}{ */}}
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#include <fstream>}}
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#include <string\_view>}}
+\DoxyCodeLine{13 \textcolor{preprocessor}{\#include "{}hope/stream/ostream.h"{}}}
+\DoxyCodeLine{14 }
+\DoxyCodeLine{15 \textcolor{keyword}{namespace }hope \{}
+\DoxyCodeLine{16 }
+\DoxyCodeLine{17     \textcolor{keyword}{class }\mbox{\hyperlink{classhope_1_1ofstream}{ofstream}} final : \textcolor{keyword}{public} \mbox{\hyperlink{classhope_1_1ostream}{ostream}}\{}
+\DoxyCodeLine{18     \textcolor{keyword}{public}:}
+\DoxyCodeLine{19 }
+\DoxyCodeLine{20         \mbox{\hyperlink{classhope_1_1ofstream}{ofstream}}(std::string\_view file\_name);}
+\DoxyCodeLine{21         \textcolor{keyword}{virtual} \mbox{\hyperlink{classhope_1_1ofstream}{\string~ofstream}}() \textcolor{keyword}{override};}
+\DoxyCodeLine{22 }
+\DoxyCodeLine{23         DECLARE\_EXPLICIT\_DEFAULT\_MOVABLE(\mbox{\hyperlink{classhope_1_1ofstream}{ofstream}});}
+\DoxyCodeLine{24         DECLARE\_NON\_COPYABLE(\mbox{\hyperlink{classhope_1_1ofstream}{ofstream}});}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26         \textcolor{keyword}{virtual} \textcolor{keywordtype}{bool} is\_open() \textcolor{keyword}{const} \textcolor{keyword}{noexcept} \textcolor{keyword}{override};}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28         \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} write(\textcolor{keyword}{const} \textcolor{keywordtype}{void}* data, std::size\_t size) \textcolor{keyword}{override};}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30         \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} flush() \textcolor{keyword}{override};}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32     \textcolor{keyword}{private}:}
+\DoxyCodeLine{33         std::ofstream m\_stream\_impl;}
+\DoxyCodeLine{34     \};}
+\DoxyCodeLine{35 }
+\DoxyCodeLine{36 \}}
+
+\end{DoxyCode}

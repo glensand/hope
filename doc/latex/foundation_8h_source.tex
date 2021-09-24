@@ -1,0 +1,29 @@
+\hypertarget{foundation_8h_source}{}\doxysection{foundation.\+h}
+\label{foundation_8h_source}\index{lib/hope/foundation.h@{lib/hope/foundation.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* Copyright (C) 2021 Gleb Bezborodov -\/ All Rights Reserved}}
+\DoxyCodeLine{2 \textcolor{comment}{ * You may use, distribute and modify this code under the}}
+\DoxyCodeLine{3 \textcolor{comment}{ * terms of the MIT license.}}
+\DoxyCodeLine{4 \textcolor{comment}{ *}}
+\DoxyCodeLine{5 \textcolor{comment}{ * You should have received a copy of the MIT license with}}
+\DoxyCodeLine{6 \textcolor{comment}{ * this file. If not, please write to: bezborodoff.gleb@gmail.com, or visit : https://github.com/glensand/hope}}
+\DoxyCodeLine{7 \textcolor{comment}{ */}}
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{11 \textcolor{comment}{// useful macro section}}
+\DoxyCodeLine{12 }
+\DoxyCodeLine{17 \textcolor{preprocessor}{\#define DECLARE\_NON\_MOVABLE(Name) Name ( Name \&\&) = delete; \(\backslash\)}}
+\DoxyCodeLine{18 \textcolor{preprocessor}{    Name \& operator=( Name \&\&) = delete}}
+\DoxyCodeLine{19 }
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#define DECLARE\_NON\_COPYABLE(Name) Name(const Name \&) = delete; \(\backslash\)}}
+\DoxyCodeLine{25 \textcolor{preprocessor}{    Name \& operator=(const Name \&) = delete}}
+\DoxyCodeLine{26 }
+\DoxyCodeLine{31 \textcolor{preprocessor}{\#define DECLARE\_EXPLICIT\_DEFAULT\_MOVABLE(Name) Name ( Name \&\&) = default; \(\backslash\)}}
+\DoxyCodeLine{32 \textcolor{preprocessor}{    Name \& operator=( Name \&\&) = default}}
+\DoxyCodeLine{33 }
+\DoxyCodeLine{38 \textcolor{preprocessor}{\#define DECLARE\_EXPLICIT\_DEFAULT\_COPYABLE(Name) Name ( const Name \&) = default; \(\backslash\)}}
+\DoxyCodeLine{39 \textcolor{preprocessor}{    Name \& operator=( const Name \&) = default}}
+
+\end{DoxyCode}

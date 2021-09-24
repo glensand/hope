@@ -1,0 +1,75 @@
+\hypertarget{typelistsort_8h_source}{}\doxysection{typelistsort.\+h}
+\label{typelistsort_8h_source}\index{lib/hope/typelist/typelistsort.h@{lib/hope/typelist/typelistsort.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* Copyright (C) 2020 -\/ 2021 Gleb Bezborodov -\/ All Rights Reserved}}
+\DoxyCodeLine{2 \textcolor{comment}{ * You may use, distribute and modify this code under the}}
+\DoxyCodeLine{3 \textcolor{comment}{ * terms of the MIT license.}}
+\DoxyCodeLine{4 \textcolor{comment}{ *}}
+\DoxyCodeLine{5 \textcolor{comment}{ * You should have received a copy of the MIT license with}}
+\DoxyCodeLine{6 \textcolor{comment}{ * this file. If not, please write to: bezborodoff.gleb@gmail.com, or visit : https://github.com/glensand/hope}}
+\DoxyCodeLine{7 \textcolor{comment}{ */}}
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#include "{}hope/typelist/type\_list.h"{}}}
+\DoxyCodeLine{12 }
+\DoxyCodeLine{13 \textcolor{keyword}{namespace }hope \{}
+\DoxyCodeLine{14     \textcolor{keyword}{namespace }detail \{}
+\DoxyCodeLine{15 }
+\DoxyCodeLine{16         \textcolor{keyword}{struct }\mbox{\hyperlink{structhope_1_1detail_1_1sort__helper}{sort\_helper}} \{}
+\DoxyCodeLine{17             \textcolor{keyword}{constexpr} \mbox{\hyperlink{structhope_1_1detail_1_1sort__helper}{sort\_helper}}(std::size\_t index, std::size\_t size) noexcept}
+\DoxyCodeLine{18                 : type\_index(index)}
+\DoxyCodeLine{19                 , type\_size(size)}
+\DoxyCodeLine{20             \{ \}}
+\DoxyCodeLine{21 }
+\DoxyCodeLine{22             \textcolor{keyword}{constexpr} \textcolor{keywordtype}{bool} operator<(\textcolor{keyword}{const} \mbox{\hyperlink{structhope_1_1detail_1_1sort__helper}{sort\_helper}}\& r)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{23                 \textcolor{keywordflow}{return} type\_size < r.type\_size;}
+\DoxyCodeLine{24             \}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26             \textcolor{keyword}{constexpr} \textcolor{keywordtype}{bool} operator>(\textcolor{keyword}{const} \mbox{\hyperlink{structhope_1_1detail_1_1sort__helper}{sort\_helper}}\& r)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{27                 \textcolor{keywordflow}{return} type\_size > r.type\_size;}
+\DoxyCodeLine{28             \}}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30             std::size\_t     type\_index;}
+\DoxyCodeLine{31             std::size\_t     type\_size;}
+\DoxyCodeLine{32         \};}
+\DoxyCodeLine{33 }
+\DoxyCodeLine{34         \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{35         \textcolor{keyword}{constexpr} \textcolor{keywordtype}{void} swap(T\&\& l, T\&\& r) \{}
+\DoxyCodeLine{36             \textcolor{keyword}{auto} temp\{ r \};}
+\DoxyCodeLine{37             r = \textcolor{keyword}{static\_cast<}T\&\&\textcolor{keyword}{>}(l);}
+\DoxyCodeLine{38             l = \textcolor{keyword}{static\_cast<}T\&\&\textcolor{keyword}{>}(temp);}
+\DoxyCodeLine{39         \}}
+\DoxyCodeLine{40 }
+\DoxyCodeLine{41         \textcolor{keyword}{template}<std::size\_t... Is, \textcolor{keyword}{typename}... Ts>}
+\DoxyCodeLine{42         \textcolor{keyword}{constexpr} \textcolor{keyword}{auto} sort\_impl(std::index\_sequence<Is...> sequence, type\_list<Ts...> list) \{}
+\DoxyCodeLine{43             \textcolor{keyword}{constexpr} \textcolor{keyword}{auto} listSize = size(list);}
+\DoxyCodeLine{44             std::array<sort\_helper, listSize> sizes\{ sort\_helper(Is, \textcolor{keyword}{sizeof}(Ts))... \};}
+\DoxyCodeLine{45 }
+\DoxyCodeLine{46             \textcolor{comment}{// should be replaced with std::sort in cxx20}}
+\DoxyCodeLine{47             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{size\_t} i\{ 0 \}; i < listSize; ++i) \{}
+\DoxyCodeLine{48                 \textcolor{keyword}{auto} it = std::max\_element(std::begin(sizes) + i, std::end(sizes));}
+\DoxyCodeLine{49                 \textcolor{keywordtype}{size\_t} pos = std::distance(std::begin(sizes), it);}
+\DoxyCodeLine{50                 \textcolor{keywordflow}{if} (i != pos)}
+\DoxyCodeLine{51                     swap(sizes[i], sizes[pos]);}
+\DoxyCodeLine{52             \}}
+\DoxyCodeLine{53             \textcolor{keywordflow}{return} sizes;}
+\DoxyCodeLine{54         \}}
+\DoxyCodeLine{55 }
+\DoxyCodeLine{56         \textcolor{keyword}{template}<std::size\_t... Is, \textcolor{keyword}{typename}... Ts>}
+\DoxyCodeLine{57         \textcolor{keyword}{constexpr} \textcolor{keyword}{auto} sort\_type\_list(std::index\_sequence<Is...> sequence, type\_list<Ts...> list) \{}
+\DoxyCodeLine{58             \textcolor{keyword}{constexpr} \textcolor{keyword}{auto} sorted\_index\_array = detail::sort\_impl(sequence, list);}
+\DoxyCodeLine{59             \textcolor{keywordflow}{return} make\_type\_list(get\_nth\_type<sorted\_index\_array[Is].type\_index>(list)...);}
+\DoxyCodeLine{60         \}}
+\DoxyCodeLine{61 }
+\DoxyCodeLine{62     \}}
+\DoxyCodeLine{63 }
+\DoxyCodeLine{64     \textcolor{keyword}{template} <\textcolor{keyword}{typename}... Ts>}
+\DoxyCodeLine{65     \textcolor{keyword}{constexpr} \textcolor{keyword}{auto} sort(type\_list<Ts...> list) \{}
+\DoxyCodeLine{66         \textcolor{keyword}{constexpr} \textcolor{keyword}{auto} sorted\_index\_array = detail::sort\_type\_list<>(std::make\_index\_sequence<size(list)>(), list);}
+\DoxyCodeLine{67         \textcolor{keywordflow}{return} sorted\_index\_array;}
+\DoxyCodeLine{68     \}}
+\DoxyCodeLine{69 \}}
+
+\end{DoxyCode}

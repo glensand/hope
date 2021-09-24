@@ -1,0 +1,44 @@
+\hypertarget{variantimpl_8hpp_source}{}\doxysection{variantimpl.\+hpp}
+\label{variantimpl_8hpp_source}\index{lib/hope/variant/variantimpl.hpp@{lib/hope/variant/variantimpl.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* Copyright (C) 2020 -\/ 2021 Gleb Bezborodov -\/ All Rights Reserved}}
+\DoxyCodeLine{2 \textcolor{comment}{ * You may use, distribute and modify this code under the}}
+\DoxyCodeLine{3 \textcolor{comment}{ * terms of the MIT license.}}
+\DoxyCodeLine{4 \textcolor{comment}{ *}}
+\DoxyCodeLine{5 \textcolor{comment}{ * You should have received a copy of the MIT license with}}
+\DoxyCodeLine{6 \textcolor{comment}{ * this file. If not, please write to: bezborodoff.gleb@gmail.com, or visit : https://github.com/glensand/hope}}
+\DoxyCodeLine{7 \textcolor{comment}{ */}}
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#include "{}hope/variant/variant.hpp"{}}}
+\DoxyCodeLine{12 }
+\DoxyCodeLine{13 \textcolor{keyword}{namespace }hope\{}
+\DoxyCodeLine{14 }
+\DoxyCodeLine{15     \textcolor{keyword}{template} <\textcolor{keyword}{typename} ... Ts>}
+\DoxyCodeLine{16     \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{17     variant<Ts...>::variant(T\&\& type)}
+\DoxyCodeLine{18     \{}
+\DoxyCodeLine{19         \textcolor{keyword}{static\_assert}(contains<T>(type\_list<Ts...>\{\}));}
+\DoxyCodeLine{20         m\_storage.template initialize<T>(std::forward<T>(type));}
+\DoxyCodeLine{21     \}}
+\DoxyCodeLine{22 }
+\DoxyCodeLine{23     \textcolor{keyword}{template} <\textcolor{keyword}{typename} ... Ts>}
+\DoxyCodeLine{24     \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{25     variant<Ts...>\& variant<Ts...>::operator=(T\&\& value)}
+\DoxyCodeLine{26     \{}
+\DoxyCodeLine{27         m\_storage.set(std::forward<T>(value));}
+\DoxyCodeLine{28         \textcolor{keywordflow}{return} *\textcolor{keyword}{this};}
+\DoxyCodeLine{29     \}}
+\DoxyCodeLine{30 }
+\DoxyCodeLine{31     \textcolor{keyword}{template} <\textcolor{keyword}{typename} ... Ts>}
+\DoxyCodeLine{32     \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{33     T\& variant<Ts...>::get()}
+\DoxyCodeLine{34     \{}
+\DoxyCodeLine{35         \textcolor{keywordflow}{return} m\_storage.template get<T>();}
+\DoxyCodeLine{36     \}}
+\DoxyCodeLine{37 }
+\DoxyCodeLine{38 \}}
+
+\end{DoxyCode}

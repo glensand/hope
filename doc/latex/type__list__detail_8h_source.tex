@@ -1,0 +1,31 @@
+\hypertarget{type__list__detail_8h_source}{}\doxysection{type\+\_\+list\+\_\+detail.\+h}
+\label{type__list__detail_8h_source}\index{lib/hope/typelist/type\_list\_detail.h@{lib/hope/typelist/type\_list\_detail.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* Copyright (C) 2021 Gleb Bezborodov -\/ All Rights Reserved}}
+\DoxyCodeLine{2 \textcolor{comment}{ * You may use, distribute and modify this code under the}}
+\DoxyCodeLine{3 \textcolor{comment}{ * terms of the MIT license.}}
+\DoxyCodeLine{4 \textcolor{comment}{ *}}
+\DoxyCodeLine{5 \textcolor{comment}{ * You should have received a copy of the MIT license with}}
+\DoxyCodeLine{6 \textcolor{comment}{ * this file. If not, please write to: bezborodoff.gleb@gmail.com, or visit : https://github.com/glensand/hope}}
+\DoxyCodeLine{7 \textcolor{comment}{ */}}
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#include <utility>}}
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#include <cstddef>} \textcolor{comment}{// NOTE: do not remove dis header, it is required for successful g++ compilation (size\_t definition) }}
+\DoxyCodeLine{13 }
+\DoxyCodeLine{14 \textcolor{keyword}{namespace }hope::detail \{}
+\DoxyCodeLine{15 }
+\DoxyCodeLine{16     \textcolor{keyword}{template} <\textcolor{keyword}{typename} Is>}
+\DoxyCodeLine{17     \textcolor{keyword}{struct }\mbox{\hyperlink{structhope_1_1detail_1_1get}{get}};}
+\DoxyCodeLine{18 }
+\DoxyCodeLine{19     \textcolor{keyword}{template} <\textcolor{keywordtype}{size\_t}... Is>}
+\DoxyCodeLine{20     \textcolor{keyword}{struct }\mbox{\hyperlink{structhope_1_1detail_1_1get}{get}}<std::index\_sequence<Is...>> \{}
+\DoxyCodeLine{21         \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{22         \textcolor{keyword}{static} \textcolor{keyword}{constexpr} T extractor(\textcolor{keyword}{decltype}(Is, \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{void}*\textcolor{keyword}{>}(0))..., T*, ...);}
+\DoxyCodeLine{23     \};}
+\DoxyCodeLine{24 }
+\DoxyCodeLine{25 \}}
+
+\end{DoxyCode}

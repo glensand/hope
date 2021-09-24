@@ -1,0 +1,106 @@
+\hypertarget{fixed__any_8h_source}{}\doxysection{fixed\+\_\+any.\+h}
+\label{fixed__any_8h_source}\index{lib/hope/any/fixed\_any.h@{lib/hope/any/fixed\_any.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* Copyright (C) 2020 -\/ 2021 Gleb Bezborodov -\/ All Rights Reserved}}
+\DoxyCodeLine{2 \textcolor{comment}{ * You may use, distribute and modify this code under the}}
+\DoxyCodeLine{3 \textcolor{comment}{ * terms of the MIT license.}}
+\DoxyCodeLine{4 \textcolor{comment}{ *}}
+\DoxyCodeLine{5 \textcolor{comment}{ * You should have received a copy of the MIT license with}}
+\DoxyCodeLine{6 \textcolor{comment}{ * this file. If not, please write to: bezborodoff.gleb@gmail.com, or visit : https://github.com/glensand/hope}}
+\DoxyCodeLine{7 \textcolor{comment}{ */}}
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#include <type\_traits>}}
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#include <typeinfo>}}
+\DoxyCodeLine{13 \textcolor{preprocessor}{\#include <cstdint>}}
+\DoxyCodeLine{14 \textcolor{preprocessor}{\#include "{}hope/any/fixed\_any\_types.h"{}}}
+\DoxyCodeLine{15 }
+\DoxyCodeLine{16 \textcolor{keyword}{namespace }hope \{}
+\DoxyCodeLine{17 }
+\DoxyCodeLine{18     \textcolor{keyword}{namespace }detail \{}
+\DoxyCodeLine{19 }
+\DoxyCodeLine{20         \textcolor{keyword}{struct }\mbox{\hyperlink{structhope_1_1detail_1_1fixed__any__holder__base}{fixed\_any\_holder\_base}}\{ \};}
+\DoxyCodeLine{21 }
+\DoxyCodeLine{22         \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{23         \textcolor{keyword}{struct }\mbox{\hyperlink{structhope_1_1detail_1_1fixed__any__holder__impl}{fixed\_any\_holder\_impl}} final : \mbox{\hyperlink{structhope_1_1detail_1_1fixed__any__holder__base}{fixed\_any\_holder\_base}} \{}
+\DoxyCodeLine{24             T value;}
+\DoxyCodeLine{25         \};}
+\DoxyCodeLine{26     \}}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28     \textcolor{keyword}{class }\mbox{\hyperlink{classhope_1_1fixed__any}{fixed\_any}} final \{}
+\DoxyCodeLine{29     \textcolor{keyword}{public}:}
+\DoxyCodeLine{30         \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{31         \textcolor{keyword}{explicit} \mbox{\hyperlink{classhope_1_1fixed__any}{fixed\_any}}(T\&\& val) \{}
+\DoxyCodeLine{32             assert\_type\_registered<T>();}
+\DoxyCodeLine{33             \textcolor{keywordflow}{if} \textcolor{keyword}{constexpr} (is\_small<T>())\{}
+\DoxyCodeLine{34                 build\_small\_pod(val);}
+\DoxyCodeLine{35             \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{36                 build(val);}
+\DoxyCodeLine{37             \}}
+\DoxyCodeLine{38             type\_index = extract\_type\_index<T>();}
+\DoxyCodeLine{39         \}}
+\DoxyCodeLine{40 }
+\DoxyCodeLine{41         \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{42         \textcolor{keyword}{const} T\& get()\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{43             get\_check<T>();}
+\DoxyCodeLine{44             \textcolor{keywordflow}{if} \textcolor{keyword}{constexpr}(is\_small<T>())}
+\DoxyCodeLine{45                 \textcolor{keywordflow}{return} \textcolor{keyword}{reinterpret\_cast<}\textcolor{keyword}{const }T\&\textcolor{keyword}{>}(holder);}
+\DoxyCodeLine{46             \textcolor{keywordflow}{return} \textcolor{keyword}{static\_cast<}\textcolor{keyword}{const }\mbox{\hyperlink{structhope_1_1detail_1_1fixed__any__holder__impl}{detail::fixed\_any\_holder\_impl<T>}}*\textcolor{keyword}{>}(holder)-\/>value;}
+\DoxyCodeLine{47         \}}
+\DoxyCodeLine{48 }
+\DoxyCodeLine{49         \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{50         T\& get() \{}
+\DoxyCodeLine{51             get\_check<T>();}
+\DoxyCodeLine{52             \textcolor{keywordflow}{if} \textcolor{keyword}{constexpr} (is\_small<T>())}
+\DoxyCodeLine{53                 \textcolor{keywordflow}{return} \textcolor{keyword}{reinterpret\_cast<}T\&\textcolor{keyword}{>}(holder);}
+\DoxyCodeLine{54             \textcolor{keywordflow}{return} \textcolor{keyword}{static\_cast<}\mbox{\hyperlink{structhope_1_1detail_1_1fixed__any__holder__impl}{detail::fixed\_any\_holder\_impl<T>}}*\textcolor{keyword}{>}(holder)-\/>value;}
+\DoxyCodeLine{55         \}}
+\DoxyCodeLine{56 }
+\DoxyCodeLine{57     \textcolor{keyword}{private}:}
+\DoxyCodeLine{58 }
+\DoxyCodeLine{59         \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{60         \textcolor{keyword}{constexpr} \textcolor{keyword}{static} \textcolor{keywordtype}{bool} is\_small() \textcolor{keyword}{noexcept} \{}
+\DoxyCodeLine{61             \textcolor{keywordflow}{return} std::is\_standard\_layout\_v<std::decay\_t<T>>}
+\DoxyCodeLine{62                 \&\& \textcolor{keyword}{sizeof}(std::decay\_t<T>) <= \textcolor{keyword}{sizeof}(\mbox{\hyperlink{structhope_1_1detail_1_1fixed__any__holder__base}{detail::fixed\_any\_holder\_base}});}
+\DoxyCodeLine{63         \}}
+\DoxyCodeLine{64 }
+\DoxyCodeLine{65         \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{66         \textcolor{keyword}{constexpr} \textcolor{keyword}{static} uint8\_t extract\_type\_index() \textcolor{keyword}{noexcept}  \{}
+\DoxyCodeLine{67             \textcolor{keywordflow}{return} uint8\_t(find<std::decay\_t<T>>(FixedAnyTypes));}
+\DoxyCodeLine{68         \}}
+\DoxyCodeLine{69 }
+\DoxyCodeLine{70         \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{71         \textcolor{keyword}{static} \textcolor{keywordtype}{void} assert\_type\_registered() \{}
+\DoxyCodeLine{72             \textcolor{keyword}{static\_assert}(contains<std::decay\_t<T>>(FixedAnyTypes));}
+\DoxyCodeLine{73         \}}
+\DoxyCodeLine{74 }
+\DoxyCodeLine{75         \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{76         \textcolor{keywordtype}{void} assert\_containing\_type()\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{77             \textcolor{keywordflow}{if} (extract\_type\_index<T>() != type\_index)}
+\DoxyCodeLine{78                 \textcolor{keywordflow}{throw} std::bad\_cast();}
+\DoxyCodeLine{79         \}}
+\DoxyCodeLine{80 }
+\DoxyCodeLine{81         \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{82         \textcolor{keywordtype}{void} get\_check()\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{83             assert\_type\_registered<T>();}
+\DoxyCodeLine{84             assert\_containing\_type<T>();}
+\DoxyCodeLine{85         \}}
+\DoxyCodeLine{86 }
+\DoxyCodeLine{87         \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{88         \textcolor{keywordtype}{void} build\_small\_pod(\textcolor{keyword}{const} T\& val) \{}
+\DoxyCodeLine{89             *\textcolor{keyword}{reinterpret\_cast<}T*\textcolor{keyword}{>}(\&holder) = val;}
+\DoxyCodeLine{90         \}}
+\DoxyCodeLine{91 }
+\DoxyCodeLine{92         \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{93         \textcolor{keywordtype}{void} build(\textcolor{keyword}{const} T\& val) \{}
+\DoxyCodeLine{94             *\textcolor{keyword}{reinterpret\_cast<}T*\textcolor{keyword}{>}(\&holder) = val;}
+\DoxyCodeLine{95         \}}
+\DoxyCodeLine{96 }
+\DoxyCodeLine{97         \mbox{\hyperlink{structhope_1_1detail_1_1fixed__any__holder__base}{detail::fixed\_any\_holder\_base}}* holder;}
+\DoxyCodeLine{98         uint8\_t type\_index;}
+\DoxyCodeLine{99     \};}
+\DoxyCodeLine{100 \}}
+
+\end{DoxyCode}

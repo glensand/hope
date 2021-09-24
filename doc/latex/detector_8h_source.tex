@@ -1,0 +1,59 @@
+\hypertarget{detector_8h_source}{}\doxysection{detector.\+h}
+\label{detector_8h_source}\index{lib/hope/components/detector.h@{lib/hope/components/detector.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* Copyright (C) 2020 -\/ 2021 Gleb Bezborodov -\/ All Rights Reserved}}
+\DoxyCodeLine{2 \textcolor{comment}{ * You may use, distribute and modify this code under the}}
+\DoxyCodeLine{3 \textcolor{comment}{ * terms of the MIT license.}}
+\DoxyCodeLine{4 \textcolor{comment}{ *}}
+\DoxyCodeLine{5 \textcolor{comment}{ * You should have received a copy of the MIT license with}}
+\DoxyCodeLine{6 \textcolor{comment}{ * this file. If not, please write to: bezborodoff.gleb@gmail.com, or visit : https://github.com/glensand/hope}}
+\DoxyCodeLine{7 \textcolor{comment}{ */}}
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#include <type\_traits>}}
+\DoxyCodeLine{12 }
+\DoxyCodeLine{13 \textcolor{keyword}{namespace }hope \{}
+\DoxyCodeLine{14 }
+\DoxyCodeLine{15     \textcolor{keyword}{namespace }detail \{}
+\DoxyCodeLine{16 }
+\DoxyCodeLine{17         \textcolor{keyword}{template} <\textcolor{keyword}{class }Default, \textcolor{keyword}{class }AlwaysVoid, \textcolor{keyword}{template}<\textcolor{keyword}{class}...> \textcolor{keyword}{class }Op, \textcolor{keyword}{class}... Args>}
+\DoxyCodeLine{18         \textcolor{keyword}{struct }\mbox{\hyperlink{structhope_1_1detail_1_1detector}{detector}} \{}
+\DoxyCodeLine{19             \textcolor{keyword}{using} value\_t = std::false\_type;}
+\DoxyCodeLine{20             \textcolor{keyword}{using} type = Default;}
+\DoxyCodeLine{21         \};}
+\DoxyCodeLine{22 }
+\DoxyCodeLine{23         \textcolor{keyword}{template} <\textcolor{keyword}{class }Default, \textcolor{keyword}{template}<\textcolor{keyword}{class}...> \textcolor{keyword}{class }Op, \textcolor{keyword}{class}... Args>}
+\DoxyCodeLine{24         \textcolor{keyword}{struct }\mbox{\hyperlink{structhope_1_1detail_1_1detector}{detector}}<Default, std::void\_t<Op<Args...>>, Op, Args...> \{}
+\DoxyCodeLine{25             \textcolor{keyword}{using} value\_t = std::true\_type;}
+\DoxyCodeLine{26             \textcolor{keyword}{using} type = Op<Args...>;}
+\DoxyCodeLine{27         \};}
+\DoxyCodeLine{28 }
+\DoxyCodeLine{29     \} }
+\DoxyCodeLine{30 }
+\DoxyCodeLine{31     \textcolor{keyword}{struct }\mbox{\hyperlink{structhope_1_1nonesuch}{nonesuch}} final \{}
+\DoxyCodeLine{32         \mbox{\hyperlink{structhope_1_1nonesuch}{nonesuch}}() = \textcolor{keyword}{delete};}
+\DoxyCodeLine{33         \mbox{\hyperlink{structhope_1_1nonesuch}{\string~nonesuch}}() = \textcolor{keyword}{delete};}
+\DoxyCodeLine{34         \mbox{\hyperlink{structhope_1_1nonesuch}{nonesuch}}(\mbox{\hyperlink{structhope_1_1nonesuch}{nonesuch}} \textcolor{keyword}{const}\&) = \textcolor{keyword}{delete};}
+\DoxyCodeLine{35         \textcolor{keywordtype}{void} operator=(\mbox{\hyperlink{structhope_1_1nonesuch}{nonesuch}} \textcolor{keyword}{const}\&) = \textcolor{keyword}{delete};}
+\DoxyCodeLine{36     \};}
+\DoxyCodeLine{37 }
+\DoxyCodeLine{38     \textcolor{keyword}{template} <\textcolor{keyword}{template}<\textcolor{keyword}{class}...> \textcolor{keyword}{class }Op, \textcolor{keyword}{class}... Args>}
+\DoxyCodeLine{39     \textcolor{keyword}{using} is\_detected = \textcolor{keyword}{typename} \mbox{\hyperlink{structhope_1_1detail_1_1detector}{detail::detector}}<\mbox{\hyperlink{structhope_1_1nonesuch}{nonesuch}}, void, Op, Args...>::value\_t;}
+\DoxyCodeLine{40 }
+\DoxyCodeLine{41     \textcolor{keyword}{template} <\textcolor{keyword}{template}<\textcolor{keyword}{class}...> \textcolor{keyword}{class }Op, \textcolor{keyword}{class}... Args>}
+\DoxyCodeLine{42     \textcolor{keyword}{constexpr} \textcolor{keywordtype}{bool} is\_detected\_v = \mbox{\hyperlink{structhope_1_1detail_1_1detector}{detail::detector}}<\mbox{\hyperlink{structhope_1_1nonesuch}{nonesuch}}, void, Op, Args...>::value\_t::value;}
+\DoxyCodeLine{43 }
+\DoxyCodeLine{44     \textcolor{keyword}{template} <\textcolor{keyword}{template}<\textcolor{keyword}{class}...> \textcolor{keyword}{class }Op, \textcolor{keyword}{class}... Args>}
+\DoxyCodeLine{45     \textcolor{keyword}{using} detected\_t = \textcolor{keyword}{typename} \mbox{\hyperlink{structhope_1_1detail_1_1detector}{detail::detector}}<\mbox{\hyperlink{structhope_1_1nonesuch}{nonesuch}}, void, Op, Args...>::type;}
+\DoxyCodeLine{46 }
+\DoxyCodeLine{47     \textcolor{keyword}{template} <\textcolor{keyword}{class }Default, \textcolor{keyword}{template}<\textcolor{keyword}{class}...> \textcolor{keyword}{class }Op, \textcolor{keyword}{class}... Args>}
+\DoxyCodeLine{48     \textcolor{keyword}{using} \mbox{\hyperlink{structhope_1_1detail_1_1detector}{detected\_or}} = \mbox{\hyperlink{structhope_1_1detail_1_1detector}{detail::detector}}<Default, void, Op, Args...>;}
+\DoxyCodeLine{49 }
+\DoxyCodeLine{50     \textcolor{keyword}{template}<\textcolor{keyword}{class }Lambda, \textcolor{keywordtype}{int} = (Lambda\{\}(), 0) >}
+\DoxyCodeLine{51     \textcolor{keyword}{constexpr} \textcolor{keywordtype}{bool} is\_constexpr(Lambda) \{ \textcolor{keywordflow}{return} \textcolor{keyword}{true}; \}}
+\DoxyCodeLine{52     \textcolor{keyword}{constexpr} \textcolor{keywordtype}{bool} is\_constexpr(...) \{ \textcolor{keywordflow}{return} \textcolor{keyword}{false}; \}}
+\DoxyCodeLine{53 \}}
+
+\end{DoxyCode}

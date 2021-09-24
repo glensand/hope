@@ -1,0 +1,110 @@
+\hypertarget{logger_2log__helper_8h_source}{}\doxysection{log\+\_\+helper.\+h}
+\label{logger_2log__helper_8h_source}\index{lib/hope/logger/log\_helper.h@{lib/hope/logger/log\_helper.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* Copyright (C) 2021 Gleb Bezborodov -\/ All Rights Reserved}}
+\DoxyCodeLine{2 \textcolor{comment}{ * You may use, distribute and modify this code under the}}
+\DoxyCodeLine{3 \textcolor{comment}{ * terms of the MIT license.}}
+\DoxyCodeLine{4 \textcolor{comment}{ *}}
+\DoxyCodeLine{5 \textcolor{comment}{ * You should have received a copy of the MIT license with}}
+\DoxyCodeLine{6 \textcolor{comment}{ * this file. If not, please write to: bezborodoff.gleb@gmail.com, or visit : https://github.com/glensand/hope}}
+\DoxyCodeLine{7 \textcolor{comment}{ */}}
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#include "{}hope/logger/stack\_buffer.h"{}}}
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#include "{}hope/logger/log\_level.h"{}}}
+\DoxyCodeLine{13 }
+\DoxyCodeLine{14 \textcolor{preprocessor}{\#include "{}hope/components/detector.h"{}}}
+\DoxyCodeLine{15 }
+\DoxyCodeLine{16 \textcolor{preprocessor}{\#include <charconv>}}
+\DoxyCodeLine{17 }
+\DoxyCodeLine{18 \textcolor{keyword}{namespace }hope \{}
+\DoxyCodeLine{19 }
+\DoxyCodeLine{20     \textcolor{keyword}{class }logger;}
+\DoxyCodeLine{21 }
+\DoxyCodeLine{25     \textcolor{keyword}{struct }\mbox{\hyperlink{structhope_1_1log__helper}{log\_helper}} final \{}
+\DoxyCodeLine{26 }
+\DoxyCodeLine{27         \mbox{\hyperlink{structhope_1_1log__helper}{log\_helper}}(\mbox{\hyperlink{classhope_1_1logger}{logger}}\& logger\_instance, log\_priority priority);}
+\DoxyCodeLine{28         \mbox{\hyperlink{structhope_1_1log__helper}{\string~log\_helper}}();}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{35         \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{36         \textcolor{keyword}{using} \mbox{\hyperlink{structhope_1_1log__helper_ab33c4bb0d46beb7fa2593010b5edafd7}{write\_method\_t}} = \textcolor{keyword}{decltype}(std::declval<T>().write(std::declval<log\_helper\&>()));}
+\DoxyCodeLine{37 }
+\DoxyCodeLine{45         \textcolor{keyword}{template}<\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{46         \textcolor{keyword}{using} \mbox{\hyperlink{structhope_1_1log__helper_a68b7f639f238711381b6f63727d88669}{write\_function\_t}} = \textcolor{keyword}{decltype}(write(std::declval<log\_helper\&>(), std::declval<const T\&>()));}
+\DoxyCodeLine{47 }
+\DoxyCodeLine{53         \textcolor{keyword}{template}<\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{54         \textcolor{keyword}{using} \mbox{\hyperlink{structhope_1_1log__helper_a74e21dd76d65db23c6334400fe704258}{write\_enum\_function\_t}} = \textcolor{keyword}{decltype}(write\_enum(std::declval<log\_helper\&>(), std::declval<const T\&>()));}
+\DoxyCodeLine{55 }
+\DoxyCodeLine{61         \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{62         \textcolor{keyword}{struct }\mbox{\hyperlink{structhope_1_1log__helper_1_1value__wrapper}{value\_wrapper}} final \{}
+\DoxyCodeLine{63             \mbox{\hyperlink{structhope_1_1log__helper_1_1value__wrapper}{value\_wrapper}}(\textcolor{keyword}{const} T\& val)}
+\DoxyCodeLine{64                 : value(val) \{ \}}
+\DoxyCodeLine{65         }
+\DoxyCodeLine{66             \textcolor{keyword}{const} T\& value;}
+\DoxyCodeLine{67         \};}
+\DoxyCodeLine{68 }
+\DoxyCodeLine{79         \textcolor{keyword}{template}<\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{80         \textcolor{keyword}{friend} \mbox{\hyperlink{structhope_1_1log__helper}{log\_helper}}\& \mbox{\hyperlink{structhope_1_1log__helper_af353a103ac837a3e395120bbcf20b9eb}{operator<<}}(\mbox{\hyperlink{structhope_1_1log__helper}{log\_helper}}\& helper, \textcolor{keyword}{const} T\& value)\{}
+\DoxyCodeLine{81             \textcolor{keywordflow}{if} \textcolor{keyword}{constexpr} (is\_detected\_v<write\_method\_t, T>) \{}
+\DoxyCodeLine{82                 value.write(helper);}
+\DoxyCodeLine{83             \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} \textcolor{keyword}{constexpr} (is\_detected\_v<write\_function\_t, T>) \{}
+\DoxyCodeLine{84                 write(helper, value);}
+\DoxyCodeLine{85             \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} \textcolor{keyword}{constexpr} ( std::is\_enum\_v<T>)\{}
+\DoxyCodeLine{86                 \textcolor{keywordflow}{if} \textcolor{keyword}{constexpr}(is\_detected\_v<write\_enum\_function\_t, T>)}
+\DoxyCodeLine{87                     write\_enum(helper, value);}
+\DoxyCodeLine{88                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{89                     helper.write\_impl(\textcolor{keywordtype}{int}(value)); \textcolor{comment}{// if enum writer had not been set, write enum as integer}}
+\DoxyCodeLine{90             \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{91                 helper.write\_impl(value);}
+\DoxyCodeLine{92             \}}
+\DoxyCodeLine{93             \textcolor{keywordflow}{return} helper;}
+\DoxyCodeLine{94         \}}
+\DoxyCodeLine{95 }
+\DoxyCodeLine{101         \textcolor{keyword}{template}<\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{102         \textcolor{keyword}{friend} \mbox{\hyperlink{structhope_1_1log__helper}{log\_helper}}\& \mbox{\hyperlink{structhope_1_1log__helper_a321424629802282b7274c80521166e00}{operator<<}}(\mbox{\hyperlink{structhope_1_1log__helper}{log\_helper}}\&\& helper, \textcolor{keyword}{const} T\& value) \{}
+\DoxyCodeLine{103             helper << value;}
+\DoxyCodeLine{104             \textcolor{keywordflow}{return} helper;}
+\DoxyCodeLine{105         \}}
+\DoxyCodeLine{106 }
+\DoxyCodeLine{110         \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{111         \textcolor{keyword}{static} \mbox{\hyperlink{structhope_1_1log__helper_1_1value__wrapper}{value\_wrapper<T>}} \mbox{\hyperlink{structhope_1_1log__helper_adc45074e2526a8b310d6d4c0647d010f}{build\_value}}(\textcolor{keyword}{const} T\& value) \{}
+\DoxyCodeLine{112             \textcolor{keywordflow}{return} \mbox{\hyperlink{structhope_1_1log__helper_1_1value__wrapper}{value\_wrapper<T>}}(value);}
+\DoxyCodeLine{113         \}}
+\DoxyCodeLine{114     \textcolor{keyword}{private}:}
+\DoxyCodeLine{115 }
+\DoxyCodeLine{116         \textcolor{keywordtype}{void} write\_impl(\textcolor{keyword}{const} \textcolor{keywordtype}{void}* data, std::size\_t size);}
+\DoxyCodeLine{117         \textcolor{keywordtype}{void} write\_impl(std::string\_view data);}
+\DoxyCodeLine{118         \textcolor{keywordtype}{void} write\_impl(\textcolor{keyword}{const} std::string\& data);}
+\DoxyCodeLine{119 }
+\DoxyCodeLine{120         \textcolor{keyword}{template}<\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{121         \textcolor{keywordtype}{void} write\_impl(\textcolor{keyword}{const} value\_wrapper<T>\& \textcolor{keywordtype}{object})\{}
+\DoxyCodeLine{122             m\_buffer.put(\textcolor{stringliteral}{"{} ["{}}, 2);}
+\DoxyCodeLine{123             write(\textcolor{keywordtype}{object});}
+\DoxyCodeLine{124             m\_buffer.put(\textcolor{stringliteral}{"{}] "{}}, 2);}
+\DoxyCodeLine{125         \}}
+\DoxyCodeLine{126 }
+\DoxyCodeLine{127         \textcolor{keyword}{template}<\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{128         \textcolor{keywordtype}{void} write\_impl(\textcolor{keyword}{const} T\& val) \{}
+\DoxyCodeLine{129             \textcolor{keyword}{constexpr} \textcolor{keywordtype}{bool} is\_suitable = std::is\_integral\_v<T> || std::is\_floating\_point\_v<T>;}
+\DoxyCodeLine{130             \textcolor{keywordflow}{if} \textcolor{keyword}{constexpr} (is\_suitable) \{}
+\DoxyCodeLine{131                 std::array<char, 100> buffer\{\};}
+\DoxyCodeLine{132                 \textcolor{keyword}{auto}\&\& [ptr, ec] = std::to\_chars(buffer.data(), buffer.data() + buffer.size(), val);}
+\DoxyCodeLine{133                 write\_impl(buffer.data(), std::size\_t(ptr) -\/ std::size\_t(buffer.data()));}
+\DoxyCodeLine{134             \}}
+\DoxyCodeLine{135             \textcolor{keyword}{static\_assert}(is\_suitable, \textcolor{stringliteral}{"{}<-\/-\/-\/ hope::logger: An attempt was made to write value of unregistered type."{}});}
+\DoxyCodeLine{136         \}}
+\DoxyCodeLine{137 }
+\DoxyCodeLine{138         stack\_buffer m\_buffer;  \textcolor{comment}{// Contains all written bytes}}
+\DoxyCodeLine{139         logger\& m\_logger;   \textcolor{comment}{// Ref to the global logger, all bytes had to be written there}}
+\DoxyCodeLine{140         log\_priority m\_priority;}
+\DoxyCodeLine{141     \};}
+\DoxyCodeLine{142 }
+\DoxyCodeLine{143 \}}
+\DoxyCodeLine{144 }
+\DoxyCodeLine{145 \textcolor{preprocessor}{\#define HOPE\_INTERIOR\_LOG(PRIORITY, logger) if((logger).should\_write(PRIORITY)) hope::log\_helper(logger, PRIORITY) <<}}
+\DoxyCodeLine{146 \textcolor{preprocessor}{\#define HOPE\_INTERIOR\_LOG\_TRACE(PRIORITY, logger) if((logger).should\_write(PRIORITY)) hope::log\_helper(logger, PRIORITY) <<  \_\_FUNCTION\_\_ << "{} "{}}}
+\DoxyCodeLine{147 \#define HOPE\_VAL(V) hope::log\_helper::build\_value(V)}
+
+\end{DoxyCode}
