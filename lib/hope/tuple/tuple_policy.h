@@ -8,6 +8,10 @@
 
 #pragma once
 
+/*! \defgroup <reflection> Static reflection
+    @{
+*/
+
 namespace hope {
 
     /**
@@ -28,3 +32,5 @@ namespace hope {
     };
 
 }
+
+/*! @} */

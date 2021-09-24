@@ -69,7 +69,7 @@ $(function() {
   <div class="headertitle"><div class="title">flat_sorted_tuple.h</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/* Copyright (C) 2020 - 2021 Gleb Bezborodov - All Rights Reserved</span></div>
+<a href="flat__sorted__tuple_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/* Copyright (C) 2020 - 2021 Gleb Bezborodov - All Rights Reserved</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="comment"> * You may use, distribute and modify this code under the</span></div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="comment"> * terms of the MIT license.</span></div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="comment"> *</span></div>
@@ -81,23 +81,27 @@ $(function() {
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &quot;hope/typelist/type_list.h&quot;</span></div>
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &quot;hope/typelist/typelistsort.h&quot;</span></div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#include &quot;hope/tuple/flat_tuple.h&quot;</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#include &quot;<a class="code" href="flat__tuple_8h.html">hope/tuple/flat_tuple.h</a>&quot;</span></div>
 <div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="keyword">namespace </span>hope {</div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>    <span class="keyword">namespace </span>detail {</div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>        <span class="keyword">template</span>&lt;<span class="keyword">typename</span>... Ts, <span class="keyword">typename</span>... Vs&gt;</div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>        <span class="keyword">constexpr</span> <span class="keyword">auto</span> make_flat_tuple_from_type_list(type_list&lt;Ts...&gt;, Vs&amp;&amp;... args) {</div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>            <span class="keywordflow">return</span> flat_tuple&lt;Ts...&gt;(std::forward&lt;Vs&gt;(args)...);</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>        }</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    }</div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>    <span class="keyword">template</span>&lt;<span class="keyword">typename</span>... Ts&gt;</div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>    <span class="keyword">constexpr</span> <span class="keyword">auto</span> make_sorted_tuple(Ts&amp;&amp;... args) {</div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>        <span class="keyword">constexpr</span> <span class="keyword">auto</span> typeList = sort(type_list&lt;Ts...&gt;{});</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>        <span class="keywordflow">return</span> detail::make_flat_tuple_from_type_list(typeList, std::forward&lt;Ts&gt;(args)...);</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>    }</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>}</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="keyword">namespace </span>hope {</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    <span class="keyword">namespace </span>detail {</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>        <span class="keyword">template</span>&lt;<span class="keyword">typename</span>... Ts, <span class="keyword">typename</span>... Vs&gt;</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>        <span class="keyword">constexpr</span> <span class="keyword">auto</span> make_flat_tuple_from_type_list(type_list&lt;Ts...&gt;, Vs&amp;&amp;... args) {</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>            <span class="keywordflow">return</span> flat_tuple&lt;Ts...&gt;(std::forward&lt;Vs&gt;(args)...);</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>        }</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>    }</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    <span class="keyword">template</span>&lt;<span class="keyword">typename</span>... Ts&gt;</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno"><a class="line" href="flat__sorted__tuple_8h.html#a123084fe920262f76e077dc88d20bf16">   40</a></span>    <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_function" href="flat__sorted__tuple_8h.html#a123084fe920262f76e077dc88d20bf16">make_sorted_tuple</a>(Ts&amp;&amp;... args) {</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>        <span class="keyword">constexpr</span> <span class="keyword">auto</span> typeList = sort(<a class="code hl_class" href="classhope_1_1type__list.html">type_list&lt;Ts...&gt;</a>{});</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>        <span class="keywordflow">return</span> detail::make_flat_tuple_from_type_list(typeList, std::forward&lt;Ts&gt;(args)...);</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    }</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>}</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span> </div>
+<div class="ttc" id="aclasshope_1_1type__list_html"><div class="ttname"><a href="classhope_1_1type__list.html">hope::type_list</a></div><div class="ttdef"><b>Definition:</b> type_list.h:21</div></div>
+<div class="ttc" id="aflat__sorted__tuple_8h_html_a123084fe920262f76e077dc88d20bf16"><div class="ttname"><a href="flat__sorted__tuple_8h.html#a123084fe920262f76e077dc88d20bf16">hope::make_sorted_tuple</a></div><div class="ttdeci">constexpr auto make_sorted_tuple(Ts &amp;&amp;... args)</div><div class="ttdef"><b>Definition:</b> flat_sorted_tuple.h:40</div></div>
+<div class="ttc" id="aflat__tuple_8h_html"><div class="ttname"><a href="flat__tuple_8h.html">flat_tuple.h</a></div><div class="ttdoc">Implementation of non - recursive tuple, tuple size and alignment is same as structure with fields of...</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

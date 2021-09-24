@@ -69,7 +69,7 @@ $(function() {
   <div class="headertitle"><div class="title">print_tuple.h</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/* Copyright (C) 2021 Gleb Bezborodov - All Rights Reserved</span></div>
+<a href="print__tuple_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/* Copyright (C) 2021 Gleb Bezborodov - All Rights Reserved</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="comment"> * You may use, distribute and modify this code under the</span></div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="comment"> * terms of the MIT license.</span></div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="comment"> *</span></div>
@@ -79,38 +79,45 @@ $(function() {
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#pragma once</span></div>
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &quot;hope/tuple/flat_tuple.h&quot;</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &quot;<a class="code" href="flat__tuple_8h.html">hope/tuple/flat_tuple.h</a>&quot;</span></div>
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &quot;hope/tuple/tuple_from_struct.h&quot;</span></div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#include &lt;functional&gt;</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
 <div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="keyword">namespace </span>hope{</div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    <span class="keyword">namespace </span>detail {</div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>        <span class="keyword">template</span>&lt;<span class="keyword">typename</span>... Ts, std::size_t... VIs&gt;</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>        <span class="keywordtype">void</span> print_impl(std::ostream&amp; stream, <span class="keyword">const</span> flat_tuple&lt;Ts...&gt;&amp; tuple, std::index_sequence&lt;VIs...&gt;) {</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>            stream &lt;&lt; <span class="stringliteral">&quot;{ &quot;</span>;</div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>            ((stream &lt;&lt; (VIs == 0 ? <span class="stringliteral">&quot;&quot;</span> : <span class="stringliteral">&quot;, &quot;</span>) &lt;&lt; tuple.template get&lt;VIs&gt;()), ...);</div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>            stream &lt;&lt; <span class="stringliteral">&quot; };&quot;</span>;</div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>        }</div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    </div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>    }</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span> </div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>    <span class="keyword">template</span>&lt;<span class="keyword">typename</span>... Ts&gt;</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>    <span class="keyword">constexpr</span> std::ostream&amp; operator&lt;&lt; (std::ostream&amp; stream, <span class="keyword">const</span> flat_tuple&lt;Ts...&gt;&amp; tuple) {</div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>        print_impl(stream, tuple, std::make_index_sequence&lt;size(type_list&lt;Ts...&gt;{})&gt;());</div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>        <span class="keywordflow">return</span> stream;</div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>    }</div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>}</div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> </div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span> </div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span><span class="keyword">constexpr</span> std::ostream&amp; operator&lt;&lt; (std::ostream&amp; stream, <span class="keyword">const</span> T&amp; <span class="keywordtype">object</span>) {</div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    <span class="keyword">auto</span>&amp;&amp; tuple = hope::ref_tuple_from_struct(<span class="keywordtype">object</span>);</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    stream &lt;&lt; tuple;</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    <span class="keywordflow">return</span> stream;</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>}</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="keyword">namespace </span>hope{</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    <span class="keyword">namespace </span>detail {</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>        <span class="keyword">template</span>&lt;<span class="keyword">typename</span>... Ts, std::size_t... VIs&gt;</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno"><a class="line" href="print__tuple_8h.html#a3df5ed2ac8c98a3267604042d3a0e135">   32</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="print__tuple_8h.html#a3df5ed2ac8c98a3267604042d3a0e135">print_impl</a>(std::ostream&amp; stream, <span class="keyword">const</span> <a class="code hl_class" href="classhope_1_1flat__tuple.html">flat_tuple&lt;Ts...&gt;</a>&amp; <a class="code hl_class" href="classhope_1_1tuple.html">tuple</a>, std::index_sequence&lt;VIs...&gt;) {</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>            stream &lt;&lt; <span class="stringliteral">&quot;{ &quot;</span>;</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>            ((stream &lt;&lt; (VIs == 0 ? <span class="stringliteral">&quot;&quot;</span> : <span class="stringliteral">&quot;, &quot;</span>) &lt;&lt; <a class="code hl_class" href="classhope_1_1tuple.html">tuple</a>.template <a class="code hl_struct" href="structhope_1_1detail_1_1get.html">get&lt;VIs&gt;</a>()), ...);</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>            stream &lt;&lt; <span class="stringliteral">&quot; };&quot;</span>;</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>        }</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    </div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>    }</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span> </div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>    <span class="keyword">template</span>&lt;<span class="keyword">typename</span>... Ts&gt;</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno"><a class="line" href="print__tuple_8h.html#ac655849327188dabe831c72bc093a53a">   45</a></span>    <span class="keyword">constexpr</span> std::ostream&amp; <a class="code hl_function" href="group__reflection.html#gab67dd118db3cc092b48aacf6d760cfaf">operator&lt;&lt; </a>(std::ostream&amp; stream, <span class="keyword">const</span> <a class="code hl_class" href="classhope_1_1flat__tuple.html">flat_tuple&lt;Ts...&gt;</a>&amp; <a class="code hl_class" href="classhope_1_1tuple.html">tuple</a>) {</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>        print_impl(stream, <a class="code hl_class" href="classhope_1_1tuple.html">tuple</a>, std::make_index_sequence&lt;size(<a class="code hl_class" href="classhope_1_1type__list.html">type_list&lt;Ts...&gt;</a>{})&gt;());</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>        <span class="keywordflow">return</span> stream;</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    }</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>}</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> </div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno"><a class="line" href="group__reflection.html#gab67dd118db3cc092b48aacf6d760cfaf">   55</a></span><span class="keyword">constexpr</span> std::ostream&amp; <a class="code hl_function" href="group__reflection.html#gab67dd118db3cc092b48aacf6d760cfaf">operator&lt;&lt; </a>(std::ostream&amp; stream, <span class="keyword">const</span> T&amp; <span class="keywordtype">object</span>) {</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>    <span class="keyword">auto</span>&amp;&amp; tuple = hope::ref_tuple_from_struct(<span class="keywordtype">object</span>);</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    stream &lt;&lt; tuple;</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    <span class="keywordflow">return</span> stream;</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>}</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span> </div>
+<div class="ttc" id="aclasshope_1_1flat__tuple_html"><div class="ttname"><a href="classhope_1_1flat__tuple.html">hope::flat_tuple</a></div><div class="ttdoc">Implementation of the struct like non recursive tuple which might be used to directly cast to struct ...</div><div class="ttdef"><b>Definition:</b> flat_tuple.h:264</div></div>
+<div class="ttc" id="aclasshope_1_1tuple_html"><div class="ttname"><a href="classhope_1_1tuple.html">hope::tuple</a></div><div class="ttdef"><b>Definition:</b> tuple.h:24</div></div>
+<div class="ttc" id="aclasshope_1_1type__list_html"><div class="ttname"><a href="classhope_1_1type__list.html">hope::type_list</a></div><div class="ttdef"><b>Definition:</b> type_list.h:21</div></div>
+<div class="ttc" id="aflat__tuple_8h_html"><div class="ttname"><a href="flat__tuple_8h.html">flat_tuple.h</a></div><div class="ttdoc">Implementation of non - recursive tuple, tuple size and alignment is same as structure with fields of...</div></div>
+<div class="ttc" id="agroup__reflection_html_gab67dd118db3cc092b48aacf6d760cfaf"><div class="ttname"><a href="group__reflection.html#gab67dd118db3cc092b48aacf6d760cfaf">operator&lt;&lt;</a></div><div class="ttdeci">constexpr std::ostream &amp; operator&lt;&lt;(std::ostream &amp;stream, const T &amp;object)</div><div class="ttdef"><b>Definition:</b> print_tuple.h:55</div></div>
+<div class="ttc" id="aprint__tuple_8h_html_a3df5ed2ac8c98a3267604042d3a0e135"><div class="ttname"><a href="print__tuple_8h.html#a3df5ed2ac8c98a3267604042d3a0e135">hope::detail::print_impl</a></div><div class="ttdeci">void print_impl(std::ostream &amp;stream, const flat_tuple&lt; Ts... &gt; &amp;tuple, std::index_sequence&lt; VIs... &gt;)</div><div class="ttdef"><b>Definition:</b> print_tuple.h:32</div></div>
+<div class="ttc" id="astructhope_1_1detail_1_1get_html"><div class="ttname"><a href="structhope_1_1detail_1_1get.html">hope::detail::get</a></div><div class="ttdef"><b>Definition:</b> type_list_detail.h:17</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

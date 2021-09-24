@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['deallocate_0',['deallocate',['../structhope_1_1memory_1_1chunk.html#a67127097fa2f304eb663b867b63007e6',1,'hope::memory::chunk::deallocate()'],['../classhope_1_1memory_1_1fixed__allocator.html#afc0ab835b42ecd4504ba6942b0eb1387',1,'hope::memory::fixed_allocator::deallocate()'],['../classhope_1_1memory_1_1small__object__allocator.html#ac4b99e6684984b32ae3495509404786f',1,'hope::memory::small_object_allocator::deallocate()']]]
+  ['compute_5ffield_5fcount_5frecursive_0',['compute_field_count_recursive',['../compute__field__count__recursive_8h.html#accf6e094314c4b00186f3007243ea8bf',1,'hope']]],
+  ['compute_5ffield_5fcount_5frecursive_5fconstexpr_1',['compute_field_count_recursive_constexpr',['../compute__field__count__recursive_8h.html#aef686aa3f76e08ed449a3c7c4a032323',1,'hope']]]
 ];

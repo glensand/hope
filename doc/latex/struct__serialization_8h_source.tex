@@ -13,7 +13,7 @@
 \DoxyCodeLine{9 \textcolor{preprocessor}{\#pragma once}}
 \DoxyCodeLine{10 }
 \DoxyCodeLine{11 \textcolor{preprocessor}{\#include "{}hope/tuple/tuple\_from\_struct.h"{}}}
-\DoxyCodeLine{12 \textcolor{preprocessor}{\#include "{}hope/tuple/compute\_field\_count\_recursive.h"{}}}
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{compute__field__count__recursive_8h}{hope/tuple/compute\_field\_count\_recursive.h}}"{}}}
 \DoxyCodeLine{13 \textcolor{preprocessor}{\#include "{}hope/serialization/package.h"{}}}
 \DoxyCodeLine{14 \textcolor{preprocessor}{\#include "{}hope/serialization/custom\_serializer\_holder.h"{}}}
 \DoxyCodeLine{15 }
@@ -76,7 +76,7 @@
 \DoxyCodeLine{72             \textcolor{keyword}{auto}\&\& \mbox{\hyperlink{classhope_1_1tuple}{tuple}} = tuple\_from\_struct(value, \mbox{\hyperlink{structhope_1_1field__policy_1_1reference}{field\_policy::reference}}\{\});}
 \DoxyCodeLine{73             \textcolor{keyword}{auto}\&\& prev\_tuple = tuple\_from\_struct(prev\_value, \mbox{\hyperlink{structhope_1_1field__policy_1_1reference}{field\_policy::reference}}\{\});}
 \DoxyCodeLine{74 }
-\DoxyCodeLine{75             for\_each(\mbox{\hyperlink{classhope_1_1tuple}{tuple}}, prev\_tuple, [\&](\textcolor{keyword}{auto}\&\& field, \textcolor{keyword}{auto}\&\& prev\_field) \{}
+\DoxyCodeLine{75             \mbox{\hyperlink{flat__tuple_8h_ae2d36d67f13767b85f74df9ee4d0b4a1}{for\_each}}(\mbox{\hyperlink{classhope_1_1tuple}{tuple}}, prev\_tuple, [\&](\textcolor{keyword}{auto}\&\& field, \textcolor{keyword}{auto}\&\& prev\_field) \{}
 \DoxyCodeLine{76                 serialize(field, prev\_field, pack, cur\_index);}
 \DoxyCodeLine{77             \});}
 \DoxyCodeLine{78         \}}
@@ -115,7 +115,7 @@
 \DoxyCodeLine{111         deserialize\_impl(TValue\& value, \mbox{\hyperlink{classhope_1_1serialization_1_1package}{package}}\& pack, std::size\_t\& cur\_index) \{}
 \DoxyCodeLine{112             \textcolor{keyword}{auto}\&\& \mbox{\hyperlink{classhope_1_1tuple}{tuple}} = tuple\_from\_struct(value, \mbox{\hyperlink{structhope_1_1field__policy_1_1reference}{field\_policy::reference}}\{\});}
 \DoxyCodeLine{113 }
-\DoxyCodeLine{114             for\_each(\mbox{\hyperlink{classhope_1_1tuple}{tuple}}, [\&](\textcolor{keyword}{auto}\&\& field) \{}
+\DoxyCodeLine{114             \mbox{\hyperlink{flat__tuple_8h_ae2d36d67f13767b85f74df9ee4d0b4a1}{for\_each}}(\mbox{\hyperlink{classhope_1_1tuple}{tuple}}, [\&](\textcolor{keyword}{auto}\&\& field) \{}
 \DoxyCodeLine{115                 deserialize(field, pack, cur\_index);}
 \DoxyCodeLine{116             \});}
 \DoxyCodeLine{117         \}}

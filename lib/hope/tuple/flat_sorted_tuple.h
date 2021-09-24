@@ -12,6 +12,13 @@
 #include "hope/typelist/typelistsort.h"
 #include "hope/tuple/flat_tuple.h"
 
+/*! \defgroup <reflection> Static reflection
+    @{
+    \file
+    \brief This file contains function which might be used to create tuple of specified types. Before tuple creation all
+    the corresponding types sorts and reorders by predicate.
+*/
+
 namespace hope {
     namespace detail {
 
@@ -21,9 +28,19 @@ namespace hope {
         }
     }
 
+    /**
+     * Function creates tuple of specified types with given values; Firstly types sorts by size (descending order).
+     * Then values reorder is required.
+     * \warning NOTE: This function is not implemented yet. And does not
+     * @tparam Ts
+     * @param args
+     * @return
+     */
     template<typename... Ts>
     constexpr auto make_sorted_tuple(Ts&&... args) {
         constexpr auto typeList = sort(type_list<Ts...>{});
         return detail::make_flat_tuple_from_type_list(typeList, std::forward<Ts>(args)...);
     }
 }
+
+/*! @} */

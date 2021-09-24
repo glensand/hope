@@ -1,6 +1,6 @@
 \hypertarget{print__tuple_8h_source}{}\doxysection{print\+\_\+tuple.\+h}
 \label{print__tuple_8h_source}\index{lib/hope/tuple/print\_tuple.h@{lib/hope/tuple/print\_tuple.h}}
-
+\mbox{\hyperlink{print__tuple_8h}{Go to the documentation of this file.}}
 \begin{DoxyCode}{0}
 \DoxyCodeLine{1 \textcolor{comment}{/* Copyright (C) 2021 Gleb Bezborodov -\/ All Rights Reserved}}
 \DoxyCodeLine{2 \textcolor{comment}{ * You may use, distribute and modify this code under the}}
@@ -12,37 +12,37 @@
 \DoxyCodeLine{8 }
 \DoxyCodeLine{9 \textcolor{preprocessor}{\#pragma once}}
 \DoxyCodeLine{10 }
-\DoxyCodeLine{11 \textcolor{preprocessor}{\#include "{}hope/tuple/flat\_tuple.h"{}}}
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{flat__tuple_8h}{hope/tuple/flat\_tuple.h}}"{}}}
 \DoxyCodeLine{12 \textcolor{preprocessor}{\#include "{}hope/tuple/tuple\_from\_struct.h"{}}}
-\DoxyCodeLine{13 \textcolor{preprocessor}{\#include <functional>}}
+\DoxyCodeLine{13 }
 \DoxyCodeLine{14 \textcolor{preprocessor}{\#include <iostream>}}
 \DoxyCodeLine{15 }
-\DoxyCodeLine{16 \textcolor{keyword}{namespace }hope\{}
-\DoxyCodeLine{17 }
-\DoxyCodeLine{18     \textcolor{keyword}{namespace }detail \{}
-\DoxyCodeLine{19 }
-\DoxyCodeLine{20         \textcolor{keyword}{template}<\textcolor{keyword}{typename}... Ts, std::size\_t... VIs>}
-\DoxyCodeLine{21         \textcolor{keywordtype}{void} print\_impl(std::ostream\& stream, \textcolor{keyword}{const} flat\_tuple<Ts...>\& tuple, std::index\_sequence<VIs...>) \{}
-\DoxyCodeLine{22             stream << \textcolor{stringliteral}{"{}\{ "{}};}
-\DoxyCodeLine{23             ((stream << (VIs == 0 ? \textcolor{stringliteral}{"{}"{}} : \textcolor{stringliteral}{"{}, "{}}) << tuple.template get<VIs>()), ...);}
-\DoxyCodeLine{24             stream << \textcolor{stringliteral}{"{} \};"{}};}
-\DoxyCodeLine{25         \}}
-\DoxyCodeLine{26     }
-\DoxyCodeLine{27     \}}
-\DoxyCodeLine{28 }
-\DoxyCodeLine{29     \textcolor{keyword}{template}<\textcolor{keyword}{typename}... Ts>}
-\DoxyCodeLine{30     \textcolor{keyword}{constexpr} std::ostream\& operator<< (std::ostream\& stream, \textcolor{keyword}{const} flat\_tuple<Ts...>\& tuple) \{}
-\DoxyCodeLine{31         print\_impl(stream, tuple, std::make\_index\_sequence<size(type\_list<Ts...>\{\})>());}
-\DoxyCodeLine{32         \textcolor{keywordflow}{return} stream;}
-\DoxyCodeLine{33     \}}
-\DoxyCodeLine{34 \}}
-\DoxyCodeLine{35 }
-\DoxyCodeLine{36 }
-\DoxyCodeLine{37 \textcolor{keyword}{template}<\textcolor{keyword}{typename} T>}
-\DoxyCodeLine{38 \textcolor{keyword}{constexpr} std::ostream\& operator<< (std::ostream\& stream, \textcolor{keyword}{const} T\& \textcolor{keywordtype}{object}) \{}
-\DoxyCodeLine{39     \textcolor{keyword}{auto}\&\& tuple = hope::ref\_tuple\_from\_struct(\textcolor{keywordtype}{object});}
-\DoxyCodeLine{40     stream << tuple;}
-\DoxyCodeLine{41     \textcolor{keywordflow}{return} stream;}
-\DoxyCodeLine{42 \}}
+\DoxyCodeLine{24 \textcolor{keyword}{namespace }hope\{}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26     \textcolor{keyword}{namespace }detail \{}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{31         \textcolor{keyword}{template}<\textcolor{keyword}{typename}... Ts, std::size\_t... VIs>}
+\DoxyCodeLine{32         \textcolor{keywordtype}{void} \mbox{\hyperlink{print__tuple_8h_a3df5ed2ac8c98a3267604042d3a0e135}{print\_impl}}(std::ostream\& stream, \textcolor{keyword}{const} \mbox{\hyperlink{classhope_1_1flat__tuple}{flat\_tuple<Ts...>}}\& \mbox{\hyperlink{classhope_1_1tuple}{tuple}}, std::index\_sequence<VIs...>) \{}
+\DoxyCodeLine{33             stream << \textcolor{stringliteral}{"{}\{ "{}};}
+\DoxyCodeLine{34             ((stream << (VIs == 0 ? \textcolor{stringliteral}{"{}"{}} : \textcolor{stringliteral}{"{}, "{}}) << \mbox{\hyperlink{classhope_1_1tuple}{tuple}}.template \mbox{\hyperlink{structhope_1_1detail_1_1get}{get<VIs>}}()), ...);}
+\DoxyCodeLine{35             stream << \textcolor{stringliteral}{"{} \};"{}};}
+\DoxyCodeLine{36         \}}
+\DoxyCodeLine{37     }
+\DoxyCodeLine{38     \}}
+\DoxyCodeLine{39 }
+\DoxyCodeLine{44     \textcolor{keyword}{template}<\textcolor{keyword}{typename}... Ts>}
+\DoxyCodeLine{45     \textcolor{keyword}{constexpr} std::ostream\& \mbox{\hyperlink{group__reflection_gab67dd118db3cc092b48aacf6d760cfaf}{operator<< }}(std::ostream\& stream, \textcolor{keyword}{const} \mbox{\hyperlink{classhope_1_1flat__tuple}{flat\_tuple<Ts...>}}\& \mbox{\hyperlink{classhope_1_1tuple}{tuple}}) \{}
+\DoxyCodeLine{46         print\_impl(stream, \mbox{\hyperlink{classhope_1_1tuple}{tuple}}, std::make\_index\_sequence<size(\mbox{\hyperlink{classhope_1_1type__list}{type\_list<Ts...>}}\{\})>());}
+\DoxyCodeLine{47         \textcolor{keywordflow}{return} stream;}
+\DoxyCodeLine{48     \}}
+\DoxyCodeLine{49 \}}
+\DoxyCodeLine{50 }
+\DoxyCodeLine{54 \textcolor{keyword}{template}<\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{55 \textcolor{keyword}{constexpr} std::ostream\& \mbox{\hyperlink{group__reflection_gab67dd118db3cc092b48aacf6d760cfaf}{operator<< }}(std::ostream\& stream, \textcolor{keyword}{const} T\& \textcolor{keywordtype}{object}) \{}
+\DoxyCodeLine{56     \textcolor{keyword}{auto}\&\& tuple = hope::ref\_tuple\_from\_struct(\textcolor{keywordtype}{object});}
+\DoxyCodeLine{57     stream << tuple;}
+\DoxyCodeLine{58     \textcolor{keywordflow}{return} stream;}
+\DoxyCodeLine{59 \}}
+\DoxyCodeLine{60 }
 
 \end{DoxyCode}

@@ -1,7 +1,6 @@
 var searchData=
 [
-  ['init_0',['init',['../structhope_1_1memory_1_1chunk.html#acf928e403f88bb938e90dbf2d689b6ed',1,'hope::memory::chunk']]],
-  ['instance_1',['instance',['../classhope_1_1memory_1_1small__object__allocator.html#a498abc57a482a829955140987efd9f13',1,'hope::memory::small_object_allocator']]],
-  ['is_5fallocation_5fvalid_2',['is_allocation_valid',['../structhope_1_1memory_1_1chunk.html#aee824910780f0562c431cecabb958781',1,'hope::memory::chunk']]],
-  ['is_5fdeallocation_5fvalid_3',['is_deallocation_valid',['../structhope_1_1memory_1_1chunk.html#a128474f2b0f4ae41f2d3e46f607f63b7',1,'hope::memory::chunk']]]
+  ['get_0',['get',['../classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_01_4_00_01_ts_8_8_8_01_4.html#a614a63b798ed5f427da6aa7bf08111a2',1,'hope::detail::flat_tuple_impl&lt; std::index_sequence&lt; Is... &gt;, Ts... &gt;::get() noexcept'],['../classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_01_4_00_01_ts_8_8_8_01_4.html#ab64701e05abfc78fb43f703577cb9920',1,'hope::detail::flat_tuple_impl&lt; std::index_sequence&lt; Is... &gt;, Ts... &gt;::get() const noexcept'],['../classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_01_4_00_01_ts_8_8_8_01_4.html#a72594a3474312e81860ed0dc8c72b29e',1,'hope::detail::flat_tuple_impl&lt; std::index_sequence&lt; Is... &gt;, Ts... &gt;::get() noexcept'],['../classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_01_4_00_01_ts_8_8_8_01_4.html#a96a39d2d700295e27342636e64a3dc47',1,'hope::detail::flat_tuple_impl&lt; std::index_sequence&lt; Is... &gt;, Ts... &gt;::get() const noexcept']]],
+  ['get_5fbuffer_1',['get_buffer',['../classhope_1_1serialization_1_1package.html#a4d0dc0ba5fb9a1261281ceac74f9c5b7',1,'hope::serialization::package']]],
+  ['get_5fsize_2',['get_size',['../classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_01_4_00_01_ts_8_8_8_01_4.html#aa974184168a47b1aec781dcc4ffbd4fc',1,'hope::detail::flat_tuple_impl&lt; std::index_sequence&lt; Is... &gt;, Ts... &gt;']]]
 ];

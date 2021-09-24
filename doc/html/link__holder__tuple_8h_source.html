@@ -80,7 +80,7 @@ $(function() {
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#pragma once</span></div>
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &quot;hope/typelist/type_list.h&quot;</span></div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &quot;hope/tuple/flat_tuple.h&quot;</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &quot;<a class="code" href="flat__tuple_8h.html">hope/tuple/flat_tuple.h</a>&quot;</span></div>
 <div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
 <div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="keyword">namespace </span>hope {</div>
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
@@ -106,7 +106,7 @@ $(function() {
 <div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>                <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
 <div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span> </div>
 <div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>            <span class="keywordtype">bool</span> added = <span class="keyword">false</span>;</div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>            for_each(links, [&amp;](<span class="keyword">auto</span>&amp;&amp; field) {</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>            <a class="code hl_function" href="flat__tuple_8h.html#ae2d36d67f13767b85f74df9ee4d0b4a1">for_each</a>(links, [&amp;](<span class="keyword">auto</span>&amp;&amp; field) {</div>
 <div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>                <span class="keywordflow">if</span> (added) <span class="keywordflow">return</span>;</div>
 <div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>                added = field.add(link);</div>
 <div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>            });</div>
@@ -119,7 +119,7 @@ $(function() {
 <div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>                <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
 <div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span> </div>
 <div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>            <span class="keywordtype">bool</span> removed = <span class="keyword">false</span>;</div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>            for_each(links, [&amp;](<span class="keyword">auto</span>&amp;&amp; field) {</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>            <a class="code hl_function" href="flat__tuple_8h.html#ae2d36d67f13767b85f74df9ee4d0b4a1">for_each</a>(links, [&amp;](<span class="keyword">auto</span>&amp;&amp; field) {</div>
 <div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>                <span class="keywordflow">if</span> (removed) <span class="keywordflow">return</span>;</div>
 <div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>                removed = field.remove(link);</div>
 <div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>            });</div>
@@ -146,6 +146,8 @@ $(function() {
 <div class="ttc" id="aclasshope_1_1flat__tuple_html"><div class="ttname"><a href="classhope_1_1flat__tuple.html">hope::flat_tuple&lt; InnerHolderPolicy&lt; Links &gt;... &gt;</a></div></div>
 <div class="ttc" id="aclasshope_1_1link__holder__tuple_html"><div class="ttname"><a href="classhope_1_1link__holder__tuple.html">hope::link_holder_tuple</a></div><div class="ttdef"><b>Definition:</b> link_holder_tuple.h:20</div></div>
 <div class="ttc" id="aclasshope_1_1type__list_html"><div class="ttname"><a href="classhope_1_1type__list.html">hope::type_list</a></div><div class="ttdef"><b>Definition:</b> type_list.h:21</div></div>
+<div class="ttc" id="aflat__tuple_8h_html"><div class="ttname"><a href="flat__tuple_8h.html">flat_tuple.h</a></div><div class="ttdoc">Implementation of non - recursive tuple, tuple size and alignment is same as structure with fields of...</div></div>
+<div class="ttc" id="aflat__tuple_8h_html_ae2d36d67f13767b85f74df9ee4d0b4a1"><div class="ttname"><a href="flat__tuple_8h.html#ae2d36d67f13767b85f74df9ee4d0b4a1">hope::for_each</a></div><div class="ttdeci">constexpr std::enable_if_t&lt; std::is_base_of_v&lt; detail::tuple_tag, std::decay_t&lt; Tuple &gt; &gt; &gt; for_each(Tuple &amp;&amp;tuple, F &amp;&amp;f)</div><div class="ttdef"><b>Definition:</b> flat_tuple.h:323</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

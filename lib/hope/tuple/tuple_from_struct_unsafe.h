@@ -13,6 +13,10 @@
 #include "hope/typelist/type_list.h"
 #include "hope/components/loophole.h"
 
+/*! \defgroup <reflection> Static reflection
+    @{
+*/
+
 namespace hope {
     namespace detail{
 

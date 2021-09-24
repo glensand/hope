@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['fixed_5fallocator_0',['fixed_allocator',['../classhope_1_1memory_1_1fixed__allocator.html#a5721666db5d5274d3b274709538cccaa',1,'hope::memory::fixed_allocator']]],
-  ['for_5feach_1',['for_each',['../classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_01_4_00_01_ts_8_8_8_01_4.html#ac08ef238632966d87e990d0b5de6e372',1,'hope::detail::flat_tuple_impl&lt; std::index_sequence&lt; Is... &gt;, Ts... &gt;::for_each(F &amp;&amp;f) const'],['../classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_01_4_00_01_ts_8_8_8_01_4.html#abb79287ce9b6dda01b61957ed41bf2c7',1,'hope::detail::flat_tuple_impl&lt; std::index_sequence&lt; Is... &gt;, Ts... &gt;::for_each(F &amp;&amp;f)']]]
+  ['deallocate_0',['deallocate',['../structhope_1_1memory_1_1chunk.html#a67127097fa2f304eb663b867b63007e6',1,'hope::memory::chunk::deallocate()'],['../classhope_1_1memory_1_1fixed__allocator.html#afc0ab835b42ecd4504ba6942b0eb1387',1,'hope::memory::fixed_allocator::deallocate()'],['../classhope_1_1memory_1_1small__object__allocator.html#ac4b99e6684984b32ae3495509404786f',1,'hope::memory::small_object_allocator::deallocate()']]],
+  ['detect_5ffields_5fcount_1',['detect_fields_count',['../detect__fields__count_8h.html#a46bea548ee7efd698b94966d0095c91c',1,'hope']]],
+  ['detect_5ffields_5fcount_5fimpl_2',['detect_fields_count_impl',['../detect__fields__count_8h.html#aa44e554ce5b36e05b95f89c46d6b1dba',1,'hope::detail']]]
 ];

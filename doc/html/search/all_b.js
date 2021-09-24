@@ -1,8 +1,10 @@
 var searchData=
 [
-  ['manual_5freset_5fevent_0',['manual_reset_event',['../classhope_1_1concurrency_1_1manual__reset__event.html',1,'hope::concurrency']]],
-  ['multi_5fthreaded_1',['multi_threaded',['../classhope_1_1concurrency_1_1policy_1_1multi__threaded.html',1,'hope::concurrency::policy']]],
-  ['multi_5fthreaded_5fmutex_2',['multi_threaded_mutex',['../structhope_1_1multi__threaded__mutex.html',1,'hope']]],
-  ['multi_5fthreaded_5fspin_5flock_3',['multi_threaded_spin_lock',['../structhope_1_1multi__threaded__spin__lock.html',1,'hope']]],
-  ['multiple_5fvalue_4',['multiple_value',['../structhope_1_1link__holder__policy_1_1multiple__value.html',1,'hope::link_holder_policy']]]
+  ['life_5fcontroller_0',['life_controller',['../classhope_1_1life__controller.html',1,'hope']]],
+  ['lifetime_5fauto_1',['lifetime_auto',['../classhope_1_1lifetime__auto.html',1,'hope']]],
+  ['link_5fholder_5farray_2',['link_holder_array',['../classhope_1_1link__holder__array.html',1,'hope']]],
+  ['link_5fholder_5ftuple_3',['link_holder_tuple',['../classhope_1_1link__holder__tuple.html',1,'hope']]],
+  ['lock_4',['lock',['../structhope_1_1detail_1_1lock.html',1,'hope::detail']]],
+  ['log_5fhelper_5',['log_helper',['../structhope_1_1log__helper.html',1,'hope']]],
+  ['logger_6',['logger',['../classhope_1_1logger.html',1,'hope']]]
 ];

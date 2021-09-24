@@ -1,5 +1,9 @@
 \hypertarget{structhope_1_1detail_1_1indexed__value}{}\doxysection{hope\+::detail\+::indexed\+\_\+value\texorpdfstring{$<$}{<} T, I \texorpdfstring{$>$}{>} Struct Template Reference}
 \label{structhope_1_1detail_1_1indexed__value}\index{hope::detail::indexed\_value$<$ T, I $>$@{hope::detail::indexed\_value$<$ T, I $>$}}
+
+
+{\ttfamily \#include $<$flat\+\_\+tuple.\+h$>$}
+
 \doxysubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
@@ -9,8 +13,8 @@ constexpr {\bfseries indexed\+\_\+value} (\mbox{\hyperlink{structhope_1_1detail_
 \mbox{\Hypertarget{structhope_1_1detail_1_1indexed__value_a9bb86190fc0226560513a5c3a46b1fb9}\label{structhope_1_1detail_1_1indexed__value_a9bb86190fc0226560513a5c3a46b1fb9}} 
 constexpr {\bfseries indexed\+\_\+value} (const \mbox{\hyperlink{structhope_1_1detail_1_1indexed__value}{indexed\+\_\+value}} \&)=default
 \item 
-\mbox{\Hypertarget{structhope_1_1detail_1_1indexed__value_a90e3b2c62118274b207ff807558116ef}\label{structhope_1_1detail_1_1indexed__value_a90e3b2c62118274b207ff807558116ef}} 
-{\footnotesize template$<$typename Vt , typename  = std\+::is\+\_\+constructible$<$\+T, Vt$>$$>$ }\\constexpr {\bfseries indexed\+\_\+value} (Vt \&\&value\+Ref)
+\mbox{\Hypertarget{structhope_1_1detail_1_1indexed__value_a481301721e9293cc727c14c549c94784}\label{structhope_1_1detail_1_1indexed__value_a481301721e9293cc727c14c549c94784}} 
+{\footnotesize template$<$typename Vt $>$ }\\constexpr {\bfseries indexed\+\_\+value} (Vt \&\&value\+Ref)
 \end{DoxyCompactItemize}
 \doxysubsection*{Public Attributes}
 \begin{DoxyCompactItemize}
@@ -20,6 +24,18 @@ T {\bfseries value}
 \end{DoxyCompactItemize}
 
 
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$typename T, size\+\_\+t I$>$\newline
+struct hope\+::detail\+::indexed\+\_\+value$<$ T, I $>$}
+Structure used to create non recursive tuple via inheritance. 
+\begin{DoxyTemplParams}{Template Parameters}
+{\em T} & Corresponding type, value of this type is stored as single field \\
+\hline
+{\em I} & Index of current field (transparent). Is used to unambiguously determine value \\
+\hline
+\end{DoxyTemplParams}
+
+
 The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
 \item 
-lib/hope/tuple/flat\+\_\+tuple.\+h\end{DoxyCompactItemize}
+lib/hope/tuple/\mbox{\hyperlink{flat__tuple_8h}{flat\+\_\+tuple.\+h}}\end{DoxyCompactItemize}

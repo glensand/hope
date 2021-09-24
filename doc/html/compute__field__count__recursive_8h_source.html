@@ -69,7 +69,7 @@ $(function() {
   <div class="headertitle"><div class="title">compute_field_count_recursive.h</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/* Copyright (C) 2020 - 2021 Gleb Bezborodov - All Rights Reserved</span></div>
+<a href="compute__field__count__recursive_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/* Copyright (C) 2020 - 2021 Gleb Bezborodov - All Rights Reserved</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="comment"> * You may use, distribute and modify this code under the</span></div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="comment"> * terms of the MIT license.</span></div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="comment"> *</span></div>
@@ -85,62 +85,47 @@ $(function() {
 <div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#include &quot;hope/components/user_defined_types.h&quot;</span></div>
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#include &quot;hope/components/detector.h&quot;</span></div>
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span> </div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="keyword">namespace </span>hope {</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>    <span class="keyword">namespace </span>detail {</div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>        <span class="keyword">constexpr</span> std::enable_if_t&lt;!is_user_defined_type_v&lt;T&gt;, std::size_t&gt;</div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>        compute_via_type_list() {</div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>            <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>        }</div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>        <span class="keyword">constexpr</span> std::enable_if_t&lt;is_user_defined_type_v&lt;T&gt;, std::size_t&gt;</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>        compute_via_type_list() {</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>            <span class="keyword">constexpr</span> <span class="keyword">auto</span> fields_count = detect_fields_count&lt;T&gt;();</div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>            <span class="keyword">constexpr</span> <span class="keyword">auto</span> types = detail::extract_types&lt;T&gt;(std::make_index_sequence&lt;fields_count&gt;());</div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>            std::size_t count{ 0 };</div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>            for_each(types, [&amp;] (<span class="keyword">auto</span> field) {</div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>                <span class="keyword">using</span> type_t = <span class="keyword">typename</span> <span class="keyword">decltype</span>(field)::Type;</div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>                count += compute_via_type_list&lt;type_t&gt;();</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>            });</div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>            </div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>            <span class="keywordflow">return</span> count;</div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>        }</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>        std::enable_if_t&lt;!is_user_defined_type_v&lt;T&gt;, std::size_t&gt;</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>        compute_via_tuple() {</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>            <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>        }</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="keyword">namespace </span>hope {</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> TStructure&gt;</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno"><a class="line" href="compute__field__count__recursive_8h.html#aef686aa3f76e08ed449a3c7c4a032323">   32</a></span>    <span class="keyword">constexpr</span> std::size_t <a class="code hl_function" href="compute__field__count__recursive_8h.html#aef686aa3f76e08ed449a3c7c4a032323">compute_field_count_recursive_constexpr</a>() {</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>        <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (is_user_defined_type_v&lt;TStructure&gt;) {</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>            <span class="keyword">constexpr</span> <span class="keyword">auto</span> fields_count = detect_fields_count&lt;TStructure&gt;();</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>            <span class="keyword">constexpr</span> <span class="keyword">auto</span> types = detail::extract_types&lt;TStructure&gt;(std::make_index_sequence&lt;fields_count&gt;());</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>            std::size_t count{0};</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>            <a class="code hl_function" href="flat__tuple_8h.html#ae2d36d67f13767b85f74df9ee4d0b4a1">for_each</a>(types, [&amp;](<span class="keyword">auto</span> field) {</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>                <span class="keyword">using</span> type_t = <span class="keyword">typename</span> <span class="keyword">decltype</span>(field)::Type;</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>                count += compute_field_count_recursive_constexpr&lt;type_t&gt;();</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>            });</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>            <span class="keywordflow">return</span> count;</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>        } <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>            <span class="keywordflow">return</span> 1u;</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>        }</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    }</div>
 <div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>        std::enable_if_t&lt;is_user_defined_type_v&lt;T&gt;, std::size_t&gt;</div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>        compute_via_tuple() {</div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>            <span class="keyword">const</span> T <span class="keywordtype">object</span>{ };</div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>            <span class="keyword">auto</span> tuple = tuple_from_struct(<span class="keywordtype">object</span>, field_policy::reference{ });</div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>            std::size_t count{ 0 };</div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>            for_each(tuple, [&amp;](<span class="keyword">auto</span> &amp;&amp;field) {</div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>                <span class="keyword">using</span> type_t = std::decay_t&lt;<span class="keyword">decltype</span>(field)&gt;;</div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>                count += compute_via_tuple&lt;type_t&gt;();</div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>            });</div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>            <span class="keywordflow">return</span> count;</div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>        }</div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> </div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>    }</div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span> </div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>    <span class="keyword">constexpr</span> std::size_t compute_field_count_recursive_constexpr() {</div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>        <span class="keywordflow">return</span> detail::compute_via_type_list&lt;T&gt;();</div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>    }</div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span> </div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>    <span class="keyword">constexpr</span> std::size_t compute_field_count_recursive() {</div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>            <span class="keywordflow">return</span> detail::compute_via_tuple&lt;T&gt;();</div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>    }</div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span> </div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>}</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> TStructure&gt;</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno"><a class="line" href="compute__field__count__recursive_8h.html#accf6e094314c4b00186f3007243ea8bf">   54</a></span>    std::size_t <a class="code hl_function" href="compute__field__count__recursive_8h.html#accf6e094314c4b00186f3007243ea8bf">compute_field_count_recursive</a>() {</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>        <span class="keywordflow">if</span> <span class="keyword">constexpr</span>(is_user_defined_type_v&lt;TStructure&gt;) {</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>            <span class="keyword">const</span> TStructure <span class="keywordtype">object</span>{};</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>            <span class="keyword">auto</span> <a class="code hl_class" href="classhope_1_1tuple.html">tuple</a> = tuple_from_struct(<span class="keywordtype">object</span>, <a class="code hl_struct" href="structhope_1_1field__policy_1_1reference.html">field_policy::reference</a>{});</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>            std::size_t count{0};</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>            <a class="code hl_function" href="flat__tuple_8h.html#ae2d36d67f13767b85f74df9ee4d0b4a1">for_each</a>(<a class="code hl_class" href="classhope_1_1tuple.html">tuple</a>, [&amp;](<span class="keyword">auto</span> &amp;&amp;field) {</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>                <span class="keyword">using</span> type_t = std::decay_t&lt;<span class="keyword">decltype</span>(field)&gt;;</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>                count += compute_field_count_recursive&lt;type_t&gt;();</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>            });</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>            <span class="keywordflow">return</span> count;</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>        } <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>            <span class="keywordflow">return</span> 1u;</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>        }</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>    }</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span> </div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>}</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span> </div>
+<div class="ttc" id="aclasshope_1_1tuple_html"><div class="ttname"><a href="classhope_1_1tuple.html">hope::tuple</a></div><div class="ttdef"><b>Definition:</b> tuple.h:24</div></div>
+<div class="ttc" id="acompute__field__count__recursive_8h_html_accf6e094314c4b00186f3007243ea8bf"><div class="ttname"><a href="compute__field__count__recursive_8h.html#accf6e094314c4b00186f3007243ea8bf">hope::compute_field_count_recursive</a></div><div class="ttdeci">std::size_t compute_field_count_recursive()</div><div class="ttdef"><b>Definition:</b> compute_field_count_recursive.h:54</div></div>
+<div class="ttc" id="acompute__field__count__recursive_8h_html_aef686aa3f76e08ed449a3c7c4a032323"><div class="ttname"><a href="compute__field__count__recursive_8h.html#aef686aa3f76e08ed449a3c7c4a032323">hope::compute_field_count_recursive_constexpr</a></div><div class="ttdeci">constexpr std::size_t compute_field_count_recursive_constexpr()</div><div class="ttdef"><b>Definition:</b> compute_field_count_recursive.h:32</div></div>
+<div class="ttc" id="aflat__tuple_8h_html_ae2d36d67f13767b85f74df9ee4d0b4a1"><div class="ttname"><a href="flat__tuple_8h.html#ae2d36d67f13767b85f74df9ee4d0b4a1">hope::for_each</a></div><div class="ttdeci">constexpr std::enable_if_t&lt; std::is_base_of_v&lt; detail::tuple_tag, std::decay_t&lt; Tuple &gt; &gt; &gt; for_each(Tuple &amp;&amp;tuple, F &amp;&amp;f)</div><div class="ttdef"><b>Definition:</b> flat_tuple.h:323</div></div>
+<div class="ttc" id="astructhope_1_1field__policy_1_1reference_html"><div class="ttname"><a href="structhope_1_1field__policy_1_1reference.html">hope::field_policy::reference</a></div><div class="ttdoc">Policy, used to specify how to convert struct to tuple. If instance of this structure is used,...</div><div class="ttdef"><b>Definition:</b> tuple_policy.h:27</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

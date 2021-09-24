@@ -1,15 +1,20 @@
 var searchData=
 [
-  ['threading_5fpolicy_0',['threading_policy',['../classhope_1_1concurrency_1_1threading__policy.html',1,'hope::concurrency']]],
-  ['transit_5fto_1',['transit_to',['../structhope_1_1fsm_1_1transit__to.html',1,'hope::fsm']]],
-  ['tuple_2',['tuple',['../classhope_1_1tuple.html',1,'hope']]],
-  ['tuple_3c_20head_2c_20tail_2e_2e_2e_20_3e_3',['tuple&lt; Head, Tail... &gt;',['../classhope_1_1tuple_3_01_head_00_01_tail_8_8_8_01_4.html',1,'hope']]],
-  ['tuple_3c_3e_4',['tuple&lt;&gt;',['../classhope_1_1tuple_3_4.html',1,'hope']]],
-  ['tuple_5fget_5',['tuple_get',['../structhope_1_1detail_1_1tuple__get.html',1,'hope::detail']]],
-  ['tuple_5fget_3c_200_20_3e_6',['tuple_get&lt; 0 &gt;',['../structhope_1_1detail_1_1tuple__get_3_010_01_4.html',1,'hope::detail']]],
-  ['tuple_5ftag_7',['tuple_tag',['../structhope_1_1detail_1_1tuple__tag.html',1,'hope::detail']]],
-  ['type_5fholder_8',['type_holder',['../structhope_1_1type__holder.html',1,'hope']]],
-  ['type_5flist_9',['type_list',['../classhope_1_1type__list.html',1,'hope']]],
-  ['type_5fmap_10',['type_map',['../classhope_1_1type__map.html',1,'hope']]],
-  ['type_5fpair_11',['type_pair',['../structhope_1_1type__pair.html',1,'hope']]]
+  ['seek_0',['seek',['../classhope_1_1serialization_1_1package.html#ac0106745853599af982d229f4202fbcc',1,'hope::serialization::package']]],
+  ['shut_5fdown_1',['shut_down',['../classhope_1_1concurrency_1_1async__worker.html#a5ae627c80628acab2f001f92235903dc',1,'hope::concurrency::async_worker']]],
+  ['shutdown_2',['shutdown',['../classhope_1_1concurrency_1_1async__worker__pool.html#a963c5d3c03d7bac7fa4c87b8ac89101f',1,'hope::concurrency::async_worker_pool']]],
+  ['single_5fthreaded_3',['single_threaded',['../classhope_1_1concurrency_1_1policy_1_1single__threaded.html',1,'hope::concurrency::policy::single_threaded'],['../structhope_1_1single__threaded.html',1,'hope::single_threaded&lt; SingletonImpl &gt;'],['../classhope_1_1concurrency_1_1policy_1_1single__threaded.html#ab17eb9ebfe3465cfd550558f9c043ddb',1,'hope::concurrency::policy::single_threaded::single_threaded()']]],
+  ['single_5fvalue_4',['single_value',['../structhope_1_1link__holder__policy_1_1single__value.html',1,'hope::link_holder_policy']]],
+  ['singleton_5fholder_5',['singleton_holder',['../classhope_1_1singleton__holder.html',1,'hope']]],
+  ['small_5fobject_6',['small_object',['../classhope_1_1memory_1_1small__object.html',1,'hope::memory']]],
+  ['small_5fobject_5fallocator_7',['small_object_allocator',['../classhope_1_1memory_1_1small__object__allocator.html',1,'hope::memory']]],
+  ['sort_5fhelper_8',['sort_helper',['../structhope_1_1detail_1_1sort__helper.html',1,'hope::detail']]],
+  ['spin_5flock_9',['spin_lock',['../classhope_1_1concurrency_1_1spin__lock.html',1,'hope::concurrency']]],
+  ['spsc_5fqueue_10',['spsc_queue',['../classhope_1_1concurrency_1_1spsc__queue.html',1,'hope::concurrency']]],
+  ['stack_5fbuffer_11',['stack_buffer',['../classhope_1_1stack__buffer.html',1,'hope']]],
+  ['static_5fstring_12',['static_string',['../structhope_1_1static__string.html',1,'hope']]],
+  ['stop_13',['stop',['../classhope_1_1concurrency_1_1async__worker.html#a21a3207d01b41bc1e6b9f4bdb2dc129b',1,'hope::concurrency::async_worker::stop()'],['../classhope_1_1concurrency_1_1async__worker__pool.html#a97e4f314acb78d19c4df2e99f9403cf5',1,'hope::concurrency::async_worker_pool::stop()']]],
+  ['sutter_5fqueue_14',['sutter_queue',['../classhope_1_1concurrency_1_1sutter__queue.html',1,'hope::concurrency']]],
+  ['switch_5fexpression_15',['switch_expression',['../classhope_1_1switch__expression.html',1,'hope']]],
+  ['synchronization_5fevent_16',['synchronization_event',['../classhope_1_1concurrency_1_1synchronization__event.html',1,'hope::concurrency']]]
 ];

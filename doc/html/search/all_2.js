@@ -1,7 +1,6 @@
 var searchData=
 [
-  ['chunk_0',['chunk',['../structhope_1_1memory_1_1chunk.html',1,'hope::memory']]],
-  ['create_5fstatic_1',['create_static',['../structhope_1_1create__static.html',1,'hope']]],
-  ['create_5fvia_5fnew_2',['create_via_new',['../structhope_1_1create__via__new.html',1,'hope']]],
-  ['custom_5fserializer_5fholder_3',['custom_serializer_holder',['../classhope_1_1serialization_1_1custom__serializer__holder.html',1,'hope::serialization']]]
+  ['bit_5fmask_0',['bit_mask',['../classhope_1_1bit__utils_1_1bit__mask.html',1,'hope::bit_utils']]],
+  ['block_5fsize_1',['block_size',['../classhope_1_1memory_1_1fixed__allocator.html#a6b5b1dd43dc603dc8ea1a29f04e6d735',1,'hope::memory::fixed_allocator']]],
+  ['build_5fvalue_2',['build_value',['../structhope_1_1log__helper.html#adc45074e2526a8b310d6d4c0647d010f',1,'hope::log_helper']]]
 ];

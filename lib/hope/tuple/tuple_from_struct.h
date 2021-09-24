@@ -11,6 +11,10 @@
 #include "hope/tuple/generated.h"
 #include "hope/tuple/detect_fields_count.h"
 
+/*! \defgroup <reflection> Static reflection
+    @{
+*/
+
 namespace hope {
 
     /**
@@ -28,3 +32,5 @@ namespace hope {
     }
 
 }
+
+/*! @} */

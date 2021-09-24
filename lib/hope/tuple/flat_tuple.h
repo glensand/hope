@@ -9,6 +9,14 @@
 #pragma once
 
 #include "hope/typelist/type_list.h"
+#include "hope/foundation.h"
+
+/*! \defgroup <reflection> Static reflection
+    @{
+    \file
+    \brief Implementation of non - recursive tuple, tuple size and alignment is same as structure with fields of
+    specified types; Also this class contains a lot of useful methods.
+*/
 
 namespace hope {
     namespace detail {
@@ -16,48 +24,65 @@ namespace hope {
         /**
          * \brief Tag is used to identify whether object of provided type is tuple or not
          */
-        struct tuple_tag { };
+        struct tuple_tag {
+        };
 
+        /**
+         * \breaf Structure used to create non recursive tuple via inheritance.
+         * @tparam T Corresponding type, value of this type is stored as single field
+         * @tparam I Index of current field (transparent). Is used to unambiguously determine value
+         */
         template<typename T, size_t I>
         struct indexed_value {
             constexpr indexed_value() = default;
-            constexpr indexed_value(indexed_value&&) = default;
-            constexpr indexed_value(const indexed_value&) = default;
+
+            constexpr indexed_value(indexed_value &&) = default;
+
+            constexpr indexed_value(const indexed_value &) = default;
 
             ~indexed_value() = default;
 
-            template<typename Vt,
-                typename = std::is_constructible<T, Vt>>
-                explicit constexpr indexed_value(Vt&& valueRef)
-                : value(std::forward<Vt>(valueRef)) { }
+            template<typename Vt>
+            explicit constexpr indexed_value(Vt &&valueRef)
+                    : value(std::forward<Vt>(valueRef)) {
+                static_assert(std::is_constructible_v<T, Vt>,
+                              "hope::indexed_value: given object is not suitable as initializer"
+                );
+            }
 
             T value;
         };
 
-        template <typename, typename... Ts>
+        template<typename, typename... Ts>
         class flat_tuple_impl;
 
+        /**
+         * \breaf General class of the all static reflection module.
+         * @tparam Is Helper sequence of indexes, max(Is...) + is the count of the tuple's elements
+         * @tparam Ts Types stored in the tuple
+         */
         template<std::size_t... Is, typename... Ts>
-        class flat_tuple_impl<std::index_sequence<Is...>, Ts...> : public tuple_tag, public indexed_value <Ts, Is>... {
+        class flat_tuple_impl<std::index_sequence<Is...>, Ts...> : public tuple_tag, public indexed_value<Ts, Is> ... {
             using self_t = flat_tuple_impl<std::index_sequence<Is...>, Ts...>;
-            constexpr static type_list<std::decay_t<Ts>...> types{ }; // only clear types might be used, thus make it clear here
+            constexpr static type_list<std::decay_t<Ts>...> types{}; // only clear types might be used, thus make it clear here
 
-            template <std::size_t I>
+            template<std::size_t I>
             using native_t = std::decay_t<typename decltype(get_nth_type<I>(types))::Type>;
         protected:
             using flat_tuple = flat_tuple_impl<std::index_sequence<Is...>, Ts...>;
+
             constexpr flat_tuple_impl() = default;
-            constexpr flat_tuple_impl(const flat_tuple_impl&) = default;
-            constexpr flat_tuple_impl(flat_tuple_impl&&) = default;
+            constexpr flat_tuple_impl(const flat_tuple_impl &) = default;
+            constexpr flat_tuple_impl(flat_tuple_impl &&) = default;
 
             ~flat_tuple_impl() = default;
 
-            template <typename... VTs>
-            constexpr flat_tuple_impl(VTs&&... elems) noexcept
-                : indexed_value<Ts, Is>(std::forward<VTs>(elems))...
-            { }
+            template<typename... VTs>
+            constexpr flat_tuple_impl(VTs &&... elems) noexcept
+                    : indexed_value<Ts, Is>(std::forward<VTs>(elems))... {}
+
         public:
-            constexpr static std::size_t tuple_size{ size(types) };
+            constexpr static std::size_t tuple_size{size(types)};
 
             /**
              * \brief Tries to find element of specified type, fails on static assert if element had not been found; method is not sensitive to the
@@ -70,7 +95,7 @@ namespace hope {
              *
              * \return reference to the containing element
              */
-            template <typename T, typename NativeT = std::decay_t<T>>
+            template<typename T, typename NativeT = std::decay_t<T>>
             [[nodiscard]] constexpr decltype(auto)
             get() noexcept {
                 static_assert(contains<NativeT>(types));
@@ -90,7 +115,7 @@ namespace hope {
             *
             * \return reference to the containing element
             */
-            template <typename T, typename NativeT = std::decay_t<T>>
+            template<typename T, typename NativeT = std::decay_t<T>>
             [[nodiscard]] constexpr decltype(auto)
             get() const noexcept {
                 static_assert(contains<NativeT>(types));
@@ -105,7 +130,7 @@ namespace hope {
              * \return Reference to the containing element, const and ref qualifiers of the containing one are not change,
              * ref will be returned "as is"
              */
-            template <size_t N>
+            template<size_t N>
             [[nodiscard]] constexpr decltype(auto)
             get() noexcept {
                 static_assert(tuple_size > N);
@@ -119,7 +144,7 @@ namespace hope {
              * \return Reference to the containing element, const and ref qualifiers of the containing one do not change,
              * ref will be returned "as is"
              */
-            template <size_t N>
+            template<size_t N>
             [[nodiscard]] constexpr decltype(auto)
             get() const noexcept {
                 static_assert(tuple_size > N);
@@ -132,13 +157,19 @@ namespace hope {
              * \tparam F type of functional object 
              * \param f functional object to be sequentially applied to each field of tuple
              */
-            template <typename F>
-            constexpr void for_each(F&& f) const {
+            template<typename F>
+            constexpr void for_each(F &&f) const {
                 (f(get<Is>()), ...);
             }
 
-            template <typename F>
-            constexpr void for_each(const flat_tuple& tuple2, F&& f) const {
+            /**
+            * \brief Applies given functor to each value of tuples
+            * \tparam F type of functional object
+            * \param tuple2 second tuple the function to be applied to
+            * \param f functional object to be sequentially applied to each field of tuple
+            */
+            template<typename F>
+            constexpr void for_each(const flat_tuple &tuple2, F &&f) const {
                 (f(get<Is>(), tuple2.template get<Is>()), ...);
             }
 
@@ -147,13 +178,19 @@ namespace hope {
              * \tparam F type of functional object
              * \param f functional object to be sequentially applied to each field of tuple
              */
-            template <typename F>
-            constexpr void for_each(F&& f) {
+            template<typename F>
+            constexpr void for_each(F &&f) {
                 (f(get<Is>()), ...);
             }
 
-            template <typename F>
-            constexpr void for_each(flat_tuple& tuple2, F&& f) {
+            /**
+            * \brief Applies given functor to each value of tuples
+            * \tparam F type of functional object
+            * \param tuple2 second tuple the function to be applied to
+            * \param f functional object to be sequentially applied to each field of tuple
+            */
+            template<typename F>
+            constexpr void for_each(flat_tuple &tuple2, F &&f) {
                 (f(get<Is>(), tuple2.template get<Is>()), ...);
             }
 
@@ -164,6 +201,7 @@ namespace hope {
             [[nodiscard]] static constexpr auto get_size() noexcept {
                 return tuple_size;
             }
+
         private:
 
             /**
@@ -175,9 +213,9 @@ namespace hope {
             template<std::size_t N, typename NativeT>
             [[nodiscard]] constexpr decltype(auto)
             get_impl() const noexcept {
-                return static_cast<const NativeT&>(
-                    static_cast<const indexed_value < NativeT, N >&> (*this).value
-                    );
+                return static_cast<const NativeT &>(
+                        static_cast<const indexed_value<NativeT, N> &> (*this).value
+                );
             }
 
             /**
@@ -189,9 +227,9 @@ namespace hope {
             template<std::size_t N, typename NativeT>
             constexpr decltype(auto)
             get_impl() noexcept {
-                return static_cast<NativeT&>(
-                    static_cast<indexed_value < NativeT, N >&> (*this).value
-                    );
+                return static_cast<NativeT &>(
+                        static_cast<indexed_value<NativeT, N> &> (*this).value
+                );
             }
 
             /**
@@ -205,15 +243,15 @@ namespace hope {
                 // we cannot unambiguous determine holding type, thus try to cast to value and ref, and const ref...
                 if constexpr (std::is_base_of_v<indexed_value<T, I>, self_t>)
                     return type_holder<T>{};
-                else if constexpr (std::is_base_of_v<indexed_value<T&, I>, self_t>)
-                    return type_holder<T&>{};
+                else if constexpr (std::is_base_of_v<indexed_value<T &, I>, self_t>)
+                    return type_holder<T &>{};
                 else
-                    return type_holder<const T&>{};
+                    return type_holder<const T &>{};
             }
         };
 
-        template <typename... Ts>
-        using flat_tuple_t = flat_tuple_impl < std::make_index_sequence < size(type_list<Ts...>{}) > , Ts... > ;
+        template<typename... Ts>
+        using flat_tuple_t = flat_tuple_impl<std::make_index_sequence<size(type_list<Ts...>{})>, Ts...>;
     }
 
     /**
@@ -221,20 +259,19 @@ namespace hope {
      * because alignment of the structs's fields and tuple's fields are match 
      * \tparam Ts types which might be stored in the tuple
      */
-    template <typename... Ts>
+    template<typename... Ts>
     class flat_tuple final : public detail::flat_tuple_t<Ts...> {
     public:
-        template <typename... VTs,
-            typename = std::enable_if_t<std::is_same_v<type_list<std::decay_t<VTs>...>, type_list<std::decay_t<Ts>...>>>>
-            constexpr flat_tuple(VTs&&... elems) noexcept
-            : detail::flat_tuple_t<Ts...>(std::forward<VTs>(elems)...)
-        { }
+        template<typename... VTs,
+                typename = std::enable_if_t<std::is_same_v<type_list<std::decay_t<VTs>...>, type_list<std::decay_t<Ts>...>>>>
+        constexpr flat_tuple(VTs &&... elems) noexcept
+                : detail::flat_tuple_t<Ts...>(std::forward<VTs>(elems)...) {}
+
         constexpr flat_tuple()
-            : detail::flat_tuple_t<Ts...>()
-        { }
+                : detail::flat_tuple_t<Ts...>() {}
     };
 
-    template <typename... Ts>
+    template<typename... Ts>
     flat_tuple(Ts...)->flat_tuple<Ts...>;
 
     /**
@@ -244,8 +281,8 @@ namespace hope {
      * \param args arguments are used to initialize each field of the tuple
      * \return created tuple
      */
-    template <typename... Ts>
-    constexpr auto make_flat_tuple(Ts&&... args) {
+    template<typename... Ts>
+    constexpr auto make_flat_tuple(Ts &&... args) {
         return flat_tuple<std::decay_t<Ts>...>(std::forward<Ts>(args)...);
     }
 
@@ -255,7 +292,7 @@ namespace hope {
      * \param args arguments are used to initialize each field of the tuple
      * \return created tuple
      */
-    template <typename... Ts>
+    template<typename... Ts>
     constexpr auto make_flat_tuple_bitfield_friendly(Ts... args) {
         return flat_tuple<std::decay_t<Ts>...>(std::forward<Ts>(args)...);
     }
@@ -266,20 +303,42 @@ namespace hope {
      * \param args arguments to create references for
      * \return tuple of references to given objects
      */
-    template <typename... Ts>
-    constexpr auto make_flat_ref_tuple(Ts&&... args) {
+    template<typename... Ts>
+    constexpr auto make_flat_ref_tuple(Ts &&... args) {
         return flat_tuple<Ts...>(std::forward<Ts>(args)...);
     }
 
+    /**
+     * Helper function, should be used to call corresponding function on each value of the provided tuple.
+     * SFINAE is used to disable this function to other types, which might be used in the functions with the
+     * same signature, such as type_list::for_each
+     * @tparam Tuple Type of the tuple the function to be applied to, only hope::flat_tuple is allowed
+     * @tparam F The type of the function
+     * @param tuple Instance of the tuple object(const ref and ref might be used)
+     * @param f Instance of the functor to be applied to
+     */
     template<typename Tuple, typename F>
     constexpr std::enable_if_t<std::is_base_of_v<detail::tuple_tag, std::decay_t<Tuple>>>
-    for_each(Tuple&& tuple, F&& f) {
+    for_each(Tuple &&tuple, F &&f) {
         tuple.for_each(std::forward<F>(f));
     }
 
+    /**
+     * Helper function, should be used to call corresponding function on each value of the provided tuples.
+     * SFINAE is used to disable this function to other types, which might be used in the functions with the
+     * same signature, such as type_list::for_each
+     * @tparam Tuple Type of the tuple the function to be applied to, only hope::flat_tuple is allowed
+     * @tparam F The type of the function
+     * @param tuple1 Instance of the first tuple object(const ref and ref might be used). Values from this object will be
+     * given as first argument to the desired function.
+     * @param tuple2 Same as tuple1, but values of this tuple will be provided to the desired function as second arg.
+     * @param f The instance of the function to be called
+     */
     template<typename Tuple, typename F>
     constexpr std::enable_if_t<std::is_base_of_v<detail::tuple_tag, std::decay_t<Tuple>>>
-    for_each(Tuple&& tuple1, Tuple&& tuple2, F&& f) {
+    for_each(Tuple &&tuple1, Tuple &&tuple2, F &&f) {
         tuple1.for_each(std::forward<Tuple>(tuple2), std::forward<F>(f));
     }
 }
+
+/*! @} */

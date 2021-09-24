@@ -1,25 +1,5 @@
 var searchData=
 [
-  ['factory_0',['factory',['../classhope_1_1factory.html',1,'hope']]],
-  ['fast_5fpimpl_1',['fast_pimpl',['../classhope_1_1fast__pimpl.html',1,'hope']]],
-  ['field_5fpolicy_2',['field_policy',['../structhope_1_1field__policy.html',1,'hope']]],
-  ['fixed_5fallocator_3',['fixed_allocator',['../classhope_1_1memory_1_1fixed__allocator.html#a5721666db5d5274d3b274709538cccaa',1,'hope::memory::fixed_allocator::fixed_allocator()'],['../classhope_1_1memory_1_1fixed__allocator.html',1,'hope::memory::fixed_allocator']]],
-  ['fixed_5fany_4',['fixed_any',['../classhope_1_1fixed__any.html',1,'hope']]],
-  ['fixed_5fany_5fholder_5fbase_5',['fixed_any_holder_base',['../structhope_1_1detail_1_1fixed__any__holder__base.html',1,'hope::detail']]],
-  ['fixed_5fany_5fholder_5fimpl_6',['fixed_any_holder_impl',['../structhope_1_1detail_1_1fixed__any__holder__impl.html',1,'hope::detail']]],
-  ['flat_5ftuple_7',['flat_tuple',['../classhope_1_1flat__tuple.html',1,'hope']]],
-  ['flat_5ftuple_3c_20innerholderpolicy_3c_20links_20_3e_2e_2e_2e_20_3e_8',['flat_tuple&lt; InnerHolderPolicy&lt; Links &gt;... &gt;',['../classhope_1_1flat__tuple.html',1,'hope']]],
-  ['flat_5ftuple_5fimpl_9',['flat_tuple_impl',['../classhope_1_1detail_1_1flat__tuple__impl.html',1,'hope::detail']]],
-  ['flat_5ftuple_5fimpl_3c_20std_3a_3aindex_5fsequence_3c_20is_2e_2e_2e_20_3e_2c_20ts_2e_2e_2e_20_3e_10',['flat_tuple_impl&lt; std::index_sequence&lt; Is... &gt;, Ts... &gt;',['../classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_01_4_00_01_ts_8_8_8_01_4.html',1,'hope::detail']]],
-  ['for_5feach_11',['for_each',['../classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_01_4_00_01_ts_8_8_8_01_4.html#ac08ef238632966d87e990d0b5de6e372',1,'hope::detail::flat_tuple_impl&lt; std::index_sequence&lt; Is... &gt;, Ts... &gt;::for_each(F &amp;&amp;f) const'],['../classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_01_4_00_01_ts_8_8_8_01_4.html#abb79287ce9b6dda01b61957ed41bf2c7',1,'hope::detail::flat_tuple_impl&lt; std::index_sequence&lt; Is... &gt;, Ts... &gt;::for_each(F &amp;&amp;f)']]],
-  ['fsm_12',['fsm',['../classhope_1_1fsm_1_1fsm.html',1,'hope::fsm']]],
-  ['fsm_3c_20flat_5ftuple_3c_20states_2e_2e_2e_20_3e_2c_20handlers_2e_2e_2e_20_3e_13',['fsm&lt; flat_tuple&lt; States... &gt;, Handlers... &gt;',['../classhope_1_1fsm_1_1fsm_3_01flat__tuple_3_01_states_8_8_8_01_4_00_01_handlers_8_8_8_01_4.html',1,'hope::fsm']]],
-  ['function_14',['function',['../classhope_1_1function.html',1,'hope']]],
-  ['function_3c_20r_28args_2e_2e_2e_29_3e_15',['function&lt; R(Args...)&gt;',['../classhope_1_1function_3_01_r_07_args_8_8_8_08_4.html',1,'hope']]],
-  ['function_5fbridge_16',['function_bridge',['../classhope_1_1detail_1_1function__bridge.html',1,'hope::detail']]],
-  ['function_5fbridge_3c_20r_2c_20args_2e_2e_2e_20_3e_17',['function_bridge&lt; R, Args... &gt;',['../classhope_1_1detail_1_1function__bridge.html',1,'hope::detail']]],
-  ['function_5fbridge_5fimpl_18',['function_bridge_impl',['../classhope_1_1detail_1_1function__bridge__impl.html',1,'hope::detail']]],
-  ['function_5ftraits_19',['function_traits',['../structhope_1_1function__traits.html',1,'hope']]],
-  ['function_5ftraits_3c_20treturn_28tclass_3a_3a_2a_29_28ts_2e_2e_2e_29_20const_20_3e_20',['function_traits&lt; TReturn(TClass::*)(Ts...) const &gt;',['../structhope_1_1function__traits_3_01_t_return_07_t_class_1_1_5_08_07_ts_8_8_8_08_01const_01_4.html',1,'hope']]],
-  ['function_5ftraits_3c_20treturn_28tclass_3a_3a_2a_29_28ts_2e_2e_2e_29_3e_21',['function_traits&lt; TReturn(TClass::*)(Ts...)&gt;',['../structhope_1_1function__traits_3_01_t_return_07_t_class_1_1_5_08_07_ts_8_8_8_08_4.html',1,'hope']]]
+  ['entity_0',['entity',['../structhope_1_1serialization_1_1entity.html',1,'hope::serialization']]],
+  ['entity_5ftag_1',['entity_tag',['../structhope_1_1serialization_1_1detail_1_1entity__tag.html',1,'hope::serialization::detail']]]
 ];

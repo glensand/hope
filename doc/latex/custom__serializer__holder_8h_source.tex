@@ -35,7 +35,7 @@
 \DoxyCodeLine{31     \textcolor{keyword}{class }\mbox{\hyperlink{classhope_1_1serialization_1_1custom__serializer__holder}{custom\_serializer\_holder}} final \{}
 \DoxyCodeLine{32 }
 \DoxyCodeLine{33         \textcolor{keyword}{constexpr} \textcolor{keywordtype}{void} type\_check() \{}
-\DoxyCodeLine{34             hope::for\_each(\mbox{\hyperlink{classhope_1_1type__list}{type\_list<Serializer...>}}\{\}, [](\textcolor{keyword}{auto} \mbox{\hyperlink{structhope_1_1type__holder}{type\_holder}}) \{}
+\DoxyCodeLine{34             \mbox{\hyperlink{flat__tuple_8h_ae2d36d67f13767b85f74df9ee4d0b4a1}{hope::for\_each}}(\mbox{\hyperlink{classhope_1_1type__list}{type\_list<Serializer...>}}\{\}, [](\textcolor{keyword}{auto} \mbox{\hyperlink{structhope_1_1type__holder}{type\_holder}}) \{}
 \DoxyCodeLine{35                 \textcolor{keyword}{using} clear\_t = \textcolor{keyword}{typename} std::decay\_t<\textcolor{keyword}{decltype}(\mbox{\hyperlink{structhope_1_1type__holder}{type\_holder}})>::Type;}
 \DoxyCodeLine{36                 \textcolor{keyword}{static\_assert}(std::is\_base\_of\_v<detail::entity\_tag, clear\_t>);}
 \DoxyCodeLine{37             \});}
@@ -45,7 +45,7 @@
 \DoxyCodeLine{41         \textcolor{keyword}{template}<\textcolor{keyword}{typename} Tag>}
 \DoxyCodeLine{42         \textcolor{keyword}{constexpr} \textcolor{keyword}{static} \textcolor{keywordtype}{bool} has() \{}
 \DoxyCodeLine{43             \textcolor{keywordtype}{bool} has\_type\{ \textcolor{keyword}{false} \};}
-\DoxyCodeLine{44             hope::for\_each(\mbox{\hyperlink{classhope_1_1type__list}{type\_list<Serializer...>}}\{\}, [\&](\textcolor{keyword}{auto} \mbox{\hyperlink{structhope_1_1type__holder}{type\_holder}}) \{}
+\DoxyCodeLine{44             \mbox{\hyperlink{flat__tuple_8h_ae2d36d67f13767b85f74df9ee4d0b4a1}{hope::for\_each}}(\mbox{\hyperlink{classhope_1_1type__list}{type\_list<Serializer...>}}\{\}, [\&](\textcolor{keyword}{auto} \mbox{\hyperlink{structhope_1_1type__holder}{type\_holder}}) \{}
 \DoxyCodeLine{45                 \textcolor{keyword}{using} clear\_t = \textcolor{keyword}{typename} std::decay\_t<\textcolor{keyword}{decltype}(\mbox{\hyperlink{structhope_1_1type__holder}{type\_holder}})>::Type;}
 \DoxyCodeLine{46                 has\_type |= std::is\_same\_v<typename clear\_t::tag\_t, Tag>;}
 \DoxyCodeLine{47             \});}
