@@ -1,0 +1,49 @@
+\hypertarget{classhope_1_1concurrency_1_1async__worker}{}\doxysection{hope\+::concurrency\+::async\+\_\+worker Class Reference}
+\label{classhope_1_1concurrency_1_1async__worker}\index{hope::concurrency::async\_worker@{hope::concurrency::async\_worker}}
+\doxysubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classhope_1_1concurrency_1_1async__worker_a0a44265628dbbe0d07150ff5b31914cb}\label{classhope_1_1concurrency_1_1async__worker_a0a44265628dbbe0d07150ff5b31914cb}} 
+using {\bfseries job\+\_\+t} = std\+::function$<$ void()$>$
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classhope_1_1concurrency_1_1async__worker_a72e3233eed7f5ddb67b159123de86110}\label{classhope_1_1concurrency_1_1async__worker_a72e3233eed7f5ddb67b159123de86110}} 
+void {\bfseries run} () noexcept
+\begin{DoxyCompactList}\small\item\em Starts the asynchronous worker, after calling this method you can add new job via add\+\_\+job. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classhope_1_1concurrency_1_1async__worker_a21a3207d01b41bc1e6b9f4bdb2dc129b}\label{classhope_1_1concurrency_1_1async__worker_a21a3207d01b41bc1e6b9f4bdb2dc129b}} 
+void {\bfseries stop} () noexcept
+\begin{DoxyCompactList}\small\item\em Synchronously wait while all recently added jobs will be completed, and after it shut down inner thread. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classhope_1_1concurrency_1_1async__worker_a5ae627c80628acab2f001f92235903dc}\label{classhope_1_1concurrency_1_1async__worker_a5ae627c80628acab2f001f92235903dc}} 
+void {\bfseries shut\+\_\+down} () noexcept
+\begin{DoxyCompactList}\small\item\em Unlike method \char`\"{}\+Stop\char`\"{} this method does not wait any operation, and stops worker\textquotesingle{}s activity as soon as possible, all the remaining jobs will be discarded. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classhope_1_1concurrency_1_1async__worker_aa6e340c1c07c627e1e601792c7244d49}{add\+\_\+job}} (job\+\_\+t \&\&task) noexcept
+\begin{DoxyCompactList}\small\item\em Adds new job to the operation queue, the job may be an empty function, in this case it will be just ignored.. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classhope_1_1concurrency_1_1async__worker_aa9d3c0b38aefc87ae8c4d4e6749040ec}\label{classhope_1_1concurrency_1_1async__worker_aa9d3c0b38aefc87ae8c4d4e6749040ec}} 
+void {\bfseries wait} () const noexcept
+\begin{DoxyCompactList}\small\item\em Waits while all the recently added jobs will be completed. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classhope_1_1concurrency_1_1async__worker_aa6e340c1c07c627e1e601792c7244d49}\label{classhope_1_1concurrency_1_1async__worker_aa6e340c1c07c627e1e601792c7244d49}} 
+\index{hope::concurrency::async\_worker@{hope::concurrency::async\_worker}!add\_job@{add\_job}}
+\index{add\_job@{add\_job}!hope::concurrency::async\_worker@{hope::concurrency::async\_worker}}
+\doxysubsubsection{\texorpdfstring{add\_job()}{add\_job()}}
+{\footnotesize\ttfamily void hope\+::concurrency\+::async\+\_\+worker\+::add\+\_\+job (\begin{DoxyParamCaption}\item[{job\+\_\+t \&\&}]{task }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [noexcept]}}
+
+
+
+Adds new job to the operation queue, the job may be an empty function, in this case it will be just ignored.. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em task} & the job to be added \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+lib/hope/concurrency/async\+\_\+worker.\+h\item 
+lib/hope/concurrency/async\+\_\+worker.\+cpp\end{DoxyCompactItemize}

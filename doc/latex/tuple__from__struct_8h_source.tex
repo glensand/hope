@@ -1,0 +1,28 @@
+\hypertarget{tuple__from__struct_8h_source}{}\doxysection{tuple\+\_\+from\+\_\+struct.\+h}
+\label{tuple__from__struct_8h_source}\index{lib/hope/tuple/tuple\_from\_struct.h@{lib/hope/tuple/tuple\_from\_struct.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* Copyright (C) 2021 Gleb Bezborodov -\/ All Rights Reserved}}
+\DoxyCodeLine{2 \textcolor{comment}{ * You may use, distribute and modify this code under the}}
+\DoxyCodeLine{3 \textcolor{comment}{ * terms of the MIT license.}}
+\DoxyCodeLine{4 \textcolor{comment}{ *}}
+\DoxyCodeLine{5 \textcolor{comment}{ * You should have received a copy of the MIT license with}}
+\DoxyCodeLine{6 \textcolor{comment}{ * this file. If not, please write to: bezborodoff.gleb@gmail.com, or visit : https://github.com/glensand/hope}}
+\DoxyCodeLine{7 \textcolor{comment}{ */}}
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#include "{}hope/tuple/generated.h"{}}}
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{detect__fields__count_8h}{hope/tuple/detect\_fields\_count.h}}"{}}}
+\DoxyCodeLine{13 }
+\DoxyCodeLine{14 \textcolor{keyword}{namespace }hope \{}
+\DoxyCodeLine{15 }
+\DoxyCodeLine{24     \textcolor{keyword}{template} <\textcolor{keyword}{typename} T, \textcolor{keyword}{typename} FieldPolicy = field\_policy::value>}
+\DoxyCodeLine{25     \textcolor{keyword}{constexpr} \textcolor{keyword}{auto} tuple\_from\_struct(T\&\& \textcolor{keywordtype}{object}, FieldPolicy p = FieldPolicy\{\}) \{}
+\DoxyCodeLine{26         \textcolor{keyword}{constexpr} \textcolor{keyword}{auto} fields\_count = detect\_fields\_count<std::decay\_t<T>>();}
+\DoxyCodeLine{27         \textcolor{keywordflow}{return} detail::generated::tuple\_from\_struct(std::forward<T>(\textcolor{keywordtype}{object}), detail::Int<fields\_count>\{\}, FieldPolicy\{\});}
+\DoxyCodeLine{28     \}}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30 \}}
+
+\end{DoxyCode}

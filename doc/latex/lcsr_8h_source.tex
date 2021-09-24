@@ -1,0 +1,38 @@
+\hypertarget{lcsr_8h_source}{}\doxysection{lcsr.\+h}
+\label{lcsr_8h_source}\index{lib/hope/concurrency/lcsr.h@{lib/hope/concurrency/lcsr.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* Copyright (C) 2021 Gleb Bezborodov -\/ All Rights Reserved}}
+\DoxyCodeLine{2 \textcolor{comment}{ * You may use, distribute and modify this code under the}}
+\DoxyCodeLine{3 \textcolor{comment}{ * terms of the MIT license.}}
+\DoxyCodeLine{4 \textcolor{comment}{ *}}
+\DoxyCodeLine{5 \textcolor{comment}{ * You should have received a copy of the MIT license with}}
+\DoxyCodeLine{6 \textcolor{comment}{ * this file. If not, please write to: bezborodoff.gleb@gmail.com, or visit : https://github.com/glensand/hope}}
+\DoxyCodeLine{7 \textcolor{comment}{ */}}
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#include <atomic>}}
+\DoxyCodeLine{12 }
+\DoxyCodeLine{13 \textcolor{keyword}{namespace }hope::concurrency \{}
+\DoxyCodeLine{14 }
+\DoxyCodeLine{15     \textcolor{comment}{// load with 'consume' (data-\/dependent) memory ordering }}
+\DoxyCodeLine{16     \textcolor{keyword}{template}<\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{17     T load\_consume(\textcolor{keyword}{const} T * addr) \{}
+\DoxyCodeLine{18         \textcolor{comment}{// hardware fence is implicit on x86 }}
+\DoxyCodeLine{19         T v = *\textcolor{keyword}{const\_cast<}T \textcolor{keyword}{const }volatile*\textcolor{keyword}{>}(addr);}
+\DoxyCodeLine{20         std::atomic\_signal\_fence(std::memory\_order\_seq\_cst);}
+\DoxyCodeLine{21         \textcolor{keywordflow}{return} v;}
+\DoxyCodeLine{22     \}}
+\DoxyCodeLine{23 }
+\DoxyCodeLine{24     \textcolor{comment}{// store with 'release' memory ordering }}
+\DoxyCodeLine{25     \textcolor{keyword}{template}<\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{26     \textcolor{keywordtype}{void} store\_release(T* addr, T v) \{}
+\DoxyCodeLine{27         \textcolor{comment}{// hardware fence is implicit on x86 }}
+\DoxyCodeLine{28         std::atomic\_signal\_fence(std::memory\_order\_seq\_cst);}
+\DoxyCodeLine{29         *\textcolor{keyword}{const\_cast<}T volatile*\textcolor{keyword}{>}(addr) = v;}
+\DoxyCodeLine{30     \}}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32 \}}
+
+\end{DoxyCode}

@@ -1,0 +1,53 @@
+\hypertarget{classhope_1_1memory_1_1small__object__allocator}{}\doxysection{hope\+::memory\+::small\+\_\+object\+\_\+allocator Class Reference}
+\label{classhope_1_1memory_1_1small__object__allocator}\index{hope::memory::small\_object\_allocator@{hope::memory::small\_object\_allocator}}
+
+
+singleton, is used to hold list with fixed allocators of proper sizes  
+
+
+
+
+{\ttfamily \#include $<$small\+\_\+object\+\_\+allocator.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classhope_1_1memory_1_1small__object__allocator_ae93efb4b9f8b6a3bc4b3f7cc04888597}\label{classhope_1_1memory_1_1small__object__allocator_ae93efb4b9f8b6a3bc4b3f7cc04888597}} 
+{\bfseries small\+\_\+object\+\_\+allocator} (const \mbox{\hyperlink{classhope_1_1memory_1_1small__object__allocator}{small\+\_\+object\+\_\+allocator}} \&)=delete
+\item 
+\mbox{\Hypertarget{classhope_1_1memory_1_1small__object__allocator_a0d15405b437efda070b9ca5c9b2fb604}\label{classhope_1_1memory_1_1small__object__allocator_a0d15405b437efda070b9ca5c9b2fb604}} 
+{\bfseries small\+\_\+object\+\_\+allocator} (\mbox{\hyperlink{classhope_1_1memory_1_1small__object__allocator}{small\+\_\+object\+\_\+allocator}} \&\&)=delete
+\item 
+\mbox{\Hypertarget{classhope_1_1memory_1_1small__object__allocator_a43102ad7bce32ac53569f79b9fe800dd}\label{classhope_1_1memory_1_1small__object__allocator_a43102ad7bce32ac53569f79b9fe800dd}} 
+\mbox{\hyperlink{classhope_1_1memory_1_1small__object__allocator}{small\+\_\+object\+\_\+allocator}} \& {\bfseries operator=} (const \mbox{\hyperlink{classhope_1_1memory_1_1small__object__allocator}{small\+\_\+object\+\_\+allocator}} \&)=delete
+\item 
+\mbox{\Hypertarget{classhope_1_1memory_1_1small__object__allocator_a87c9689cea0fac1dedd164071a05c969}\label{classhope_1_1memory_1_1small__object__allocator_a87c9689cea0fac1dedd164071a05c969}} 
+\mbox{\hyperlink{classhope_1_1memory_1_1small__object__allocator}{small\+\_\+object\+\_\+allocator}} \& {\bfseries operator=} (\mbox{\hyperlink{classhope_1_1memory_1_1small__object__allocator}{small\+\_\+object\+\_\+allocator}} \&\&)=delete
+\item 
+\mbox{\Hypertarget{classhope_1_1memory_1_1small__object__allocator_ac4b99e6684984b32ae3495509404786f}\label{classhope_1_1memory_1_1small__object__allocator_ac4b99e6684984b32ae3495509404786f}} 
+void {\bfseries deallocate} (void $\ast$ptr, std\+::size\+\_\+t size) noexcept
+\begin{DoxyCompactList}\small\item\em try to deallocate passed pointer to object since allocator is stateful, you cannot deallocate objects, which were allocated by this class params meaning are trivial \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classhope_1_1memory_1_1small__object__allocator_ae75db68defbe1e90fec4936a62d011b2}\label{classhope_1_1memory_1_1small__object__allocator_ae75db68defbe1e90fec4936a62d011b2}} 
+void $\ast$ {\bfseries allocate} (std\+::size\+\_\+t size) noexcept
+\begin{DoxyCompactList}\small\item\em try to allocate object, if passed size greater than m\+\_\+max\+\_\+object\+\_\+size, operator new will be called params meaning are trivial \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classhope_1_1memory_1_1small__object__allocator_a498abc57a482a829955140987efd9f13}\label{classhope_1_1memory_1_1small__object__allocator_a498abc57a482a829955140987efd9f13}} 
+static \mbox{\hyperlink{classhope_1_1memory_1_1small__object__allocator}{small\+\_\+object\+\_\+allocator}} \& {\bfseries instance} ()
+\begin{DoxyCompactList}\small\item\em just return instance of singleton NOTE\+: before use this class, u have to initialize its instance, see small\+\_\+object\+\_\+allocator\+::initialize \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classhope_1_1memory_1_1small__object__allocator_a430993a05a9a34af3e25581753c4d24a}\label{classhope_1_1memory_1_1small__object__allocator_a430993a05a9a34af3e25581753c4d24a}} 
+class {\bfseries sm\+\_\+allocator\+\_\+reset}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+singleton, is used to hold list with fixed allocators of proper sizes 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+lib/hope/memory/small\+\_\+object/small\+\_\+object\+\_\+allocator.\+h\item 
+lib/hope/memory/small\+\_\+object/small\+\_\+object\+\_\+allocator.\+cpp\end{DoxyCompactItemize}

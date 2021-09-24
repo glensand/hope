@@ -1,0 +1,36 @@
+\hypertarget{flat__sorted__tuple_8h_source}{}\doxysection{flat\+\_\+sorted\+\_\+tuple.\+h}
+\label{flat__sorted__tuple_8h_source}\index{lib/hope/tuple/flat\_sorted\_tuple.h@{lib/hope/tuple/flat\_sorted\_tuple.h}}
+\mbox{\hyperlink{flat__sorted__tuple_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* Copyright (C) 2020 -\/ 2021 Gleb Bezborodov -\/ All Rights Reserved}}
+\DoxyCodeLine{2 \textcolor{comment}{ * You may use, distribute and modify this code under the}}
+\DoxyCodeLine{3 \textcolor{comment}{ * terms of the MIT license.}}
+\DoxyCodeLine{4 \textcolor{comment}{ *}}
+\DoxyCodeLine{5 \textcolor{comment}{ * You should have received a copy of the MIT license with}}
+\DoxyCodeLine{6 \textcolor{comment}{ * this file. If not, please write to: bezborodoff.gleb@gmail.com, or visit : https://github.com/glensand/hope}}
+\DoxyCodeLine{7 \textcolor{comment}{ */}}
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#include "{}hope/typelist/type\_list.h"{}}}
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#include "{}hope/typelist/typelistsort.h"{}}}
+\DoxyCodeLine{13 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{flat__tuple_8h}{hope/tuple/flat\_tuple.h}}"{}}}
+\DoxyCodeLine{14 }
+\DoxyCodeLine{22 \textcolor{keyword}{namespace }hope \{}
+\DoxyCodeLine{23     \textcolor{keyword}{namespace }detail \{}
+\DoxyCodeLine{24 }
+\DoxyCodeLine{25         \textcolor{keyword}{template}<\textcolor{keyword}{typename}... Ts, \textcolor{keyword}{typename}... Vs>}
+\DoxyCodeLine{26         \textcolor{keyword}{constexpr} \textcolor{keyword}{auto} make\_flat\_tuple\_from\_type\_list(type\_list<Ts...>, Vs\&\&... args) \{}
+\DoxyCodeLine{27             \textcolor{keywordflow}{return} flat\_tuple<Ts...>(std::forward<Vs>(args)...);}
+\DoxyCodeLine{28         \}}
+\DoxyCodeLine{29     \}}
+\DoxyCodeLine{30 }
+\DoxyCodeLine{39     \textcolor{keyword}{template}<\textcolor{keyword}{typename}... Ts>}
+\DoxyCodeLine{40     \textcolor{keyword}{constexpr} \textcolor{keyword}{auto} \mbox{\hyperlink{flat__sorted__tuple_8h_a123084fe920262f76e077dc88d20bf16}{make\_sorted\_tuple}}(Ts\&\&... args) \{}
+\DoxyCodeLine{41         \textcolor{keyword}{constexpr} \textcolor{keyword}{auto} typeList = sort(\mbox{\hyperlink{classhope_1_1type__list}{type\_list<Ts...>}}\{\});}
+\DoxyCodeLine{42         \textcolor{keywordflow}{return} detail::make\_flat\_tuple\_from\_type\_list(typeList, std::forward<Ts>(args)...);}
+\DoxyCodeLine{43     \}}
+\DoxyCodeLine{44 \}}
+\DoxyCodeLine{45 }
+
+\end{DoxyCode}

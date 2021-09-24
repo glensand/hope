@@ -1,0 +1,57 @@
+\hypertarget{threading__model_8h_source}{}\doxysection{threading\+\_\+model.\+h}
+\label{threading__model_8h_source}\index{lib/hope/components/singleton\_holder/threading\_model.h@{lib/hope/components/singleton\_holder/threading\_model.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* Copyright (C) 2021 Gleb Bezborodov -\/ All Rights Reserved}}
+\DoxyCodeLine{2 \textcolor{comment}{ * You may use, distribute and modify this code under the}}
+\DoxyCodeLine{3 \textcolor{comment}{ * terms of the MIT license.}}
+\DoxyCodeLine{4 \textcolor{comment}{ *}}
+\DoxyCodeLine{5 \textcolor{comment}{ * You should have received a copy of the MIT license with}}
+\DoxyCodeLine{6 \textcolor{comment}{ * this file. If not, please write to: bezborodoff.gleb@gmail.com, or visit : https://github.com/glensand/hope}}
+\DoxyCodeLine{7 \textcolor{comment}{ */}}
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#include <mutex>}}
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#include "{}hope/concurrency/spin\_lock.h"{}}}
+\DoxyCodeLine{13 }
+\DoxyCodeLine{14 \textcolor{keyword}{namespace }hope \{}
+\DoxyCodeLine{15 }
+\DoxyCodeLine{16     \textcolor{keyword}{namespace }detail \{}
+\DoxyCodeLine{17         \textcolor{keyword}{template} <\textcolor{keyword}{typename} SingletonImpl, \textcolor{keyword}{typename} Mutex>}
+\DoxyCodeLine{18         \textcolor{keyword}{struct }\mbox{\hyperlink{structhope_1_1detail_1_1lock}{lock}} final \{}
+\DoxyCodeLine{19             }
+\DoxyCodeLine{20             \textcolor{keyword}{explicit} \mbox{\hyperlink{structhope_1_1detail_1_1lock}{lock}}() \textcolor{keyword}{noexcept} \{}
+\DoxyCodeLine{21                 m\_lock.lock();}
+\DoxyCodeLine{22             \}}
+\DoxyCodeLine{23 }
+\DoxyCodeLine{24             \mbox{\hyperlink{structhope_1_1detail_1_1lock}{\string~lock}}() \textcolor{keyword}{noexcept} \{}
+\DoxyCodeLine{25                 m\_lock.unlock();}
+\DoxyCodeLine{26             \}}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28         \textcolor{keyword}{private}:}
+\DoxyCodeLine{29             \textcolor{keyword}{static} Mutex m\_lock;}
+\DoxyCodeLine{30         \};}
+\DoxyCodeLine{31     \}}
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33     \textcolor{keyword}{template} <\textcolor{keyword}{typename} SingletonImpl>}
+\DoxyCodeLine{34     \textcolor{keyword}{struct }\mbox{\hyperlink{structhope_1_1single__threaded}{single\_threaded}} final \{}
+\DoxyCodeLine{35         \textcolor{keyword}{using} VolatileType = SingletonImpl;}
+\DoxyCodeLine{36         \textcolor{keyword}{using} Lock = int;}
+\DoxyCodeLine{37     \};}
+\DoxyCodeLine{38 }
+\DoxyCodeLine{39     \textcolor{keyword}{template} <\textcolor{keyword}{typename} SingletonImpl>}
+\DoxyCodeLine{40     \textcolor{keyword}{struct }\mbox{\hyperlink{structhope_1_1multi__threaded__spin__lock}{multi\_threaded\_spin\_lock}} final \{}
+\DoxyCodeLine{41         \textcolor{keyword}{using} VolatileType = \textcolor{keyword}{volatile} SingletonImpl;}
+\DoxyCodeLine{42         \textcolor{keyword}{using} \mbox{\hyperlink{structhope_1_1detail_1_1lock}{Lock}} = \mbox{\hyperlink{structhope_1_1detail_1_1lock}{detail::lock<SingletonImpl, concurrency::spin\_lock>}};}
+\DoxyCodeLine{43     \};}
+\DoxyCodeLine{44 }
+\DoxyCodeLine{45     \textcolor{keyword}{template} <\textcolor{keyword}{typename} SingletonImpl>}
+\DoxyCodeLine{46     \textcolor{keyword}{struct }\mbox{\hyperlink{structhope_1_1multi__threaded__mutex}{multi\_threaded\_mutex}} final \{}
+\DoxyCodeLine{47         \textcolor{keyword}{using} VolatileType = \textcolor{keyword}{volatile} SingletonImpl;}
+\DoxyCodeLine{48         \textcolor{keyword}{using} \mbox{\hyperlink{structhope_1_1detail_1_1lock}{Lock}} = \mbox{\hyperlink{structhope_1_1detail_1_1lock}{detail::lock<SingletonImpl, std::mutex>}};}
+\DoxyCodeLine{49     \};}
+\DoxyCodeLine{50 }
+\DoxyCodeLine{51 \}}
+
+\end{DoxyCode}

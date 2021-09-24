@@ -21,7 +21,6 @@ namespace
 
 TEST(WorkerTest, OneJob)
 {
-	return;
     changed test_s;
     test_s.test = false;
     hope::concurrency::async_worker worker;

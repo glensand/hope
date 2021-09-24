@@ -1,0 +1,198 @@
+\hypertarget{struct__serialization_8h_source}{}\doxysection{struct\+\_\+serialization.\+h}
+\label{struct__serialization_8h_source}\index{lib/hope/serialization/struct\_serialization.h@{lib/hope/serialization/struct\_serialization.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* Copyright (C) 2021 Gleb Bezborodov -\/ All Rights Reserved}}
+\DoxyCodeLine{2 \textcolor{comment}{ * You may use, distribute and modify this code under the}}
+\DoxyCodeLine{3 \textcolor{comment}{ * terms of the MIT license.}}
+\DoxyCodeLine{4 \textcolor{comment}{ *}}
+\DoxyCodeLine{5 \textcolor{comment}{ * You should have received a copy of the MIT license with}}
+\DoxyCodeLine{6 \textcolor{comment}{ * this file. If not, please write to: bezborodoff.gleb@gmail.com, or visit : https://github.com/glensand/hope}}
+\DoxyCodeLine{7 \textcolor{comment}{ */}}
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#include "{}hope/tuple/tuple\_from\_struct.h"{}}}
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{compute__field__count__recursive_8h}{hope/tuple/compute\_field\_count\_recursive.h}}"{}}}
+\DoxyCodeLine{13 \textcolor{preprocessor}{\#include "{}hope/serialization/package.h"{}}}
+\DoxyCodeLine{14 \textcolor{preprocessor}{\#include "{}hope/serialization/custom\_serializer\_holder.h"{}}}
+\DoxyCodeLine{15 }
+\DoxyCodeLine{16 \textcolor{preprocessor}{\#include <unordered\_map>}}
+\DoxyCodeLine{17 \textcolor{preprocessor}{\#include <bitset>}}
+\DoxyCodeLine{18 \textcolor{preprocessor}{\#include <any>}}
+\DoxyCodeLine{19 \textcolor{preprocessor}{\#include <typeindex>}}
+\DoxyCodeLine{20 }
+\DoxyCodeLine{21 \textcolor{keyword}{namespace }hope::serialization \{}
+\DoxyCodeLine{22 }
+\DoxyCodeLine{23     \textcolor{keyword}{template} <\textcolor{keyword}{typename} T, \textcolor{keyword}{typename}... CustomSerializer>}
+\DoxyCodeLine{24     \textcolor{keyword}{class }\mbox{\hyperlink{classhope_1_1serialization_1_1pod__serializer}{pod\_serializer}} final \{}
+\DoxyCodeLine{25         \textcolor{keyword}{constexpr} \textcolor{keyword}{static} std::size\_t fields\_count\{ compute\_field\_count\_recursive\_constexpr<T>() \};}
+\DoxyCodeLine{26         \textcolor{keyword}{using} bit\_mask = std::bitset <fields\_count>;}
+\DoxyCodeLine{27         \textcolor{keyword}{using} \mbox{\hyperlink{classhope_1_1serialization_1_1custom__serializer__holder}{serializer\_holder\_t}} = \mbox{\hyperlink{classhope_1_1serialization_1_1custom__serializer__holder}{custom\_serializer\_holder}}<CustomSerializer...>;}
+\DoxyCodeLine{28         \textcolor{keyword}{using} serializer\_map = std::unordered\_map<std::type\_index, std::any>;}
+\DoxyCodeLine{29     \textcolor{keyword}{public}:}
+\DoxyCodeLine{30         \mbox{\hyperlink{classhope_1_1serialization_1_1pod__serializer}{pod\_serializer}}(T\& serializable\_struct, \textcolor{keywordtype}{double} \_fp\_accuracy = std::numeric\_limits<double>::epsilon())}
+\DoxyCodeLine{31             : m\_value(serializable\_struct)}
+\DoxyCodeLine{32             , m\_fp\_accuracy(\_fp\_accuracy) \{\}}
+\DoxyCodeLine{33 }
+\DoxyCodeLine{34         \textcolor{keywordtype}{void} serialize(\mbox{\hyperlink{classhope_1_1serialization_1_1package}{package}}\& pack) \{}
+\DoxyCodeLine{35             \textcolor{keyword}{const} \textcolor{keyword}{auto} mask\_begin\_pos = pack.\mbox{\hyperlink{classhope_1_1serialization_1_1package_a1a39b40936a5908b095c9e0f112ae629}{reserve}}(get\_bit\_mask\_actual\_size());}
+\DoxyCodeLine{36             std::size\_t index\{ 0 \};}
+\DoxyCodeLine{37             serialize(m\_value, m\_prev\_value, pack, index);}
+\DoxyCodeLine{38             \textcolor{keyword}{const} \textcolor{keyword}{auto} struct\_end\_pos = pack.\mbox{\hyperlink{classhope_1_1serialization_1_1package_ac0106745853599af982d229f4202fbcc}{seek}}(mask\_begin\_pos);}
+\DoxyCodeLine{39             write\_mask( pack);}
+\DoxyCodeLine{40             pack.\mbox{\hyperlink{classhope_1_1serialization_1_1package_ac0106745853599af982d229f4202fbcc}{seek}}(struct\_end\_pos);}
+\DoxyCodeLine{41             m\_first\_pack = \textcolor{keyword}{false};}
+\DoxyCodeLine{42             m\_prev\_value = m\_value;}
+\DoxyCodeLine{43         \}}
+\DoxyCodeLine{44 }
+\DoxyCodeLine{45         \textcolor{keywordtype}{void} deserialize(\mbox{\hyperlink{classhope_1_1serialization_1_1package}{package}}\& pack) \{}
+\DoxyCodeLine{46             read\_mask(pack);}
+\DoxyCodeLine{47             std::size\_t index\{ 0 \};}
+\DoxyCodeLine{48             deserialize(m\_value, pack, index);}
+\DoxyCodeLine{49         \}}
+\DoxyCodeLine{50 }
+\DoxyCodeLine{51     \textcolor{keyword}{private}:}
+\DoxyCodeLine{52         \textcolor{keyword}{template}<\textcolor{keyword}{typename} TValue>}
+\DoxyCodeLine{53         \textcolor{keywordtype}{void} serialize(\textcolor{keyword}{const} TValue\& value, \textcolor{keyword}{const} TValue\& prev\_value, \mbox{\hyperlink{classhope_1_1serialization_1_1package}{package}}\& pack, std::size\_t\& cur\_index) \{}
+\DoxyCodeLine{54             \textcolor{keywordflow}{if} \textcolor{keyword}{constexpr} (serializer\_holder\_t::template has<TValue>())}
+\DoxyCodeLine{55                 serialize\_custom\_type(value, prev\_value, pack, cur\_index);}
+\DoxyCodeLine{56             \textcolor{keywordflow}{else} }
+\DoxyCodeLine{57                 serialize\_impl(value, prev\_value, pack, cur\_index);}
+\DoxyCodeLine{58         \}}
+\DoxyCodeLine{59 }
+\DoxyCodeLine{60         \textcolor{keyword}{template} <\textcolor{keyword}{typename} TValue>}
+\DoxyCodeLine{61         \textcolor{keywordtype}{void} serialize\_custom\_type(\textcolor{keyword}{const} TValue\& value, \textcolor{keyword}{const} TValue\& prev\_value, \mbox{\hyperlink{classhope_1_1serialization_1_1package}{package}}\& pack, std::size\_t\& cur\_index) \{}
+\DoxyCodeLine{62             \textcolor{keyword}{using} serializer\_t = \textcolor{keyword}{typename} \textcolor{keyword}{decltype}(serializer\_holder\_t::template serializer<TValue>())::Type;}
+\DoxyCodeLine{63             \textcolor{keyword}{auto}\&\& serializer\_any = extract<TValue, serializer\_t>(m\_serializer\_map);}
+\DoxyCodeLine{64             \textcolor{keyword}{auto}\&\& serializer = std::any\_cast<serializer\_t>(serializer\_any);}
+\DoxyCodeLine{65             m\_mask[cur\_index] = serializer(value, prev\_value, pack);}
+\DoxyCodeLine{66             ++cur\_index;}
+\DoxyCodeLine{67         \}}
+\DoxyCodeLine{68 }
+\DoxyCodeLine{69         \textcolor{keyword}{template}<\textcolor{keyword}{typename} TValue>}
+\DoxyCodeLine{70         std::enable\_if\_t<std::is\_class\_v<TValue>>}
+\DoxyCodeLine{71         serialize\_impl(\textcolor{keyword}{const} TValue\& value, \textcolor{keyword}{const} TValue\& prev\_value, \mbox{\hyperlink{classhope_1_1serialization_1_1package}{package}}\& pack, std::size\_t\& cur\_index) \{}
+\DoxyCodeLine{72             \textcolor{keyword}{auto}\&\& \mbox{\hyperlink{classhope_1_1tuple}{tuple}} = tuple\_from\_struct(value, \mbox{\hyperlink{structhope_1_1field__policy_1_1reference}{field\_policy::reference}}\{\});}
+\DoxyCodeLine{73             \textcolor{keyword}{auto}\&\& prev\_tuple = tuple\_from\_struct(prev\_value, \mbox{\hyperlink{structhope_1_1field__policy_1_1reference}{field\_policy::reference}}\{\});}
+\DoxyCodeLine{74 }
+\DoxyCodeLine{75             \mbox{\hyperlink{flat__tuple_8h_ae2d36d67f13767b85f74df9ee4d0b4a1}{for\_each}}(\mbox{\hyperlink{classhope_1_1tuple}{tuple}}, prev\_tuple, [\&](\textcolor{keyword}{auto}\&\& field, \textcolor{keyword}{auto}\&\& prev\_field) \{}
+\DoxyCodeLine{76                 serialize(field, prev\_field, pack, cur\_index);}
+\DoxyCodeLine{77             \});}
+\DoxyCodeLine{78         \}}
+\DoxyCodeLine{79 }
+\DoxyCodeLine{80         \textcolor{keyword}{template}<\textcolor{keyword}{typename} TValue>}
+\DoxyCodeLine{81         std::enable\_if\_t<!std::is\_class\_v<TValue>>}
+\DoxyCodeLine{82         serialize\_impl(\textcolor{keyword}{const} TValue\& value, \textcolor{keyword}{const} TValue\& prev\_value, \mbox{\hyperlink{classhope_1_1serialization_1_1package}{package}}\& pack, std::size\_t\& cur\_index) \{}
+\DoxyCodeLine{83             \textcolor{keyword}{const} \textcolor{keywordtype}{bool} changed = m\_first\_pack || !is\_equal(value, prev\_value);}
+\DoxyCodeLine{84             \textcolor{keywordflow}{if} (changed)}
+\DoxyCodeLine{85                 pack.\mbox{\hyperlink{classhope_1_1serialization_1_1package_a521179e63d94a77b209def5308068af0}{write}}(value);}
+\DoxyCodeLine{86             m\_mask[cur\_index] = changed;}
+\DoxyCodeLine{87             ++cur\_index;}
+\DoxyCodeLine{88         \}}
+\DoxyCodeLine{89 }
+\DoxyCodeLine{90         \textcolor{keyword}{template}<\textcolor{keyword}{typename} TValue>}
+\DoxyCodeLine{91         \textcolor{keywordtype}{void} deserialize(TValue\& value, \mbox{\hyperlink{classhope_1_1serialization_1_1package}{package}}\& pack, std::size\_t\& cur\_index) \{}
+\DoxyCodeLine{92             \textcolor{keywordflow}{if} \textcolor{keyword}{constexpr} (serializer\_holder\_t::template has<TValue>())}
+\DoxyCodeLine{93                 deserialize\_custom\_type(value, pack, cur\_index);}
+\DoxyCodeLine{94             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{95                 deserialize\_impl(value, pack, cur\_index);}
+\DoxyCodeLine{96         \}}
+\DoxyCodeLine{97 }
+\DoxyCodeLine{98         \textcolor{keyword}{template} <\textcolor{keyword}{typename} TValue>}
+\DoxyCodeLine{99         \textcolor{keywordtype}{void} deserialize\_custom\_type(TValue\& value, \mbox{\hyperlink{classhope_1_1serialization_1_1package}{package}}\& pack, std::size\_t\& cur\_index) \{}
+\DoxyCodeLine{100             \textcolor{keywordflow}{if} (m\_mask[cur\_index]) \{}
+\DoxyCodeLine{101                 \textcolor{keyword}{using} deserializer\_t = \textcolor{keyword}{typename} \textcolor{keyword}{decltype}(serializer\_holder\_t::template deserializer<TValue>())::Type;}
+\DoxyCodeLine{102                 \textcolor{keyword}{auto}\&\& deserializer\_any = extract<TValue, deserializer\_t>(m\_deserializer\_map);}
+\DoxyCodeLine{103                 \textcolor{keyword}{auto}\&\& deserializer = std::any\_cast<deserializer\_t>(deserializer\_any);}
+\DoxyCodeLine{104                 deserializer(value, pack);}
+\DoxyCodeLine{105             \}}
+\DoxyCodeLine{106             ++cur\_index;}
+\DoxyCodeLine{107         \}}
+\DoxyCodeLine{108 }
+\DoxyCodeLine{109         \textcolor{keyword}{template}<\textcolor{keyword}{typename} TValue>}
+\DoxyCodeLine{110         std::enable\_if\_t<std::is\_class\_v<TValue>>}
+\DoxyCodeLine{111         deserialize\_impl(TValue\& value, \mbox{\hyperlink{classhope_1_1serialization_1_1package}{package}}\& pack, std::size\_t\& cur\_index) \{}
+\DoxyCodeLine{112             \textcolor{keyword}{auto}\&\& \mbox{\hyperlink{classhope_1_1tuple}{tuple}} = tuple\_from\_struct(value, \mbox{\hyperlink{structhope_1_1field__policy_1_1reference}{field\_policy::reference}}\{\});}
+\DoxyCodeLine{113 }
+\DoxyCodeLine{114             \mbox{\hyperlink{flat__tuple_8h_ae2d36d67f13767b85f74df9ee4d0b4a1}{for\_each}}(\mbox{\hyperlink{classhope_1_1tuple}{tuple}}, [\&](\textcolor{keyword}{auto}\&\& field) \{}
+\DoxyCodeLine{115                 deserialize(field, pack, cur\_index);}
+\DoxyCodeLine{116             \});}
+\DoxyCodeLine{117         \}}
+\DoxyCodeLine{118 }
+\DoxyCodeLine{119         \textcolor{keyword}{template}<\textcolor{keyword}{typename} TValue>}
+\DoxyCodeLine{120         std::enable\_if\_t<!std::is\_class\_v<TValue>>}
+\DoxyCodeLine{121         deserialize\_impl(TValue\& value, \mbox{\hyperlink{classhope_1_1serialization_1_1package}{package}}\& pack, std::size\_t\& cur\_index) \{}
+\DoxyCodeLine{122             \textcolor{keywordflow}{if} (m\_mask[cur\_index])}
+\DoxyCodeLine{123                 value = pack.\mbox{\hyperlink{classhope_1_1serialization_1_1package_a8ea2a404ba8b2bad77bc8a87499e5e07}{read}}<TValue>();}
+\DoxyCodeLine{124             ++cur\_index;}
+\DoxyCodeLine{125         \}}
+\DoxyCodeLine{126 }
+\DoxyCodeLine{127         \textcolor{keyword}{template} <\textcolor{keyword}{typename} V>}
+\DoxyCodeLine{128         [[nodiscard]] \textcolor{keywordtype}{bool} is\_equal(\textcolor{keyword}{const} V\& left, \textcolor{keyword}{const} V\& right)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{129             \textcolor{keywordflow}{if} \textcolor{keyword}{constexpr} (std::is\_floating\_point\_v<V>)}
+\DoxyCodeLine{130                 \textcolor{keywordflow}{return} std::abs(left -\/ right) < m\_fp\_accuracy;}
+\DoxyCodeLine{131             \textcolor{keywordflow}{return} left == right;}
+\DoxyCodeLine{132         \}}
+\DoxyCodeLine{133 }
+\DoxyCodeLine{134         \textcolor{keywordtype}{void} write\_mask(\mbox{\hyperlink{classhope_1_1serialization_1_1package}{package}}\& pack) \{}
+\DoxyCodeLine{135             \textcolor{keywordflow}{if} \textcolor{keyword}{constexpr} (fields\_count <= std::numeric\_limits<unsigned long>::digits)}
+\DoxyCodeLine{136                 pack.\mbox{\hyperlink{classhope_1_1serialization_1_1package_a521179e63d94a77b209def5308068af0}{write}}(m\_mask.to\_ulong());}
+\DoxyCodeLine{137             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{138                 pack.\mbox{\hyperlink{classhope_1_1serialization_1_1package_a521179e63d94a77b209def5308068af0}{write}}(m\_mask.to\_ullong());}
+\DoxyCodeLine{139         \}}
+\DoxyCodeLine{140 }
+\DoxyCodeLine{141         \textcolor{keyword}{template}<\textcolor{keyword}{typename} MaskType>}
+\DoxyCodeLine{142         \textcolor{keywordtype}{void} read\_mask\_impl(\mbox{\hyperlink{classhope_1_1serialization_1_1package}{package}}\& pack) \{}
+\DoxyCodeLine{143             \textcolor{keyword}{auto}\&\& mask = pack.\mbox{\hyperlink{classhope_1_1serialization_1_1package_a8ea2a404ba8b2bad77bc8a87499e5e07}{read}}<MaskType>();}
+\DoxyCodeLine{144             m\_mask = bit\_mask(mask);}
+\DoxyCodeLine{145         \}}
+\DoxyCodeLine{146 }
+\DoxyCodeLine{147         \textcolor{keywordtype}{void} read\_mask(\mbox{\hyperlink{classhope_1_1serialization_1_1package}{package}}\& pack) \{}
+\DoxyCodeLine{148             \textcolor{keywordflow}{if} \textcolor{keyword}{constexpr} (fields\_count <= std::numeric\_limits<unsigned long>::digits)}
+\DoxyCodeLine{149                 read\_mask\_impl<unsigned long>(pack);}
+\DoxyCodeLine{150             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{151                 read\_mask\_impl<unsigned long long>(pack);}
+\DoxyCodeLine{152         \}}
+\DoxyCodeLine{153 }
+\DoxyCodeLine{154         [[nodiscard]] \textcolor{keyword}{static} \textcolor{keyword}{constexpr} \textcolor{keyword}{auto} get\_bit\_mask\_actual\_size() \{}
+\DoxyCodeLine{155             \textcolor{keywordflow}{if} \textcolor{keyword}{constexpr} (fields\_count <= std::numeric\_limits<unsigned long>::digits)}
+\DoxyCodeLine{156                 \textcolor{keywordflow}{return} \textcolor{keyword}{sizeof} (\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long});}
+\DoxyCodeLine{157             \textcolor{keywordflow}{return} \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} long);}
+\DoxyCodeLine{158         \}}
+\DoxyCodeLine{159 }
+\DoxyCodeLine{160         \textcolor{keyword}{template}<\textcolor{keyword}{typename} TValue, \textcolor{keyword}{typename} TSerializer>}
+\DoxyCodeLine{161         [[nodiscard]] std::any\& extract(serializer\_map\& map)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{162             \textcolor{keyword}{auto}\&\& type\_index = std::type\_index(\textcolor{keyword}{typeid}(TValue));}
+\DoxyCodeLine{163             \textcolor{keyword}{auto}\&\& it = map.find(type\_index);}
+\DoxyCodeLine{164             \textcolor{keywordflow}{if} (it == std::end(map))}
+\DoxyCodeLine{165                 it = map.emplace(type\_index, TSerializer\{\}).first;}
+\DoxyCodeLine{166             \textcolor{keywordflow}{return} it-\/>second;}
+\DoxyCodeLine{167         \}}
+\DoxyCodeLine{168 }
+\DoxyCodeLine{169         T\& m\_value;}
+\DoxyCodeLine{170         T m\_prev\_value;}
+\DoxyCodeLine{171         \textcolor{keywordtype}{bool} m\_first\_pack\{ \textcolor{keyword}{true} \};}
+\DoxyCodeLine{172         bit\_mask m\_mask;}
+\DoxyCodeLine{173         serializer\_map m\_serializer\_map;}
+\DoxyCodeLine{174         serializer\_map m\_deserializer\_map;}
+\DoxyCodeLine{175         \textcolor{keyword}{const} \textcolor{keywordtype}{double} m\_fp\_accuracy;}
+\DoxyCodeLine{176 }
+\DoxyCodeLine{177         \textcolor{keyword}{static\_assert}(fields\_count <= std::numeric\_limits<unsigned long long>::digits, \textcolor{stringliteral}{"{}Men, you can't use this serializer for structure with 65 fields and more."{}});}
+\DoxyCodeLine{178     \};}
+\DoxyCodeLine{179 }
+\DoxyCodeLine{180 \}}
+\DoxyCodeLine{181 }
+\DoxyCodeLine{182 \textcolor{preprocessor}{\#define DECLARE\_SERIALIZER(ClassName) \(\backslash\)}}
+\DoxyCodeLine{183 \textcolor{preprocessor}{    struct ClassName\#\#\_serializer final\{ \(\backslash\)}}
+\DoxyCodeLine{184 \textcolor{preprocessor}{        bool operator()(const ClassName\& value, const ClassName\& prev\_value, hope::serialization::package\& pack) const; \(\backslash\)}}
+\DoxyCodeLine{185 \textcolor{preprocessor}{\}; \(\backslash\)}}
+\DoxyCodeLine{186 \textcolor{preprocessor}{bool ClassName\#\#\_serializer::operator()(const ClassName\& value, const ClassName\& prev\_value, hope::serialization::package\& pack) const\(\backslash\)}}
+\DoxyCodeLine{187 \textcolor{preprocessor}{}}
+\DoxyCodeLine{188 \textcolor{preprocessor}{\#define DECLARE\_DESERIALIZER(ClassName) \(\backslash\)}}
+\DoxyCodeLine{189 \textcolor{preprocessor}{    struct ClassName\#\#\_deserializer final\{ \(\backslash\)}}
+\DoxyCodeLine{190 \textcolor{preprocessor}{        void operator()(ClassName\& value, hope::serialization::package\& pack) const; \(\backslash\)}}
+\DoxyCodeLine{191 \textcolor{preprocessor}{\}; \(\backslash\)}}
+\DoxyCodeLine{192 \textcolor{preprocessor}{void ClassName\#\#\_deserializer::operator()(ClassName\& value, hope::serialization::package\& pack) const\(\backslash\)}}
+
+\end{DoxyCode}

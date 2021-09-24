@@ -1,0 +1,94 @@
+\hypertarget{tuple__utils_8h_source}{}\doxysection{tuple\+\_\+utils.\+h}
+\label{tuple__utils_8h_source}\index{lib/hope/tuple/tuple\_utils.h@{lib/hope/tuple/tuple\_utils.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* Copyright (C) 2021 Gleb Bezborodov -\/ All Rights Reserved}}
+\DoxyCodeLine{2 \textcolor{comment}{ * You may use, distribute and modify this code under the}}
+\DoxyCodeLine{3 \textcolor{comment}{ * terms of the MIT license.}}
+\DoxyCodeLine{4 \textcolor{comment}{ *}}
+\DoxyCodeLine{5 \textcolor{comment}{ * You should have received a copy of the MIT license with}}
+\DoxyCodeLine{6 \textcolor{comment}{ * this file. If not, please write to: bezborodoff.gleb@gmail.com, or visit : https://github.com/glensand/hope}}
+\DoxyCodeLine{7 \textcolor{comment}{ */}}
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{flat__tuple_8h}{hope/tuple/flat\_tuple.h}}"{}}}
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#include "{}hope/tuple/tuple\_from\_struct.h"{}}}
+\DoxyCodeLine{13 \textcolor{preprocessor}{\#include "{}hope/components/user\_defined\_types.h"{}}}
+\DoxyCodeLine{14 \textcolor{preprocessor}{\#include <functional>}}
+\DoxyCodeLine{15 }
+\DoxyCodeLine{16 \textcolor{keyword}{namespace }hope \{}
+\DoxyCodeLine{17 }
+\DoxyCodeLine{18     \textcolor{keyword}{namespace }detail \{}
+\DoxyCodeLine{19 }
+\DoxyCodeLine{20         \textcolor{keyword}{template}<\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{21         \textcolor{keyword}{constexpr} std::enable\_if\_t<!is\_user\_defined\_type\_v<T>, \textcolor{keywordtype}{bool}>}
+\DoxyCodeLine{22             is\_equal(\textcolor{keyword}{const} T\& left, \textcolor{keyword}{const} T\& right);}
+\DoxyCodeLine{23 }
+\DoxyCodeLine{24         \textcolor{keyword}{template}<\textcolor{keyword}{typename}... Ts, std::size\_t... Is>}
+\DoxyCodeLine{25         \textcolor{keyword}{constexpr} \textcolor{keywordtype}{bool} is\_equal(\textcolor{keyword}{const} flat\_tuple<Ts...>\& left, \textcolor{keyword}{const} flat\_tuple<Ts...>\& right, std::index\_sequence<Is...>);}
+\DoxyCodeLine{26 }
+\DoxyCodeLine{27         \textcolor{keyword}{template}<\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{28         \textcolor{keyword}{constexpr} std::enable\_if\_t<is\_user\_defined\_type\_v<T>, \textcolor{keywordtype}{bool}>}
+\DoxyCodeLine{29             is\_equal(\textcolor{keyword}{const} T\& left, \textcolor{keyword}{const} T\& right);}
+\DoxyCodeLine{30 }
+\DoxyCodeLine{31         \textcolor{keyword}{template}<\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{32         \textcolor{keyword}{constexpr} std::enable\_if\_t<!is\_user\_defined\_type\_v<T>, \textcolor{keywordtype}{bool}>}
+\DoxyCodeLine{33             is\_equal(\textcolor{keyword}{const} T\& left, \textcolor{keyword}{const} T\& right) \{}
+\DoxyCodeLine{34             \textcolor{keywordflow}{return} left == right;}
+\DoxyCodeLine{35         \}}
+\DoxyCodeLine{36 }
+\DoxyCodeLine{37         \textcolor{keyword}{template}<\textcolor{keyword}{typename}... Ts, std::size\_t... Is>}
+\DoxyCodeLine{38         \textcolor{keyword}{constexpr} \textcolor{keywordtype}{bool} is\_equal(\textcolor{keyword}{const} flat\_tuple<Ts...>\& left, \textcolor{keyword}{const} flat\_tuple<Ts...>\& right, std::index\_sequence<Is...>) \{}
+\DoxyCodeLine{39             \textcolor{keywordflow}{return} (is\_equal(left.template get<Is>(), right.template get<Is>()) \&\& ...);}
+\DoxyCodeLine{40         \}}
+\DoxyCodeLine{41 }
+\DoxyCodeLine{42         \textcolor{keyword}{template}<\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{43         \textcolor{keyword}{constexpr} std::enable\_if\_t<is\_user\_defined\_type\_v<T>, \textcolor{keywordtype}{bool}>}
+\DoxyCodeLine{44             is\_equal(\textcolor{keyword}{const} T\& left, \textcolor{keyword}{const} T\& right) \{}
+\DoxyCodeLine{45             \textcolor{keywordflow}{return} tuple\_from\_struct(left, field\_policy::reference\{\}) == tuple\_from\_struct(right, field\_policy::reference\{\});}
+\DoxyCodeLine{46         \}}
+\DoxyCodeLine{47 }
+\DoxyCodeLine{48         \textcolor{keyword}{template}<\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{49         \textcolor{keyword}{constexpr} std::size\_t hash(\textcolor{keyword}{const} T\& val) \{}
+\DoxyCodeLine{50             \textcolor{keywordflow}{return} std::hash<T>\{\}(val);}
+\DoxyCodeLine{51         \}}
+\DoxyCodeLine{52 }
+\DoxyCodeLine{53         \textcolor{keyword}{template}<\textcolor{keyword}{typename}... Ts, std::size\_t... Is>}
+\DoxyCodeLine{54         \textcolor{keyword}{constexpr} std::size\_t hash(\textcolor{keyword}{const} flat\_tuple<Ts...>\& tuple, std::index\_sequence<Is...>) \{}
+\DoxyCodeLine{55             \textcolor{keyword}{constexpr} \textcolor{keyword}{auto} tuple\_size = size(type\_list<Ts...>\{\});}
+\DoxyCodeLine{56             \textcolor{keywordflow}{return} (std::size\_t(hash(tuple. \textcolor{keyword}{template} get<Is>()) / tuple\_size) + ...);}
+\DoxyCodeLine{57         \}}
+\DoxyCodeLine{58     \}}
+\DoxyCodeLine{59 }
+\DoxyCodeLine{60     \textcolor{keyword}{template} <\textcolor{keyword}{typename}... Ts>}
+\DoxyCodeLine{61     \textcolor{keyword}{constexpr} \textcolor{keywordtype}{bool} operator==(\textcolor{keyword}{const} flat\_tuple<Ts...>\& left, \textcolor{keyword}{const} flat\_tuple<Ts...>\& right) \{}
+\DoxyCodeLine{62         \textcolor{keyword}{using} tuple\_t = flat\_tuple<Ts...>;}
+\DoxyCodeLine{63         \textcolor{keywordflow}{return} detail::is\_equal(left, right, std::make\_index\_sequence<tuple\_t::get\_size()>());}
+\DoxyCodeLine{64     \}}
+\DoxyCodeLine{65 }
+\DoxyCodeLine{66     \textcolor{keyword}{template} <\textcolor{keyword}{typename}... Ts>}
+\DoxyCodeLine{67     \textcolor{keyword}{constexpr} \textcolor{keywordtype}{bool} operator!=(\textcolor{keyword}{const} flat\_tuple<Ts...>\& left, \textcolor{keyword}{const} flat\_tuple<Ts...>\& right) \{}
+\DoxyCodeLine{68         \textcolor{keywordflow}{return} !(left == right);}
+\DoxyCodeLine{69     \}}
+\DoxyCodeLine{70 }
+\DoxyCodeLine{71     \textcolor{keyword}{template} <\textcolor{keyword}{typename}... Ts>}
+\DoxyCodeLine{72     \textcolor{keyword}{constexpr} \textcolor{keywordtype}{bool} operator<(\textcolor{keyword}{const} flat\_tuple<Ts...>\& left, \textcolor{keyword}{const} flat\_tuple<Ts...>\& right) \{}
+\DoxyCodeLine{73         \textcolor{keywordflow}{return} detail::is\_equal(left, right, std::make\_index\_sequence<flat\_tuple<Ts...>::size>());}
+\DoxyCodeLine{74     \}}
+\DoxyCodeLine{75 }
+\DoxyCodeLine{76     \textcolor{keyword}{template} <\textcolor{keyword}{typename}... Ts>}
+\DoxyCodeLine{77     \textcolor{keyword}{struct }\mbox{\hyperlink{structhope_1_1hash}{hash}} final \{}
+\DoxyCodeLine{78         \textcolor{keyword}{constexpr} std::size\_t operator()(\textcolor{keyword}{const} \mbox{\hyperlink{classhope_1_1flat__tuple}{flat\_tuple<Ts...>}}\& \mbox{\hyperlink{classhope_1_1tuple}{tuple}}) \{}
+\DoxyCodeLine{79             \textcolor{keywordflow}{return} detail::hash(\mbox{\hyperlink{classhope_1_1tuple}{tuple}}, std::make\_index\_sequence < size(\mbox{\hyperlink{classhope_1_1type__list}{type\_list<Ts...>}}\{\})() > ());}
+\DoxyCodeLine{80         \}}
+\DoxyCodeLine{81     \};}
+\DoxyCodeLine{82 \}}
+\DoxyCodeLine{83 }
+\DoxyCodeLine{84 \textcolor{keyword}{template} <\textcolor{keyword}{typename} TStruct>}
+\DoxyCodeLine{85 \textcolor{keyword}{constexpr} std::enable\_if\_t<hope::is\_user\_defined\_type\_v<TStruct>, \textcolor{keywordtype}{bool}>}
+\DoxyCodeLine{86 operator==(\textcolor{keyword}{const} TStruct\& left, \textcolor{keyword}{const} TStruct\& right) \{}
+\DoxyCodeLine{87     \textcolor{keywordflow}{return} hope::tuple\_from\_struct(left, \mbox{\hyperlink{structhope_1_1field__policy_1_1reference}{hope::field\_policy::reference}}\{\}) == hope::tuple\_from\_struct(right, \mbox{\hyperlink{structhope_1_1field__policy_1_1reference}{hope::field\_policy::reference}}\{\});}
+\DoxyCodeLine{88 \}}
+
+\end{DoxyCode}

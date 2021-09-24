@@ -10,13 +10,24 @@
 
 #include "hope/tuple/flat_tuple.h"
 #include "hope/tuple/tuple_from_struct.h"
-#include <functional>
+
 #include <iostream>
+
+/*! \defgroup <reflection> Static reflection
+    @{
+    \file
+    \brief Implementation of helper print functions. This functions might be used to print any instance of the
+    aggregate type to the output stream; File contains a quit heavy include : iostream and should never be included
+    at the header. Be careful with usages of these operators
+*/
 
 namespace hope{
 
     namespace detail {
 
+        /**
+         * Prints tuple to the given stream
+         */
         template<typename... Ts, std::size_t... VIs>
         void print_impl(std::ostream& stream, const flat_tuple<Ts...>& tuple, std::index_sequence<VIs...>) {
             stream << "{ ";
@@ -26,6 +37,10 @@ namespace hope{
     
     }
 
+    /**
+     * This overload of the stream operator is intended to be used in the hope namespace
+     * Or might bw called via adl;
+     */
     template<typename... Ts>
     constexpr std::ostream& operator<< (std::ostream& stream, const flat_tuple<Ts...>& tuple) {
         print_impl(stream, tuple, std::make_index_sequence<size(type_list<Ts...>{})>());
@@ -33,10 +48,14 @@ namespace hope{
     }
 }
 
-
+/**
+ * Public stream operator
+ */
 template<typename T>
 constexpr std::ostream& operator<< (std::ostream& stream, const T& object) {
     auto&& tuple = hope::ref_tuple_from_struct(object);
     stream << tuple;
     return stream;
 }
+
+/*! @} */

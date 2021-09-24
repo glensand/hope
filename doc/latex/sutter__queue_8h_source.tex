@@ -1,0 +1,98 @@
+\hypertarget{sutter__queue_8h_source}{}\doxysection{sutter\+\_\+queue.\+h}
+\label{sutter__queue_8h_source}\index{lib/hope/concurrency/sutter\_queue.h@{lib/hope/concurrency/sutter\_queue.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* Copyright (C) 2021 Gleb Bezborodov -\/ All Rights Reserved}}
+\DoxyCodeLine{2 \textcolor{comment}{ * You may use, distribute and modify this code under the}}
+\DoxyCodeLine{3 \textcolor{comment}{ * terms of the MIT license.}}
+\DoxyCodeLine{4 \textcolor{comment}{ *}}
+\DoxyCodeLine{5 \textcolor{comment}{ * You should have received a copy of the MIT license with}}
+\DoxyCodeLine{6 \textcolor{comment}{ * this file. If not, please write to: bezborodoff.gleb@gmail.com, or visit : https://github.com/glensand/hope}}
+\DoxyCodeLine{7 \textcolor{comment}{ */}}
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#include <atomic>}}
+\DoxyCodeLine{12 }
+\DoxyCodeLine{13 \textcolor{keyword}{namespace }hope::concurrency \{}
+\DoxyCodeLine{14 }
+\DoxyCodeLine{15     \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{16     \textcolor{keyword}{class }\mbox{\hyperlink{classhope_1_1concurrency_1_1sutter__queue}{sutter\_queue}} final \{}
+\DoxyCodeLine{17 }
+\DoxyCodeLine{18         \textcolor{keyword}{struct }node final \{}
+\DoxyCodeLine{19             \textcolor{keyword}{template}<\textcolor{keyword}{typename} TVal>}
+\DoxyCodeLine{20             \textcolor{keyword}{explicit} node(TVal\&\& val)}
+\DoxyCodeLine{21                 : value(std::forward<TVal>(val)), next(\textcolor{keyword}{nullptr}) \{ \}}
+\DoxyCodeLine{22 }
+\DoxyCodeLine{23             T value;}
+\DoxyCodeLine{24 }
+\DoxyCodeLine{25             node* next\{ \textcolor{keyword}{nullptr} \};}
+\DoxyCodeLine{26         \};}
+\DoxyCodeLine{27     }
+\DoxyCodeLine{28     \textcolor{keyword}{public}:}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30         \textcolor{comment}{// This queue must be fully constructed before being used in another thread.}}
+\DoxyCodeLine{31         \mbox{\hyperlink{classhope_1_1concurrency_1_1sutter__queue}{sutter\_queue}}() \{}
+\DoxyCodeLine{32             m\_first = m\_divider = m\_last = \textcolor{keyword}{new} node(T());}
+\DoxyCodeLine{33         \}}
+\DoxyCodeLine{34     }
+\DoxyCodeLine{35         \mbox{\hyperlink{classhope_1_1concurrency_1_1sutter__queue}{\string~sutter\_queue}}() \{}
+\DoxyCodeLine{36             \textcolor{keywordflow}{while} (m\_first != \textcolor{keyword}{nullptr}) \{}
+\DoxyCodeLine{37                 node* temp = m\_first;}
+\DoxyCodeLine{38                 m\_first = temp-\/>next;}
+\DoxyCodeLine{39                 \textcolor{keyword}{delete} temp;}
+\DoxyCodeLine{40             \}}
+\DoxyCodeLine{41         \}}
+\DoxyCodeLine{42     }
+\DoxyCodeLine{43         \textcolor{keyword}{template}<\textcolor{keyword}{typename} TVal>}
+\DoxyCodeLine{44         \textcolor{keywordtype}{void} enqueue(TVal\&\& item) \{}
+\DoxyCodeLine{45             \textcolor{keyword}{auto}* last = m\_last.load();}
+\DoxyCodeLine{46             last-\/>next = \textcolor{keyword}{new} node(std::forward<TVal>(item));}
+\DoxyCodeLine{47     }
+\DoxyCodeLine{48             produce\_impl(last);}
+\DoxyCodeLine{49         \}}
+\DoxyCodeLine{50     }
+\DoxyCodeLine{51         \textcolor{keywordtype}{bool} dequeue(T\& item) \{}
+\DoxyCodeLine{52             \textcolor{keyword}{auto}* divNode = m\_divider.load();}
+\DoxyCodeLine{53             \textcolor{keywordflow}{if} (\textcolor{keyword}{auto} * lastNode = m\_last.load(); divNode != lastNode)}
+\DoxyCodeLine{54             \{}
+\DoxyCodeLine{55                 item = std::move(divNode-\/>next-\/>value);}
+\DoxyCodeLine{56                 divNode = divNode-\/>next;}
+\DoxyCodeLine{57                 m\_divider.store(divNode);}
+\DoxyCodeLine{58     }
+\DoxyCodeLine{59                 \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{60             \}}
+\DoxyCodeLine{61             \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{62         \}}
+\DoxyCodeLine{63     }
+\DoxyCodeLine{64     \textcolor{keyword}{private}:}
+\DoxyCodeLine{65         \textcolor{keywordtype}{void} produce\_impl(node* tmpLast) \{}
+\DoxyCodeLine{66             tmpLast = tmpLast-\/>next;}
+\DoxyCodeLine{67     }
+\DoxyCodeLine{68             m\_last.store(tmpLast);}
+\DoxyCodeLine{69     }
+\DoxyCodeLine{70             node* div = m\_divider.load();}
+\DoxyCodeLine{71             \textcolor{keywordflow}{while} (m\_first != div) \{}
+\DoxyCodeLine{72                 node* temp = m\_first;}
+\DoxyCodeLine{73                 m\_first = m\_first-\/>next;}
+\DoxyCodeLine{74                 \textcolor{keyword}{delete} temp;}
+\DoxyCodeLine{75     }
+\DoxyCodeLine{76                 div = m\_divider.load();}
+\DoxyCodeLine{77             \}}
+\DoxyCodeLine{78         \}}
+\DoxyCodeLine{79 }
+\DoxyCodeLine{80         \textcolor{keyword}{constexpr} \textcolor{keyword}{static} std::size\_t CacheLineSize\{ 64 \};}
+\DoxyCodeLine{81 }
+\DoxyCodeLine{82         node* m\_first;    \textcolor{comment}{// Producer Only}}
+\DoxyCodeLine{83 }
+\DoxyCodeLine{84         uint8\_t m\_cache\_padding1[CacheLineSize]\{ \};}
+\DoxyCodeLine{85 }
+\DoxyCodeLine{86         std::atomic<node*>     m\_divider;    \textcolor{comment}{// Producer / Consumer}}
+\DoxyCodeLine{87 }
+\DoxyCodeLine{88         uint8\_t m\_cache\_padding2[CacheLineSize]\{ \};}
+\DoxyCodeLine{89 }
+\DoxyCodeLine{90         std::atomic<node*>     m\_last;        \textcolor{comment}{// Producer / Consumer}}
+\DoxyCodeLine{91     \};}
+\DoxyCodeLine{92 \}}
+
+\end{DoxyCode}

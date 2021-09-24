@@ -1,0 +1,271 @@
+\hypertarget{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_01_4_00_01_ts_8_8_8_01_4}{}\doxysection{hope\+::detail\+::flat\+\_\+tuple\+\_\+impl\texorpdfstring{$<$}{<} std\+::index\+\_\+sequence\texorpdfstring{$<$}{<} Is... \texorpdfstring{$>$}{>}, Ts... \texorpdfstring{$>$}{>} Class Template Reference}
+\label{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_01_4_00_01_ts_8_8_8_01_4}\index{hope::detail::flat\_tuple\_impl$<$ std::index\_sequence$<$ Is... $>$, Ts... $>$@{hope::detail::flat\_tuple\_impl$<$ std::index\_sequence$<$ Is... $>$, Ts... $>$}}
+
+
+{\ttfamily \#include $<$flat\+\_\+tuple.\+h$>$}
+
+Inheritance diagram for hope\+::detail\+::flat\+\_\+tuple\+\_\+impl\texorpdfstring{$<$}{<} std\+::index\+\_\+sequence\texorpdfstring{$<$}{<} Is... \texorpdfstring{$>$}{>}, Ts... \texorpdfstring{$>$}{>}\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=1.450777cm]{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_01_4_00_01_ts_8_8_8_01_4}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$typename T , typename NativeT  = std\+::decay\+\_\+t$<$\+T$>$$>$ }\\constexpr decltype(auto) \mbox{\hyperlink{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_01_4_00_01_ts_8_8_8_01_4_a614a63b798ed5f427da6aa7bf08111a2}{get}} () noexcept
+\begin{DoxyCompactList}\small\item\em Tries to find element of specified type, fails on static assert if element had not been found; method is not sensitive to the qualifiers, followed constructions are equal\+: \mbox{\hyperlink{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_01_4_00_01_ts_8_8_8_01_4_a614a63b798ed5f427da6aa7bf08111a2}{get$<$int$>$()}} \mbox{\hyperlink{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_01_4_00_01_ts_8_8_8_01_4_a614a63b798ed5f427da6aa7bf08111a2}{get$<$int\&$>$()}} , \mbox{\hyperlink{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_01_4_00_01_ts_8_8_8_01_4_a614a63b798ed5f427da6aa7bf08111a2}{get$<$const int$>$()}}, \mbox{\hyperlink{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_01_4_00_01_ts_8_8_8_01_4_a614a63b798ed5f427da6aa7bf08111a2}{get$<$const int\&$>$()}}; accessed value will be automatically deduced by tuple\textquotesingle{}s type (regardless of field policy is being used to create the tuple). \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T , typename NativeT  = std\+::decay\+\_\+t$<$\+T$>$$>$ }\\constexpr decltype(auto) \mbox{\hyperlink{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_01_4_00_01_ts_8_8_8_01_4_ab64701e05abfc78fb43f703577cb9920}{get}} () const noexcept
+\begin{DoxyCompactList}\small\item\em Tries to find element of specified type, fails on static assert if element had not been found; method is not sensitive to the qualifiers, followed constructions are equal\+: \mbox{\hyperlink{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_01_4_00_01_ts_8_8_8_01_4_a614a63b798ed5f427da6aa7bf08111a2}{get$<$int$>$()}} \mbox{\hyperlink{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_01_4_00_01_ts_8_8_8_01_4_a614a63b798ed5f427da6aa7bf08111a2}{get$<$int\&$>$()}} , \mbox{\hyperlink{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_01_4_00_01_ts_8_8_8_01_4_a614a63b798ed5f427da6aa7bf08111a2}{get$<$const int$>$()}}, \mbox{\hyperlink{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_01_4_00_01_ts_8_8_8_01_4_a614a63b798ed5f427da6aa7bf08111a2}{get$<$const int\&$>$()}}; accessed value will be automatically deduced by tuple\textquotesingle{}s type (regardless of field policy is being used to create the tuple). \end{DoxyCompactList}\item 
+{\footnotesize template$<$size\+\_\+t N$>$ }\\constexpr decltype(auto) \mbox{\hyperlink{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_01_4_00_01_ts_8_8_8_01_4_a72594a3474312e81860ed0dc8c72b29e}{get}} () noexcept
+\begin{DoxyCompactList}\small\item\em Tries to find element with given index. \end{DoxyCompactList}\item 
+{\footnotesize template$<$size\+\_\+t N$>$ }\\constexpr decltype(auto) \mbox{\hyperlink{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_01_4_00_01_ts_8_8_8_01_4_a96a39d2d700295e27342636e64a3dc47}{get}} () const noexcept
+\begin{DoxyCompactList}\small\item\em Tries to find element with given index. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename F $>$ }\\constexpr void \mbox{\hyperlink{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_01_4_00_01_ts_8_8_8_01_4_ac08ef238632966d87e990d0b5de6e372}{for\+\_\+each}} (F \&\&f) const
+\begin{DoxyCompactList}\small\item\em Applies given functor to each value of tuple, more useful analogue of std\+::apply. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename F $>$ }\\constexpr void \mbox{\hyperlink{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_01_4_00_01_ts_8_8_8_01_4_adbb07ae1ced644721247d0d3aabf34a9}{for\+\_\+each}} (const \mbox{\hyperlink{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_01_4_00_01_ts_8_8_8_01_4}{flat\+\_\+tuple}} \&tuple2, F \&\&f) const
+\begin{DoxyCompactList}\small\item\em Applies given functor to each value of tuples. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename F $>$ }\\constexpr void \mbox{\hyperlink{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_01_4_00_01_ts_8_8_8_01_4_abb79287ce9b6dda01b61957ed41bf2c7}{for\+\_\+each}} (F \&\&f)
+\begin{DoxyCompactList}\small\item\em Applies given functor to each value of given tuple, more useful analogue of std\+::apply. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename F $>$ }\\constexpr void \mbox{\hyperlink{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_01_4_00_01_ts_8_8_8_01_4_a75921af66ad1b80541a76afc03bca170}{for\+\_\+each}} (\mbox{\hyperlink{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_01_4_00_01_ts_8_8_8_01_4}{flat\+\_\+tuple}} \&tuple2, F \&\&f)
+\begin{DoxyCompactList}\small\item\em Applies given functor to each value of tuples. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static constexpr auto \mbox{\hyperlink{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_01_4_00_01_ts_8_8_8_01_4_aa974184168a47b1aec781dcc4ffbd4fc}{get\+\_\+size}} () noexcept
+\begin{DoxyCompactList}\small\item\em just returns the size of the tuple (means number of fields) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_01_4_00_01_ts_8_8_8_01_4_a82392ce94ab710ff80ef99fbd9198650}\label{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_01_4_00_01_ts_8_8_8_01_4_a82392ce94ab710ff80ef99fbd9198650}} 
+constexpr static std\+::size\+\_\+t {\bfseries tuple\+\_\+size} \{size(types)\}
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Types}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_01_4_00_01_ts_8_8_8_01_4_a9fea42d1f73951c22fe8a0a51306406e}\label{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_01_4_00_01_ts_8_8_8_01_4_a9fea42d1f73951c22fe8a0a51306406e}} 
+using {\bfseries flat\+\_\+tuple} = \mbox{\hyperlink{classhope_1_1detail_1_1flat__tuple__impl}{flat\+\_\+tuple\+\_\+impl}}$<$ std\+::index\+\_\+sequence$<$ Is... $>$, Ts... $>$
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_01_4_00_01_ts_8_8_8_01_4_a0a7f3c8c495ab333aa3d13733070dc95}\label{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_01_4_00_01_ts_8_8_8_01_4_a0a7f3c8c495ab333aa3d13733070dc95}} 
+constexpr {\bfseries flat\+\_\+tuple\+\_\+impl} (const \mbox{\hyperlink{classhope_1_1detail_1_1flat__tuple__impl}{flat\+\_\+tuple\+\_\+impl}} \&)=default
+\item 
+\mbox{\Hypertarget{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_01_4_00_01_ts_8_8_8_01_4_a333a59707a49af5d977aaf24b29fe8b8}\label{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_01_4_00_01_ts_8_8_8_01_4_a333a59707a49af5d977aaf24b29fe8b8}} 
+constexpr {\bfseries flat\+\_\+tuple\+\_\+impl} (\mbox{\hyperlink{classhope_1_1detail_1_1flat__tuple__impl}{flat\+\_\+tuple\+\_\+impl}} \&\&)=default
+\item 
+\mbox{\Hypertarget{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_01_4_00_01_ts_8_8_8_01_4_a0d71c12ad4bbaecfe490fdc95c3af048}\label{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_01_4_00_01_ts_8_8_8_01_4_a0d71c12ad4bbaecfe490fdc95c3af048}} 
+{\footnotesize template$<$typename... VTs$>$ }\\constexpr {\bfseries flat\+\_\+tuple\+\_\+impl} (VTs \&\&... elems) noexcept
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$std\+::size\+\_\+t... Is, typename... Ts$>$\newline
+class hope\+::detail\+::flat\+\_\+tuple\+\_\+impl$<$ std\+::index\+\_\+sequence$<$ Is... $>$, Ts... $>$}
+General class of the all static reflection module. 
+\begin{DoxyTemplParams}{Template Parameters}
+{\em Is} & Helper sequence of indexes, max(\+Is...) + is the count of the tuple\textquotesingle{}s elements \\
+\hline
+{\em Ts} & Types stored in the tuple \\
+\hline
+\end{DoxyTemplParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_01_4_00_01_ts_8_8_8_01_4_adbb07ae1ced644721247d0d3aabf34a9}\label{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_01_4_00_01_ts_8_8_8_01_4_adbb07ae1ced644721247d0d3aabf34a9}} 
+\index{hope::detail::flat\_tuple\_impl$<$ std::index\_sequence$<$ Is... $>$, Ts... $>$@{hope::detail::flat\_tuple\_impl$<$ std::index\_sequence$<$ Is... $>$, Ts... $>$}!for\_each@{for\_each}}
+\index{for\_each@{for\_each}!hope::detail::flat\_tuple\_impl$<$ std::index\_sequence$<$ Is... $>$, Ts... $>$@{hope::detail::flat\_tuple\_impl$<$ std::index\_sequence$<$ Is... $>$, Ts... $>$}}
+\doxysubsubsection{\texorpdfstring{for\_each()}{for\_each()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily template$<$std\+::size\+\_\+t... Is, typename... Ts$>$ \\
+template$<$typename F $>$ \\
+constexpr void \mbox{\hyperlink{classhope_1_1detail_1_1flat__tuple__impl}{hope\+::detail\+::flat\+\_\+tuple\+\_\+impl}}$<$ std\+::index\+\_\+sequence$<$ Is... $>$, Ts... $>$\+::for\+\_\+each (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_01_4_00_01_ts_8_8_8_01_4}{flat\+\_\+tuple}} \&}]{tuple2,  }\item[{F \&\&}]{f }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}}
+
+
+
+Applies given functor to each value of tuples. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em F} & type of functional object \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em tuple2} & second tuple the function to be applied to \\
+\hline
+{\em f} & functional object to be sequentially applied to each field of tuple \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_01_4_00_01_ts_8_8_8_01_4_abb79287ce9b6dda01b61957ed41bf2c7}\label{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_01_4_00_01_ts_8_8_8_01_4_abb79287ce9b6dda01b61957ed41bf2c7}} 
+\index{hope::detail::flat\_tuple\_impl$<$ std::index\_sequence$<$ Is... $>$, Ts... $>$@{hope::detail::flat\_tuple\_impl$<$ std::index\_sequence$<$ Is... $>$, Ts... $>$}!for\_each@{for\_each}}
+\index{for\_each@{for\_each}!hope::detail::flat\_tuple\_impl$<$ std::index\_sequence$<$ Is... $>$, Ts... $>$@{hope::detail::flat\_tuple\_impl$<$ std::index\_sequence$<$ Is... $>$, Ts... $>$}}
+\doxysubsubsection{\texorpdfstring{for\_each()}{for\_each()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily template$<$std\+::size\+\_\+t... Is, typename... Ts$>$ \\
+template$<$typename F $>$ \\
+constexpr void \mbox{\hyperlink{classhope_1_1detail_1_1flat__tuple__impl}{hope\+::detail\+::flat\+\_\+tuple\+\_\+impl}}$<$ std\+::index\+\_\+sequence$<$ Is... $>$, Ts... $>$\+::for\+\_\+each (\begin{DoxyParamCaption}\item[{F \&\&}]{f }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}}
+
+
+
+Applies given functor to each value of given tuple, more useful analogue of std\+::apply. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em F} & type of functional object \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em f} & functional object to be sequentially applied to each field of tuple \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_01_4_00_01_ts_8_8_8_01_4_ac08ef238632966d87e990d0b5de6e372}\label{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_01_4_00_01_ts_8_8_8_01_4_ac08ef238632966d87e990d0b5de6e372}} 
+\index{hope::detail::flat\_tuple\_impl$<$ std::index\_sequence$<$ Is... $>$, Ts... $>$@{hope::detail::flat\_tuple\_impl$<$ std::index\_sequence$<$ Is... $>$, Ts... $>$}!for\_each@{for\_each}}
+\index{for\_each@{for\_each}!hope::detail::flat\_tuple\_impl$<$ std::index\_sequence$<$ Is... $>$, Ts... $>$@{hope::detail::flat\_tuple\_impl$<$ std::index\_sequence$<$ Is... $>$, Ts... $>$}}
+\doxysubsubsection{\texorpdfstring{for\_each()}{for\_each()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily template$<$std\+::size\+\_\+t... Is, typename... Ts$>$ \\
+template$<$typename F $>$ \\
+constexpr void \mbox{\hyperlink{classhope_1_1detail_1_1flat__tuple__impl}{hope\+::detail\+::flat\+\_\+tuple\+\_\+impl}}$<$ std\+::index\+\_\+sequence$<$ Is... $>$, Ts... $>$\+::for\+\_\+each (\begin{DoxyParamCaption}\item[{F \&\&}]{f }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}}
+
+
+
+Applies given functor to each value of tuple, more useful analogue of std\+::apply. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em F} & type of functional object \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em f} & functional object to be sequentially applied to each field of tuple \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_01_4_00_01_ts_8_8_8_01_4_a75921af66ad1b80541a76afc03bca170}\label{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_01_4_00_01_ts_8_8_8_01_4_a75921af66ad1b80541a76afc03bca170}} 
+\index{hope::detail::flat\_tuple\_impl$<$ std::index\_sequence$<$ Is... $>$, Ts... $>$@{hope::detail::flat\_tuple\_impl$<$ std::index\_sequence$<$ Is... $>$, Ts... $>$}!for\_each@{for\_each}}
+\index{for\_each@{for\_each}!hope::detail::flat\_tuple\_impl$<$ std::index\_sequence$<$ Is... $>$, Ts... $>$@{hope::detail::flat\_tuple\_impl$<$ std::index\_sequence$<$ Is... $>$, Ts... $>$}}
+\doxysubsubsection{\texorpdfstring{for\_each()}{for\_each()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily template$<$std\+::size\+\_\+t... Is, typename... Ts$>$ \\
+template$<$typename F $>$ \\
+constexpr void \mbox{\hyperlink{classhope_1_1detail_1_1flat__tuple__impl}{hope\+::detail\+::flat\+\_\+tuple\+\_\+impl}}$<$ std\+::index\+\_\+sequence$<$ Is... $>$, Ts... $>$\+::for\+\_\+each (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_01_4_00_01_ts_8_8_8_01_4}{flat\+\_\+tuple}} \&}]{tuple2,  }\item[{F \&\&}]{f }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}}
+
+
+
+Applies given functor to each value of tuples. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em F} & type of functional object \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em tuple2} & second tuple the function to be applied to \\
+\hline
+{\em f} & functional object to be sequentially applied to each field of tuple \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_01_4_00_01_ts_8_8_8_01_4_ab64701e05abfc78fb43f703577cb9920}\label{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_01_4_00_01_ts_8_8_8_01_4_ab64701e05abfc78fb43f703577cb9920}} 
+\index{hope::detail::flat\_tuple\_impl$<$ std::index\_sequence$<$ Is... $>$, Ts... $>$@{hope::detail::flat\_tuple\_impl$<$ std::index\_sequence$<$ Is... $>$, Ts... $>$}!get@{get}}
+\index{get@{get}!hope::detail::flat\_tuple\_impl$<$ std::index\_sequence$<$ Is... $>$, Ts... $>$@{hope::detail::flat\_tuple\_impl$<$ std::index\_sequence$<$ Is... $>$, Ts... $>$}}
+\doxysubsubsection{\texorpdfstring{get()}{get()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily template$<$std\+::size\+\_\+t... Is, typename... Ts$>$ \\
+template$<$typename T , typename NativeT  = std\+::decay\+\_\+t$<$\+T$>$$>$ \\
+constexpr decltype(auto) \mbox{\hyperlink{classhope_1_1detail_1_1flat__tuple__impl}{hope\+::detail\+::flat\+\_\+tuple\+\_\+impl}}$<$ std\+::index\+\_\+sequence$<$ Is... $>$, Ts... $>$\+::\mbox{\hyperlink{structhope_1_1detail_1_1get}{get}} (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
+
+
+
+Tries to find element of specified type, fails on static assert if element had not been found; method is not sensitive to the qualifiers, followed constructions are equal\+: \mbox{\hyperlink{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_01_4_00_01_ts_8_8_8_01_4_a614a63b798ed5f427da6aa7bf08111a2}{get$<$int$>$()}} \mbox{\hyperlink{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_01_4_00_01_ts_8_8_8_01_4_a614a63b798ed5f427da6aa7bf08111a2}{get$<$int\&$>$()}} , \mbox{\hyperlink{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_01_4_00_01_ts_8_8_8_01_4_a614a63b798ed5f427da6aa7bf08111a2}{get$<$const int$>$()}}, \mbox{\hyperlink{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_01_4_00_01_ts_8_8_8_01_4_a614a63b798ed5f427da6aa7bf08111a2}{get$<$const int\&$>$()}}; accessed value will be automatically deduced by tuple\textquotesingle{}s type (regardless of field policy is being used to create the tuple). 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em T} & \+: Type of element to be returned, const and reference qualifiers does not matter\\
+\hline
+{\em NativeT} & \+: clear type, used to deduce return type and check whether tuple has element with specified value or not\\
+\hline
+\end{DoxyTemplParams}
+\begin{DoxyReturn}{Returns}
+reference to the containing element 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_01_4_00_01_ts_8_8_8_01_4_a96a39d2d700295e27342636e64a3dc47}\label{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_01_4_00_01_ts_8_8_8_01_4_a96a39d2d700295e27342636e64a3dc47}} 
+\index{hope::detail::flat\_tuple\_impl$<$ std::index\_sequence$<$ Is... $>$, Ts... $>$@{hope::detail::flat\_tuple\_impl$<$ std::index\_sequence$<$ Is... $>$, Ts... $>$}!get@{get}}
+\index{get@{get}!hope::detail::flat\_tuple\_impl$<$ std::index\_sequence$<$ Is... $>$, Ts... $>$@{hope::detail::flat\_tuple\_impl$<$ std::index\_sequence$<$ Is... $>$, Ts... $>$}}
+\doxysubsubsection{\texorpdfstring{get()}{get()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily template$<$std\+::size\+\_\+t... Is, typename... Ts$>$ \\
+template$<$size\+\_\+t N$>$ \\
+constexpr decltype(auto) \mbox{\hyperlink{classhope_1_1detail_1_1flat__tuple__impl}{hope\+::detail\+::flat\+\_\+tuple\+\_\+impl}}$<$ std\+::index\+\_\+sequence$<$ Is... $>$, Ts... $>$\+::\mbox{\hyperlink{structhope_1_1detail_1_1get}{get}} (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
+
+
+
+Tries to find element with given index. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em N} & Index of the element to be found \\
+\hline
+\end{DoxyTemplParams}
+\begin{DoxyReturn}{Returns}
+Reference to the containing element, const and ref qualifiers of the containing one do not change, ref will be returned \char`\"{}as is\char`\"{} 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_01_4_00_01_ts_8_8_8_01_4_a614a63b798ed5f427da6aa7bf08111a2}\label{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_01_4_00_01_ts_8_8_8_01_4_a614a63b798ed5f427da6aa7bf08111a2}} 
+\index{hope::detail::flat\_tuple\_impl$<$ std::index\_sequence$<$ Is... $>$, Ts... $>$@{hope::detail::flat\_tuple\_impl$<$ std::index\_sequence$<$ Is... $>$, Ts... $>$}!get@{get}}
+\index{get@{get}!hope::detail::flat\_tuple\_impl$<$ std::index\_sequence$<$ Is... $>$, Ts... $>$@{hope::detail::flat\_tuple\_impl$<$ std::index\_sequence$<$ Is... $>$, Ts... $>$}}
+\doxysubsubsection{\texorpdfstring{get()}{get()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily template$<$std\+::size\+\_\+t... Is, typename... Ts$>$ \\
+template$<$typename T , typename NativeT  = std\+::decay\+\_\+t$<$\+T$>$$>$ \\
+constexpr decltype(auto) \mbox{\hyperlink{classhope_1_1detail_1_1flat__tuple__impl}{hope\+::detail\+::flat\+\_\+tuple\+\_\+impl}}$<$ std\+::index\+\_\+sequence$<$ Is... $>$, Ts... $>$\+::\mbox{\hyperlink{structhope_1_1detail_1_1get}{get}} (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
+
+
+
+Tries to find element of specified type, fails on static assert if element had not been found; method is not sensitive to the qualifiers, followed constructions are equal\+: \mbox{\hyperlink{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_01_4_00_01_ts_8_8_8_01_4_a614a63b798ed5f427da6aa7bf08111a2}{get$<$int$>$()}} \mbox{\hyperlink{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_01_4_00_01_ts_8_8_8_01_4_a614a63b798ed5f427da6aa7bf08111a2}{get$<$int\&$>$()}} , \mbox{\hyperlink{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_01_4_00_01_ts_8_8_8_01_4_a614a63b798ed5f427da6aa7bf08111a2}{get$<$const int$>$()}}, \mbox{\hyperlink{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_01_4_00_01_ts_8_8_8_01_4_a614a63b798ed5f427da6aa7bf08111a2}{get$<$const int\&$>$()}}; accessed value will be automatically deduced by tuple\textquotesingle{}s type (regardless of field policy is being used to create the tuple). 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em T} & \+: Type of element to be returned, const and reference qualifiers does not matter\\
+\hline
+{\em NativeT} & \+: clear type, used to deduce return type and check whether tuple has element with specified value or not\\
+\hline
+\end{DoxyTemplParams}
+\begin{DoxyReturn}{Returns}
+reference to the containing element 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_01_4_00_01_ts_8_8_8_01_4_a72594a3474312e81860ed0dc8c72b29e}\label{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_01_4_00_01_ts_8_8_8_01_4_a72594a3474312e81860ed0dc8c72b29e}} 
+\index{hope::detail::flat\_tuple\_impl$<$ std::index\_sequence$<$ Is... $>$, Ts... $>$@{hope::detail::flat\_tuple\_impl$<$ std::index\_sequence$<$ Is... $>$, Ts... $>$}!get@{get}}
+\index{get@{get}!hope::detail::flat\_tuple\_impl$<$ std::index\_sequence$<$ Is... $>$, Ts... $>$@{hope::detail::flat\_tuple\_impl$<$ std::index\_sequence$<$ Is... $>$, Ts... $>$}}
+\doxysubsubsection{\texorpdfstring{get()}{get()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily template$<$std\+::size\+\_\+t... Is, typename... Ts$>$ \\
+template$<$size\+\_\+t N$>$ \\
+constexpr decltype(auto) \mbox{\hyperlink{classhope_1_1detail_1_1flat__tuple__impl}{hope\+::detail\+::flat\+\_\+tuple\+\_\+impl}}$<$ std\+::index\+\_\+sequence$<$ Is... $>$, Ts... $>$\+::\mbox{\hyperlink{structhope_1_1detail_1_1get}{get}} (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
+
+
+
+Tries to find element with given index. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em N} & Index of the element to be found \\
+\hline
+\end{DoxyTemplParams}
+\begin{DoxyReturn}{Returns}
+Reference to the containing element, const and ref qualifiers of the containing one are not change, ref will be returned \char`\"{}as is\char`\"{} 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_01_4_00_01_ts_8_8_8_01_4_aa974184168a47b1aec781dcc4ffbd4fc}\label{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_01_4_00_01_ts_8_8_8_01_4_aa974184168a47b1aec781dcc4ffbd4fc}} 
+\index{hope::detail::flat\_tuple\_impl$<$ std::index\_sequence$<$ Is... $>$, Ts... $>$@{hope::detail::flat\_tuple\_impl$<$ std::index\_sequence$<$ Is... $>$, Ts... $>$}!get\_size@{get\_size}}
+\index{get\_size@{get\_size}!hope::detail::flat\_tuple\_impl$<$ std::index\_sequence$<$ Is... $>$, Ts... $>$@{hope::detail::flat\_tuple\_impl$<$ std::index\_sequence$<$ Is... $>$, Ts... $>$}}
+\doxysubsubsection{\texorpdfstring{get\_size()}{get\_size()}}
+{\footnotesize\ttfamily template$<$std\+::size\+\_\+t... Is, typename... Ts$>$ \\
+static constexpr auto \mbox{\hyperlink{classhope_1_1detail_1_1flat__tuple__impl}{hope\+::detail\+::flat\+\_\+tuple\+\_\+impl}}$<$ std\+::index\+\_\+sequence$<$ Is... $>$, Ts... $>$\+::get\+\_\+size (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
+
+
+
+just returns the size of the tuple (means number of fields) 
+
+\begin{DoxyReturn}{Returns}
+number of fields 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+lib/hope/tuple/\mbox{\hyperlink{flat__tuple_8h}{flat\+\_\+tuple.\+h}}\end{DoxyCompactItemize}

@@ -1,0 +1,80 @@
+\hypertarget{link__holder__tuple_8h_source}{}\doxysection{link\+\_\+holder\+\_\+tuple.\+h}
+\label{link__holder__tuple_8h_source}\index{lib/hope/components/link\_holder/link\_holder\_tuple.h@{lib/hope/components/link\_holder/link\_holder\_tuple.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* Copyright (C) 2021 Gleb Bezborodov -\/ All Rights Reserved}}
+\DoxyCodeLine{2 \textcolor{comment}{ * You may use, distribute and modify this code under the}}
+\DoxyCodeLine{3 \textcolor{comment}{ * terms of the MIT license.}}
+\DoxyCodeLine{4 \textcolor{comment}{ *}}
+\DoxyCodeLine{5 \textcolor{comment}{ * You should have received a copy of the MIT license with}}
+\DoxyCodeLine{6 \textcolor{comment}{ * this file. If not, please write to: bezborodoff.gleb@gmail.com, or visit : https://github.com/glensand/hope}}
+\DoxyCodeLine{7 \textcolor{comment}{ */}}
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#include "{}hope/typelist/type\_list.h"{}}}
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{flat__tuple_8h}{hope/tuple/flat\_tuple.h}}"{}}}
+\DoxyCodeLine{13 }
+\DoxyCodeLine{14 \textcolor{keyword}{namespace }hope \{}
+\DoxyCodeLine{15 }
+\DoxyCodeLine{16     \textcolor{keyword}{template}<}
+\DoxyCodeLine{17         \textcolor{keyword}{template}<\textcolor{keyword}{typename}> \textcolor{keyword}{typename} InnerHolderPolicy,}
+\DoxyCodeLine{18         \textcolor{keyword}{typename}... Links}
+\DoxyCodeLine{19     >}
+\DoxyCodeLine{20     \textcolor{keyword}{class }\mbox{\hyperlink{classhope_1_1link__holder__tuple}{link\_holder\_tuple}} final \{}
+\DoxyCodeLine{21     \textcolor{keyword}{public}:}
+\DoxyCodeLine{22         \textcolor{keyword}{using} \mbox{\hyperlink{classhope_1_1flat__tuple}{links\_t}} = \mbox{\hyperlink{classhope_1_1flat__tuple}{flat\_tuple<InnerHolderPolicy<Links>}}...>;}
+\DoxyCodeLine{23 }
+\DoxyCodeLine{24         \mbox{\hyperlink{classhope_1_1link__holder__tuple}{link\_holder\_tuple}}() = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{25         \mbox{\hyperlink{classhope_1_1link__holder__tuple}{\string~link\_holder\_tuple}}() = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{26 }
+\DoxyCodeLine{27         \textcolor{keyword}{template} <\textcolor{keyword}{typename} T, \textcolor{keyword}{typename} NativeT = std::decay\_t<T>>}
+\DoxyCodeLine{28         [[nodiscard]] \textcolor{keyword}{constexpr} \textcolor{keyword}{decltype}(\textcolor{keyword}{auto}) get() \textcolor{keyword}{const} \textcolor{keyword}{noexcept} \{}
+\DoxyCodeLine{29             \textcolor{keywordflow}{return} get\_impl<NativeT>();}
+\DoxyCodeLine{30         \}}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32         \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{33         \textcolor{keywordtype}{bool} add(T* link) \textcolor{keyword}{noexcept} \{}
+\DoxyCodeLine{34             \textcolor{keywordflow}{if} (link == \textcolor{keyword}{nullptr})}
+\DoxyCodeLine{35                 \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{36 }
+\DoxyCodeLine{37             \textcolor{keywordtype}{bool} added = \textcolor{keyword}{false};}
+\DoxyCodeLine{38             \mbox{\hyperlink{flat__tuple_8h_ae2d36d67f13767b85f74df9ee4d0b4a1}{for\_each}}(links, [\&](\textcolor{keyword}{auto}\&\& field) \{}
+\DoxyCodeLine{39                 \textcolor{keywordflow}{if} (added) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{40                 added = field.add(link);}
+\DoxyCodeLine{41             \});}
+\DoxyCodeLine{42             \textcolor{keywordflow}{return} added;}
+\DoxyCodeLine{43         \}}
+\DoxyCodeLine{44 }
+\DoxyCodeLine{45         \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{46         \textcolor{keywordtype}{bool} remove(T* link) \textcolor{keyword}{noexcept} \{}
+\DoxyCodeLine{47             \textcolor{keywordflow}{if} (link == \textcolor{keyword}{nullptr}) }
+\DoxyCodeLine{48                 \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{49 }
+\DoxyCodeLine{50             \textcolor{keywordtype}{bool} removed = \textcolor{keyword}{false};}
+\DoxyCodeLine{51             \mbox{\hyperlink{flat__tuple_8h_ae2d36d67f13767b85f74df9ee4d0b4a1}{for\_each}}(links, [\&](\textcolor{keyword}{auto}\&\& field) \{}
+\DoxyCodeLine{52                 \textcolor{keywordflow}{if} (removed) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{53                 removed = field.remove(link);}
+\DoxyCodeLine{54             \});}
+\DoxyCodeLine{55             \textcolor{keywordflow}{return} removed;}
+\DoxyCodeLine{56         \}}
+\DoxyCodeLine{57 }
+\DoxyCodeLine{58         \mbox{\hyperlink{classhope_1_1link__holder__tuple}{link\_holder\_tuple}}(\textcolor{keyword}{const} \mbox{\hyperlink{classhope_1_1link__holder__tuple}{link\_holder\_tuple}}\&) = \textcolor{keyword}{delete};}
+\DoxyCodeLine{59         \mbox{\hyperlink{classhope_1_1link__holder__tuple}{link\_holder\_tuple}}(\mbox{\hyperlink{classhope_1_1link__holder__tuple}{link\_holder\_tuple}}\&\&) = \textcolor{keyword}{delete};}
+\DoxyCodeLine{60         \mbox{\hyperlink{classhope_1_1link__holder__tuple}{link\_holder\_tuple}}\& operator=(\textcolor{keyword}{const} \mbox{\hyperlink{classhope_1_1link__holder__tuple}{link\_holder\_tuple}}\&) = \textcolor{keyword}{delete};}
+\DoxyCodeLine{61         \mbox{\hyperlink{classhope_1_1link__holder__tuple}{link\_holder\_tuple}}\& operator=(\mbox{\hyperlink{classhope_1_1link__holder__tuple}{link\_holder\_tuple}}\&\&) = \textcolor{keyword}{delete};}
+\DoxyCodeLine{62     \textcolor{keyword}{private}:}
+\DoxyCodeLine{63 }
+\DoxyCodeLine{64         \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{65         [[nodiscard]] \textcolor{keyword}{constexpr} \textcolor{keyword}{decltype}(\textcolor{keyword}{auto}) get\_impl() \textcolor{keyword}{const} \textcolor{keyword}{noexcept} \{}
+\DoxyCodeLine{66             \textcolor{keyword}{static\_assert}(contains<T>(types));}
+\DoxyCodeLine{67             \textcolor{keywordflow}{return} links.template get<InnerHolderPolicy<T>>().get();}
+\DoxyCodeLine{68         \}}
+\DoxyCodeLine{69 }
+\DoxyCodeLine{70         \textcolor{keyword}{constexpr} \textcolor{keyword}{static} \mbox{\hyperlink{classhope_1_1type__list}{type\_list}}<Links...> types\{ \};}
+\DoxyCodeLine{71 }
+\DoxyCodeLine{72         \mbox{\hyperlink{classhope_1_1flat__tuple}{links\_t}} links\{ \};}
+\DoxyCodeLine{73     \};}
+\DoxyCodeLine{74 \}}
+
+\end{DoxyCode}

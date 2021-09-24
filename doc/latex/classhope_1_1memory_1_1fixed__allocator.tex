@@ -1,0 +1,51 @@
+\hypertarget{classhope_1_1memory_1_1fixed__allocator}{}\doxysection{hope\+::memory\+::fixed\+\_\+allocator Class Reference}
+\label{classhope_1_1memory_1_1fixed__allocator}\index{hope::memory::fixed\_allocator@{hope::memory::fixed\_allocator}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classhope_1_1memory_1_1fixed__allocator_a8719b9e4e5395de5cc5b134b3144557c}\label{classhope_1_1memory_1_1fixed__allocator_a8719b9e4e5395de5cc5b134b3144557c}} 
+{\bfseries fixed\+\_\+allocator} (uint8\+\_\+t max\+\_\+blocks\+\_\+count, std\+::size\+\_\+t \mbox{\hyperlink{classhope_1_1memory_1_1fixed__allocator_a6b5b1dd43dc603dc8ea1a29f04e6d735}{block\+\_\+size}}) noexcept
+\item 
+\mbox{\Hypertarget{classhope_1_1memory_1_1fixed__allocator_a28cc19c63047144687d8be985d5883ab}\label{classhope_1_1memory_1_1fixed__allocator_a28cc19c63047144687d8be985d5883ab}} 
+{\bfseries fixed\+\_\+allocator} (\mbox{\hyperlink{classhope_1_1memory_1_1fixed__allocator}{fixed\+\_\+allocator}} \&\&rhs) noexcept
+\item 
+\mbox{\Hypertarget{classhope_1_1memory_1_1fixed__allocator_acaad66366fa5c4bad35941eca75a14f1}\label{classhope_1_1memory_1_1fixed__allocator_acaad66366fa5c4bad35941eca75a14f1}} 
+\mbox{\hyperlink{classhope_1_1memory_1_1fixed__allocator}{fixed\+\_\+allocator}} \& {\bfseries operator=} (\mbox{\hyperlink{classhope_1_1memory_1_1fixed__allocator}{fixed\+\_\+allocator}} \&\&rhs) noexcept
+\item 
+\mbox{\hyperlink{classhope_1_1memory_1_1fixed__allocator_a5721666db5d5274d3b274709538cccaa}{fixed\+\_\+allocator}} (const \mbox{\hyperlink{classhope_1_1memory_1_1fixed__allocator}{fixed\+\_\+allocator}} \&rhs)=delete
+\begin{DoxyCompactList}\small\item\em to avoid extra or unsafe copying we have to explicitly delete copy constructor and copy assign operator also, we should create explicit noexcept move constructor and copy assign operator \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classhope_1_1memory_1_1fixed__allocator_abd51416bdf10794e3184f52ff00a108c}\label{classhope_1_1memory_1_1fixed__allocator_abd51416bdf10794e3184f52ff00a108c}} 
+\mbox{\hyperlink{classhope_1_1memory_1_1fixed__allocator}{fixed\+\_\+allocator}} \& {\bfseries operator=} (const \mbox{\hyperlink{classhope_1_1memory_1_1fixed__allocator}{fixed\+\_\+allocator}} \&rhs)=delete
+\item 
+\mbox{\Hypertarget{classhope_1_1memory_1_1fixed__allocator_a65c6e85befbcaf87821a4dfcae301d26}\label{classhope_1_1memory_1_1fixed__allocator_a65c6e85befbcaf87821a4dfcae301d26}} 
+void $\ast$ {\bfseries allocate} () noexcept
+\begin{DoxyCompactList}\small\item\em allocate block with m\+\_\+block\+\_\+size size \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classhope_1_1memory_1_1fixed__allocator_afc0ab835b42ecd4504ba6942b0eb1387}\label{classhope_1_1memory_1_1fixed__allocator_afc0ab835b42ecd4504ba6942b0eb1387}} 
+void {\bfseries deallocate} (void $\ast$ptr) noexcept
+\begin{DoxyCompactList}\small\item\em try to deallocate passed pointer, if it were allocated by another memory pool in debug this caused assert failure in realize mode this causes undefined behavior \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classhope_1_1memory_1_1fixed__allocator_a6b5b1dd43dc603dc8ea1a29f04e6d735}\label{classhope_1_1memory_1_1fixed__allocator_a6b5b1dd43dc603dc8ea1a29f04e6d735}} 
+std\+::size\+\_\+t {\bfseries block\+\_\+size} () const noexcept
+\begin{DoxyCompactList}\small\item\em returns size of block, witch may be allocated \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classhope_1_1memory_1_1fixed__allocator_a5721666db5d5274d3b274709538cccaa}\label{classhope_1_1memory_1_1fixed__allocator_a5721666db5d5274d3b274709538cccaa}} 
+\index{hope::memory::fixed\_allocator@{hope::memory::fixed\_allocator}!fixed\_allocator@{fixed\_allocator}}
+\index{fixed\_allocator@{fixed\_allocator}!hope::memory::fixed\_allocator@{hope::memory::fixed\_allocator}}
+\doxysubsubsection{\texorpdfstring{fixed\_allocator()}{fixed\_allocator()}}
+{\footnotesize\ttfamily hope\+::memory\+::fixed\+\_\+allocator\+::fixed\+\_\+allocator (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classhope_1_1memory_1_1fixed__allocator}{fixed\+\_\+allocator}} \&}]{rhs }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+
+
+to avoid extra or unsafe copying we have to explicitly delete copy constructor and copy assign operator also, we should create explicit noexcept move constructor and copy assign operator 
+
+
+\begin{DoxyParams}{Parameters}
+{\em rhs} & \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+lib/hope/memory/small\+\_\+object/fixed\+\_\+allocator.\+h\end{DoxyCompactItemize}

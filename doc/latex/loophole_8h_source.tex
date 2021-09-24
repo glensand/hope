@@ -1,0 +1,58 @@
+\hypertarget{loophole_8h_source}{}\doxysection{loophole.\+h}
+\label{loophole_8h_source}\index{lib/hope/components/loophole.h@{lib/hope/components/loophole.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* Copyright (C) 2020 -\/ 2021 Gleb Bezborodov -\/ All Rights Reserved}}
+\DoxyCodeLine{2 \textcolor{comment}{ * You may use, distribute and modify this code under the}}
+\DoxyCodeLine{3 \textcolor{comment}{ * terms of the MIT license.}}
+\DoxyCodeLine{4 \textcolor{comment}{ *}}
+\DoxyCodeLine{5 \textcolor{comment}{ * You should have received a copy of the MIT license with}}
+\DoxyCodeLine{6 \textcolor{comment}{ * this file. If not, please write to: bezborodoff.gleb@gmail.com, or visit : https://github.com/glensand/hope}}
+\DoxyCodeLine{7 \textcolor{comment}{ */}}
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{11 \textcolor{keyword}{namespace }hope::loophole \{}
+\DoxyCodeLine{12 }
+\DoxyCodeLine{13     \textcolor{keyword}{namespace }detail \{}
+\DoxyCodeLine{14         \textcolor{keyword}{template} <\textcolor{keyword}{typename} T, std::\textcolor{keywordtype}{size\_t} I>}
+\DoxyCodeLine{15         \textcolor{keyword}{struct }\mbox{\hyperlink{structhope_1_1loophole_1_1detail_1_1def__inserter__i}{def\_inserter\_i}} \{}
+\DoxyCodeLine{16             \textcolor{keyword}{friend} \textcolor{keyword}{constexpr} \textcolor{keyword}{auto} get\_impl(\mbox{\hyperlink{structhope_1_1loophole_1_1detail_1_1def__inserter__i}{def\_inserter\_i<T, I>}});}
+\DoxyCodeLine{17         \};}
+\DoxyCodeLine{18 }
+\DoxyCodeLine{19         \textcolor{keyword}{template} <\textcolor{keyword}{typename}>}
+\DoxyCodeLine{20         \textcolor{keyword}{struct }\mbox{\hyperlink{structhope_1_1loophole_1_1detail_1_1def__inserter}{def\_inserter}} \{}
+\DoxyCodeLine{21             \textcolor{keyword}{friend} \textcolor{keyword}{constexpr} \textcolor{keyword}{auto} get\_impl(\mbox{\hyperlink{structhope_1_1loophole_1_1detail_1_1def__inserter}{def\_inserter}});}
+\DoxyCodeLine{22         \};}
+\DoxyCodeLine{23 }
+\DoxyCodeLine{24         \textcolor{keyword}{template} <\textcolor{keyword}{typename} K, \textcolor{keyword}{typename} V>}
+\DoxyCodeLine{25         \textcolor{keyword}{struct }\mbox{\hyperlink{structhope_1_1loophole_1_1detail_1_1decl__inserter}{decl\_inserter}} \{}
+\DoxyCodeLine{26             \textcolor{keyword}{friend} \textcolor{keyword}{constexpr} \textcolor{keyword}{auto} get\_impl(K) \{}
+\DoxyCodeLine{27                 \textcolor{keywordflow}{return} V\{\};}
+\DoxyCodeLine{28             \}}
+\DoxyCodeLine{29         \};}
+\DoxyCodeLine{30     \}}
+\DoxyCodeLine{31     }
+\DoxyCodeLine{32     \textcolor{keyword}{template} <\textcolor{keyword}{typename} K, \textcolor{keyword}{typename} V>}
+\DoxyCodeLine{33     \textcolor{keyword}{constexpr} \textcolor{keywordtype}{void} inject(K, V) \{}
+\DoxyCodeLine{34         (void)\textcolor{keyword}{sizeof}(\mbox{\hyperlink{structhope_1_1loophole_1_1detail_1_1decl__inserter}{detail::decl\_inserter}}<\mbox{\hyperlink{structhope_1_1loophole_1_1detail_1_1def__inserter}{detail::def\_inserter<K>}}, V>);}
+\DoxyCodeLine{35     \}}
+\DoxyCodeLine{36 }
+\DoxyCodeLine{37     \textcolor{keyword}{template} <std::\textcolor{keywordtype}{size\_t} I, \textcolor{keyword}{typename} K, \textcolor{keyword}{typename} V>}
+\DoxyCodeLine{38     \textcolor{keyword}{constexpr} \textcolor{keywordtype}{void} inject(K, V) \{}
+\DoxyCodeLine{39         (void)\textcolor{keyword}{sizeof}(detail::decl\_inserter<detail::def\_inserter\_i<K, I>, V>);}
+\DoxyCodeLine{40     \}}
+\DoxyCodeLine{41 }
+\DoxyCodeLine{42     \textcolor{keyword}{template} <\textcolor{keyword}{typename} K>}
+\DoxyCodeLine{43     \textcolor{keyword}{constexpr} \textcolor{keyword}{auto} get(K) \{}
+\DoxyCodeLine{44         \textcolor{keywordflow}{return} get\_impl(detail::def\_inserter<K>\{\});}
+\DoxyCodeLine{45     \}}
+\DoxyCodeLine{46 }
+\DoxyCodeLine{47     \textcolor{keyword}{template} <std::\textcolor{keywordtype}{size\_t} I, \textcolor{keyword}{typename} K>}
+\DoxyCodeLine{48     \textcolor{keyword}{constexpr} \textcolor{keyword}{auto} get(K) \{}
+\DoxyCodeLine{49         \textcolor{keywordflow}{return} get\_impl(detail::def\_inserter\_i<K, I>\{\});}
+\DoxyCodeLine{50     \}}
+\DoxyCodeLine{51 }
+\DoxyCodeLine{52 \}}
+
+\end{DoxyCode}

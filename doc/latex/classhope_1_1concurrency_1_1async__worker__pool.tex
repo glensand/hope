@@ -1,0 +1,60 @@
+\hypertarget{classhope_1_1concurrency_1_1async__worker__pool}{}\doxysection{hope\+::concurrency\+::async\+\_\+worker\+\_\+pool Class Reference}
+\label{classhope_1_1concurrency_1_1async__worker__pool}\index{hope::concurrency::async\_worker\_pool@{hope::concurrency::async\_worker\_pool}}
+\doxysubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classhope_1_1concurrency_1_1async__worker__pool_a7a36625356bffa082a85fd421017c267}\label{classhope_1_1concurrency_1_1async__worker__pool_a7a36625356bffa082a85fd421017c267}} 
+enum class {\bfseries job\+\_\+add\+\_\+policy} \+: std\+::size\+\_\+t \{ {\bfseries sequential} = 0
+, {\bfseries random}
+, {\bfseries count}
+ \}
+\item 
+\mbox{\Hypertarget{classhope_1_1concurrency_1_1async__worker__pool_ae5dd6a50cb0eefce7cfd2ad698258ffe}\label{classhope_1_1concurrency_1_1async__worker__pool_ae5dd6a50cb0eefce7cfd2ad698258ffe}} 
+using {\bfseries job\+\_\+t} = async\+\_\+worker\+::job\+\_\+t
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classhope_1_1concurrency_1_1async__worker__pool_a5efa229d4e1cfd7429895c260de0463c}\label{classhope_1_1concurrency_1_1async__worker__pool_a5efa229d4e1cfd7429895c260de0463c}} 
+{\bfseries async\+\_\+worker\+\_\+pool} (std\+::size\+\_\+t thread\+\_\+count=std\+::thread\+::hardware\+\_\+concurrency()+1)
+\item 
+\mbox{\Hypertarget{classhope_1_1concurrency_1_1async__worker__pool_ac9299b50128c235c94cc0ef587250c09}\label{classhope_1_1concurrency_1_1async__worker__pool_ac9299b50128c235c94cc0ef587250c09}} 
+void {\bfseries run} () noexcept
+\begin{DoxyCompactList}\small\item\em Runs all the recently created threads. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classhope_1_1concurrency_1_1async__worker__pool_a97e4f314acb78d19c4df2e99f9403cf5}\label{classhope_1_1concurrency_1_1async__worker__pool_a97e4f314acb78d19c4df2e99f9403cf5}} 
+void {\bfseries stop} () noexcept
+\begin{DoxyCompactList}\small\item\em Stops all the controlled threads, completes jobs. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classhope_1_1concurrency_1_1async__worker__pool_a963c5d3c03d7bac7fa4c87b8ac89101f}\label{classhope_1_1concurrency_1_1async__worker__pool_a963c5d3c03d7bac7fa4c87b8ac89101f}} 
+void {\bfseries shutdown} () noexcept
+\begin{DoxyCompactList}\small\item\em Stops all the controlled threads, when this method will be called all jobs will bve discarded. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classhope_1_1concurrency_1_1async__worker__pool_a8d0d364ddaf627d6eaa9c4b8269a9b56}{add\+\_\+job}} (job\+\_\+t \&\&task, job\+\_\+add\+\_\+policy add\+\_\+policy=job\+\_\+add\+\_\+policy\+::random) noexcept
+\begin{DoxyCompactList}\small\item\em Adds given job to the random controlled thread. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classhope_1_1concurrency_1_1async__worker__pool_ac1e1c98db7aebb442aef18109d16f3ee}\label{classhope_1_1concurrency_1_1async__worker__pool_ac1e1c98db7aebb442aef18109d16f3ee}} 
+void {\bfseries wait} ()
+\begin{DoxyCompactList}\small\item\em Synchronous operation, wait while all recently added jobs will be completed. This method is not intended to be called from workers. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classhope_1_1concurrency_1_1async__worker__pool_a8d0d364ddaf627d6eaa9c4b8269a9b56}\label{classhope_1_1concurrency_1_1async__worker__pool_a8d0d364ddaf627d6eaa9c4b8269a9b56}} 
+\index{hope::concurrency::async\_worker\_pool@{hope::concurrency::async\_worker\_pool}!add\_job@{add\_job}}
+\index{add\_job@{add\_job}!hope::concurrency::async\_worker\_pool@{hope::concurrency::async\_worker\_pool}}
+\doxysubsubsection{\texorpdfstring{add\_job()}{add\_job()}}
+{\footnotesize\ttfamily void hope\+::concurrency\+::async\+\_\+worker\+\_\+pool\+::add\+\_\+job (\begin{DoxyParamCaption}\item[{job\+\_\+t \&\&}]{task,  }\item[{job\+\_\+add\+\_\+policy}]{add\+\_\+policy = {\ttfamily job\+\_\+add\+\_\+policy\+:\+:random} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [noexcept]}}
+
+
+
+Adds given job to the random controlled thread. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em task} & Job to be added \\
+\hline
+{\em add\+\_\+policy} & \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+lib/hope/concurrency/async\+\_\+worker\+\_\+pool.\+h\item 
+lib/hope/concurrency/async\+\_\+worker\+\_\+pool.\+cpp\end{DoxyCompactItemize}

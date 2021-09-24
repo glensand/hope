@@ -1,0 +1,208 @@
+\hypertarget{flat__tuple_8h_source}{}\doxysection{flat\+\_\+tuple.\+h}
+\label{flat__tuple_8h_source}\index{lib/hope/tuple/flat\_tuple.h@{lib/hope/tuple/flat\_tuple.h}}
+\mbox{\hyperlink{flat__tuple_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* Copyright (C) 2020 -\/ 2021 Gleb Bezborodov -\/ All Rights Reserved}}
+\DoxyCodeLine{2 \textcolor{comment}{ * You may use, distribute and modify this code under the}}
+\DoxyCodeLine{3 \textcolor{comment}{ * terms of the MIT license.}}
+\DoxyCodeLine{4 \textcolor{comment}{ *}}
+\DoxyCodeLine{5 \textcolor{comment}{ * You should have received a copy of the MIT license with}}
+\DoxyCodeLine{6 \textcolor{comment}{ * this file. If not, please write to: bezborodoff.gleb@gmail.com, or visit : https://github.com/glensand/hope}}
+\DoxyCodeLine{7 \textcolor{comment}{ */}}
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#include "{}hope/typelist/type\_list.h"{}}}
+\DoxyCodeLine{12 }
+\DoxyCodeLine{20 \textcolor{keyword}{namespace }hope \{}
+\DoxyCodeLine{21     \textcolor{keyword}{namespace }detail \{}
+\DoxyCodeLine{22 }
+\DoxyCodeLine{26         \textcolor{keyword}{struct }\mbox{\hyperlink{structhope_1_1detail_1_1tuple__tag}{tuple\_tag}} \{}
+\DoxyCodeLine{27         \};}
+\DoxyCodeLine{28 }
+\DoxyCodeLine{34         \textcolor{keyword}{template}<\textcolor{keyword}{typename} T, \textcolor{keywordtype}{size\_t} I>}
+\DoxyCodeLine{35         \textcolor{keyword}{struct }\mbox{\hyperlink{structhope_1_1detail_1_1indexed__value}{indexed\_value}} \{}
+\DoxyCodeLine{36             \textcolor{keyword}{constexpr} \mbox{\hyperlink{structhope_1_1detail_1_1indexed__value}{indexed\_value}}() = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{37 }
+\DoxyCodeLine{38             \textcolor{keyword}{constexpr} \mbox{\hyperlink{structhope_1_1detail_1_1indexed__value}{indexed\_value}}(\mbox{\hyperlink{structhope_1_1detail_1_1indexed__value}{indexed\_value}} \&\&) = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{39 }
+\DoxyCodeLine{40             \textcolor{keyword}{constexpr} \mbox{\hyperlink{structhope_1_1detail_1_1indexed__value}{indexed\_value}}(\textcolor{keyword}{const} \mbox{\hyperlink{structhope_1_1detail_1_1indexed__value}{indexed\_value}} \&) = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{41 }
+\DoxyCodeLine{42             \mbox{\hyperlink{structhope_1_1detail_1_1indexed__value}{\string~indexed\_value}}() = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{43 }
+\DoxyCodeLine{44             \textcolor{keyword}{template}<\textcolor{keyword}{typename} Vt>}
+\DoxyCodeLine{45             \textcolor{keyword}{explicit} \textcolor{keyword}{constexpr} \mbox{\hyperlink{structhope_1_1detail_1_1indexed__value}{indexed\_value}}(Vt \&\&valueRef)}
+\DoxyCodeLine{46                     : value(std::forward<Vt>(valueRef)) \{}
+\DoxyCodeLine{47                 \textcolor{keyword}{static\_assert}(std::is\_constructible\_v<T, Vt>,}
+\DoxyCodeLine{48                               \textcolor{stringliteral}{"{}hope::indexed\_value: given object is not suitable as initializer"{}}}
+\DoxyCodeLine{49                 );}
+\DoxyCodeLine{50             \}}
+\DoxyCodeLine{51 }
+\DoxyCodeLine{52             T value;}
+\DoxyCodeLine{53         \};}
+\DoxyCodeLine{54 }
+\DoxyCodeLine{55         \textcolor{keyword}{template}<\textcolor{keyword}{typename}, \textcolor{keyword}{typename}... Ts>}
+\DoxyCodeLine{56         \textcolor{keyword}{class }\mbox{\hyperlink{classhope_1_1detail_1_1flat__tuple__impl}{flat\_tuple\_impl}};}
+\DoxyCodeLine{57 }
+\DoxyCodeLine{63         \textcolor{keyword}{template}<std::size\_t... Is, \textcolor{keyword}{typename}... Ts>}
+\DoxyCodeLine{64         \textcolor{keyword}{class }\mbox{\hyperlink{classhope_1_1detail_1_1flat__tuple__impl}{flat\_tuple\_impl}}<std::index\_sequence<Is...>, Ts...> : \textcolor{keyword}{public} \mbox{\hyperlink{structhope_1_1detail_1_1tuple__tag}{tuple\_tag}}, \textcolor{keyword}{public} \mbox{\hyperlink{structhope_1_1detail_1_1indexed__value}{indexed\_value}}<Ts, Is> ... \{}
+\DoxyCodeLine{65             \textcolor{keyword}{using} \mbox{\hyperlink{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_01_4_00_01_ts_8_8_8_01_4}{self\_t}} = \mbox{\hyperlink{classhope_1_1detail_1_1flat__tuple__impl}{flat\_tuple\_impl}}<std::index\_sequence<Is...>, Ts...>;}
+\DoxyCodeLine{66             \textcolor{keyword}{constexpr} \textcolor{keyword}{static} \mbox{\hyperlink{classhope_1_1type__list}{type\_list<std::decay\_t<Ts>}}...> types\{\}; \textcolor{comment}{// only clear types might be used, thus make it clear here}}
+\DoxyCodeLine{67 }
+\DoxyCodeLine{68             \textcolor{keyword}{template}<std::\textcolor{keywordtype}{size\_t} I>}
+\DoxyCodeLine{69             \textcolor{keyword}{using} native\_t = std::decay\_t<typename decltype(get\_nth\_type<I>(types))::Type>;}
+\DoxyCodeLine{70         \textcolor{keyword}{protected}:}
+\DoxyCodeLine{71             \textcolor{keyword}{using} \mbox{\hyperlink{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_01_4_00_01_ts_8_8_8_01_4}{flat\_tuple}} = \mbox{\hyperlink{classhope_1_1detail_1_1flat__tuple__impl}{flat\_tuple\_impl}}<std::index\_sequence<Is...>, Ts...>;}
+\DoxyCodeLine{72 }
+\DoxyCodeLine{73             \textcolor{keyword}{constexpr} \mbox{\hyperlink{classhope_1_1detail_1_1flat__tuple__impl}{flat\_tuple\_impl}}() = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{74 }
+\DoxyCodeLine{75             \textcolor{keyword}{constexpr} \mbox{\hyperlink{classhope_1_1detail_1_1flat__tuple__impl}{flat\_tuple\_impl}}(\textcolor{keyword}{const} \mbox{\hyperlink{classhope_1_1detail_1_1flat__tuple__impl}{flat\_tuple\_impl}} \&) = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{76 }
+\DoxyCodeLine{77             \textcolor{keyword}{constexpr} \mbox{\hyperlink{classhope_1_1detail_1_1flat__tuple__impl}{flat\_tuple\_impl}}(\mbox{\hyperlink{classhope_1_1detail_1_1flat__tuple__impl}{flat\_tuple\_impl}} \&\&) = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{78 }
+\DoxyCodeLine{79             \mbox{\hyperlink{classhope_1_1detail_1_1flat__tuple__impl}{\string~flat\_tuple\_impl}}() = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{80 }
+\DoxyCodeLine{81             \textcolor{keyword}{template}<\textcolor{keyword}{typename}... VTs>}
+\DoxyCodeLine{82             \textcolor{keyword}{constexpr} \mbox{\hyperlink{classhope_1_1detail_1_1flat__tuple__impl}{flat\_tuple\_impl}}(VTs \&\&... elems) noexcept}
+\DoxyCodeLine{83                     : \mbox{\hyperlink{structhope_1_1detail_1_1indexed__value}{indexed\_value<Ts, Is>}}(std::forward<VTs>(elems))... \{\}}
+\DoxyCodeLine{84 }
+\DoxyCodeLine{85         \textcolor{keyword}{public}:}
+\DoxyCodeLine{86             \textcolor{keyword}{constexpr} \textcolor{keyword}{static} std::size\_t tuple\_size\{size(types)\};}
+\DoxyCodeLine{87 }
+\DoxyCodeLine{99             \textcolor{keyword}{template}<\textcolor{keyword}{typename} T, \textcolor{keyword}{typename} NativeT = std::decay\_t<T>>}
+\DoxyCodeLine{100             [[nodiscard]] \textcolor{keyword}{constexpr} \textcolor{keyword}{decltype}(\textcolor{keyword}{auto})}
+\DoxyCodeLine{101             \mbox{\hyperlink{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_01_4_00_01_ts_8_8_8_01_4_a614a63b798ed5f427da6aa7bf08111a2}{get}}() \textcolor{keyword}{noexcept} \{}
+\DoxyCodeLine{102                 \textcolor{keyword}{static\_assert}(contains<NativeT>(types));}
+\DoxyCodeLine{103                 \textcolor{keyword}{constexpr} \textcolor{keyword}{auto} TypeIndex = find<NativeT>(types);}
+\DoxyCodeLine{104                 \textcolor{keyword}{using} value\_t = \textcolor{keyword}{typename} \textcolor{keyword}{decltype}(deduce\_type<NativeT, TypeIndex>())::Type;}
+\DoxyCodeLine{105                 \textcolor{keywordflow}{return} get\_impl<TypeIndex, value\_t>();}
+\DoxyCodeLine{106             \}}
+\DoxyCodeLine{107 }
+\DoxyCodeLine{119             \textcolor{keyword}{template}<\textcolor{keyword}{typename} T, \textcolor{keyword}{typename} NativeT = std::decay\_t<T>>}
+\DoxyCodeLine{120             [[nodiscard]] \textcolor{keyword}{constexpr} \textcolor{keyword}{decltype}(\textcolor{keyword}{auto})}
+\DoxyCodeLine{121             \mbox{\hyperlink{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_01_4_00_01_ts_8_8_8_01_4_ab64701e05abfc78fb43f703577cb9920}{get}}() \textcolor{keyword}{const} \textcolor{keyword}{noexcept} \{}
+\DoxyCodeLine{122                 \textcolor{keyword}{static\_assert}(contains<NativeT>(types));}
+\DoxyCodeLine{123                 \textcolor{keyword}{constexpr} \textcolor{keyword}{auto} TypeIndex = find<NativeT>(types);}
+\DoxyCodeLine{124                 \textcolor{keyword}{using} value\_t = \textcolor{keyword}{typename} \textcolor{keyword}{decltype}(deduce\_type<NativeT, TypeIndex>())::Type;}
+\DoxyCodeLine{125                 \textcolor{keywordflow}{return} get\_impl<TypeIndex, value\_t>();}
+\DoxyCodeLine{126             \}}
+\DoxyCodeLine{127 }
+\DoxyCodeLine{134             \textcolor{keyword}{template}<\textcolor{keywordtype}{size\_t} N>}
+\DoxyCodeLine{135             [[nodiscard]] \textcolor{keyword}{constexpr} \textcolor{keyword}{decltype}(\textcolor{keyword}{auto})}
+\DoxyCodeLine{136             \mbox{\hyperlink{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_01_4_00_01_ts_8_8_8_01_4_a72594a3474312e81860ed0dc8c72b29e}{get}}() \textcolor{keyword}{noexcept} \{}
+\DoxyCodeLine{137                 \textcolor{keyword}{static\_assert}(tuple\_size > N);}
+\DoxyCodeLine{138                 \textcolor{keyword}{using} value\_t = \textcolor{keyword}{typename} \textcolor{keyword}{decltype}(deduce\_type<native\_t<N>, N>())::Type;}
+\DoxyCodeLine{139                 \textcolor{keywordflow}{return} get\_impl<N, value\_t>();}
+\DoxyCodeLine{140             \}}
+\DoxyCodeLine{141 }
+\DoxyCodeLine{148             \textcolor{keyword}{template}<\textcolor{keywordtype}{size\_t} N>}
+\DoxyCodeLine{149             [[nodiscard]] \textcolor{keyword}{constexpr} \textcolor{keyword}{decltype}(\textcolor{keyword}{auto})}
+\DoxyCodeLine{150             \mbox{\hyperlink{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_01_4_00_01_ts_8_8_8_01_4_a96a39d2d700295e27342636e64a3dc47}{get}}() \textcolor{keyword}{const} \textcolor{keyword}{noexcept} \{}
+\DoxyCodeLine{151                 \textcolor{keyword}{static\_assert}(tuple\_size > N);}
+\DoxyCodeLine{152                 \textcolor{keyword}{using} value\_t = \textcolor{keyword}{typename} \textcolor{keyword}{decltype}(deduce\_type<native\_t<N>, N>())::Type;}
+\DoxyCodeLine{153                 \textcolor{keywordflow}{return} get\_impl<N, value\_t>();}
+\DoxyCodeLine{154             \}}
+\DoxyCodeLine{155 }
+\DoxyCodeLine{161             \textcolor{keyword}{template}<\textcolor{keyword}{typename} F>}
+\DoxyCodeLine{162             \textcolor{keyword}{constexpr} \textcolor{keywordtype}{void} \mbox{\hyperlink{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_01_4_00_01_ts_8_8_8_01_4_ac08ef238632966d87e990d0b5de6e372}{for\_each}}(F \&\&f)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{163                 (f(\mbox{\hyperlink{structhope_1_1detail_1_1get}{get<Is>}}()), ...);}
+\DoxyCodeLine{164             \}}
+\DoxyCodeLine{165 }
+\DoxyCodeLine{172             \textcolor{keyword}{template}<\textcolor{keyword}{typename} F>}
+\DoxyCodeLine{173             \textcolor{keyword}{constexpr} \textcolor{keywordtype}{void} \mbox{\hyperlink{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_01_4_00_01_ts_8_8_8_01_4_adbb07ae1ced644721247d0d3aabf34a9}{for\_each}}(\textcolor{keyword}{const} \mbox{\hyperlink{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_01_4_00_01_ts_8_8_8_01_4}{flat\_tuple}} \&tuple2, F \&\&f)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{174                 (f(\mbox{\hyperlink{structhope_1_1detail_1_1get}{get<Is>}}(), tuple2.template \mbox{\hyperlink{structhope_1_1detail_1_1get}{get<Is>}}()), ...);}
+\DoxyCodeLine{175             \}}
+\DoxyCodeLine{176 }
+\DoxyCodeLine{182             \textcolor{keyword}{template}<\textcolor{keyword}{typename} F>}
+\DoxyCodeLine{183             \textcolor{keyword}{constexpr} \textcolor{keywordtype}{void} \mbox{\hyperlink{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_01_4_00_01_ts_8_8_8_01_4_abb79287ce9b6dda01b61957ed41bf2c7}{for\_each}}(F \&\&f) \{}
+\DoxyCodeLine{184                 (f(\mbox{\hyperlink{structhope_1_1detail_1_1get}{get<Is>}}()), ...);}
+\DoxyCodeLine{185             \}}
+\DoxyCodeLine{186 }
+\DoxyCodeLine{193             \textcolor{keyword}{template}<\textcolor{keyword}{typename} F>}
+\DoxyCodeLine{194             \textcolor{keyword}{constexpr} \textcolor{keywordtype}{void} \mbox{\hyperlink{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_01_4_00_01_ts_8_8_8_01_4_a75921af66ad1b80541a76afc03bca170}{for\_each}}(\mbox{\hyperlink{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_01_4_00_01_ts_8_8_8_01_4}{flat\_tuple}} \&tuple2, F \&\&f) \{}
+\DoxyCodeLine{195                 (f(\mbox{\hyperlink{structhope_1_1detail_1_1get}{get<Is>}}(), tuple2.template \mbox{\hyperlink{structhope_1_1detail_1_1get}{get<Is>}}()), ...);}
+\DoxyCodeLine{196             \}}
+\DoxyCodeLine{197 }
+\DoxyCodeLine{202             [[nodiscard]] \textcolor{keyword}{static} \textcolor{keyword}{constexpr} \textcolor{keyword}{auto} \mbox{\hyperlink{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_01_4_00_01_ts_8_8_8_01_4_aa974184168a47b1aec781dcc4ffbd4fc}{get\_size}}() noexcept \{}
+\DoxyCodeLine{203                 \textcolor{keywordflow}{return} tuple\_size;}
+\DoxyCodeLine{204             \}}
+\DoxyCodeLine{205 }
+\DoxyCodeLine{206         \textcolor{keyword}{private}:}
+\DoxyCodeLine{207 }
+\DoxyCodeLine{214             \textcolor{keyword}{template}<std::\textcolor{keywordtype}{size\_t} N, \textcolor{keyword}{typename} NativeT>}
+\DoxyCodeLine{215             [[nodiscard]] \textcolor{keyword}{constexpr} \textcolor{keyword}{decltype}(\textcolor{keyword}{auto})}
+\DoxyCodeLine{216             get\_impl() const noexcept \{}
+\DoxyCodeLine{217                 \textcolor{keywordflow}{return} \textcolor{keyword}{static\_cast<}\textcolor{keyword}{const }NativeT \&\textcolor{keyword}{>}(}
+\DoxyCodeLine{218                         \textcolor{keyword}{static\_cast<}\textcolor{keyword}{const }\mbox{\hyperlink{structhope_1_1detail_1_1indexed__value}{indexed\_value<NativeT, N>}} \&\textcolor{keyword}{>} (*this).value}
+\DoxyCodeLine{219                 );}
+\DoxyCodeLine{220             \}}
+\DoxyCodeLine{221 }
+\DoxyCodeLine{228             \textcolor{keyword}{template}<std::\textcolor{keywordtype}{size\_t} N, \textcolor{keyword}{typename} NativeT>}
+\DoxyCodeLine{229             \textcolor{keyword}{constexpr} \textcolor{keyword}{decltype}(\textcolor{keyword}{auto})}
+\DoxyCodeLine{230             get\_impl() noexcept \{}
+\DoxyCodeLine{231                 \textcolor{keywordflow}{return} \textcolor{keyword}{static\_cast<}NativeT \&\textcolor{keyword}{>}(}
+\DoxyCodeLine{232                         \textcolor{keyword}{static\_cast<}indexed\_value<NativeT, N> \&\textcolor{keyword}{>} (*this).value}
+\DoxyCodeLine{233                 );}
+\DoxyCodeLine{234             \}}
+\DoxyCodeLine{235 }
+\DoxyCodeLine{242             \textcolor{keyword}{template}<\textcolor{keyword}{typename} T, std::\textcolor{keywordtype}{size\_t} I>}
+\DoxyCodeLine{243             [[nodiscard]] \textcolor{keyword}{constexpr} \textcolor{keyword}{auto} deduce\_type() const noexcept \{}
+\DoxyCodeLine{244                 \textcolor{comment}{// we cannot unambiguous determine holding type, thus try to cast to value and ref, and const ref...}}
+\DoxyCodeLine{245                 \textcolor{keywordflow}{if} \textcolor{keyword}{constexpr} (std::is\_base\_of\_v<indexed\_value<T, I>, self\_t>)}
+\DoxyCodeLine{246                     \textcolor{keywordflow}{return} type\_holder<T>\{\};}
+\DoxyCodeLine{247                 \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} \textcolor{keyword}{constexpr} (std::is\_base\_of\_v<indexed\_value<T \&, I>, self\_t>)}
+\DoxyCodeLine{248                     \textcolor{keywordflow}{return} type\_holder<T \&>\{\};}
+\DoxyCodeLine{249                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{250                     \textcolor{keywordflow}{return} type\_holder<const T \&>\{\};}
+\DoxyCodeLine{251             \}}
+\DoxyCodeLine{252         \};}
+\DoxyCodeLine{253 }
+\DoxyCodeLine{254         \textcolor{keyword}{template}<\textcolor{keyword}{typename}... Ts>}
+\DoxyCodeLine{255         \textcolor{keyword}{using} flat\_tuple\_t = flat\_tuple\_impl<std::make\_index\_sequence<size(type\_list<Ts...>\{\})>, Ts...>;}
+\DoxyCodeLine{256     \}}
+\DoxyCodeLine{257 }
+\DoxyCodeLine{263     \textcolor{keyword}{template}<\textcolor{keyword}{typename}... Ts>}
+\DoxyCodeLine{264     \textcolor{keyword}{class }\mbox{\hyperlink{classhope_1_1flat__tuple}{flat\_tuple}} final : \textcolor{keyword}{public} \mbox{\hyperlink{classhope_1_1detail_1_1flat__tuple__impl}{detail::flat\_tuple\_t}}<Ts...> \{}
+\DoxyCodeLine{265     \textcolor{keyword}{public}:}
+\DoxyCodeLine{266         \textcolor{keyword}{template}<\textcolor{keyword}{typename}... VTs,}
+\DoxyCodeLine{267                 \textcolor{keyword}{typename} = std::enable\_if\_t<std::is\_same\_v<type\_list<std::decay\_t<VTs>...>, \mbox{\hyperlink{classhope_1_1type__list}{type\_list<std::decay\_t<Ts>}}...>>>>}
+\DoxyCodeLine{268         \textcolor{keyword}{constexpr} \mbox{\hyperlink{classhope_1_1flat__tuple}{flat\_tuple}}(VTs \&\&... elems) noexcept}
+\DoxyCodeLine{269                 : \mbox{\hyperlink{classhope_1_1detail_1_1flat__tuple__impl}{detail::flat\_tuple\_t}}<Ts...>(std::forward<VTs>(elems)...) \{\}}
+\DoxyCodeLine{270 }
+\DoxyCodeLine{271         \textcolor{keyword}{constexpr} \mbox{\hyperlink{classhope_1_1flat__tuple}{flat\_tuple}}()}
+\DoxyCodeLine{272                 : \mbox{\hyperlink{classhope_1_1detail_1_1flat__tuple__impl}{detail::flat\_tuple\_t}}<Ts...>() \{\}}
+\DoxyCodeLine{273     \};}
+\DoxyCodeLine{274 }
+\DoxyCodeLine{275     \textcolor{keyword}{template}<\textcolor{keyword}{typename}... Ts>}
+\DoxyCodeLine{276     \mbox{\hyperlink{classhope_1_1flat__tuple}{flat\_tuple}}(Ts...)-\/>flat\_tuple<Ts...>;}
+\DoxyCodeLine{277 }
+\DoxyCodeLine{285     \textcolor{keyword}{template}<\textcolor{keyword}{typename}... Ts>}
+\DoxyCodeLine{286     \textcolor{keyword}{constexpr} \textcolor{keyword}{auto} \mbox{\hyperlink{flat__tuple_8h_aee9c169b15f597fb4ae73157aa146655}{make\_flat\_tuple}}(Ts \&\&... args) \{}
+\DoxyCodeLine{287         \textcolor{keywordflow}{return} \mbox{\hyperlink{classhope_1_1flat__tuple}{flat\_tuple<std::decay\_t<Ts>}}...>(std::forward<Ts>(args)...);}
+\DoxyCodeLine{288     \}}
+\DoxyCodeLine{289 }
+\DoxyCodeLine{296     \textcolor{keyword}{template}<\textcolor{keyword}{typename}... Ts>}
+\DoxyCodeLine{297     \textcolor{keyword}{constexpr} \textcolor{keyword}{auto} \mbox{\hyperlink{flat__tuple_8h_a3469d7439f0b0fa64a65d2824b4e8962}{make\_flat\_tuple\_bitfield\_friendly}}(Ts... args) \{}
+\DoxyCodeLine{298         \textcolor{keywordflow}{return} \mbox{\hyperlink{classhope_1_1flat__tuple}{flat\_tuple<std::decay\_t<Ts>}}...>(std::forward<Ts>(args)...);}
+\DoxyCodeLine{299     \}}
+\DoxyCodeLine{300 }
+\DoxyCodeLine{307     \textcolor{keyword}{template}<\textcolor{keyword}{typename}... Ts>}
+\DoxyCodeLine{308     \textcolor{keyword}{constexpr} \textcolor{keyword}{auto} \mbox{\hyperlink{flat__tuple_8h_a5c1e6d98c140dd52281485c113fd9deb}{make\_flat\_ref\_tuple}}(Ts \&\&... args) \{}
+\DoxyCodeLine{309         \textcolor{keywordflow}{return} \mbox{\hyperlink{classhope_1_1flat__tuple}{flat\_tuple}}<Ts...>(std::forward<Ts>(args)...);}
+\DoxyCodeLine{310     \}}
+\DoxyCodeLine{311 }
+\DoxyCodeLine{321     \textcolor{keyword}{template}<\textcolor{keyword}{typename} Tuple, \textcolor{keyword}{typename} F>}
+\DoxyCodeLine{322     \textcolor{keyword}{constexpr} std::enable\_if\_t<std::is\_base\_of\_v<detail::tuple\_tag, std::decay\_t<Tuple>>>}
+\DoxyCodeLine{323     \mbox{\hyperlink{flat__tuple_8h_ae2d36d67f13767b85f74df9ee4d0b4a1}{for\_each}}(Tuple \&\&\mbox{\hyperlink{classhope_1_1tuple}{tuple}}, F \&\&f) \{}
+\DoxyCodeLine{324         \mbox{\hyperlink{classhope_1_1tuple}{tuple}}.for\_each(std::forward<F>(f));}
+\DoxyCodeLine{325     \}}
+\DoxyCodeLine{326 }
+\DoxyCodeLine{338     \textcolor{keyword}{template}<\textcolor{keyword}{typename} Tuple, \textcolor{keyword}{typename} F>}
+\DoxyCodeLine{339     \textcolor{keyword}{constexpr} std::enable\_if\_t<std::is\_base\_of\_v<detail::tuple\_tag, std::decay\_t<Tuple>>>}
+\DoxyCodeLine{340     \mbox{\hyperlink{flat__tuple_8h_ae2d36d67f13767b85f74df9ee4d0b4a1}{for\_each}}(Tuple \&\&tuple1, Tuple \&\&tuple2, F \&\&f) \{}
+\DoxyCodeLine{341         tuple1.for\_each(std::forward<Tuple>(tuple2), std::forward<F>(f));}
+\DoxyCodeLine{342     \}}
+\DoxyCodeLine{343 \}}
+\DoxyCodeLine{344 }
+
+\end{DoxyCode}

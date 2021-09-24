@@ -1,0 +1,55 @@
+\hypertarget{factory_8h_source}{}\doxysection{factory.\+h}
+\label{factory_8h_source}\index{lib/hope/components/factory.h@{lib/hope/components/factory.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* Copyright (C) 2021 Gleb Bezborodov -\/ All Rights Reserved}}
+\DoxyCodeLine{2 \textcolor{comment}{ * You may use, distribute and modify this code under the}}
+\DoxyCodeLine{3 \textcolor{comment}{ * terms of the MIT license.}}
+\DoxyCodeLine{4 \textcolor{comment}{ *}}
+\DoxyCodeLine{5 \textcolor{comment}{ * You should have received a copy of the MIT license with}}
+\DoxyCodeLine{6 \textcolor{comment}{ * this file. If not, please write to: bezborodoff.gleb@gmail.com, or visit : https://github.com/glensand/hope}}
+\DoxyCodeLine{7 \textcolor{comment}{ */}}
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#include <unordered\_map>}}
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#include <functional>}}
+\DoxyCodeLine{13 \textcolor{preprocessor}{\#include <string>}}
+\DoxyCodeLine{14 \textcolor{preprocessor}{\#include <string\_view>}}
+\DoxyCodeLine{15 \textcolor{preprocessor}{\#include <stdexcept>}}
+\DoxyCodeLine{16 \textcolor{preprocessor}{\#include <utility>}}
+\DoxyCodeLine{17 }
+\DoxyCodeLine{18 \textcolor{keyword}{namespace }hope \{}
+\DoxyCodeLine{19 }
+\DoxyCodeLine{20     \textcolor{keyword}{template} <\textcolor{keyword}{typename} ReturnType,}
+\DoxyCodeLine{21                \textcolor{keyword}{typename} NameClass = std::string\_view>}
+\DoxyCodeLine{22     \textcolor{keyword}{class }\mbox{\hyperlink{classhope_1_1factory}{factory}} final \{}
+\DoxyCodeLine{23         \textcolor{keyword}{using} creator\_map = std::unordered\_map<NameClass, std::function<ReturnType*()>>;}
+\DoxyCodeLine{24     \textcolor{keyword}{public}:}
+\DoxyCodeLine{25         \mbox{\hyperlink{classhope_1_1factory}{factory}}() = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{26         \mbox{\hyperlink{classhope_1_1factory}{factory}}(\textcolor{keyword}{const} \mbox{\hyperlink{classhope_1_1factory}{factory}}\&) = \textcolor{keyword}{delete};}
+\DoxyCodeLine{27         \mbox{\hyperlink{classhope_1_1factory}{factory}}\& operator=(\textcolor{keyword}{const} \mbox{\hyperlink{classhope_1_1factory}{factory}}\&) = \textcolor{keyword}{delete};}
+\DoxyCodeLine{28         \mbox{\hyperlink{classhope_1_1factory}{\string~factory}}() = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30         \textcolor{keyword}{template} <\textcolor{keyword}{typename} Type>}
+\DoxyCodeLine{31         \textcolor{keywordtype}{bool} register\_object(NameClass name) \{}
+\DoxyCodeLine{32             \textcolor{keywordflow}{if} (creators.count(name) != 0)}
+\DoxyCodeLine{33                 \textcolor{keywordflow}{throw} std::runtime\_error(std::string(\textcolor{stringliteral}{"{}An attempt was made to register already registered type with name: "{}}) + \textcolor{keyword}{typeid}(Type).name());}
+\DoxyCodeLine{34             creators.emplace(std::move(name), [] \{ \textcolor{keywordflow}{return} \textcolor{keyword}{new} Type; \});}
+\DoxyCodeLine{35             \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{36         \}}
+\DoxyCodeLine{37 }
+\DoxyCodeLine{38         [[nodiscard]] ReturnType* create(\textcolor{keyword}{const} NameClass\& name)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{39             \textcolor{keyword}{const} \textcolor{keyword}{auto} creatorIt = creators.find(name);}
+\DoxyCodeLine{40             \textcolor{keywordflow}{if} (creatorIt == std::cend(creators))}
+\DoxyCodeLine{41                 \textcolor{keywordflow}{throw} std::runtime\_error(std::string(\textcolor{stringliteral}{"{}Unregistered typename passed to factory of type: "{}})}
+\DoxyCodeLine{42                     + \textcolor{keyword}{typeid}(ReturnType).name());}
+\DoxyCodeLine{43             \textcolor{keywordflow}{return} creatorIt-\/>second();}
+\DoxyCodeLine{44         \}}
+\DoxyCodeLine{45 }
+\DoxyCodeLine{46     \textcolor{keyword}{private}:}
+\DoxyCodeLine{47         creator\_map creators;}
+\DoxyCodeLine{48     \};}
+\DoxyCodeLine{49 \}}
+
+\end{DoxyCode}

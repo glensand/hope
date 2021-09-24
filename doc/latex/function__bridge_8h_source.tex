@@ -1,0 +1,49 @@
+\hypertarget{function__bridge_8h_source}{}\doxysection{function\+\_\+bridge.\+h}
+\label{function__bridge_8h_source}\index{lib/hope/function/function\_bridge.h@{lib/hope/function/function\_bridge.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* Copyright (C) 2020 -\/ 2021 Gleb Bezborodov -\/ All Rights Reserved}}
+\DoxyCodeLine{2 \textcolor{comment}{ * You may use, distribute and modify this code under the}}
+\DoxyCodeLine{3 \textcolor{comment}{ * terms of the MIT license.}}
+\DoxyCodeLine{4 \textcolor{comment}{ *}}
+\DoxyCodeLine{5 \textcolor{comment}{ * You should have received a copy of the MIT license with}}
+\DoxyCodeLine{6 \textcolor{comment}{ * this file. If not, please write to: bezborodoff.gleb@gmail.com, or visit : https://github.com/glensand/hope}}
+\DoxyCodeLine{7 \textcolor{comment}{ */}}
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#include <type\_traits>}}
+\DoxyCodeLine{12 }
+\DoxyCodeLine{13 \textcolor{keyword}{namespace }hope::detail \{}
+\DoxyCodeLine{14     \textcolor{keyword}{template} <\textcolor{keyword}{typename} R, \textcolor{keyword}{typename}... Args>}
+\DoxyCodeLine{15     \textcolor{keyword}{class }\mbox{\hyperlink{classhope_1_1detail_1_1function__bridge}{function\_bridge}} \{}
+\DoxyCodeLine{16     \textcolor{keyword}{public}:}
+\DoxyCodeLine{17         \textcolor{keyword}{virtual} \mbox{\hyperlink{classhope_1_1detail_1_1function__bridge}{\string~function\_bridge}}()\{\}}
+\DoxyCodeLine{18 }
+\DoxyCodeLine{19         [[nodiscard]] \textcolor{keyword}{virtual} \mbox{\hyperlink{classhope_1_1detail_1_1function__bridge}{function\_bridge}}* clone() \textcolor{keyword}{const} = 0;}
+\DoxyCodeLine{20         }
+\DoxyCodeLine{21         \textcolor{keyword}{virtual} R invoke(Args... args) \textcolor{keyword}{const} = 0;}
+\DoxyCodeLine{22     \};}
+\DoxyCodeLine{23 }
+\DoxyCodeLine{24     \textcolor{keyword}{template} <\textcolor{keyword}{typename} Functor, \textcolor{keyword}{typename} R, \textcolor{keyword}{typename}... Args>}
+\DoxyCodeLine{25     \textcolor{keyword}{class }\mbox{\hyperlink{classhope_1_1detail_1_1function__bridge__impl}{function\_bridge\_impl}} final : \textcolor{keyword}{public} \mbox{\hyperlink{classhope_1_1detail_1_1function__bridge}{function\_bridge}}<R, Args...> \{}
+\DoxyCodeLine{26     \textcolor{keyword}{public}:}
+\DoxyCodeLine{27         \textcolor{keyword}{template} <\textcolor{keyword}{typename} ForwardedFunctor>}
+\DoxyCodeLine{28         \textcolor{keyword}{explicit} \mbox{\hyperlink{classhope_1_1detail_1_1function__bridge__impl}{function\_bridge\_impl}}(ForwardedFunctor\&\& functor)}
+\DoxyCodeLine{29             :m\_functor(std::forward<ForwardedFunctor>(functor)) \{}
+\DoxyCodeLine{30         \}}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32         \mbox{\hyperlink{classhope_1_1detail_1_1function__bridge__impl}{function\_bridge\_impl}}* clone()\textcolor{keyword}{ const override }\{}
+\DoxyCodeLine{33             \textcolor{keywordflow}{return} \textcolor{keyword}{new} \mbox{\hyperlink{classhope_1_1detail_1_1function__bridge__impl}{function\_bridge\_impl}}(m\_functor);}
+\DoxyCodeLine{34         \}}
+\DoxyCodeLine{35 }
+\DoxyCodeLine{36         R invoke(Args... args)\textcolor{keyword}{ const override }\{}
+\DoxyCodeLine{37             \textcolor{keywordflow}{return} m\_functor(std::forward<Args>(args)...);}
+\DoxyCodeLine{38         \}}
+\DoxyCodeLine{39 }
+\DoxyCodeLine{40     \textcolor{keyword}{private}:}
+\DoxyCodeLine{41         Functor    m\_functor;}
+\DoxyCodeLine{42     \};}
+\DoxyCodeLine{43 \}}
+
+\end{DoxyCode}

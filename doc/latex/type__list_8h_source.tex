@@ -1,0 +1,187 @@
+\hypertarget{type__list_8h_source}{}\doxysection{type\+\_\+list.\+h}
+\label{type__list_8h_source}\index{lib/hope/typelist/type\_list.h@{lib/hope/typelist/type\_list.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* Copyright (C) 2020 -\/ 2021 Gleb Bezborodov -\/ All Rights Reserved}}
+\DoxyCodeLine{2 \textcolor{comment}{ * You may use, distribute and modify this code under the}}
+\DoxyCodeLine{3 \textcolor{comment}{ * terms of the MIT license.}}
+\DoxyCodeLine{4 \textcolor{comment}{ *}}
+\DoxyCodeLine{5 \textcolor{comment}{ * You should have received a copy of the MIT license with}}
+\DoxyCodeLine{6 \textcolor{comment}{ * this file. If not, please write to: bezborodoff.gleb@gmail.com, or visit : https://github.com/glensand/hope}}
+\DoxyCodeLine{7 \textcolor{comment}{ */}}
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#include "{}hope/components/common.h"{}}}
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#include "{}hope/typelist/type\_list\_detail.h"{}}}
+\DoxyCodeLine{13 }
+\DoxyCodeLine{14 \textcolor{preprocessor}{\#include <type\_traits>}}
+\DoxyCodeLine{15 \textcolor{preprocessor}{\#include <algorithm>}}
+\DoxyCodeLine{16 \textcolor{preprocessor}{\#include <array>}}
+\DoxyCodeLine{17 }
+\DoxyCodeLine{18 \textcolor{keyword}{namespace }hope \{}
+\DoxyCodeLine{19 }
+\DoxyCodeLine{20     \textcolor{keyword}{template} <\textcolor{keyword}{typename}... Types>}
+\DoxyCodeLine{21     \textcolor{keyword}{class }\mbox{\hyperlink{classhope_1_1type__list}{type\_list}} final \{}
+\DoxyCodeLine{22 }
+\DoxyCodeLine{23     \};}
+\DoxyCodeLine{24 }
+\DoxyCodeLine{25     \textcolor{keyword}{template} <\textcolor{keyword}{typename}... Ts>}
+\DoxyCodeLine{26     \textcolor{keyword}{constexpr} \textcolor{keywordtype}{size\_t} size(\mbox{\hyperlink{classhope_1_1type__list}{type\_list<Ts...>}}) \{}
+\DoxyCodeLine{27         \textcolor{keywordflow}{return} \textcolor{keyword}{sizeof}...(Ts);}
+\DoxyCodeLine{28     \}}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30     \textcolor{keyword}{template}<\textcolor{keyword}{typename} T, \textcolor{keyword}{typename}... Ts>}
+\DoxyCodeLine{31     \textcolor{keyword}{constexpr} type\_holder<T> front(type\_list<T, Ts...>) \{}
+\DoxyCodeLine{32         \textcolor{keywordflow}{return} \{\};}
+\DoxyCodeLine{33     \}}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{35     \textcolor{keyword}{template}<\textcolor{keyword}{typename} T, \textcolor{keyword}{typename}... Ts>}
+\DoxyCodeLine{36     \textcolor{keyword}{constexpr} type\_list<Ts...> pop\_front(type\_list<T, Ts...>) \{}
+\DoxyCodeLine{37         \textcolor{keywordflow}{return} \{\};}
+\DoxyCodeLine{38     \}}
+\DoxyCodeLine{39 }
+\DoxyCodeLine{40     \textcolor{keyword}{template} <\textcolor{keyword}{typename} T, \textcolor{keyword}{typename}... Ts>}
+\DoxyCodeLine{41     \textcolor{keyword}{constexpr} type\_list<T, Ts...> push\_front(type\_list<Ts...>, type\_holder<T>) \{}
+\DoxyCodeLine{42         \textcolor{keywordflow}{return} \{\};}
+\DoxyCodeLine{43     \}}
+\DoxyCodeLine{44 }
+\DoxyCodeLine{45     \textcolor{keyword}{template} <\textcolor{keyword}{typename}... Ts1, \textcolor{keyword}{typename}... Ts2>}
+\DoxyCodeLine{46     \textcolor{keyword}{constexpr} type\_list<Ts1..., Ts2...> concat(type\_list<Ts1...>, type\_list<Ts2...>) \{}
+\DoxyCodeLine{47         \textcolor{keywordflow}{return} \{\};}
+\DoxyCodeLine{48     \}}
+\DoxyCodeLine{49     \textcolor{keyword}{template} <\textcolor{keyword}{typename} T, \textcolor{keyword}{typename}... Ts>}
+\DoxyCodeLine{50     \textcolor{keyword}{constexpr} type\_holder<T> back(type\_list<Ts..., T>) \{}
+\DoxyCodeLine{51         \textcolor{keywordflow}{return} \{\};}
+\DoxyCodeLine{52     \}}
+\DoxyCodeLine{53 }
+\DoxyCodeLine{54     \textcolor{keyword}{template} <\textcolor{keyword}{typename} T, \textcolor{keyword}{typename}... Ts>}
+\DoxyCodeLine{55     \textcolor{keyword}{constexpr} \textcolor{keywordtype}{bool} contains(type\_list<Ts...>) \{}
+\DoxyCodeLine{56         \textcolor{keywordflow}{return} (... || std::is\_same\_v<T, Ts>);}
+\DoxyCodeLine{57     \}}
+\DoxyCodeLine{58 }
+\DoxyCodeLine{59     \textcolor{keyword}{template} <\textcolor{keyword}{typename} T, \textcolor{keyword}{typename}... Ts>}
+\DoxyCodeLine{60     \textcolor{keyword}{constexpr} \textcolor{keywordtype}{bool} contains14(type\_list<Ts...>) \{}
+\DoxyCodeLine{61         \textcolor{keyword}{constexpr} \textcolor{keywordtype}{bool} bs[] = \{ std::is\_same\_v<T, Ts>... \};}
+\DoxyCodeLine{62         \textcolor{keywordtype}{bool} result = \textcolor{keyword}{false};}
+\DoxyCodeLine{63         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{bool} b : bs)}
+\DoxyCodeLine{64             result |= b;}
+\DoxyCodeLine{65 }
+\DoxyCodeLine{66         \textcolor{keywordflow}{return} result;}
+\DoxyCodeLine{67     \}}
+\DoxyCodeLine{68 }
+\DoxyCodeLine{69     \textcolor{keyword}{template} <\textcolor{keyword}{typename} T, \textcolor{keyword}{typename}... Ts>}
+\DoxyCodeLine{70     \textcolor{keyword}{constexpr} std::size\_t find(type\_list<Ts...> list) \{}
+\DoxyCodeLine{71         \textcolor{keyword}{constexpr} \textcolor{keywordtype}{bool} bs[] = \{ std::is\_same\_v<T, Ts>... \};}
+\DoxyCodeLine{72         \textcolor{keyword}{constexpr} \textcolor{keywordtype}{size\_t} list\_size = size(list);}
+\DoxyCodeLine{73 }
+\DoxyCodeLine{74         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{size\_t} i = 0; i < list\_size; ++i) \{}
+\DoxyCodeLine{75             \textcolor{keywordflow}{if} (bs[i])}
+\DoxyCodeLine{76                 \textcolor{keywordflow}{return} i;}
+\DoxyCodeLine{77         \}}
+\DoxyCodeLine{78         \textcolor{keywordflow}{return} list\_size;}
+\DoxyCodeLine{79     \}}
+\DoxyCodeLine{80 }
+\DoxyCodeLine{81     \textcolor{keyword}{template} <\textcolor{keyword}{typename} T, std::size\_t I, \textcolor{keyword}{typename}... Ts>}
+\DoxyCodeLine{82     \textcolor{keyword}{constexpr} std::size\_t find\_nth\_of(type\_list<Ts...> list) \{}
+\DoxyCodeLine{83         \textcolor{keyword}{constexpr} \textcolor{keywordtype}{bool} bs[] = \{ std::is\_same\_v<T, Ts>... \};}
+\DoxyCodeLine{84         \textcolor{keyword}{constexpr} \textcolor{keywordtype}{size\_t} list\_size = size(list);}
+\DoxyCodeLine{85         std::size\_t index\{ 0 \};}
+\DoxyCodeLine{86         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{size\_t} i = 0; i < list\_size; ++i) \{}
+\DoxyCodeLine{87             \textcolor{keywordflow}{if} (bs[i]) \{}
+\DoxyCodeLine{88                 \textcolor{keywordflow}{if} (index == I)}
+\DoxyCodeLine{89                     \textcolor{keywordflow}{return} i;}
+\DoxyCodeLine{90                 ++index;}
+\DoxyCodeLine{91             \}}
+\DoxyCodeLine{92         \}}
+\DoxyCodeLine{93         \textcolor{keywordflow}{return} list\_size;}
+\DoxyCodeLine{94     \}}
+\DoxyCodeLine{95 }
+\DoxyCodeLine{96     \textcolor{keyword}{template} <\textcolor{keyword}{typename} T, \textcolor{keyword}{typename}... Ts>}
+\DoxyCodeLine{97     \textcolor{keyword}{constexpr} std::size\_t find\_cxx20(type\_list<Ts...>) \{}
+\DoxyCodeLine{98         \textcolor{keyword}{constexpr} \textcolor{keywordtype}{bool} bs[] = \{ std::is\_same\_v<T, Ts>... \};}
+\DoxyCodeLine{99         \textcolor{keywordflow}{return} std::find(bs, \textcolor{keyword}{true}) -\/ bs;}
+\DoxyCodeLine{100     \}}
+\DoxyCodeLine{101 }
+\DoxyCodeLine{102     \textcolor{keyword}{template} <\textcolor{keyword}{template} <\textcolor{keyword}{typename}...> \textcolor{keyword}{typename} F, \textcolor{keyword}{typename}... Ts>}
+\DoxyCodeLine{103     \textcolor{keyword}{constexpr} \textcolor{keywordtype}{size\_t} find\_if(type\_list<Ts...>) \{}
+\DoxyCodeLine{104         \textcolor{keyword}{constexpr} \textcolor{keywordtype}{bool} bs[] = \{ F<Ts>::value... \};}
+\DoxyCodeLine{105         \textcolor{keywordflow}{return} std::find(bs, \textcolor{keyword}{true}) -\/ bs;}
+\DoxyCodeLine{106     \}}
+\DoxyCodeLine{107 }
+\DoxyCodeLine{108     \textcolor{keyword}{template} <\textcolor{keyword}{typename} F, \textcolor{keyword}{typename}... Ts>}
+\DoxyCodeLine{109     \textcolor{keyword}{constexpr} \textcolor{keywordtype}{size\_t} find\_if(type\_list<Ts...> list, F f) \{}
+\DoxyCodeLine{110         \textcolor{keywordtype}{bool} bs[] = \{ f(type\_holder<Ts>\{\})... \};}
+\DoxyCodeLine{111         \textcolor{comment}{/*return std::find(bs, true) -\/ bs;*/} \textcolor{comment}{// available since cxx20}}
+\DoxyCodeLine{112         \textcolor{keyword}{constexpr} \textcolor{keywordtype}{size\_t} list\_size = size(list);}
+\DoxyCodeLine{113 }
+\DoxyCodeLine{114         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{size\_t} i = 0; i < list\_size; ++i) \{}
+\DoxyCodeLine{115             \textcolor{keywordflow}{if} (bs[i])}
+\DoxyCodeLine{116                 \textcolor{keywordflow}{return} i;}
+\DoxyCodeLine{117         \}}
+\DoxyCodeLine{118 }
+\DoxyCodeLine{119         \textcolor{keywordflow}{return} list\_size;}
+\DoxyCodeLine{120     \}}
+\DoxyCodeLine{121 }
+\DoxyCodeLine{122     \textcolor{keyword}{template} <\textcolor{keyword}{template} <\textcolor{keyword}{typename}...> \textcolor{keyword}{typename} F, \textcolor{keyword}{typename}... Ts>}
+\DoxyCodeLine{123     \textcolor{keyword}{constexpr} \textcolor{keywordtype}{bool} all\_of(type\_list<Ts...>) \{}
+\DoxyCodeLine{124         \textcolor{keywordflow}{return} (... \&\& F<Ts>::value);}
+\DoxyCodeLine{125     \}}
+\DoxyCodeLine{126 }
+\DoxyCodeLine{127     \textcolor{keyword}{template} <\textcolor{keyword}{template} <\textcolor{keyword}{typename}...> \textcolor{keyword}{typename} F, \textcolor{keyword}{typename}... Ts>}
+\DoxyCodeLine{128     \textcolor{keyword}{constexpr} \textcolor{keywordtype}{bool} any\_of(type\_list<Ts...>) \{}
+\DoxyCodeLine{129         \textcolor{keywordflow}{return} (... || F<Ts>::value);}
+\DoxyCodeLine{130     \}}
+\DoxyCodeLine{131 }
+\DoxyCodeLine{132     \textcolor{keyword}{template} <\textcolor{keyword}{template} <\textcolor{keyword}{typename}...> \textcolor{keyword}{typename} F, \textcolor{keyword}{typename}... Ts>}
+\DoxyCodeLine{133     \textcolor{keyword}{constexpr} \textcolor{keywordtype}{bool} none\_of(type\_list<Ts...> list) \{}
+\DoxyCodeLine{134         \textcolor{keywordflow}{return} !any\_of<F>(list);}
+\DoxyCodeLine{135     \}}
+\DoxyCodeLine{136 }
+\DoxyCodeLine{137     \textcolor{keyword}{template}<\textcolor{keywordtype}{size\_t} I, \textcolor{keyword}{typename}... Ts>}
+\DoxyCodeLine{138     \textcolor{keyword}{constexpr} \textcolor{keyword}{auto} get\_nth\_type(type\_list<Ts...>) \{}
+\DoxyCodeLine{139         \textcolor{keywordflow}{return} type\_holder<\textcolor{keyword}{decltype}(}
+\DoxyCodeLine{140             detail::get<std::make\_index\_sequence<I>>::extractor(\textcolor{keyword}{static\_cast<}Ts*\textcolor{keyword}{>}(\textcolor{keyword}{nullptr})...))>\{\};}
+\DoxyCodeLine{141     \}}
+\DoxyCodeLine{142 }
+\DoxyCodeLine{143     \textcolor{keyword}{template}<\textcolor{keywordtype}{size\_t} I, \textcolor{keyword}{typename}... Ts>}
+\DoxyCodeLine{144     \textcolor{keyword}{using} NthType = \textcolor{keyword}{typename} \textcolor{keyword}{decltype}(get\_nth\_type<I>(type\_list<Ts...>\{\}))::Type;}
+\DoxyCodeLine{145 }
+\DoxyCodeLine{146     \textcolor{keyword}{template} <\textcolor{keyword}{typename} F, \textcolor{keyword}{typename}...Ts, std::size\_t... Is>}
+\DoxyCodeLine{147     \textcolor{keyword}{constexpr} \textcolor{keywordtype}{void} for\_each\_impl(type\_list<Ts...> list, F\&\& f, std::index\_sequence<Is...>) \{}
+\DoxyCodeLine{148         (f(get\_nth\_type<Is>(list)), ...);}
+\DoxyCodeLine{149     \}}
+\DoxyCodeLine{150 }
+\DoxyCodeLine{151     \textcolor{keyword}{template} <\textcolor{keyword}{typename}... Ts, \textcolor{keyword}{typename} F>}
+\DoxyCodeLine{152     \textcolor{keyword}{constexpr} \textcolor{keywordtype}{void} \mbox{\hyperlink{flat__tuple_8h_ae2d36d67f13767b85f74df9ee4d0b4a1}{for\_each}}(type\_list<Ts...> list, F\&\& f) \{}
+\DoxyCodeLine{153         for\_each\_impl(list, std::forward<F>(f),}
+\DoxyCodeLine{154             std::make\_index\_sequence<size(list)>()}
+\DoxyCodeLine{155         );}
+\DoxyCodeLine{156     \}}
+\DoxyCodeLine{157 }
+\DoxyCodeLine{158     \textcolor{keyword}{template} <\textcolor{keyword}{typename} T, \textcolor{keyword}{typename}... Ts>}
+\DoxyCodeLine{159     \textcolor{keyword}{constexpr} \textcolor{keywordtype}{size\_t} index\_of(type\_list<Ts...>) \{}
+\DoxyCodeLine{160         \textcolor{keyword}{constexpr} \textcolor{keywordtype}{bool} bs[] = \{ std::is\_same\_v<T, Ts>... \};}
+\DoxyCodeLine{161         \textcolor{keywordflow}{return} std::count\_if(bs, \textcolor{keyword}{true});}
+\DoxyCodeLine{162     \}}
+\DoxyCodeLine{163 }
+\DoxyCodeLine{164     \textcolor{keyword}{template} <\textcolor{keyword}{typename}... Ts>}
+\DoxyCodeLine{165     \textcolor{keyword}{constexpr} \textcolor{keywordtype}{size\_t} largest\_type\_index(type\_list<Ts...>) \{}
+\DoxyCodeLine{166         \textcolor{keyword}{constexpr} std::array<std::size\_t, \textcolor{keyword}{sizeof}...(Ts)> sizes\{ \textcolor{keyword}{sizeof}(Ts)... \};}
+\DoxyCodeLine{167         \textcolor{keyword}{const} \textcolor{keyword}{auto} it = std::max\_element(std::begin(sizes), std::end(sizes));}
+\DoxyCodeLine{168         \textcolor{keywordflow}{return} std::distance(std::begin(sizes), it);}
+\DoxyCodeLine{169     \}}
+\DoxyCodeLine{170 }
+\DoxyCodeLine{171     \textcolor{keyword}{template} <\textcolor{keyword}{typename}... Ts>}
+\DoxyCodeLine{172     \textcolor{keyword}{constexpr} \textcolor{keyword}{auto} largest\_type(type\_list<Ts...> list) \{}
+\DoxyCodeLine{173         \textcolor{keyword}{constexpr} \textcolor{keyword}{auto} index = largest\_type\_index(list);}
+\DoxyCodeLine{174         \textcolor{keywordflow}{return} get\_nth\_type<index>(list);}
+\DoxyCodeLine{175     \}}
+\DoxyCodeLine{176 }
+\DoxyCodeLine{177     \textcolor{keyword}{template} <\textcolor{keyword}{typename}... Ts>}
+\DoxyCodeLine{178     \textcolor{keyword}{constexpr} type\_list<Ts...> make\_type\_list(type\_holder<Ts>\&\&...) \{}
+\DoxyCodeLine{179         \textcolor{keywordflow}{return} \{\};}
+\DoxyCodeLine{180     \}}
+\DoxyCodeLine{181 \}}
+
+\end{DoxyCode}

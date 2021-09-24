@@ -1,0 +1,82 @@
+\hypertarget{event_8h_source}{}\doxysection{event.\+h}
+\label{event_8h_source}\index{lib/hope/concurrency/event.h@{lib/hope/concurrency/event.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* Copyright (C) 2020 -\/ 2021 Gleb Bezborodov -\/ All Rights Reserved}}
+\DoxyCodeLine{2 \textcolor{comment}{ * You may use, distribute and modify this code under the}}
+\DoxyCodeLine{3 \textcolor{comment}{ * terms of the MIT license.}}
+\DoxyCodeLine{4 \textcolor{comment}{ *}}
+\DoxyCodeLine{5 \textcolor{comment}{ * You should have received a copy of the MIT license with}}
+\DoxyCodeLine{6 \textcolor{comment}{ * this file. If not, please write to: bezborodoff.gleb@gmail.com, or visit : https://github.com/glensand/hope}}
+\DoxyCodeLine{7 \textcolor{comment}{ */}}
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#include <limits>}}
+\DoxyCodeLine{12 }
+\DoxyCodeLine{13 \textcolor{preprocessor}{\#if !defined(\_WIN32) \&\& !defined(\_WIN64)}}
+\DoxyCodeLine{14 \textcolor{preprocessor}{\#include <condition\_variable>}}
+\DoxyCodeLine{15 \textcolor{preprocessor}{\#include <mutex>}}
+\DoxyCodeLine{16 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{17 }
+\DoxyCodeLine{18 \textcolor{keyword}{namespace }hope::concurrency \{}
+\DoxyCodeLine{19 }
+\DoxyCodeLine{20     \textcolor{keyword}{class }\mbox{\hyperlink{classhope_1_1concurrency_1_1synchronization__event}{synchronization\_event}} \{}
+\DoxyCodeLine{21     \textcolor{keyword}{protected}:}
+\DoxyCodeLine{22         \textcolor{keyword}{enum class} policy : unsigned \{}
+\DoxyCodeLine{23             Auto,}
+\DoxyCodeLine{24             Manual,}
+\DoxyCodeLine{25         \};}
+\DoxyCodeLine{26 }
+\DoxyCodeLine{27         \textcolor{keyword}{explicit} \mbox{\hyperlink{classhope_1_1concurrency_1_1synchronization__event}{synchronization\_event}}(policy policy) \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{28     \textcolor{keyword}{public}:}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30         \mbox{\hyperlink{classhope_1_1concurrency_1_1synchronization__event}{\string~synchronization\_event}}() \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32         \textcolor{keywordtype}{void} set() \textcolor{keyword}{const} \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{33 }
+\DoxyCodeLine{34         \textcolor{keywordtype}{void} reset() \textcolor{keyword}{const} \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{35 }
+\DoxyCodeLine{36         \textcolor{keywordtype}{bool} wait(\textcolor{keywordtype}{long} waiting\_time = std::numeric\_limits<long>::max()) \textcolor{keyword}{const} \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{37 }
+\DoxyCodeLine{38         \mbox{\hyperlink{classhope_1_1concurrency_1_1synchronization__event}{synchronization\_event}}(\mbox{\hyperlink{classhope_1_1concurrency_1_1synchronization__event}{synchronization\_event}}\&\&) = \textcolor{keyword}{delete};}
+\DoxyCodeLine{39         \mbox{\hyperlink{classhope_1_1concurrency_1_1synchronization__event}{synchronization\_event}}(\textcolor{keyword}{const} \mbox{\hyperlink{classhope_1_1concurrency_1_1synchronization__event}{synchronization\_event}}\&) = \textcolor{keyword}{delete};}
+\DoxyCodeLine{40         \mbox{\hyperlink{classhope_1_1concurrency_1_1synchronization__event}{synchronization\_event}}\& operator=(\mbox{\hyperlink{classhope_1_1concurrency_1_1synchronization__event}{synchronization\_event}}\&\&) = \textcolor{keyword}{delete};}
+\DoxyCodeLine{41         \mbox{\hyperlink{classhope_1_1concurrency_1_1synchronization__event}{synchronization\_event}}\& operator=(\textcolor{keyword}{const} \mbox{\hyperlink{classhope_1_1concurrency_1_1synchronization__event}{synchronization\_event}}\&) = \textcolor{keyword}{delete};}
+\DoxyCodeLine{42 }
+\DoxyCodeLine{43     \textcolor{keyword}{private}:}
+\DoxyCodeLine{44 \textcolor{preprocessor}{\#if defined(\_WIN32) || defined(\_WIN64)}}
+\DoxyCodeLine{45         \textcolor{keyword}{using} handle = \textcolor{keywordtype}{void}*;}
+\DoxyCodeLine{46         handle m\_event;}
+\DoxyCodeLine{47 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{48         \textcolor{keyword}{mutable} std::condition\_variable m\_cv;}
+\DoxyCodeLine{49         \textcolor{keyword}{mutable} std::mutex m\_mutex;}
+\DoxyCodeLine{50 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{51     \};}
+\DoxyCodeLine{52 }
+\DoxyCodeLine{53     \textcolor{keyword}{class }\mbox{\hyperlink{classhope_1_1concurrency_1_1auto__reset__event}{auto\_reset\_event}} final : \textcolor{keyword}{public} \mbox{\hyperlink{classhope_1_1concurrency_1_1synchronization__event}{synchronization\_event}} \{}
+\DoxyCodeLine{54     \textcolor{keyword}{public}:}
+\DoxyCodeLine{55         \textcolor{keyword}{explicit} \mbox{\hyperlink{classhope_1_1concurrency_1_1auto__reset__event}{auto\_reset\_event}}();}
+\DoxyCodeLine{56 }
+\DoxyCodeLine{57         \mbox{\hyperlink{classhope_1_1concurrency_1_1auto__reset__event}{\string~auto\_reset\_event}}();}
+\DoxyCodeLine{58 }
+\DoxyCodeLine{59         \mbox{\hyperlink{classhope_1_1concurrency_1_1auto__reset__event}{auto\_reset\_event}}(\mbox{\hyperlink{classhope_1_1concurrency_1_1auto__reset__event}{auto\_reset\_event}}\&\&) = \textcolor{keyword}{delete};}
+\DoxyCodeLine{60         \mbox{\hyperlink{classhope_1_1concurrency_1_1auto__reset__event}{auto\_reset\_event}}(\textcolor{keyword}{const} \mbox{\hyperlink{classhope_1_1concurrency_1_1auto__reset__event}{auto\_reset\_event}}\&) = \textcolor{keyword}{delete};}
+\DoxyCodeLine{61         \mbox{\hyperlink{classhope_1_1concurrency_1_1auto__reset__event}{auto\_reset\_event}}\& operator=(\mbox{\hyperlink{classhope_1_1concurrency_1_1auto__reset__event}{auto\_reset\_event}}\&\&) = \textcolor{keyword}{delete};}
+\DoxyCodeLine{62         \mbox{\hyperlink{classhope_1_1concurrency_1_1auto__reset__event}{auto\_reset\_event}}\& operator=(\textcolor{keyword}{const} \mbox{\hyperlink{classhope_1_1concurrency_1_1auto__reset__event}{auto\_reset\_event}}\&) = \textcolor{keyword}{delete};}
+\DoxyCodeLine{63     \};}
+\DoxyCodeLine{64 }
+\DoxyCodeLine{65     \textcolor{keyword}{class }\mbox{\hyperlink{classhope_1_1concurrency_1_1manual__reset__event}{manual\_reset\_event}} final : \textcolor{keyword}{public} \mbox{\hyperlink{classhope_1_1concurrency_1_1synchronization__event}{synchronization\_event}} \{}
+\DoxyCodeLine{66     \textcolor{keyword}{public}:}
+\DoxyCodeLine{67         \textcolor{keyword}{explicit} \mbox{\hyperlink{classhope_1_1concurrency_1_1manual__reset__event}{manual\_reset\_event}}();}
+\DoxyCodeLine{68 }
+\DoxyCodeLine{69         \mbox{\hyperlink{classhope_1_1concurrency_1_1manual__reset__event}{\string~manual\_reset\_event}}();}
+\DoxyCodeLine{70 }
+\DoxyCodeLine{71         \mbox{\hyperlink{classhope_1_1concurrency_1_1manual__reset__event}{manual\_reset\_event}}(\mbox{\hyperlink{classhope_1_1concurrency_1_1manual__reset__event}{manual\_reset\_event}}\&\&) = \textcolor{keyword}{delete};}
+\DoxyCodeLine{72         \mbox{\hyperlink{classhope_1_1concurrency_1_1manual__reset__event}{manual\_reset\_event}}(\textcolor{keyword}{const} \mbox{\hyperlink{classhope_1_1concurrency_1_1manual__reset__event}{manual\_reset\_event}}\&) = \textcolor{keyword}{delete};}
+\DoxyCodeLine{73         \mbox{\hyperlink{classhope_1_1concurrency_1_1manual__reset__event}{manual\_reset\_event}}\& operator=(\mbox{\hyperlink{classhope_1_1concurrency_1_1manual__reset__event}{manual\_reset\_event}}\&\&) = \textcolor{keyword}{delete};}
+\DoxyCodeLine{74         \mbox{\hyperlink{classhope_1_1concurrency_1_1manual__reset__event}{manual\_reset\_event}}\& operator=(\textcolor{keyword}{const} \mbox{\hyperlink{classhope_1_1concurrency_1_1manual__reset__event}{manual\_reset\_event}}\&) = \textcolor{keyword}{delete};}
+\DoxyCodeLine{75     \};}
+\DoxyCodeLine{76 \}}
+
+\end{DoxyCode}

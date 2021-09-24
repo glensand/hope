@@ -1,0 +1,29 @@
+\hypertarget{structhope_1_1detail_1_1any__convertible}{}\doxysection{hope\+::detail\+::any\+\_\+convertible\texorpdfstring{$<$}{<} TStruct, I \texorpdfstring{$>$}{>} Struct Template Reference}
+\label{structhope_1_1detail_1_1any__convertible}\index{hope::detail::any\_convertible$<$ TStruct, I $>$@{hope::detail::any\_convertible$<$ TStruct, I $>$}}
+
+
+{\ttfamily \#include $<$detect\+\_\+fields\+\_\+count.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{structhope_1_1detail_1_1any__convertible_a3de036cd6201599cf5f237cfe7cc537a}\label{structhope_1_1detail_1_1any__convertible_a3de036cd6201599cf5f237cfe7cc537a}} 
+{\footnotesize template$<$typename T , typename  = std\+::enable\+\_\+if\+\_\+t$<$!std\+::is\+\_\+base\+\_\+of\+\_\+v$<$\+T, TStruct$>$$>$$>$ }\\constexpr {\bfseries operator T\&} () const noexcept
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$typename TStruct, std\+::size\+\_\+t I$>$\newline
+struct hope\+::detail\+::any\+\_\+convertible$<$ TStruct, I $>$}
+The only one reason of existing of this class is initialization of object of different types. This is the same as ubiq from magic-\/get 
+\begin{DoxyTemplParams}{Template Parameters}
+{\em TStruct} & Type to be converted to \\
+\hline
+{\em I} & Index, is used to unambiguously define the type \\
+\hline
+\end{DoxyTemplParams}
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+lib/hope/tuple/\mbox{\hyperlink{detect__fields__count_8h}{detect\+\_\+fields\+\_\+count.\+h}}\end{DoxyCompactItemize}

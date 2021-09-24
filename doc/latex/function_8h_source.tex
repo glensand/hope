@@ -1,0 +1,82 @@
+\hypertarget{function_8h_source}{}\doxysection{function.\+h}
+\label{function_8h_source}\index{lib/hope/function/function.h@{lib/hope/function/function.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* Copyright (C) 2020 -\/ 2021 Gleb Bezborodov -\/ All Rights Reserved}}
+\DoxyCodeLine{2 \textcolor{comment}{ * You may use, distribute and modify this code under the}}
+\DoxyCodeLine{3 \textcolor{comment}{ * terms of the MIT license.}}
+\DoxyCodeLine{4 \textcolor{comment}{ *}}
+\DoxyCodeLine{5 \textcolor{comment}{ * You should have received a copy of the MIT license with}}
+\DoxyCodeLine{6 \textcolor{comment}{ * this file. If not, please write to: bezborodoff.gleb@gmail.com, or visit : https://github.com/glensand/hope}}
+\DoxyCodeLine{7 \textcolor{comment}{ */}}
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#include "{}hope/function/function\_bridge.h"{}}}
+\DoxyCodeLine{12 }
+\DoxyCodeLine{13 \textcolor{keyword}{namespace }hope \{}
+\DoxyCodeLine{14     \textcolor{keyword}{template} <\textcolor{keyword}{typename} Signature>}
+\DoxyCodeLine{15     \textcolor{keyword}{class }\mbox{\hyperlink{classhope_1_1function}{function}};}
+\DoxyCodeLine{16 }
+\DoxyCodeLine{17     \textcolor{keyword}{template} <\textcolor{keyword}{typename} R, \textcolor{keyword}{typename}... Args>}
+\DoxyCodeLine{18     \textcolor{keyword}{class }\mbox{\hyperlink{classhope_1_1function}{function}}<R(Args...)> \{}
+\DoxyCodeLine{19     \textcolor{keyword}{public}:}
+\DoxyCodeLine{20         \textcolor{keyword}{function}(\textcolor{keyword}{const} \textcolor{keyword}{function}\& other) = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{21         \textcolor{keyword}{function}(\textcolor{keyword}{function}\& other)}
+\DoxyCodeLine{22             : \textcolor{keyword}{function}(\textcolor{keyword}{static\_cast<}\textcolor{keyword}{const }\mbox{\hyperlink{classhope_1_1function}{function}}\&\textcolor{keyword}{>}(other)) \{ \}}
+\DoxyCodeLine{23 }
+\DoxyCodeLine{24         \textcolor{keyword}{constexpr} \textcolor{keyword}{function}(\textcolor{keyword}{function}\&\& other) \textcolor{keyword}{noexcept}}
+\DoxyCodeLine{25             : m\_bridge(other.m\_bridge) \{}
+\DoxyCodeLine{26             other.m\_bridge = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{27         \}}
+\DoxyCodeLine{28 }
+\DoxyCodeLine{29         \textcolor{keyword}{template} <\textcolor{keyword}{typename} F>}
+\DoxyCodeLine{30         \textcolor{keyword}{explicit} \textcolor{keyword}{function}(F\&\& f)}
+\DoxyCodeLine{31             : m\_bridge(\textcolor{keyword}{nullptr}) \{}
+\DoxyCodeLine{32             \textcolor{keyword}{using} functor\_t = std::decay\_t<F>;}
+\DoxyCodeLine{33             \textcolor{keyword}{using} bridge\_t = \mbox{\hyperlink{classhope_1_1detail_1_1function__bridge__impl}{detail::function\_bridge\_impl}}<functor\_t, R, Args...>;}
+\DoxyCodeLine{34             m\_bridge = \textcolor{keyword}{new} bridge\_t(std::forward<F>(f));}
+\DoxyCodeLine{35         \}}
+\DoxyCodeLine{36 }
+\DoxyCodeLine{37         \textcolor{keyword}{function}\& operator= (\textcolor{keyword}{const} \textcolor{keyword}{function}\& other) \{}
+\DoxyCodeLine{38             \textcolor{keyword}{function} tmp(other);}
+\DoxyCodeLine{39             swap(*\textcolor{keyword}{this}, other);}
+\DoxyCodeLine{40             \textcolor{keywordflow}{return} *\textcolor{keyword}{this};}
+\DoxyCodeLine{41         \}}
+\DoxyCodeLine{42 }
+\DoxyCodeLine{43         \textcolor{keyword}{function}\& operator= (\textcolor{keyword}{function}\&\& other) \textcolor{keyword}{noexcept} \{}
+\DoxyCodeLine{44             \textcolor{keyword}{delete} m\_bridge;}
+\DoxyCodeLine{45             m\_bridge = other.m\_bridge;}
+\DoxyCodeLine{46             other.m\_bridge = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{47             \textcolor{keywordflow}{return} *\textcolor{keyword}{this};}
+\DoxyCodeLine{48         \}}
+\DoxyCodeLine{49 }
+\DoxyCodeLine{50         \textcolor{keyword}{template}<\textcolor{keyword}{typename} F>}
+\DoxyCodeLine{51         \textcolor{keyword}{function}\& operator=(F\&\& f) \{}
+\DoxyCodeLine{52             \textcolor{keyword}{function} tmp(std::forward<F>(f));}
+\DoxyCodeLine{53             swap(*\textcolor{keyword}{this}, tmp);}
+\DoxyCodeLine{54             \textcolor{keywordflow}{return} *\textcolor{keyword}{this};}
+\DoxyCodeLine{55         \}}
+\DoxyCodeLine{56 }
+\DoxyCodeLine{57         \mbox{\hyperlink{classhope_1_1function}{\string~function}}() \{}
+\DoxyCodeLine{58             \textcolor{keyword}{delete} m\_bridge;}
+\DoxyCodeLine{59         \}}
+\DoxyCodeLine{60 }
+\DoxyCodeLine{61         \textcolor{keyword}{friend} \textcolor{keywordtype}{void} swap(\textcolor{keyword}{function}\& f1, \textcolor{keyword}{function}\& f2) \textcolor{keyword}{noexcept} \{}
+\DoxyCodeLine{62             std::swap(f1.m\_bridge, f2.m\_bridge);}
+\DoxyCodeLine{63         \}}
+\DoxyCodeLine{64 }
+\DoxyCodeLine{65         \textcolor{keyword}{explicit} \textcolor{keyword}{operator} bool()\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{66             \textcolor{keywordflow}{return} m\_bridge == \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{67         \}}
+\DoxyCodeLine{68 }
+\DoxyCodeLine{69         R operator()(Args... args)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{70             \textcolor{keywordflow}{return} m\_bridge-\/>invoke(std::forward<Args>(args)...);}
+\DoxyCodeLine{71         \}}
+\DoxyCodeLine{72 }
+\DoxyCodeLine{73     \textcolor{keyword}{private}:}
+\DoxyCodeLine{74         \mbox{\hyperlink{classhope_1_1detail_1_1function__bridge}{detail::function\_bridge}}<R, Args...>* m\_bridge\{ \textcolor{keyword}{nullptr} \};}
+\DoxyCodeLine{75     \};}
+\DoxyCodeLine{76 \}}
+
+\end{DoxyCode}

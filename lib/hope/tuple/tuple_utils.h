@@ -13,6 +13,10 @@
 #include "hope/components/user_defined_types.h"
 #include <functional>
 
+/*! \defgroup <reflection> Static reflection
+    @{
+*/
+
 namespace hope {
 
     namespace detail {
@@ -86,3 +90,5 @@ constexpr std::enable_if_t<hope::is_user_defined_type_v<TStruct>, bool>
 operator==(const TStruct& left, const TStruct& right) {
     return hope::tuple_from_struct(left, hope::field_policy::reference{}) == hope::tuple_from_struct(right, hope::field_policy::reference{});
 }
+
+/*! @} */

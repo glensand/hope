@@ -1,0 +1,72 @@
+\hypertarget{switch__expression_8h_source}{}\doxysection{switch\+\_\+expression.\+h}
+\label{switch__expression_8h_source}\index{lib/hope/components/switch\_expression/switch\_expression.h@{lib/hope/components/switch\_expression/switch\_expression.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* Copyright (C) 2021 Gleb Bezborodov -\/ All Rights Reserved}}
+\DoxyCodeLine{2 \textcolor{comment}{ * You may use, distribute and modify this code under the}}
+\DoxyCodeLine{3 \textcolor{comment}{ * terms of the MIT license.}}
+\DoxyCodeLine{4 \textcolor{comment}{ *}}
+\DoxyCodeLine{5 \textcolor{comment}{ * You should have received a copy of the MIT license with}}
+\DoxyCodeLine{6 \textcolor{comment}{ * this file. If not, please write to: bezborodoff.gleb@gmail.com, or visit : https://github.com/glensand/hope}}
+\DoxyCodeLine{7 \textcolor{comment}{ */}}
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#include <any>}}
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#include <cassert>}}
+\DoxyCodeLine{13 \textcolor{preprocessor}{\#include <unordered\_map>}}
+\DoxyCodeLine{14 \textcolor{preprocessor}{\#include <functional>}}
+\DoxyCodeLine{15 }
+\DoxyCodeLine{16 \textcolor{keyword}{namespace }hope \{}
+\DoxyCodeLine{17 }
+\DoxyCodeLine{18     \textcolor{keyword}{template}<\textcolor{keyword}{typename} Key>}
+\DoxyCodeLine{19     \textcolor{keyword}{class }\mbox{\hyperlink{classhope_1_1switch__expression}{switch\_expression}} final \{}
+\DoxyCodeLine{20         \textcolor{keyword}{using} functor\_t = std::function<void()>;}
+\DoxyCodeLine{21         \textcolor{keyword}{using} switch\_t = std::unordered\_map<Key, functor\_t>;}
+\DoxyCodeLine{22         \textcolor{keyword}{using} \mbox{\hyperlink{classhope_1_1switch__expression}{this\_t}} = \mbox{\hyperlink{classhope_1_1switch__expression}{switch\_expression<Key>}};}
+\DoxyCodeLine{23 }
+\DoxyCodeLine{24         \textcolor{keyword}{class }key\_value\_pair final \{}
+\DoxyCodeLine{25         \textcolor{keyword}{public}:}
+\DoxyCodeLine{26             key\_value\_pair(\mbox{\hyperlink{classhope_1_1switch__expression}{this\_t}}\& master, \textcolor{keyword}{const} Key\& key)}
+\DoxyCodeLine{27                 : m\_key(key)}
+\DoxyCodeLine{28                 , m\_master(master) \{\}}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30             \textcolor{keyword}{template}<\textcolor{keyword}{typename} Functor>}
+\DoxyCodeLine{31             \mbox{\hyperlink{classhope_1_1switch__expression}{this\_t}}\& operator()(Functor\&\& \textcolor{keyword}{function}) \{}
+\DoxyCodeLine{32                 m\_master.m\_switch[m\_key] = std::forward<Functor>(\textcolor{keyword}{function});}
+\DoxyCodeLine{33                 \textcolor{keywordflow}{return} m\_master;}
+\DoxyCodeLine{34             \}}
+\DoxyCodeLine{35 }
+\DoxyCodeLine{36         \textcolor{keyword}{private}:}
+\DoxyCodeLine{37             \textcolor{keyword}{const} Key\& m\_key;}
+\DoxyCodeLine{38             \mbox{\hyperlink{classhope_1_1switch__expression}{this\_t}}\& m\_master;}
+\DoxyCodeLine{39         \};}
+\DoxyCodeLine{40 }
+\DoxyCodeLine{41         \textcolor{keyword}{friend} \textcolor{keyword}{class }key\_value\_pair;}
+\DoxyCodeLine{42     \textcolor{keyword}{public}:}
+\DoxyCodeLine{43         \mbox{\hyperlink{classhope_1_1switch__expression}{switch\_expression}}(\textcolor{keyword}{const} Key\& key)}
+\DoxyCodeLine{44             : m\_key(key) \{ \}}
+\DoxyCodeLine{45 }
+\DoxyCodeLine{46         \mbox{\hyperlink{classhope_1_1switch__expression}{\string~switch\_expression}}() \{}
+\DoxyCodeLine{47             \textcolor{keywordflow}{if} (\textcolor{keyword}{auto} \&\& it = m\_switch.find(m\_key); it != std::end(m\_switch))}
+\DoxyCodeLine{48                 it-\/>second();}
+\DoxyCodeLine{49         \}}
+\DoxyCodeLine{50 }
+\DoxyCodeLine{51         key\_value\_pair operator[](\textcolor{keyword}{const} Key\& key) \{}
+\DoxyCodeLine{52             \textcolor{keyword}{const} \textcolor{keyword}{auto} it = m\_switch.find(key);}
+\DoxyCodeLine{53             assert(it == std::cend(m\_switch));}
+\DoxyCodeLine{54             (void)it; \textcolor{comment}{// remove clang unused variable warning}}
+\DoxyCodeLine{55             \textcolor{keyword}{auto}\&\& [elementIt, \_] = m\_switch.emplace(key, functor\_t\{\});}
+\DoxyCodeLine{56             \textcolor{keywordflow}{return} \{ *\textcolor{keyword}{this}, elementIt-\/>first \};}
+\DoxyCodeLine{57         \}}
+\DoxyCodeLine{58      }
+\DoxyCodeLine{59     \textcolor{keyword}{private}:}
+\DoxyCodeLine{60         Key m\_key;}
+\DoxyCodeLine{61         switch\_t m\_switch;}
+\DoxyCodeLine{62     \};}
+\DoxyCodeLine{63 }
+\DoxyCodeLine{64     \textcolor{keyword}{template}<\textcolor{keyword}{typename} Key>}
+\DoxyCodeLine{65     \mbox{\hyperlink{classhope_1_1switch__expression}{switch\_expression}}(Key)-\/>switch\_expression<std::decay\_t<Key>>;}
+\DoxyCodeLine{66 \}}
+
+\end{DoxyCode}

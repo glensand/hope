@@ -1,0 +1,58 @@
+\hypertarget{compute__field__count__recursive_8h_source}{}\doxysection{compute\+\_\+field\+\_\+count\+\_\+recursive.\+h}
+\label{compute__field__count__recursive_8h_source}\index{lib/hope/tuple/compute\_field\_count\_recursive.h@{lib/hope/tuple/compute\_field\_count\_recursive.h}}
+\mbox{\hyperlink{compute__field__count__recursive_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* Copyright (C) 2020 -\/ 2021 Gleb Bezborodov -\/ All Rights Reserved}}
+\DoxyCodeLine{2 \textcolor{comment}{ * You may use, distribute and modify this code under the}}
+\DoxyCodeLine{3 \textcolor{comment}{ * terms of the MIT license.}}
+\DoxyCodeLine{4 \textcolor{comment}{ *}}
+\DoxyCodeLine{5 \textcolor{comment}{ * You should have received a copy of the MIT license with}}
+\DoxyCodeLine{6 \textcolor{comment}{ * this file. If not, please write to: bezborodoff.gleb@gmail.com, or visit : https://github.com/glensand/hope}}
+\DoxyCodeLine{7 \textcolor{comment}{ */}}
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#include "{}hope/tuple/tuple\_from\_struct.h"{}}}
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#include "{}hope/tuple/tuple\_from\_struct\_unsafe.h"{}}}
+\DoxyCodeLine{13 \textcolor{preprocessor}{\#include "{}hope/tuple/tuple\_policy.h"{}}}
+\DoxyCodeLine{14 \textcolor{preprocessor}{\#include "{}hope/components/user\_defined\_types.h"{}}}
+\DoxyCodeLine{15 \textcolor{preprocessor}{\#include "{}hope/components/detector.h"{}}}
+\DoxyCodeLine{16 }
+\DoxyCodeLine{24 \textcolor{keyword}{namespace }hope \{}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{31     \textcolor{keyword}{template}<\textcolor{keyword}{typename} TStructure>}
+\DoxyCodeLine{32     \textcolor{keyword}{constexpr} std::size\_t \mbox{\hyperlink{compute__field__count__recursive_8h_aef686aa3f76e08ed449a3c7c4a032323}{compute\_field\_count\_recursive\_constexpr}}() \{}
+\DoxyCodeLine{33         \textcolor{keywordflow}{if} \textcolor{keyword}{constexpr} (is\_user\_defined\_type\_v<TStructure>) \{}
+\DoxyCodeLine{34             \textcolor{keyword}{constexpr} \textcolor{keyword}{auto} fields\_count = detect\_fields\_count<TStructure>();}
+\DoxyCodeLine{35             \textcolor{keyword}{constexpr} \textcolor{keyword}{auto} types = detail::extract\_types<TStructure>(std::make\_index\_sequence<fields\_count>());}
+\DoxyCodeLine{36             std::size\_t count\{0\};}
+\DoxyCodeLine{37             \mbox{\hyperlink{flat__tuple_8h_ae2d36d67f13767b85f74df9ee4d0b4a1}{for\_each}}(types, [\&](\textcolor{keyword}{auto} field) \{}
+\DoxyCodeLine{38                 \textcolor{keyword}{using} type\_t = \textcolor{keyword}{typename} \textcolor{keyword}{decltype}(field)::Type;}
+\DoxyCodeLine{39                 count += compute\_field\_count\_recursive\_constexpr<type\_t>();}
+\DoxyCodeLine{40             \});}
+\DoxyCodeLine{41             \textcolor{keywordflow}{return} count;}
+\DoxyCodeLine{42         \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{43             \textcolor{keywordflow}{return} 1u;}
+\DoxyCodeLine{44         \}}
+\DoxyCodeLine{45     \}}
+\DoxyCodeLine{46 }
+\DoxyCodeLine{53     \textcolor{keyword}{template}<\textcolor{keyword}{typename} TStructure>}
+\DoxyCodeLine{54     std::size\_t \mbox{\hyperlink{compute__field__count__recursive_8h_accf6e094314c4b00186f3007243ea8bf}{compute\_field\_count\_recursive}}() \{}
+\DoxyCodeLine{55         \textcolor{keywordflow}{if} \textcolor{keyword}{constexpr}(is\_user\_defined\_type\_v<TStructure>) \{}
+\DoxyCodeLine{56             \textcolor{keyword}{const} TStructure \textcolor{keywordtype}{object}\{\};}
+\DoxyCodeLine{57             \textcolor{keyword}{auto} \mbox{\hyperlink{classhope_1_1tuple}{tuple}} = tuple\_from\_struct(\textcolor{keywordtype}{object}, \mbox{\hyperlink{structhope_1_1field__policy_1_1reference}{field\_policy::reference}}\{\});}
+\DoxyCodeLine{58             std::size\_t count\{0\};}
+\DoxyCodeLine{59             \mbox{\hyperlink{flat__tuple_8h_ae2d36d67f13767b85f74df9ee4d0b4a1}{for\_each}}(\mbox{\hyperlink{classhope_1_1tuple}{tuple}}, [\&](\textcolor{keyword}{auto} \&\&field) \{}
+\DoxyCodeLine{60                 \textcolor{keyword}{using} type\_t = std::decay\_t<\textcolor{keyword}{decltype}(field)>;}
+\DoxyCodeLine{61                 count += compute\_field\_count\_recursive<type\_t>();}
+\DoxyCodeLine{62             \});}
+\DoxyCodeLine{63             \textcolor{keywordflow}{return} count;}
+\DoxyCodeLine{64         \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{65             \textcolor{keywordflow}{return} 1u;}
+\DoxyCodeLine{66         \}}
+\DoxyCodeLine{67     \}}
+\DoxyCodeLine{68 }
+\DoxyCodeLine{69 \}}
+\DoxyCodeLine{70 }
+
+\end{DoxyCode}

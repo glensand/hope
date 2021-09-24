@@ -11,6 +11,13 @@
 #include "hope/tuple/flat_tuple.h"
 #include "hope/tuple/tuple_policy.h"
 
+/*
+    \file
+
+    This file is consists of the generated functions witch intended to be used to generate tuples with specified count
+    of values;
+*/
+
 namespace hope::detail {
 
     template<std::size_t I>

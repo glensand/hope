@@ -6,6 +6,13 @@
  * this file. If not, please write to: bezborodoff.gleb@gmail.com, or visit : https://github.com/glensand/hope
  */
 
+/*
+    \file
+    \brief File contains implementation of the classic recursive tuple. This class should never be used.
+    ANYMORE! NOWERE!
+    Compilation of this class os quit complicated deal.
+*/
+
 #pragma once
 
 #include <type_traits>

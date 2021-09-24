@@ -1,0 +1,52 @@
+\hypertarget{async__worker_8h_source}{}\doxysection{async\+\_\+worker.\+h}
+\label{async__worker_8h_source}\index{lib/hope/concurrency/async\_worker.h@{lib/hope/concurrency/async\_worker.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* Copyright (C) 2020 -\/ 2021 Gleb Bezborodov -\/ All Rights Reserved}}
+\DoxyCodeLine{2 \textcolor{comment}{ * You may use, distribute and modify this code under the}}
+\DoxyCodeLine{3 \textcolor{comment}{ * terms of the MIT license.}}
+\DoxyCodeLine{4 \textcolor{comment}{ *}}
+\DoxyCodeLine{5 \textcolor{comment}{ * You should have received a copy of the MIT license with}}
+\DoxyCodeLine{6 \textcolor{comment}{ * this file. If not, please write to: bezborodoff.gleb@gmail.com, or visit : https://github.com/glensand/hope}}
+\DoxyCodeLine{7 \textcolor{comment}{ */}}
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#include "{}hope/concurrency/spsc\_queue.h"{}}}
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#include "{}hope/concurrency/event.h"{}}}
+\DoxyCodeLine{13 \textcolor{preprocessor}{\#include <functional>}}
+\DoxyCodeLine{14 \textcolor{preprocessor}{\#include <thread>}}
+\DoxyCodeLine{15 }
+\DoxyCodeLine{16 \textcolor{keyword}{namespace }hope::concurrency \{}
+\DoxyCodeLine{17 }
+\DoxyCodeLine{18     \textcolor{keyword}{class }\mbox{\hyperlink{classhope_1_1concurrency_1_1async__worker}{async\_worker}} final}
+\DoxyCodeLine{19     \{}
+\DoxyCodeLine{20     \textcolor{keyword}{public}:}
+\DoxyCodeLine{21         \textcolor{keyword}{using} job\_t = std::function<void()>;}
+\DoxyCodeLine{22         \mbox{\hyperlink{classhope_1_1concurrency_1_1async__worker}{async\_worker}}() \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{23 }
+\DoxyCodeLine{28         \textcolor{keywordtype}{void} \mbox{\hyperlink{classhope_1_1concurrency_1_1async__worker_a72e3233eed7f5ddb67b159123de86110}{run}}() \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{34         \textcolor{keywordtype}{void} \mbox{\hyperlink{classhope_1_1concurrency_1_1async__worker_a21a3207d01b41bc1e6b9f4bdb2dc129b}{stop}}() \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{35 }
+\DoxyCodeLine{40         \textcolor{keywordtype}{void} \mbox{\hyperlink{classhope_1_1concurrency_1_1async__worker_a5ae627c80628acab2f001f92235903dc}{shut\_down}}() \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{41 }
+\DoxyCodeLine{47         \textcolor{keywordtype}{void} \mbox{\hyperlink{classhope_1_1concurrency_1_1async__worker_aa6e340c1c07c627e1e601792c7244d49}{add\_job}}(job\_t\&\& task) \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{48 }
+\DoxyCodeLine{52         \textcolor{keywordtype}{void} \mbox{\hyperlink{classhope_1_1concurrency_1_1async__worker_aa9d3c0b38aefc87ae8c4d4e6749040ec}{wait}}() \textcolor{keyword}{const} \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{53     \textcolor{keyword}{private}:}
+\DoxyCodeLine{54         \textcolor{keywordtype}{void} run\_impl() \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{55 }
+\DoxyCodeLine{56         std::atomic\_flag m\_shut\_down;}
+\DoxyCodeLine{57         std::atomic\_bool m\_wait;}
+\DoxyCodeLine{58         std::atomic\_bool m\_launched;}
+\DoxyCodeLine{59         \mbox{\hyperlink{classhope_1_1concurrency_1_1spsc__queue}{spsc\_queue<job\_t>}} m\_job\_queue;}
+\DoxyCodeLine{60         std::thread m\_thread\_impl;}
+\DoxyCodeLine{61 }
+\DoxyCodeLine{62         \mbox{\hyperlink{classhope_1_1concurrency_1_1auto__reset__event}{auto\_reset\_event}} m\_job\_added;}
+\DoxyCodeLine{63         \mbox{\hyperlink{classhope_1_1concurrency_1_1auto__reset__event}{auto\_reset\_event}} m\_jobs\_complete;}
+\DoxyCodeLine{64     \};}
+\DoxyCodeLine{65 }
+\DoxyCodeLine{66 \}}
+
+\end{DoxyCode}

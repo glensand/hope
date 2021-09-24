@@ -1,0 +1,109 @@
+\hypertarget{variant__storage_8h_source}{}\doxysection{variant\+\_\+storage.\+h}
+\label{variant__storage_8h_source}\index{lib/hope/variant/variant\_storage.h@{lib/hope/variant/variant\_storage.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* Copyright (C) 2020 -\/ 2021 Gleb Bezborodov -\/ All Rights Reserved}}
+\DoxyCodeLine{2 \textcolor{comment}{ * You may use, distribute and modify this code under the}}
+\DoxyCodeLine{3 \textcolor{comment}{ * terms of the MIT license.}}
+\DoxyCodeLine{4 \textcolor{comment}{ *}}
+\DoxyCodeLine{5 \textcolor{comment}{ * You should have received a copy of the MIT license with}}
+\DoxyCodeLine{6 \textcolor{comment}{ * this file. If not, please write to: bezborodoff.gleb@gmail.com, or visit : https://github.com/glensand/hope}}
+\DoxyCodeLine{7 \textcolor{comment}{ */}}
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#include <type\_traits>}}
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#include <cassert>}}
+\DoxyCodeLine{13 \textcolor{preprocessor}{\#include "{}hope/typelist/type\_list.h"{}}}
+\DoxyCodeLine{14 }
+\DoxyCodeLine{15 \textcolor{keyword}{namespace }hope \{}
+\DoxyCodeLine{16 }
+\DoxyCodeLine{17     \textcolor{keyword}{namespace }detail \{}
+\DoxyCodeLine{18         \textcolor{keyword}{template} <\textcolor{keyword}{typename}... Ts>}
+\DoxyCodeLine{19         \textcolor{keyword}{class }\mbox{\hyperlink{classhope_1_1detail_1_1variant__storage}{variant\_storage}} final \{}
+\DoxyCodeLine{20         \textcolor{keyword}{public}:}
+\DoxyCodeLine{21             \textcolor{keyword}{template}<\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{22             T\& \mbox{\hyperlink{structhope_1_1detail_1_1get}{get}}() \{}
+\DoxyCodeLine{23                 check\_conditions<T>();}
+\DoxyCodeLine{24                 \textcolor{keywordflow}{return} \textcolor{keyword}{reinterpret\_cast<}T\&\textcolor{keyword}{>}(m\_storage);}
+\DoxyCodeLine{25             \}}
+\DoxyCodeLine{26 }
+\DoxyCodeLine{27             \textcolor{keyword}{template}<\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{28             [[nodiscard]] \textcolor{keyword}{const} T\& \mbox{\hyperlink{structhope_1_1detail_1_1get}{get}}()\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{29                 check\_conditions<T>();}
+\DoxyCodeLine{30                 \textcolor{keywordflow}{return} \textcolor{keyword}{reinterpret\_cast<}\textcolor{keyword}{const }T\&\textcolor{keyword}{>}(m\_storage);}
+\DoxyCodeLine{31             \}}
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33             \textcolor{keyword}{template}<\textcolor{keyword}{typename} T, \textcolor{keyword}{typename}... Vs>}
+\DoxyCodeLine{34             \textcolor{keywordtype}{void} initialize(Vs\&\&... values) \{}
+\DoxyCodeLine{35                 \textcolor{keyword}{static\_assert}(contains<T>(Types));}
+\DoxyCodeLine{36                 delete\_cur\_value();}
+\DoxyCodeLine{37                 update\_type\_index<T>();}
+\DoxyCodeLine{38                 \textcolor{keyword}{new}(\&m\_storage) T(std::forward<Vs>(values)...);}
+\DoxyCodeLine{39             \}}
+\DoxyCodeLine{40 }
+\DoxyCodeLine{41             \textcolor{keyword}{template}<\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{42             \textcolor{keywordtype}{void} set(T\&\& value) \{}
+\DoxyCodeLine{43                 \textcolor{keywordflow}{if} (m\_cur\_type\_index == find<T>(\mbox{\hyperlink{classhope_1_1type__list}{type\_list<Ts...>}}\{\}))}
+\DoxyCodeLine{44                     get\_impl<T>() = std::forward<T>(value);}
+\DoxyCodeLine{45                 \textcolor{keywordflow}{else} }
+\DoxyCodeLine{46                     initialize<T>(std::forward<T>(value));}
+\DoxyCodeLine{47             \}}
+\DoxyCodeLine{48 }
+\DoxyCodeLine{49         \textcolor{keyword}{private}:}
+\DoxyCodeLine{50 }
+\DoxyCodeLine{51             \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{52             T\& get\_impl() \{}
+\DoxyCodeLine{53                 \textcolor{keywordflow}{return} \textcolor{keyword}{reinterpret\_cast<}T\&\textcolor{keyword}{>}(m\_storage);}
+\DoxyCodeLine{54             \}}
+\DoxyCodeLine{55 }
+\DoxyCodeLine{56             \textcolor{keyword}{template}<\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{57             \textcolor{keywordtype}{void} check\_conditions() \{}
+\DoxyCodeLine{58                 \textcolor{keyword}{static\_assert}(contains<T>(Types));}
+\DoxyCodeLine{59                 assert(is\_initialized());}
+\DoxyCodeLine{60             \}}
+\DoxyCodeLine{61 }
+\DoxyCodeLine{62             \textcolor{keywordtype}{void} delete\_cur\_value() \{}
+\DoxyCodeLine{63                 \textcolor{keywordflow}{if} (is\_initialized()) \{}
+\DoxyCodeLine{64                     \textcolor{comment}{// it seems like vs142 still has some bugs...}}
+\DoxyCodeLine{65                     \textcolor{comment}{// im sure it should works fine}}
+\DoxyCodeLine{66                     \textcolor{comment}{// (DeactivateImpl<Ts>, ...);}}
+\DoxyCodeLine{67 }
+\DoxyCodeLine{68                     \textcolor{comment}{// Old style curly braces}}
+\DoxyCodeLine{69                     \textcolor{keyword}{const} \textcolor{keywordtype}{bool} bs[] = \{ deactivate\_impl<Ts>()... \};}
+\DoxyCodeLine{70                     (void)bs;}
+\DoxyCodeLine{71                 \}}
+\DoxyCodeLine{72             \}}
+\DoxyCodeLine{73 }
+\DoxyCodeLine{74             \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{75             \textcolor{keyword}{constexpr} \textcolor{keywordtype}{bool} deactivate\_impl() \{}
+\DoxyCodeLine{76                 \textcolor{keywordflow}{if} (m\_cur\_type\_index == find<T>(Types)) \{}
+\DoxyCodeLine{77                     \textcolor{keyword}{reinterpret\_cast<}T*\textcolor{keyword}{>}(\&m\_storage)-\/>\string~T();}
+\DoxyCodeLine{78                     m\_cur\_type\_index = TypesCount;}
+\DoxyCodeLine{79                 \}}
+\DoxyCodeLine{80                 \textcolor{keywordflow}{return} \{ \};}
+\DoxyCodeLine{81             \}}
+\DoxyCodeLine{82 }
+\DoxyCodeLine{83             \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{84             \textcolor{keyword}{constexpr} \textcolor{keywordtype}{void} update\_type\_index() \{}
+\DoxyCodeLine{85                 m\_cur\_type\_index = find<T>(Types);}
+\DoxyCodeLine{86             \}}
+\DoxyCodeLine{87 }
+\DoxyCodeLine{88             [[nodiscard]] \textcolor{keywordtype}{bool} is\_initialized()\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{89                 \textcolor{keywordflow}{return} m\_cur\_type\_index < TypesCount;}
+\DoxyCodeLine{90             \}}
+\DoxyCodeLine{91 }
+\DoxyCodeLine{92             \textcolor{keyword}{constexpr} \textcolor{keyword}{static} \mbox{\hyperlink{classhope_1_1type__list}{type\_list}}<Ts...>   Types\{ \};}
+\DoxyCodeLine{93             \textcolor{keyword}{constexpr} \textcolor{keyword}{static} \textcolor{keywordtype}{size\_t}             LargestTypeIdx\{ largest\_type\_index(\mbox{\hyperlink{classhope_1_1type__list}{type\_list<Ts...>}}\{\}) \};}
+\DoxyCodeLine{94             \textcolor{keyword}{constexpr} \textcolor{keyword}{static} \textcolor{keywordtype}{size\_t}             TypesCount = size(Types);}
+\DoxyCodeLine{95 }
+\DoxyCodeLine{96             \textcolor{keyword}{using} largest\_t = \textcolor{keyword}{typename} \textcolor{keyword}{decltype}(largest\_type(\mbox{\hyperlink{classhope_1_1type__list}{type\_list<Ts...>}}\{\}))::Type;}
+\DoxyCodeLine{97             \textcolor{keyword}{using} storage\_t = std::aligned\_storage\_t<\textcolor{keyword}{sizeof}(largest\_t), \textcolor{keyword}{alignof}(largest\_t)>;}
+\DoxyCodeLine{98 }
+\DoxyCodeLine{99             storage\_t       m\_storage\{ \};}
+\DoxyCodeLine{100             std::size\_t     m\_cur\_type\_index\{ size(\mbox{\hyperlink{classhope_1_1type__list}{type\_list<Ts...>}}\{\}) \};}
+\DoxyCodeLine{101         \};}
+\DoxyCodeLine{102     \}}
+\DoxyCodeLine{103 \}}
+
+\end{DoxyCode}

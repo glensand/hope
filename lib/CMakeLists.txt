@@ -13,6 +13,7 @@ file(GLOB HOPE_HEADERS
     hope/core/*.h
     hope/function/*.h
     hope/tuple/*.h
+    hope/tuple/legacy/*.h
     hope/type_list/*.h
     hope/variant/*.h*
     hope/components/*.h*
