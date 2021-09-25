@@ -26,7 +26,7 @@ namespace hope::memory{
     struct chunk final{
 
             /**
-         * \brief I decide to do not use RAII principle, to avoid any explicit constructors
+         * \brief I decide to do not use RAII principle, to avoid any explicit constructors.
          *   chunk should be as simple struct as possible, btw it is lowest level in allocation hierarchy
          * \param block_size size of single block to be stored at the chunk; this is only one lock size
          *      which is available for allocation 

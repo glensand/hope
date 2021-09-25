@@ -1,0 +1,78 @@
+\hypertarget{group__reflection}{
+\section{$>$ Static reflection}
+\label{group__reflection}\index{$>$ Static reflection@{$>$ Static reflection}}
+}
+\subsection*{Classes}
+\begin{CompactItemize}
+\item 
+struct \textbf{hope::detail::any\_\-convertible\_\-s$<$ Struct, I $>$}
+\end{CompactItemize}
+\subsection*{Files}
+\begin{CompactItemize}
+\item 
+file \hyperlink{compute__field__count__recursive_8h}{compute\_\-field\_\-count\_\-recursive.h}
+\begin{CompactList}\small\item\em the file contains several functions for recursively calculating the number of fields within the structure. Only user-defined types are computed recursively, the classes of the standard library are considered a single whole \item\end{CompactList}
+
+\item 
+file \hyperlink{detect__fields__count_8h}{detect\_\-fields\_\-count.h}
+\begin{CompactList}\small\item\em This file consists of helper functions which is used to compute fields count (in general) And the only one function which computes count of the structure's fields (non - recursive). \item\end{CompactList}
+
+\item 
+file \hyperlink{flat__sorted__tuple_8h}{flat\_\-sorted\_\-tuple.h}
+\begin{CompactList}\small\item\em This file contains function which might be used to create tuple of specified types. Before tuple creation all the corresponding types sorts and reorders by predicate. \item\end{CompactList}
+
+\item 
+file \hyperlink{flat__tuple_8h}{flat\_\-tuple.h}
+\begin{CompactList}\small\item\em Implementation of non - recursive tuple, tuple size and alignment is same as structure with fields of specified types; Also this class contains a lot of useful methods. \item\end{CompactList}
+
+\item 
+file \hyperlink{print__tuple_8h}{print\_\-tuple.h}
+\begin{CompactList}\small\item\em Implementation of helper print functions. This functions might be used to print any instance of the aggregate type to the output stream; File contains a quit heavy include : iostream and should never be included at the header. Be careful with usages of these operators. \item\end{CompactList}
+
+\end{CompactItemize}
+\subsection*{Functions}
+\begin{CompactItemize}
+\item 
+{\footnotesize template$<$typename T $>$ }\\constexpr std::ostream \& \hyperlink{group__reflection_gbd3ce49df2aedd37c653a40d28c15b2f}{operator$<$$<$} (std::ostream \&stream, const T \&object)
+\item 
+\hypertarget{group__reflection_g4d776c3dd549e9a3036d34d42a39bbab}{
+{\footnotesize template$<$typename Row $>$ }\\constexpr \textbf{hope::detail::any\_\-convertible\_\-s::operator Row} () const noexcept}
+\label{group__reflection_g4d776c3dd549e9a3036d34d42a39bbab}
+
+\item 
+\hypertarget{group__reflection_g2381b28ca81695f567edca1f161ac9f3}{
+{\footnotesize template$<$typename... Ts$>$ }\\constexpr auto \textbf{hope::detail::tuple\_\-from\_\-type\_\-list} (type\_\-list$<$ Ts...$>$)}
+\label{group__reflection_g2381b28ca81695f567edca1f161ac9f3}
+
+\item 
+\hypertarget{group__reflection_gaee00aac404f7266adcadcbc88e47cbc}{
+{\footnotesize template$<$typename T , std::size\_\-t... Is$>$ }\\constexpr auto \textbf{hope::detail::extract\_\-types} (std::index\_\-sequence$<$ Is...$>$ sequence)}
+\label{group__reflection_gaee00aac404f7266adcadcbc88e47cbc}
+
+\item 
+\hypertarget{group__reflection_gaa379f00d5f74dccf8a4cbe670bd4792}{
+{\footnotesize template$<$typename T $>$ }\\constexpr auto \textbf{hope::make\_\-tuple} ()}
+\label{group__reflection_gaa379f00d5f74dccf8a4cbe670bd4792}
+
+\item 
+\hypertarget{group__reflection_g6c9177e1066ef26d1bbc0bc32c63a444}{
+{\footnotesize template$<$typename T $>$ }\\auto \textbf{hope::tuple\_\-from\_\-struct\_\-unsafe} (const T \&object)}
+\label{group__reflection_g6c9177e1066ef26d1bbc0bc32c63a444}
+
+\item 
+\hypertarget{group__reflection_g43b709ac02e4257375af4304e33eeb40}{
+{\footnotesize template$<$typename TStruct $>$ }\\constexpr std::enable\_\-if\_\-t$<$ hope::is\_\-user\_\-defined\_\-type\_\-v$<$ TStruct $>$, bool $>$ \textbf{operator==} (const TStruct \&left, const TStruct \&right)}
+\label{group__reflection_g43b709ac02e4257375af4304e33eeb40}
+
+\end{CompactItemize}
+
+
+\subsection{Function Documentation}
+\hypertarget{group__reflection_gbd3ce49df2aedd37c653a40d28c15b2f}{
+\index{reflection@{reflection}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!reflection@{reflection}}
+\subsubsection[{operator$<$$<$}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T $>$ constexpr std::ostream\& operator$<$$<$ (std::ostream \& {\em stream}, \/  const T \& {\em object})\hspace{0.3cm}{\tt  \mbox{[}inline\mbox{]}}}}
+\label{group__reflection_gbd3ce49df2aedd37c653a40d28c15b2f}
+
+
+Public stream operator 

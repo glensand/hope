@@ -1,0 +1,39 @@
+\hypertarget{flat__tuple_8h}{
+\section{lib/hope/tuple/flat\_\-tuple.h File Reference}
+\label{flat__tuple_8h}\index{lib/hope/tuple/flat\_\-tuple.h@{lib/hope/tuple/flat\_\-tuple.h}}
+}
+Implementation of non - recursive tuple, tuple size and alignment is same as structure with fields of specified types; Also this class contains a lot of useful methods.  
+
+
+{\tt \#include \char`\"{}hope/typelist/type\_\-list.h\char`\"{}}\par
+{\tt \#include \char`\"{}hope/foundation.h\char`\"{}}\par
+\subsection*{Classes}
+\begin{CompactItemize}
+\item 
+struct \hyperlink{structhope_1_1detail_1_1tuple__tag}{hope::detail::tuple\_\-tag}
+\begin{CompactList}\small\item\em Tag is used to identify whether object of provided type is tuple or not. \item\end{CompactList}\item 
+struct \hyperlink{structhope_1_1detail_1_1indexed__value}{hope::detail::indexed\_\-value$<$ T, I $>$}
+\item 
+class \hyperlink{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_4_00_01_ts_8_8_8_4}{hope::detail::flat\_\-tuple\_\-impl$<$ std::index\_\-sequence$<$ Is...$>$, Ts...$>$}
+\item 
+class \hyperlink{classhope_1_1final}{hope::final$<$ T $>$}
+\begin{CompactList}\small\item\em Implementation of the struct like non recursive tuple which might be used to directly cast to struct with same fields because alignment of the structs's fields and tuple's fields are match. \item\end{CompactList}\end{CompactItemize}
+\subsection*{Functions}
+\begin{CompactItemize}
+\item 
+\hypertarget{namespacehope_ee3c0903c9de52ddea6f49cb8e1690ee}{
+{\footnotesize template$<$typename... Ts$>$ }\\\textbf{hope::flat\_\-tuple} (Ts...) $\rightarrow$ flat\_\-tuple$<$ Ts...$>$}
+\label{namespacehope_ee3c0903c9de52ddea6f49cb8e1690ee}
+
+\item 
+{\footnotesize template$<$typename... Ts$>$ }\\constexpr auto \hyperlink{namespacehope_3e8db7eca5158658951d01fe4773452b}{hope::make\_\-flat\_\-tuple} (Ts \&\&...args)
+\begin{CompactList}\small\item\em Helper function, which should be used to create flat tuple with given arguments all given values will be forwarded to the tuple instance. \item\end{CompactList}\item 
+{\footnotesize template$<$typename... Ts$>$ }\\constexpr auto \hyperlink{namespacehope_5d72b1e4164aa5ec2b624f45e6770f35}{hope::make\_\-flat\_\-tuple\_\-bitfield\_\-friendly} (Ts...args)
+\begin{CompactList}\small\item\em Helper function, should be used to create tuple of elements with specified bit size. \item\end{CompactList}\item 
+{\footnotesize template$<$typename... Ts$>$ }\\constexpr auto \hyperlink{namespacehope_5c5a9595f11522d03c4e2d41ba79f66b}{hope::make\_\-flat\_\-ref\_\-tuple} (Ts \&\&...args)
+\begin{CompactList}\small\item\em Helper function, creates tuple with references to the given arguments; const quality of arguments do not changes. \item\end{CompactList}\end{CompactItemize}
+
+
+\subsection{Detailed Description}
+Implementation of non - recursive tuple, tuple size and alignment is same as structure with fields of specified types; Also this class contains a lot of useful methods. 
+

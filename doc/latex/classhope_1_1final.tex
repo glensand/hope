@@ -1,0 +1,600 @@
+\hypertarget{classhope_1_1final}{
+\section{hope::final$<$ T $>$ Class Template Reference}
+\label{classhope_1_1final}\index{hope::final@{hope::final}}
+}
+Implementation of the struct like non recursive tuple which might be used to directly cast to struct with same fields because alignment of the structs's fields and tuple's fields are match.  
+
+
+{\tt \#include $<$log\_\-helper.h$>$}
+
+Inheritance diagram for hope::final$<$ T $>$::\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2cm]{classhope_1_1final}
+\end{center}
+\end{figure}
+\subsection*{Classes}
+\begin{CompactItemize}
+\item 
+struct \textbf{final}
+\begin{CompactList}\small\item\em Policy, used to specify how to convert struct to tuple. If instance of this structure is used, all the fields from an object will be copied to the tuple. \item\end{CompactList}\end{CompactItemize}
+\subsection*{Public Member Functions}
+\begin{CompactItemize}
+\item 
+\hypertarget{classhope_1_1final_0975f59458d62215cbaf0e69c4cc937c}{
+{\footnotesize template$<$typename T $>$ }\\\textbf{fixed\_\-any} (T \&\&val)}
+\label{classhope_1_1final_0975f59458d62215cbaf0e69c4cc937c}
+
+\item 
+\hypertarget{classhope_1_1final_e325e53d4738f0c8228b11c3dceb70e2}{
+{\footnotesize template$<$typename T $>$ }\\const T \& \textbf{get} () const }
+\label{classhope_1_1final_e325e53d4738f0c8228b11c3dceb70e2}
+
+\item 
+\hypertarget{classhope_1_1final_1c7929ca77ce3a3edc9c554fe9080463}{
+{\footnotesize template$<$typename T $>$ }\\T \& \textbf{get} ()}
+\label{classhope_1_1final_1c7929ca77ce3a3edc9c554fe9080463}
+
+\item 
+\hypertarget{classhope_1_1final_e61301b86f3346e0690e983cdbd595d5}{
+\textbf{nonesuch} ()}
+\label{classhope_1_1final_e61301b86f3346e0690e983cdbd595d5}
+
+\item 
+\hypertarget{classhope_1_1final_b05b8c165d7459649e2328b3f878bad2}{
+\textbf{nonesuch} (nonesuch const \&)}
+\label{classhope_1_1final_b05b8c165d7459649e2328b3f878bad2}
+
+\item 
+\hypertarget{classhope_1_1final_275c7f0352a663922e3c2b6a36e521cf}{
+void \textbf{operator=} (nonesuch const \&)}
+\label{classhope_1_1final_275c7f0352a663922e3c2b6a36e521cf}
+
+\item 
+\hypertarget{classhope_1_1final_45011c8067ecc50c4482d3bc98597b93}{
+\textbf{factory} ()}
+\label{classhope_1_1final_45011c8067ecc50c4482d3bc98597b93}
+
+\item 
+\hypertarget{classhope_1_1final_3095d86896dfed9f34941e0c84644b7f}{
+\textbf{factory} (const factory \&)}
+\label{classhope_1_1final_3095d86896dfed9f34941e0c84644b7f}
+
+\item 
+\hypertarget{classhope_1_1final_f33b5129efa38dd78067646df5f41acd}{
+factory \& \textbf{operator=} (const factory \&)}
+\label{classhope_1_1final_f33b5129efa38dd78067646df5f41acd}
+
+\item 
+\hypertarget{classhope_1_1final_f7035852a144dcc1bb3b5cf8cd52707b}{
+{\footnotesize template$<$typename Type $>$ }\\bool \textbf{register\_\-object} (NameClass name)}
+\label{classhope_1_1final_f7035852a144dcc1bb3b5cf8cd52707b}
+
+\item 
+\hypertarget{classhope_1_1final_032105ac5bedbf8b4b6cf2ba9d95966e}{
+ReturnType $\ast$ \textbf{create} (const NameClass \&name) const }
+\label{classhope_1_1final_032105ac5bedbf8b4b6cf2ba9d95966e}
+
+\item 
+\hypertarget{classhope_1_1final_56edd0c19d9298493ad5029abf87ba56}{
+{\footnotesize template$<$typename... Ts$>$ }\\\textbf{fast\_\-pimpl} (Ts \&\&...args)}
+\label{classhope_1_1final_56edd0c19d9298493ad5029abf87ba56}
+
+\item 
+\hypertarget{classhope_1_1final_cc44bc2eea7e247cf2d7bcb57f7649d7}{
+T $\ast$ \textbf{operator $\rightarrow$ } () noexcept}
+\label{classhope_1_1final_cc44bc2eea7e247cf2d7bcb57f7649d7}
+
+\item 
+\hypertarget{classhope_1_1final_71cd9a35eadcbae6440af54ae9213a34}{
+const T $\ast$ \textbf{operator $\rightarrow$ } () const noexcept}
+\label{classhope_1_1final_71cd9a35eadcbae6440af54ae9213a34}
+
+\item 
+\hypertarget{classhope_1_1final_b2f4e4e314182e3b906065cde61af2f5}{
+T \& \textbf{operator=} (const T \&rhs) noexcept}
+\label{classhope_1_1final_b2f4e4e314182e3b906065cde61af2f5}
+
+\item 
+\hypertarget{classhope_1_1final_e91c6193d80043db1a43bd9e98845873}{
+T \& \textbf{operator$\ast$} () noexcept}
+\label{classhope_1_1final_e91c6193d80043db1a43bd9e98845873}
+
+\item 
+\hypertarget{classhope_1_1final_69f5ec2a89be50ffb59b53484b098acd}{
+const T \& \textbf{operator$\ast$} () const noexcept}
+\label{classhope_1_1final_69f5ec2a89be50ffb59b53484b098acd}
+
+\item 
+\hypertarget{classhope_1_1final_bc99257f2062074fff841ff29afaaba0}{
+\textbf{link\_\-holder\_\-array} ()}
+\label{classhope_1_1final_bc99257f2062074fff841ff29afaaba0}
+
+\item 
+\hypertarget{classhope_1_1final_cc0466258e5dbbd500292d18124bed63}{
+{\footnotesize template$<$typename T $>$ }\\constexpr T $\ast$ \textbf{get} () const noexcept}
+\label{classhope_1_1final_cc0466258e5dbbd500292d18124bed63}
+
+\item 
+\hypertarget{classhope_1_1final_5f2f7125384b9e74fc35d40afc0f8d6b}{
+bool \textbf{add} (BaseType $\ast$link) noexcept}
+\label{classhope_1_1final_5f2f7125384b9e74fc35d40afc0f8d6b}
+
+\item 
+\hypertarget{classhope_1_1final_dce2583efb9eb6e93ecdccd2ada2e2de}{
+bool \textbf{remove} (BaseType $\ast$link) noexcept}
+\label{classhope_1_1final_dce2583efb9eb6e93ecdccd2ada2e2de}
+
+\item 
+\hypertarget{classhope_1_1final_8640643d923a3f7f3083a66c2b77a280}{
+link\_\-list \& \textbf{get\_\-links} () noexcept}
+\label{classhope_1_1final_8640643d923a3f7f3083a66c2b77a280}
+
+\item 
+\hypertarget{classhope_1_1final_7fd4e7675820ba8da52fdcf2ddf41492}{
+const link\_\-list \& \textbf{get\_\-links} () const noexcept}
+\label{classhope_1_1final_7fd4e7675820ba8da52fdcf2ddf41492}
+
+\item 
+\hypertarget{classhope_1_1final_303acd0d7275ea3eb7ea8b2e9d855bed}{
+\textbf{link\_\-holder\_\-array} (const link\_\-holder\_\-array \&)}
+\label{classhope_1_1final_303acd0d7275ea3eb7ea8b2e9d855bed}
+
+\item 
+\hypertarget{classhope_1_1final_106655976208aa4c9c84a7151d5ce815}{
+\textbf{link\_\-holder\_\-array} (link\_\-holder\_\-array \&\&)}
+\label{classhope_1_1final_106655976208aa4c9c84a7151d5ce815}
+
+\item 
+\hypertarget{classhope_1_1final_49c24958cc977efdd1cbe99ba25ff7e5}{
+link\_\-holder\_\-array \& \textbf{operator=} (const link\_\-holder\_\-array \&)}
+\label{classhope_1_1final_49c24958cc977efdd1cbe99ba25ff7e5}
+
+\item 
+\hypertarget{classhope_1_1final_007d11c443d70a175816889e952ab072}{
+link\_\-holder\_\-array \& \textbf{operator=} (link\_\-holder\_\-array \&\&)}
+\label{classhope_1_1final_007d11c443d70a175816889e952ab072}
+
+\item 
+\hypertarget{classhope_1_1final_d635a46d34aa5a332d98d55c55386930}{
+\textbf{link\_\-holder\_\-tuple} ()}
+\label{classhope_1_1final_d635a46d34aa5a332d98d55c55386930}
+
+\item 
+\hypertarget{classhope_1_1final_7a903b6f02dbcfa1059efe99faee0ab2}{
+{\footnotesize template$<$typename T , typename NativeT  = std::decay\_\-t$<$T$>$$>$ }\\constexpr \textbf{decltype} (auto) get() const noexcept}
+\label{classhope_1_1final_7a903b6f02dbcfa1059efe99faee0ab2}
+
+\item 
+\hypertarget{classhope_1_1final_6c07e673a719b0199b453793474e1541}{
+{\footnotesize template$<$typename T $>$ }\\bool \textbf{add} (T $\ast$link) noexcept}
+\label{classhope_1_1final_6c07e673a719b0199b453793474e1541}
+
+\item 
+\hypertarget{classhope_1_1final_cf1c04b8b370dc700f287be4d307ab2b}{
+{\footnotesize template$<$typename T $>$ }\\bool \textbf{remove} (T $\ast$link) noexcept}
+\label{classhope_1_1final_cf1c04b8b370dc700f287be4d307ab2b}
+
+\item 
+\hypertarget{classhope_1_1final_84ea3e2852e3692b63a95b78c197ab7f}{
+\textbf{link\_\-holder\_\-tuple} (const link\_\-holder\_\-tuple \&)}
+\label{classhope_1_1final_84ea3e2852e3692b63a95b78c197ab7f}
+
+\item 
+\hypertarget{classhope_1_1final_2c54b8c9263dee663cb0a51ea30cb4f3}{
+\textbf{link\_\-holder\_\-tuple} (link\_\-holder\_\-tuple \&\&)}
+\label{classhope_1_1final_2c54b8c9263dee663cb0a51ea30cb4f3}
+
+\item 
+\hypertarget{classhope_1_1final_c1176c101f3185f84a652638ab9c82b7}{
+link\_\-holder\_\-tuple \& \textbf{operator=} (const link\_\-holder\_\-tuple \&)}
+\label{classhope_1_1final_c1176c101f3185f84a652638ab9c82b7}
+
+\item 
+\hypertarget{classhope_1_1final_5229cb5247ce9273934f88136863683f}{
+link\_\-holder\_\-tuple \& \textbf{operator=} (link\_\-holder\_\-tuple \&\&)}
+\label{classhope_1_1final_5229cb5247ce9273934f88136863683f}
+
+\item 
+\hypertarget{classhope_1_1final_4e993ebfa25c6ab2bc6d5cb28f711512}{
+\textbf{singleton\_\-holder} ()}
+\label{classhope_1_1final_4e993ebfa25c6ab2bc6d5cb28f711512}
+
+\item 
+\hypertarget{classhope_1_1final_af516db9bbd8b80534adec0aa9bf8d65}{
+\textbf{singleton\_\-holder} (singleton\_\-holder \&\&)}
+\label{classhope_1_1final_af516db9bbd8b80534adec0aa9bf8d65}
+
+\item 
+\hypertarget{classhope_1_1final_3ad67d8e2a660cde191dda2952ace147}{
+singleton\_\-holder \& \textbf{operator=} (singleton\_\-holder \&\&)}
+\label{classhope_1_1final_3ad67d8e2a660cde191dda2952ace147}
+
+\item 
+\hypertarget{classhope_1_1final_245639ede2861e7b5b6c2805ba197613}{
+constexpr \textbf{static\_\-string} (const char(\&str)\mbox{[}N\mbox{]})}
+\label{classhope_1_1final_245639ede2861e7b5b6c2805ba197613}
+
+\item 
+\hypertarget{classhope_1_1final_b9c30670e6c38678195a944927d2002b}{
+\textbf{switch\_\-expression} (const Key \&key)}
+\label{classhope_1_1final_b9c30670e6c38678195a944927d2002b}
+
+\item 
+\hypertarget{classhope_1_1final_25122ddad9b9e375d02cc9df348d8c7f}{
+key\_\-value\_\-pair \textbf{operator\mbox{[}$\,$\mbox{]}} (const Key \&key)}
+\label{classhope_1_1final_25122ddad9b9e375d02cc9df348d8c7f}
+
+\item 
+\hypertarget{classhope_1_1final_de0143de1670994b815944b87ee610ce}{
+{\footnotesize template$<$typename... Vs$>$ }\\constexpr \textbf{all} (Vs \&\&...args) noexcept}
+\label{classhope_1_1final_de0143de1670994b815944b87ee610ce}
+
+\item 
+\hypertarget{classhope_1_1final_4ec0c84ee90b35265693bcfff1e3dd38}{
+{\footnotesize template$<$typename T $>$ }\\constexpr bool \textbf{operator==} (const T \&rhs) const noexcept}
+\label{classhope_1_1final_4ec0c84ee90b35265693bcfff1e3dd38}
+
+\item 
+\hypertarget{classhope_1_1final_4b5cc4ae2e43b62d9158d81c4f006f04}{
+{\footnotesize template$<$typename T $>$ }\\constexpr bool \textbf{operator!=} (const T \&rhs) const noexcept}
+\label{classhope_1_1final_4b5cc4ae2e43b62d9158d81c4f006f04}
+
+\item 
+\hypertarget{classhope_1_1final_b0bf99768bae97bd34580689228a494a}{
+{\footnotesize template$<$typename... Vs$>$ }\\constexpr \textbf{any} (Vs \&\&...args) noexcept}
+\label{classhope_1_1final_b0bf99768bae97bd34580689228a494a}
+
+\item 
+\hypertarget{classhope_1_1final_4ec0c84ee90b35265693bcfff1e3dd38}{
+{\footnotesize template$<$typename T $>$ }\\constexpr bool \textbf{operator==} (const T \&rhs) const noexcept}
+\label{classhope_1_1final_4ec0c84ee90b35265693bcfff1e3dd38}
+
+\item 
+\hypertarget{classhope_1_1final_4b5cc4ae2e43b62d9158d81c4f006f04}{
+{\footnotesize template$<$typename T $>$ }\\constexpr bool \textbf{operator!=} (const T \&rhs) const noexcept}
+\label{classhope_1_1final_4b5cc4ae2e43b62d9158d81c4f006f04}
+
+\item 
+\hypertarget{classhope_1_1final_aa957103cc4e6eb1d1587f4661b156e3}{
+\textbf{log\_\-helper} (logger \&logger\_\-instance, log\_\-priority priority)}
+\label{classhope_1_1final_aa957103cc4e6eb1d1587f4661b156e3}
+
+\item 
+\hypertarget{classhope_1_1final_43d3abf0a86be5751c9bcb5f121a43d8}{
+\textbf{DECLARE\_\-NON\_\-MOVABLE} (logger)}
+\label{classhope_1_1final_43d3abf0a86be5751c9bcb5f121a43d8}
+
+\item 
+\hypertarget{classhope_1_1final_7f42494e735fa3d7bfb969e945523987}{
+\textbf{DECLARE\_\-NON\_\-COPYABLE} (logger)}
+\label{classhope_1_1final_7f42494e735fa3d7bfb969e945523987}
+
+\item 
+\hypertarget{classhope_1_1final_76c2c3b7f0d8a66c818712b363c4e0d7}{
+\textbf{logger} ()}
+\label{classhope_1_1final_76c2c3b7f0d8a66c818712b363c4e0d7}
+
+\item 
+\hypertarget{classhope_1_1final_47b1e969a1eaca3c57b6b64bd0ddedab}{
+bool \textbf{should\_\-write} (log\_\-priority priority) const noexcept}
+\label{classhope_1_1final_47b1e969a1eaca3c57b6b64bd0ddedab}
+
+\item 
+\hypertarget{classhope_1_1final_49380a5aeb332d35a7bad7c86eec1ec2}{
+void \textbf{enable} (ostream \&stream, log\_\-level level) noexcept}
+\label{classhope_1_1final_49380a5aeb332d35a7bad7c86eec1ec2}
+
+\item 
+\hypertarget{classhope_1_1final_d84e14f532b5943dc5330c604ea26e59}{
+\textbf{ofstream} (std::string\_\-view file\_\-name)}
+\label{classhope_1_1final_d84e14f532b5943dc5330c604ea26e59}
+
+\item 
+\hypertarget{classhope_1_1final_e7e5b0b60acb8d4b0eb14cf96f54d76b}{
+\textbf{DECLARE\_\-EXPLICIT\_\-DEFAULT\_\-MOVABLE} (ofstream)}
+\label{classhope_1_1final_e7e5b0b60acb8d4b0eb14cf96f54d76b}
+
+\item 
+\hypertarget{classhope_1_1final_326e577f49062cd597bbcc630d38cbaf}{
+\textbf{DECLARE\_\-NON\_\-COPYABLE} (ofstream)}
+\label{classhope_1_1final_326e577f49062cd597bbcc630d38cbaf}
+
+\item 
+\hypertarget{classhope_1_1final_353197e5aca45505be10a0d238a2450b}{
+virtual bool \textbf{is\_\-open} () const noexcept override}
+\label{classhope_1_1final_353197e5aca45505be10a0d238a2450b}
+
+\item 
+\hypertarget{classhope_1_1final_2807c24032cbd21e31befc6b57b0f323}{
+virtual void \textbf{write} (const void $\ast$data, std::size\_\-t size) override}
+\label{classhope_1_1final_2807c24032cbd21e31befc6b57b0f323}
+
+\item 
+\hypertarget{classhope_1_1final_497bcdd6f4bd42b42394a96fec40dba8}{
+virtual void \textbf{flush} () override}
+\label{classhope_1_1final_497bcdd6f4bd42b42394a96fec40dba8}
+
+\item 
+\hypertarget{classhope_1_1final_f2287f80ed00ea759d6b536f3833e1ac}{
+\textbf{stack\_\-buffer} ()}
+\label{classhope_1_1final_f2287f80ed00ea759d6b536f3833e1ac}
+
+\item 
+\hypertarget{classhope_1_1final_c796477284de807d7005387efb105ef0}{
+\textbf{DECLARE\_\-NON\_\-MOVABLE} (stack\_\-buffer)}
+\label{classhope_1_1final_c796477284de807d7005387efb105ef0}
+
+\item 
+\hypertarget{classhope_1_1final_09fdce3a73ab9d34e18ab28a3b5610d4}{
+\textbf{DECLARE\_\-NON\_\-COPYABLE} (stack\_\-buffer)}
+\label{classhope_1_1final_09fdce3a73ab9d34e18ab28a3b5610d4}
+
+\item 
+\hypertarget{classhope_1_1final_72637e3e00e19fbb398bfaf29b548463}{
+void \textbf{put} (const void $\ast$data, std::size\_\-t size) noexcept}
+\label{classhope_1_1final_72637e3e00e19fbb398bfaf29b548463}
+
+\item 
+\hypertarget{classhope_1_1final_3c9415ea9f20efe10be3464183e51592}{
+{\footnotesize template$<$typename... VTs, typename  = std::enable\_\-if\_\-t$<$std::is\_\-same\_\-v$<$type\_\-list$<$std::decay\_\-t$<$VTs$>$...$>$, type\_\-list$<$std::decay\_\-t$<$Ts$>$...$>$$>$$>$$>$ }\\constexpr \textbf{flat\_\-tuple} (VTs \&\&...elems) noexcept}
+\label{classhope_1_1final_3c9415ea9f20efe10be3464183e51592}
+
+\item 
+\hypertarget{classhope_1_1final_e9774b7f26cb585b5ef83deb5a341b3c}{
+constexpr \textbf{flat\_\-tuple} ()}
+\label{classhope_1_1final_e9774b7f26cb585b5ef83deb5a341b3c}
+
+\item 
+\hypertarget{classhope_1_1final_2f01a7839847713939813c9f6d5ff315}{
+constexpr std::size\_\-t \textbf{operator()} (const flat\_\-tuple$<$ Ts...$>$ \&tuple)}
+\label{classhope_1_1final_2f01a7839847713939813c9f6d5ff315}
+
+\item 
+\hypertarget{classhope_1_1final_6634fff470139a5e8afde02afa1bd9ef}{
+\textbf{variant} ()}
+\label{classhope_1_1final_6634fff470139a5e8afde02afa1bd9ef}
+
+\item 
+\hypertarget{classhope_1_1final_3aac7a012a2890ce74ff8bcfdda253fb}{
+{\footnotesize template$<$typename T $>$ }\\\textbf{variant} (T \&\&type)}
+\label{classhope_1_1final_3aac7a012a2890ce74ff8bcfdda253fb}
+
+\item 
+\hypertarget{classhope_1_1final_97372acb21ea0b5e13f92266a6a02e2c}{
+{\footnotesize template$<$typename T $>$ }\\variant \& \textbf{operator=} (T \&\&value)}
+\label{classhope_1_1final_97372acb21ea0b5e13f92266a6a02e2c}
+
+\item 
+\hypertarget{classhope_1_1final_1c7929ca77ce3a3edc9c554fe9080463}{
+{\footnotesize template$<$typename T $>$ }\\T \& \textbf{get} ()}
+\label{classhope_1_1final_1c7929ca77ce3a3edc9c554fe9080463}
+
+\end{CompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{CompactItemize}
+\item 
+\hypertarget{classhope_1_1final_13b450c504d01d7bfc33fc4692d0fa80}{
+static SingletonImpl $\ast$ \textbf{create} ()}
+\label{classhope_1_1final_13b450c504d01d7bfc33fc4692d0fa80}
+
+\item 
+\hypertarget{classhope_1_1final_5b08245700881f722aee4811b62e6aec}{
+static void \textbf{destroy} (SingletonImpl $\ast$instance)}
+\label{classhope_1_1final_5b08245700881f722aee4811b62e6aec}
+
+\item 
+\hypertarget{classhope_1_1final_13b450c504d01d7bfc33fc4692d0fa80}{
+static SingletonImpl $\ast$ \textbf{create} ()}
+\label{classhope_1_1final_13b450c504d01d7bfc33fc4692d0fa80}
+
+\item 
+\hypertarget{classhope_1_1final_5b08245700881f722aee4811b62e6aec}{
+static void \textbf{destroy} (SingletonImpl $\ast$instance)}
+\label{classhope_1_1final_5b08245700881f722aee4811b62e6aec}
+
+\item 
+\hypertarget{classhope_1_1final_268efe68664b71ead7fb1bcf838bb51f}{
+static void \textbf{on\_\-dead\_\-reference} ()}
+\label{classhope_1_1final_268efe68664b71ead7fb1bcf838bb51f}
+
+\item 
+\hypertarget{classhope_1_1final_00be6ae22eb41e3315e169c26a19e5cf}{
+static void \textbf{register\_\-deleter} (detail::Deleter deleter)}
+\label{classhope_1_1final_00be6ae22eb41e3315e169c26a19e5cf}
+
+\item 
+\hypertarget{classhope_1_1final_268efe68664b71ead7fb1bcf838bb51f}{
+static void \textbf{on\_\-dead\_\-reference} ()}
+\label{classhope_1_1final_268efe68664b71ead7fb1bcf838bb51f}
+
+\item 
+\hypertarget{classhope_1_1final_00be6ae22eb41e3315e169c26a19e5cf}{
+static void \textbf{register\_\-deleter} (detail::Deleter deleter)}
+\label{classhope_1_1final_00be6ae22eb41e3315e169c26a19e5cf}
+
+\item 
+\hypertarget{classhope_1_1final_268efe68664b71ead7fb1bcf838bb51f}{
+static void \textbf{on\_\-dead\_\-reference} ()}
+\label{classhope_1_1final_268efe68664b71ead7fb1bcf838bb51f}
+
+\item 
+\hypertarget{classhope_1_1final_00be6ae22eb41e3315e169c26a19e5cf}{
+static void \textbf{register\_\-deleter} (detail::Deleter deleter)}
+\label{classhope_1_1final_00be6ae22eb41e3315e169c26a19e5cf}
+
+\item 
+\hypertarget{classhope_1_1final_268efe68664b71ead7fb1bcf838bb51f}{
+static void \textbf{on\_\-dead\_\-reference} ()}
+\label{classhope_1_1final_268efe68664b71ead7fb1bcf838bb51f}
+
+\item 
+\hypertarget{classhope_1_1final_00be6ae22eb41e3315e169c26a19e5cf}{
+static void \textbf{register\_\-deleter} (detail::Deleter deleter)}
+\label{classhope_1_1final_00be6ae22eb41e3315e169c26a19e5cf}
+
+\item 
+\hypertarget{classhope_1_1final_715040978b295bca11bd5f396377b138}{
+static SingletonImpl \& \textbf{instance} ()}
+\label{classhope_1_1final_715040978b295bca11bd5f396377b138}
+
+\item 
+\hypertarget{classhope_1_1final_8a5bdf6cd1e21c29f1e3cd9b41fa8d9b}{
+{\footnotesize template$<$typename Key $>$ }\\static constexpr auto \textbf{get} () noexcept}
+\label{classhope_1_1final_8a5bdf6cd1e21c29f1e3cd9b41fa8d9b}
+
+\item 
+{\footnotesize template$<$typename T $>$ }\\static value\_\-wrapper$<$ T $>$ \hyperlink{classhope_1_1final_3c394b218c24c4d9795f84c1d1f0bf2d}{build\_\-value} (const T \&value)
+\end{CompactItemize}
+\subsection*{Public Attributes}
+\begin{CompactItemize}
+\item 
+\hypertarget{classhope_1_1final_4b912feec93db9aaa7802f82e293d3ae}{
+char \textbf{value} \mbox{[}N\mbox{]}}
+\label{classhope_1_1final_4b912feec93db9aaa7802f82e293d3ae}
+
+\item 
+\hypertarget{classhope_1_1final_c3a87c4cd07b4996bad0ebb85181411b}{
+std::size\_\-t \textbf{bytes\_\-written} = 0}
+\label{classhope_1_1final_c3a87c4cd07b4996bad0ebb85181411b}
+
+\item 
+\hypertarget{classhope_1_1final_43ea140ced19b04247964ae77c219b03}{
+buffer\_\-t \textbf{buffer}}
+\label{classhope_1_1final_43ea140ced19b04247964ae77c219b03}
+
+\item 
+\hypertarget{classhope_1_1final_2d91342662d625ab9acac0ba32f8aaa5}{
+std::vector$<$ char $>$ \textbf{additional\_\-buffer}}
+\label{classhope_1_1final_2d91342662d625ab9acac0ba32f8aaa5}
+
+\end{CompactItemize}
+\subsection*{Static Public Attributes}
+\begin{CompactItemize}
+\item 
+\hypertarget{classhope_1_1final_956a53f1be43cefc4ec367bb59d93741}{
+static constexpr std::size\_\-t \textbf{BufferSize} = 1023}
+\label{classhope_1_1final_956a53f1be43cefc4ec367bb59d93741}
+
+\end{CompactItemize}
+\subsection*{Friends}
+\begin{CompactItemize}
+\item 
+\hypertarget{classhope_1_1final_d8937554df8f60f7d5a139a6e1cdf30c}{
+class \textbf{LifetimeModel$<$ SingletonImpl $>$}}
+\label{classhope_1_1final_d8937554df8f60f7d5a139a6e1cdf30c}
+
+\item 
+\hypertarget{classhope_1_1final_d4eb20df876e902e975bf963da1ccf3e}{
+class \textbf{key\_\-value\_\-pair}}
+\label{classhope_1_1final_d4eb20df876e902e975bf963da1ccf3e}
+
+\item 
+\hypertarget{classhope_1_1final_062105058b490688776712c2f521b652}{
+struct \textbf{log\_\-helper}}
+\label{classhope_1_1final_062105058b490688776712c2f521b652}
+
+\item 
+\hypertarget{classhope_1_1final_da168e37d00bf11194fa7af409a23e2f}{
+{\footnotesize template$<$typename T $>$ }\\constexpr bool \textbf{operator==} (const T \&lhs, const all \&rhs) noexcept}
+\label{classhope_1_1final_da168e37d00bf11194fa7af409a23e2f}
+
+\item 
+\hypertarget{classhope_1_1final_4c9701d52b4c887172d578270d0ef889}{
+{\footnotesize template$<$typename T $>$ }\\constexpr bool \textbf{operator!=} (const T \&lhs, const all \&rhs) noexcept}
+\label{classhope_1_1final_4c9701d52b4c887172d578270d0ef889}
+
+\item 
+\hypertarget{classhope_1_1final_352e0f1c775282fed9323e1606d74f15}{
+{\footnotesize template$<$typename T $>$ }\\constexpr bool \textbf{operator==} (const T \&lhs, const any \&rhs) noexcept}
+\label{classhope_1_1final_352e0f1c775282fed9323e1606d74f15}
+
+\item 
+\hypertarget{classhope_1_1final_2c688c778ddbcaf0f12f719776c42ebf}{
+{\footnotesize template$<$typename T $>$ }\\constexpr bool \textbf{operator!=} (const T \&lhs, const any \&rhs) noexcept}
+\label{classhope_1_1final_2c688c778ddbcaf0f12f719776c42ebf}
+
+\item 
+{\footnotesize template$<$typename T $>$ }\\log\_\-helper \& \hyperlink{classhope_1_1final_4b8322ee0fd5ae2a2a0a9052876e6f8d}{operator$<$$<$} (log\_\-helper \&helper, const T \&value)
+\item 
+{\footnotesize template$<$typename T $>$ }\\log\_\-helper \& \hyperlink{classhope_1_1final_e477d848d5b78d071e802988f5d72584}{operator$<$$<$} (log\_\-helper \&\&helper, const T \&value)
+\end{CompactItemize}
+
+
+\subsection{Detailed Description}
+\subsubsection*{template$<$typename T$>$ class hope::final$<$ T $>$}
+
+Implementation of the struct like non recursive tuple which might be used to directly cast to struct with same fields because alignment of the structs's fields and tuple's fields are match. 
+
+struct used as namespace to policies which is used for tuple creation functions
+
+Helper class for log writing, provide dispatch of the writing value according their type
+
+\begin{Desc}
+\item[Template Parameters:]
+\begin{description}
+\item[{\em Ts}]types which might be stored in the tuple \end{description}
+\end{Desc}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classhope_1_1final_3c394b218c24c4d9795f84c1d1f0bf2d}{
+\index{hope::final@{hope::final}!build\_\-value@{build\_\-value}}
+\index{build\_\-value@{build\_\-value}!hope::final@{hope::final}}
+\subsubsection[{build\_\-value}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T $>$ template$<$typename T $>$ static value\_\-wrapper$<$T$>$ {\bf hope::final}$<$ T $>$::build\_\-value (const T \& {\em value})\hspace{0.3cm}{\tt  \mbox{[}inline, static\mbox{]}}}}
+\label{classhope_1_1final_3c394b218c24c4d9795f84c1d1f0bf2d}
+
+
+Wrap value to store it with pretty form: \mbox{[}VALUE\mbox{]} 
+
+\subsection{Friends And Related Function Documentation}
+\hypertarget{classhope_1_1final_e477d848d5b78d071e802988f5d72584}{
+\index{hope::final@{hope::final}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!hope::final@{hope::final}}
+\subsubsection[{operator$<$$<$}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T $>$ template$<$typename T $>$ log\_\-helper\& operator$<$$<$ (log\_\-helper \&\& {\em helper}, \/  const T \& {\em value})\hspace{0.3cm}{\tt  \mbox{[}friend\mbox{]}}}}
+\label{classhope_1_1final_e477d848d5b78d071e802988f5d72584}
+
+
+Function needed to delegate call to the same operator$<$$<$, but with a little different semantic On MSVC it does not need, but another compilers can not call function with non const reference parameter with rvalue \hypertarget{classhope_1_1final_4b8322ee0fd5ae2a2a0a9052876e6f8d}{
+\index{hope::final@{hope::final}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!hope::final@{hope::final}}
+\subsubsection[{operator$<$$<$}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T $>$ template$<$typename T $>$ log\_\-helper\& operator$<$$<$ (log\_\-helper \& {\em helper}, \/  const T \& {\em value})\hspace{0.3cm}{\tt  \mbox{[}friend\mbox{]}}}}
+\label{classhope_1_1final_4b8322ee0fd5ae2a2a0a9052876e6f8d}
+
+
+Central point of writing operation, provide type dispatch and call desired write method. If the type is enum and write\_\-enum had been detected, thus it will be called If member function with signature void write(log\_\-helper\&) detected, it will be called If global function with signature void write(log\_\-helper, const T\&) detected, it will be called \begin{Desc}
+\item[Template Parameters:]
+\begin{description}
+\item[{\em T}]Type of th eobject to be written \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em helper}]Self \item[{\em value}]Instance of the object to be written \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]Self \end{Desc}
+
+
+The documentation for this class was generated from the following files:\begin{CompactItemize}
+\item 
+lib/hope/any/fixed\_\-any.h\item 
+lib/hope/components/factory.h\item 
+lib/hope/components/singleton\_\-holder/singleton\_\-holder.h\item 
+lib/hope/components/static\_\-string.h\item 
+lib/hope/components/switch\_\-expression/switch\_\-expression.h\item 
+lib/hope/components/utility.h\item 
+lib/hope/logger/log\_\-helper.h\item 
+lib/hope/logger/logger.h\item 
+lib/hope/logger/ofstream.h\item 
+lib/hope/logger/stack\_\-buffer.h\item 
+lib/hope/variant/variant.hpp\item 
+lib/hope/components/detector.h\item 
+lib/hope/components/fast\_\-pimpl.h\item 
+lib/hope/components/link\_\-holder/link\_\-holder\_\-array.h\item 
+lib/hope/components/link\_\-holder/link\_\-holder\_\-tuple.h\item 
+lib/hope/components/singleton\_\-holder/creation\_\-model.h\item 
+lib/hope/components/singleton\_\-holder/lifetime\_\-model.h\item 
+lib/hope/components/typemap.h\item 
+lib/hope/tuple/\hyperlink{flat__tuple_8h}{flat\_\-tuple.h}\item 
+lib/hope/tuple/tuple\_\-utils.h\end{CompactItemize}

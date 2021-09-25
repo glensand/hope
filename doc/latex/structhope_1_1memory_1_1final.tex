@@ -1,0 +1,210 @@
+\hypertarget{structhope_1_1memory_1_1final}{
+\section{hope::memory::final Class Reference}
+\label{structhope_1_1memory_1_1final}\index{hope::memory::final@{hope::memory::final}}
+}
+Low level chunk allocator, is made such as tricky linked list first byte of the chunks block stores position of the next available element, thus we try to avoid extra memory utilization, also chunk knows nothing about it's block size, therefore alloc and dealloc methods looks so strange (their signature contain related params...) but it is worth remembering that chunk can't allocate blocks with different sizes.  
+
+
+{\tt \#include $<$chunk.h$>$}
+
+\subsection*{Public Member Functions}
+\begin{CompactItemize}
+\item 
+void \hyperlink{structhope_1_1memory_1_1final_4ceb422bbc652ee386c8458abc959425}{init} (std::size\_\-t block\_\-size, uint8\_\-t blocks\_\-count) noexcept
+\begin{CompactList}\small\item\em I decide to do not use RAII principle, to avoid any explicit constructors chunk should be as simple struct as possible, btw it is lowest level in allocation hierarchy. \item\end{CompactList}\item 
+void $\ast$ \hyperlink{structhope_1_1memory_1_1final_6b0b52dcc62d04aa1a8c3bb6168a7ce4}{allocate} (std::size\_\-t block\_\-size) noexcept
+\begin{CompactList}\small\item\em Allocation of chunks block, block\_\-size is passed throw methods parameter, because it is too expensive to store this value at the chunk struct (due to the allocators hierarchy, see \hyperlink{fixed__allocator_8h-source}{fixed\_\-allocator.h} for more details) this method extract first available block from linked list, and do other related work, it is easy to understand. \item\end{CompactList}\item 
+void \hyperlink{structhope_1_1memory_1_1final_9c7e918080a8c1429ec8d241e7dfe0cf}{deallocate} (void $\ast$ptr, std::size\_\-t block\_\-size) noexcept
+\begin{CompactList}\small\item\em freed passed memory witch is related by the passed pointer \item\end{CompactList}\item 
+bool \hyperlink{structhope_1_1memory_1_1final_180904dab84e90547c6664815c449416}{is\_\-deallocation\_\-valid} (void $\ast$ptr, std::size\_\-t block\_\-size) const noexcept
+\begin{CompactList}\small\item\em checks if deallocation of passed ptr with passed value is available, otherwise we just cough memory corruption ot other invalid activity \item\end{CompactList}\item 
+bool \hyperlink{structhope_1_1memory_1_1final_44c5aa574f7dea1a3689fdb6e1215bf1}{is\_\-allocation\_\-valid} (std::size\_\-t block\_\-size) const noexcept
+\begin{CompactList}\small\item\em check if allocation of block currently available \item\end{CompactList}\item 
+\hypertarget{structhope_1_1memory_1_1final_ca1fedc5f4cb9a16cd668f09cf0c5233}{
+\textbf{fixed\_\-allocator} (uint8\_\-t max\_\-blocks\_\-count, std::size\_\-t block\_\-size) noexcept}
+\label{structhope_1_1memory_1_1final_ca1fedc5f4cb9a16cd668f09cf0c5233}
+
+\item 
+\hypertarget{structhope_1_1memory_1_1final_bc3b393955cb128645dddaaa2e3a7cce}{
+\textbf{fixed\_\-allocator} (fixed\_\-allocator \&\&rhs) noexcept}
+\label{structhope_1_1memory_1_1final_bc3b393955cb128645dddaaa2e3a7cce}
+
+\item 
+\hypertarget{structhope_1_1memory_1_1final_b36950f24b55764a6a628803d53163c3}{
+fixed\_\-allocator \& \textbf{operator=} (fixed\_\-allocator \&\&rhs) noexcept}
+\label{structhope_1_1memory_1_1final_b36950f24b55764a6a628803d53163c3}
+
+\item 
+\hyperlink{structhope_1_1memory_1_1final_3e02f1cf966f5447a579d51afa98330c}{fixed\_\-allocator} (const fixed\_\-allocator \&rhs)
+\begin{CompactList}\small\item\em to avoid extra or unsafe copying we have to explicitly delete copy constructor and copy assign operator also, we should create explicit noexcept move constructor and copy assign operator \item\end{CompactList}\item 
+\hypertarget{structhope_1_1memory_1_1final_ce713dd85f29313a87f24eae31a5a809}{
+fixed\_\-allocator \& \textbf{operator=} (const fixed\_\-allocator \&rhs)}
+\label{structhope_1_1memory_1_1final_ce713dd85f29313a87f24eae31a5a809}
+
+\item 
+\hypertarget{structhope_1_1memory_1_1final_517c29298f9b737bce38f335df100461}{
+void $\ast$ \hyperlink{structhope_1_1memory_1_1final_517c29298f9b737bce38f335df100461}{allocate} () noexcept}
+\label{structhope_1_1memory_1_1final_517c29298f9b737bce38f335df100461}
+
+\begin{CompactList}\small\item\em allocate block with m\_\-block\_\-size size \item\end{CompactList}\item 
+\hypertarget{structhope_1_1memory_1_1final_da58e8008844f554080b7ebd9513035d}{
+void \hyperlink{structhope_1_1memory_1_1final_da58e8008844f554080b7ebd9513035d}{deallocate} (void $\ast$ptr) noexcept}
+\label{structhope_1_1memory_1_1final_da58e8008844f554080b7ebd9513035d}
+
+\begin{CompactList}\small\item\em try to deallocate passed pointer, if it were allocated by another memory pool in debug this caused assert failure in realize mode this causes undefined behavior \item\end{CompactList}\item 
+\hypertarget{structhope_1_1memory_1_1final_f6bf303e9162923afc80ef1b3081a1fa}{
+std::size\_\-t \hyperlink{structhope_1_1memory_1_1final_f6bf303e9162923afc80ef1b3081a1fa}{block\_\-size} () const noexcept}
+\label{structhope_1_1memory_1_1final_f6bf303e9162923afc80ef1b3081a1fa}
+
+\begin{CompactList}\small\item\em returns size of block, witch may be allocated \item\end{CompactList}\item 
+\hypertarget{structhope_1_1memory_1_1final_574fe43c8a88fab43e213dd568f1db78}{
+\textbf{small\_\-object\_\-allocator} (const small\_\-object\_\-allocator \&)}
+\label{structhope_1_1memory_1_1final_574fe43c8a88fab43e213dd568f1db78}
+
+\item 
+\hypertarget{structhope_1_1memory_1_1final_4e4c83e609c448a110754eb8b68c3096}{
+\textbf{small\_\-object\_\-allocator} (small\_\-object\_\-allocator \&\&)}
+\label{structhope_1_1memory_1_1final_4e4c83e609c448a110754eb8b68c3096}
+
+\item 
+\hypertarget{structhope_1_1memory_1_1final_6c1420340012d0490acff1905652b81c}{
+small\_\-object\_\-allocator \& \textbf{operator=} (const small\_\-object\_\-allocator \&)}
+\label{structhope_1_1memory_1_1final_6c1420340012d0490acff1905652b81c}
+
+\item 
+\hypertarget{structhope_1_1memory_1_1final_bfd98ecd6fb623123d8bf2870e696953}{
+small\_\-object\_\-allocator \& \textbf{operator=} (small\_\-object\_\-allocator \&\&)}
+\label{structhope_1_1memory_1_1final_bfd98ecd6fb623123d8bf2870e696953}
+
+\item 
+\hypertarget{structhope_1_1memory_1_1final_c4a6466c5b4eca5c9251eb4406540cb6}{
+void \hyperlink{structhope_1_1memory_1_1final_c4a6466c5b4eca5c9251eb4406540cb6}{deallocate} (void $\ast$ptr, std::size\_\-t size) noexcept}
+\label{structhope_1_1memory_1_1final_c4a6466c5b4eca5c9251eb4406540cb6}
+
+\begin{CompactList}\small\item\em try to deallocate passed pointer to object since allocator is stateful, you cannot deallocate objects, which were allocated by this class params meaning are trivial \item\end{CompactList}\item 
+\hypertarget{structhope_1_1memory_1_1final_ddd2a53238c4a13ac22734a0ff70e594}{
+void $\ast$ \hyperlink{structhope_1_1memory_1_1final_ddd2a53238c4a13ac22734a0ff70e594}{allocate} (std::size\_\-t size) noexcept}
+\label{structhope_1_1memory_1_1final_ddd2a53238c4a13ac22734a0ff70e594}
+
+\begin{CompactList}\small\item\em try to allocate object, if passed size greater than m\_\-max\_\-object\_\-size, operator new will be called params meaning are trivial \item\end{CompactList}\end{CompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{CompactItemize}
+\item 
+\hypertarget{structhope_1_1memory_1_1final_60ac0028ba156818940a7c7da2ba12e1}{
+static small\_\-object\_\-allocator \& \hyperlink{structhope_1_1memory_1_1final_60ac0028ba156818940a7c7da2ba12e1}{instance} ()}
+\label{structhope_1_1memory_1_1final_60ac0028ba156818940a7c7da2ba12e1}
+
+\begin{CompactList}\small\item\em just return instance of singleton NOTE: before use this class, u have to initialize its instance, see small\_\-object\_\-allocator::initialize \item\end{CompactList}\end{CompactItemize}
+\subsection*{Friends}
+\begin{CompactItemize}
+\item 
+\hypertarget{structhope_1_1memory_1_1final_430993a05a9a34af3e25581753c4d24a}{
+class \textbf{sm\_\-allocator\_\-reset}}
+\label{structhope_1_1memory_1_1final_430993a05a9a34af3e25581753c4d24a}
+
+\end{CompactItemize}
+
+
+\subsection{Detailed Description}
+Low level chunk allocator, is made such as tricky linked list first byte of the chunks block stores position of the next available element, thus we try to avoid extra memory utilization, also chunk knows nothing about it's block size, therefore alloc and dealloc methods looks so strange (their signature contain related params...) but it is worth remembering that chunk can't allocate blocks with different sizes. 
+
+singleton, is used to hold list with fixed allocators of proper sizes 
+
+\subsection{Member Function Documentation}
+\hypertarget{structhope_1_1memory_1_1final_6b0b52dcc62d04aa1a8c3bb6168a7ce4}{
+\index{hope::memory::final@{hope::memory::final}!allocate@{allocate}}
+\index{allocate@{allocate}!hope::memory::final@{hope::memory::final}}
+\subsubsection[{allocate}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ hope::memory::final::allocate (std::size\_\-t {\em block\_\-size})}}
+\label{structhope_1_1memory_1_1final_6b0b52dcc62d04aa1a8c3bb6168a7ce4}
+
+
+Allocation of chunks block, block\_\-size is passed throw methods parameter, because it is too expensive to store this value at the chunk struct (due to the allocators hierarchy, see \hyperlink{fixed__allocator_8h-source}{fixed\_\-allocator.h} for more details) this method extract first available block from linked list, and do other related work, it is easy to understand. 
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em block\_\-size}]- size of block to be allocated \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]pointer to the desired memory segment \end{Desc}
+\hypertarget{structhope_1_1memory_1_1final_9c7e918080a8c1429ec8d241e7dfe0cf}{
+\index{hope::memory::final@{hope::memory::final}!deallocate@{deallocate}}
+\index{deallocate@{deallocate}!hope::memory::final@{hope::memory::final}}
+\subsubsection[{deallocate}]{\setlength{\rightskip}{0pt plus 5cm}void hope::memory::final::deallocate (void $\ast$ {\em ptr}, \/  std::size\_\-t {\em block\_\-size})}}
+\label{structhope_1_1memory_1_1final_9c7e918080a8c1429ec8d241e7dfe0cf}
+
+
+freed passed memory witch is related by the passed pointer 
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em ptr}]pointer to the memory block to be allocated, value should be in range of \mbox{[}data, data + block\_\-size $\ast$ blocks\_\-count\mbox{]} in other words this memory should be recently allocated from this chunk \item[{\em block\_\-size}]size of block to be freed \end{description}
+\end{Desc}
+\hypertarget{structhope_1_1memory_1_1final_3e02f1cf966f5447a579d51afa98330c}{
+\index{hope::memory::final@{hope::memory::final}!fixed\_\-allocator@{fixed\_\-allocator}}
+\index{fixed\_\-allocator@{fixed\_\-allocator}!hope::memory::final@{hope::memory::final}}
+\subsubsection[{fixed\_\-allocator}]{\setlength{\rightskip}{0pt plus 5cm}hope::memory::final::fixed\_\-allocator (const fixed\_\-allocator \& {\em rhs})}}
+\label{structhope_1_1memory_1_1final_3e02f1cf966f5447a579d51afa98330c}
+
+
+to avoid extra or unsafe copying we have to explicitly delete copy constructor and copy assign operator also, we should create explicit noexcept move constructor and copy assign operator 
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em rhs}]\end{description}
+\end{Desc}
+\hypertarget{structhope_1_1memory_1_1final_4ceb422bbc652ee386c8458abc959425}{
+\index{hope::memory::final@{hope::memory::final}!init@{init}}
+\index{init@{init}!hope::memory::final@{hope::memory::final}}
+\subsubsection[{init}]{\setlength{\rightskip}{0pt plus 5cm}void hope::memory::final::init (std::size\_\-t {\em block\_\-size}, \/  uint8\_\-t {\em blocks\_\-count})}}
+\label{structhope_1_1memory_1_1final_4ceb422bbc652ee386c8458abc959425}
+
+
+I decide to do not use RAII principle, to avoid any explicit constructors chunk should be as simple struct as possible, btw it is lowest level in allocation hierarchy. 
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em block\_\-size}]size of single block to be stored at the chunk; this is only one lock size which is available for allocation \item[{\em blocks\_\-count}]count of chunk's blocks to be allocated, value in range of \mbox{[}0, 255\mbox{]} this is most appropriate interval to avoid memory alignment falls (maximum available index of chunk block is 255 due to byte size) \end{description}
+\end{Desc}
+\hypertarget{structhope_1_1memory_1_1final_44c5aa574f7dea1a3689fdb6e1215bf1}{
+\index{hope::memory::final@{hope::memory::final}!is\_\-allocation\_\-valid@{is\_\-allocation\_\-valid}}
+\index{is\_\-allocation\_\-valid@{is\_\-allocation\_\-valid}!hope::memory::final@{hope::memory::final}}
+\subsubsection[{is\_\-allocation\_\-valid}]{\setlength{\rightskip}{0pt plus 5cm}bool hope::memory::final::is\_\-allocation\_\-valid (std::size\_\-t {\em block\_\-size}) const}}
+\label{structhope_1_1memory_1_1final_44c5aa574f7dea1a3689fdb6e1215bf1}
+
+
+check if allocation of block currently available 
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em block\_\-size}]size of block to be allocated \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]true if allocation is possible \end{Desc}
+\hypertarget{structhope_1_1memory_1_1final_180904dab84e90547c6664815c449416}{
+\index{hope::memory::final@{hope::memory::final}!is\_\-deallocation\_\-valid@{is\_\-deallocation\_\-valid}}
+\index{is\_\-deallocation\_\-valid@{is\_\-deallocation\_\-valid}!hope::memory::final@{hope::memory::final}}
+\subsubsection[{is\_\-deallocation\_\-valid}]{\setlength{\rightskip}{0pt plus 5cm}bool hope::memory::final::is\_\-deallocation\_\-valid (void $\ast$ {\em ptr}, \/  std::size\_\-t {\em block\_\-size}) const}}
+\label{structhope_1_1memory_1_1final_180904dab84e90547c6664815c449416}
+
+
+checks if deallocation of passed ptr with passed value is available, otherwise we just cough memory corruption ot other invalid activity 
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em ptr}]pointer to the block to be deallocated \item[{\em block\_\-size}]size of deallocating block \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]true id deallocation may be successful, otherwise false \end{Desc}
+
+
+The documentation for this class was generated from the following files:\begin{CompactItemize}
+\item 
+lib/hope/memory/small\_\-object/chunk.h\item 
+lib/hope/memory/small\_\-object/fixed\_\-allocator.h\item 
+lib/hope/memory/small\_\-object/small\_\-object\_\-allocator.h\end{CompactItemize}

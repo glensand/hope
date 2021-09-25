@@ -1,0 +1,24 @@
+\hypertarget{print__tuple_8h}{
+\section{lib/hope/tuple/print\_\-tuple.h File Reference}
+\label{print__tuple_8h}\index{lib/hope/tuple/print\_\-tuple.h@{lib/hope/tuple/print\_\-tuple.h}}
+}
+Implementation of helper print functions. This functions might be used to print any instance of the aggregate type to the output stream; File contains a quit heavy include : iostream and should never be included at the header. Be careful with usages of these operators.  
+
+
+{\tt \#include \char`\"{}hope/tuple/flat\_\-tuple.h\char`\"{}}\par
+{\tt \#include \char`\"{}hope/tuple/tuple\_\-from\_\-struct.h\char`\"{}}\par
+{\tt \#include $<$iostream$>$}\par
+\subsection*{Functions}
+\begin{CompactItemize}
+\item 
+{\footnotesize template$<$typename... Ts, std::size\_\-t... VIs$>$ }\\void \hyperlink{namespacehope_1_1detail_7c18953cbf0db2a28a7acacbec941be9}{hope::detail::print\_\-impl} (std::ostream \&stream, const flat\_\-tuple$<$ Ts...$>$ \&tuple, std::index\_\-sequence$<$ VIs...$>$)
+\item 
+{\footnotesize template$<$typename... Ts$>$ }\\constexpr std::ostream \& \hyperlink{namespacehope_f1dd9390573623b048f5c64caef7327f}{hope::operator$<$$<$} (std::ostream \&stream, const flat\_\-tuple$<$ Ts...$>$ \&tuple)
+\item 
+{\footnotesize template$<$typename T $>$ }\\constexpr std::ostream \& \hyperlink{group__reflection_gbd3ce49df2aedd37c653a40d28c15b2f}{operator$<$$<$} (std::ostream \&stream, const T \&object)
+\end{CompactItemize}
+
+
+\subsection{Detailed Description}
+Implementation of helper print functions. This functions might be used to print any instance of the aggregate type to the output stream; File contains a quit heavy include : iostream and should never be included at the header. Be careful with usages of these operators. 
+

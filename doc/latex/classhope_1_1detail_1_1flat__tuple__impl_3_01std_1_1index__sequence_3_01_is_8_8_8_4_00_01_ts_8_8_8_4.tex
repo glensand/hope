@@ -1,0 +1,223 @@
+\hypertarget{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_4_00_01_ts_8_8_8_4}{
+\section{hope::detail::flat\_\-tuple\_\-impl$<$ std::index\_\-sequence$<$ Is...$>$, Ts...$>$ Class Template Reference}
+\label{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_4_00_01_ts_8_8_8_4}\index{hope::detail::flat\_\-tuple\_\-impl$<$ std::index\_\-sequence$<$ Is...$>$, Ts...$>$@{hope::detail::flat\_\-tuple\_\-impl$<$ std::index\_\-sequence$<$ Is...$>$, Ts...$>$}}
+}
+{\tt \#include $<$flat\_\-tuple.h$>$}
+
+Inheritance diagram for hope::detail::flat\_\-tuple\_\-impl$<$ std::index\_\-sequence$<$ Is...$>$, Ts...$>$::\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=1.48936cm]{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_4_00_01_ts_8_8_8_4}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{CompactItemize}
+\item 
+{\footnotesize template$<$typename T , typename NativeT  = std::decay\_\-t$<$T$>$$>$ }\\constexpr \hyperlink{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_4_00_01_ts_8_8_8_4_6f82e0562ca06b099334fa7c08e0eb64}{decltype} (auto) get() noexcept
+\begin{CompactList}\small\item\em Tries to find element of specified type, fails on static assert if element had not been found; method is not sensitive to the qualifiers, followed constructions are equal: get$<$int$>$() get$<$int\&$>$() , get$<$const int$>$(), get$<$const int\&$>$(); accessed value will be automatically deduced by tuple's type (regardless of field policy is being used to create the tuple). \item\end{CompactList}\item 
+{\footnotesize template$<$typename T , typename NativeT  = std::decay\_\-t$<$T$>$$>$ }\\constexpr \hyperlink{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_4_00_01_ts_8_8_8_4_0db8adfa32e775efc297ffd41fdda6a7}{decltype} (auto) get() const noexcept
+\begin{CompactList}\small\item\em Tries to find element of specified type, fails on static assert if element had not been found; method is not sensitive to the qualifiers, followed constructions are equal: get$<$int$>$() get$<$int\&$>$() , get$<$const int$>$(), get$<$const int\&$>$(); accessed value will be automatically deduced by tuple's type (regardless of field policy is being used to create the tuple). \item\end{CompactList}\item 
+{\footnotesize template$<$size\_\-t N$>$ }\\constexpr \hyperlink{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_4_00_01_ts_8_8_8_4_6f82e0562ca06b099334fa7c08e0eb64}{decltype} (auto) get() noexcept
+\begin{CompactList}\small\item\em Tries to find element with given index. \item\end{CompactList}\item 
+{\footnotesize template$<$size\_\-t N$>$ }\\constexpr \hyperlink{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_4_00_01_ts_8_8_8_4_0db8adfa32e775efc297ffd41fdda6a7}{decltype} (auto) get() const noexcept
+\begin{CompactList}\small\item\em Tries to find element with given index. \item\end{CompactList}\item 
+{\footnotesize template$<$typename F $>$ }\\constexpr void \hyperlink{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_4_00_01_ts_8_8_8_4_666a36927404ca2f5d9faeeb9da9c039}{for\_\-each} (F \&\&f) const 
+\begin{CompactList}\small\item\em Applies given functor to each value of tuple, more useful analogue of std::apply. \item\end{CompactList}\item 
+{\footnotesize template$<$typename F $>$ }\\constexpr void \hyperlink{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_4_00_01_ts_8_8_8_4_217b9226418ab5ac765404e6632a8083}{for\_\-each} (const flat\_\-tuple \&tuple2, F \&\&f) const 
+\begin{CompactList}\small\item\em Applies given functor to each value of tuples. \item\end{CompactList}\item 
+{\footnotesize template$<$typename F $>$ }\\constexpr void \hyperlink{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_4_00_01_ts_8_8_8_4_1ef2389962afceff73d54483975f5628}{for\_\-each} (F \&\&f)
+\begin{CompactList}\small\item\em Applies given functor to each value of given tuple, more useful analogue of std::apply. \item\end{CompactList}\item 
+{\footnotesize template$<$typename F $>$ }\\constexpr void \hyperlink{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_4_00_01_ts_8_8_8_4_90c90aefa83c884fc686a98175d8fcd6}{for\_\-each} (flat\_\-tuple \&tuple2, F \&\&f)
+\begin{CompactList}\small\item\em Applies given functor to each value of tuples. \item\end{CompactList}\end{CompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{CompactItemize}
+\item 
+static constexpr auto \hyperlink{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_4_00_01_ts_8_8_8_4_e8c18d2b32dc3aee7818265152bbfa46}{get\_\-size} () noexcept
+\begin{CompactList}\small\item\em just returns the size of the tuple (means number of fields) \item\end{CompactList}\end{CompactItemize}
+\subsection*{Protected Member Functions}
+\begin{CompactItemize}
+\item 
+\hypertarget{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_4_00_01_ts_8_8_8_4_2c05f9d62b48ab44dbc4493305e58e4e}{
+constexpr \textbf{flat\_\-tuple\_\-impl} (const flat\_\-tuple\_\-impl \&)}
+\label{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_4_00_01_ts_8_8_8_4_2c05f9d62b48ab44dbc4493305e58e4e}
+
+\item 
+\hypertarget{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_4_00_01_ts_8_8_8_4_095208e9f5ec49ad23353721d69f0868}{
+constexpr \textbf{flat\_\-tuple\_\-impl} (flat\_\-tuple\_\-impl \&\&)}
+\label{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_4_00_01_ts_8_8_8_4_095208e9f5ec49ad23353721d69f0868}
+
+\item 
+\hypertarget{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_4_00_01_ts_8_8_8_4_583a3a3d9e0227fc5aaf11133d8bd5be}{
+{\footnotesize template$<$typename... VTs$>$ }\\constexpr \textbf{flat\_\-tuple\_\-impl} (VTs \&\&...elems) noexcept}
+\label{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_4_00_01_ts_8_8_8_4_583a3a3d9e0227fc5aaf11133d8bd5be}
+
+\end{CompactItemize}
+
+
+\subsection{Detailed Description}
+\subsubsection*{template$<$std::size\_\-t... Is, typename... Ts$>$ class hope::detail::flat\_\-tuple\_\-impl$<$ std::index\_\-sequence$<$ Is...$>$, Ts...$>$}
+
+General class of the all static reflection module. \begin{Desc}
+\item[Template Parameters:]
+\begin{description}
+\item[{\em Is}]Helper sequence of indexes, max(Is...) + is the count of the tuple's elements \item[{\em Ts}]Types stored in the tuple \end{description}
+\end{Desc}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_4_00_01_ts_8_8_8_4_0db8adfa32e775efc297ffd41fdda6a7}{
+\index{hope::detail::flat\_\-tuple\_\-impl$<$ std::index\_\-sequence$<$ Is...$>$, Ts...$>$@{hope::detail::flat\_\-tuple\_\-impl$<$ std::index\_\-sequence$<$ Is...$>$, Ts...$>$}!decltype@{decltype}}
+\index{decltype@{decltype}!hope::detail::flat_tuple_impl< std::index_sequence< Is...>, Ts...>@{hope::detail::flat\_\-tuple\_\-impl$<$ std::index\_\-sequence$<$ Is...$>$, Ts...$>$}}
+\subsubsection[{decltype}]{\setlength{\rightskip}{0pt plus 5cm}template$<$std::size\_\-t... Is, typename... Ts$>$ template$<$size\_\-t N$>$ constexpr hope::detail::flat\_\-tuple\_\-impl$<$ std::index\_\-sequence$<$ Is...$>$, Ts...$>$::decltype (auto) const\hspace{0.3cm}{\tt  \mbox{[}inline\mbox{]}}}}
+\label{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_4_00_01_ts_8_8_8_4_0db8adfa32e775efc297ffd41fdda6a7}
+
+
+Tries to find element with given index. 
+
+\begin{Desc}
+\item[Template Parameters:]
+\begin{description}
+\item[{\em N}]Index of the element to be found \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]Reference to the containing element, const and ref qualifiers of the containing one do not change, ref will be returned \char`\"{}as is\char`\"{} \end{Desc}
+\hypertarget{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_4_00_01_ts_8_8_8_4_6f82e0562ca06b099334fa7c08e0eb64}{
+\index{hope::detail::flat\_\-tuple\_\-impl$<$ std::index\_\-sequence$<$ Is...$>$, Ts...$>$@{hope::detail::flat\_\-tuple\_\-impl$<$ std::index\_\-sequence$<$ Is...$>$, Ts...$>$}!decltype@{decltype}}
+\index{decltype@{decltype}!hope::detail::flat_tuple_impl< std::index_sequence< Is...>, Ts...>@{hope::detail::flat\_\-tuple\_\-impl$<$ std::index\_\-sequence$<$ Is...$>$, Ts...$>$}}
+\subsubsection[{decltype}]{\setlength{\rightskip}{0pt plus 5cm}template$<$std::size\_\-t... Is, typename... Ts$>$ template$<$size\_\-t N$>$ constexpr hope::detail::flat\_\-tuple\_\-impl$<$ std::index\_\-sequence$<$ Is...$>$, Ts...$>$::decltype (auto)\hspace{0.3cm}{\tt  \mbox{[}inline\mbox{]}}}}
+\label{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_4_00_01_ts_8_8_8_4_6f82e0562ca06b099334fa7c08e0eb64}
+
+
+Tries to find element with given index. 
+
+\begin{Desc}
+\item[Template Parameters:]
+\begin{description}
+\item[{\em N}]Index of the element to be found \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]Reference to the containing element, const and ref qualifiers of the containing one are not change, ref will be returned \char`\"{}as is\char`\"{} \end{Desc}
+\hypertarget{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_4_00_01_ts_8_8_8_4_0db8adfa32e775efc297ffd41fdda6a7}{
+\index{hope::detail::flat\_\-tuple\_\-impl$<$ std::index\_\-sequence$<$ Is...$>$, Ts...$>$@{hope::detail::flat\_\-tuple\_\-impl$<$ std::index\_\-sequence$<$ Is...$>$, Ts...$>$}!decltype@{decltype}}
+\index{decltype@{decltype}!hope::detail::flat_tuple_impl< std::index_sequence< Is...>, Ts...>@{hope::detail::flat\_\-tuple\_\-impl$<$ std::index\_\-sequence$<$ Is...$>$, Ts...$>$}}
+\subsubsection[{decltype}]{\setlength{\rightskip}{0pt plus 5cm}template$<$std::size\_\-t... Is, typename... Ts$>$ template$<$typename T , typename NativeT  = std::decay\_\-t$<$T$>$$>$ constexpr hope::detail::flat\_\-tuple\_\-impl$<$ std::index\_\-sequence$<$ Is...$>$, Ts...$>$::decltype (auto) const\hspace{0.3cm}{\tt  \mbox{[}inline\mbox{]}}}}
+\label{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_4_00_01_ts_8_8_8_4_0db8adfa32e775efc297ffd41fdda6a7}
+
+
+Tries to find element of specified type, fails on static assert if element had not been found; method is not sensitive to the qualifiers, followed constructions are equal: get$<$int$>$() get$<$int\&$>$() , get$<$const int$>$(), get$<$const int\&$>$(); accessed value will be automatically deduced by tuple's type (regardless of field policy is being used to create the tuple). 
+
+\begin{Desc}
+\item[Template Parameters:]
+\begin{description}
+\item[{\em T}]: Type of element to be returned, const and reference qualifiers does not matter\item[{\em NativeT}]: clear type, used to deduce return type and check whether tuple has element with specified value or not\end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]reference to the containing element \end{Desc}
+\hypertarget{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_4_00_01_ts_8_8_8_4_6f82e0562ca06b099334fa7c08e0eb64}{
+\index{hope::detail::flat\_\-tuple\_\-impl$<$ std::index\_\-sequence$<$ Is...$>$, Ts...$>$@{hope::detail::flat\_\-tuple\_\-impl$<$ std::index\_\-sequence$<$ Is...$>$, Ts...$>$}!decltype@{decltype}}
+\index{decltype@{decltype}!hope::detail::flat_tuple_impl< std::index_sequence< Is...>, Ts...>@{hope::detail::flat\_\-tuple\_\-impl$<$ std::index\_\-sequence$<$ Is...$>$, Ts...$>$}}
+\subsubsection[{decltype}]{\setlength{\rightskip}{0pt plus 5cm}template$<$std::size\_\-t... Is, typename... Ts$>$ template$<$typename T , typename NativeT  = std::decay\_\-t$<$T$>$$>$ constexpr hope::detail::flat\_\-tuple\_\-impl$<$ std::index\_\-sequence$<$ Is...$>$, Ts...$>$::decltype (auto)\hspace{0.3cm}{\tt  \mbox{[}inline\mbox{]}}}}
+\label{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_4_00_01_ts_8_8_8_4_6f82e0562ca06b099334fa7c08e0eb64}
+
+
+Tries to find element of specified type, fails on static assert if element had not been found; method is not sensitive to the qualifiers, followed constructions are equal: get$<$int$>$() get$<$int\&$>$() , get$<$const int$>$(), get$<$const int\&$>$(); accessed value will be automatically deduced by tuple's type (regardless of field policy is being used to create the tuple). 
+
+\begin{Desc}
+\item[Template Parameters:]
+\begin{description}
+\item[{\em T}]: Type of element to be returned, const and reference qualifiers does not matter\item[{\em NativeT}]: clear type, used to deduce return type and check whether tuple has element with specified value or not\end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]reference to the containing element \end{Desc}
+\hypertarget{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_4_00_01_ts_8_8_8_4_90c90aefa83c884fc686a98175d8fcd6}{
+\index{hope::detail::flat\_\-tuple\_\-impl$<$ std::index\_\-sequence$<$ Is...$>$, Ts...$>$@{hope::detail::flat\_\-tuple\_\-impl$<$ std::index\_\-sequence$<$ Is...$>$, Ts...$>$}!for\_\-each@{for\_\-each}}
+\index{for\_\-each@{for\_\-each}!hope::detail::flat_tuple_impl< std::index_sequence< Is...>, Ts...>@{hope::detail::flat\_\-tuple\_\-impl$<$ std::index\_\-sequence$<$ Is...$>$, Ts...$>$}}
+\subsubsection[{for\_\-each}]{\setlength{\rightskip}{0pt plus 5cm}template$<$std::size\_\-t... Is, typename... Ts$>$ template$<$typename F $>$ constexpr void hope::detail::flat\_\-tuple\_\-impl$<$ std::index\_\-sequence$<$ Is...$>$, Ts...$>$::for\_\-each (flat\_\-tuple \& {\em tuple2}, \/  F \&\& {\em f})\hspace{0.3cm}{\tt  \mbox{[}inline\mbox{]}}}}
+\label{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_4_00_01_ts_8_8_8_4_90c90aefa83c884fc686a98175d8fcd6}
+
+
+Applies given functor to each value of tuples. 
+
+\begin{Desc}
+\item[Template Parameters:]
+\begin{description}
+\item[{\em F}]type of functional object \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em tuple2}]second tuple the function to be applied to \item[{\em f}]functional object to be sequentially applied to each field of tuple \end{description}
+\end{Desc}
+\hypertarget{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_4_00_01_ts_8_8_8_4_1ef2389962afceff73d54483975f5628}{
+\index{hope::detail::flat\_\-tuple\_\-impl$<$ std::index\_\-sequence$<$ Is...$>$, Ts...$>$@{hope::detail::flat\_\-tuple\_\-impl$<$ std::index\_\-sequence$<$ Is...$>$, Ts...$>$}!for\_\-each@{for\_\-each}}
+\index{for\_\-each@{for\_\-each}!hope::detail::flat_tuple_impl< std::index_sequence< Is...>, Ts...>@{hope::detail::flat\_\-tuple\_\-impl$<$ std::index\_\-sequence$<$ Is...$>$, Ts...$>$}}
+\subsubsection[{for\_\-each}]{\setlength{\rightskip}{0pt plus 5cm}template$<$std::size\_\-t... Is, typename... Ts$>$ template$<$typename F $>$ constexpr void hope::detail::flat\_\-tuple\_\-impl$<$ std::index\_\-sequence$<$ Is...$>$, Ts...$>$::for\_\-each (F \&\& {\em f})\hspace{0.3cm}{\tt  \mbox{[}inline\mbox{]}}}}
+\label{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_4_00_01_ts_8_8_8_4_1ef2389962afceff73d54483975f5628}
+
+
+Applies given functor to each value of given tuple, more useful analogue of std::apply. 
+
+\begin{Desc}
+\item[Template Parameters:]
+\begin{description}
+\item[{\em F}]type of functional object \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em f}]functional object to be sequentially applied to each field of tuple \end{description}
+\end{Desc}
+\hypertarget{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_4_00_01_ts_8_8_8_4_217b9226418ab5ac765404e6632a8083}{
+\index{hope::detail::flat\_\-tuple\_\-impl$<$ std::index\_\-sequence$<$ Is...$>$, Ts...$>$@{hope::detail::flat\_\-tuple\_\-impl$<$ std::index\_\-sequence$<$ Is...$>$, Ts...$>$}!for\_\-each@{for\_\-each}}
+\index{for\_\-each@{for\_\-each}!hope::detail::flat_tuple_impl< std::index_sequence< Is...>, Ts...>@{hope::detail::flat\_\-tuple\_\-impl$<$ std::index\_\-sequence$<$ Is...$>$, Ts...$>$}}
+\subsubsection[{for\_\-each}]{\setlength{\rightskip}{0pt plus 5cm}template$<$std::size\_\-t... Is, typename... Ts$>$ template$<$typename F $>$ constexpr void hope::detail::flat\_\-tuple\_\-impl$<$ std::index\_\-sequence$<$ Is...$>$, Ts...$>$::for\_\-each (const flat\_\-tuple \& {\em tuple2}, \/  F \&\& {\em f}) const\hspace{0.3cm}{\tt  \mbox{[}inline\mbox{]}}}}
+\label{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_4_00_01_ts_8_8_8_4_217b9226418ab5ac765404e6632a8083}
+
+
+Applies given functor to each value of tuples. 
+
+\begin{Desc}
+\item[Template Parameters:]
+\begin{description}
+\item[{\em F}]type of functional object \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em tuple2}]second tuple the function to be applied to \item[{\em f}]functional object to be sequentially applied to each field of tuple \end{description}
+\end{Desc}
+\hypertarget{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_4_00_01_ts_8_8_8_4_666a36927404ca2f5d9faeeb9da9c039}{
+\index{hope::detail::flat\_\-tuple\_\-impl$<$ std::index\_\-sequence$<$ Is...$>$, Ts...$>$@{hope::detail::flat\_\-tuple\_\-impl$<$ std::index\_\-sequence$<$ Is...$>$, Ts...$>$}!for\_\-each@{for\_\-each}}
+\index{for\_\-each@{for\_\-each}!hope::detail::flat_tuple_impl< std::index_sequence< Is...>, Ts...>@{hope::detail::flat\_\-tuple\_\-impl$<$ std::index\_\-sequence$<$ Is...$>$, Ts...$>$}}
+\subsubsection[{for\_\-each}]{\setlength{\rightskip}{0pt plus 5cm}template$<$std::size\_\-t... Is, typename... Ts$>$ template$<$typename F $>$ constexpr void hope::detail::flat\_\-tuple\_\-impl$<$ std::index\_\-sequence$<$ Is...$>$, Ts...$>$::for\_\-each (F \&\& {\em f}) const\hspace{0.3cm}{\tt  \mbox{[}inline\mbox{]}}}}
+\label{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_4_00_01_ts_8_8_8_4_666a36927404ca2f5d9faeeb9da9c039}
+
+
+Applies given functor to each value of tuple, more useful analogue of std::apply. 
+
+\begin{Desc}
+\item[Template Parameters:]
+\begin{description}
+\item[{\em F}]type of functional object \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em f}]functional object to be sequentially applied to each field of tuple \end{description}
+\end{Desc}
+\hypertarget{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_4_00_01_ts_8_8_8_4_e8c18d2b32dc3aee7818265152bbfa46}{
+\index{hope::detail::flat\_\-tuple\_\-impl$<$ std::index\_\-sequence$<$ Is...$>$, Ts...$>$@{hope::detail::flat\_\-tuple\_\-impl$<$ std::index\_\-sequence$<$ Is...$>$, Ts...$>$}!get\_\-size@{get\_\-size}}
+\index{get\_\-size@{get\_\-size}!hope::detail::flat_tuple_impl< std::index_sequence< Is...>, Ts...>@{hope::detail::flat\_\-tuple\_\-impl$<$ std::index\_\-sequence$<$ Is...$>$, Ts...$>$}}
+\subsubsection[{get\_\-size}]{\setlength{\rightskip}{0pt plus 5cm}template$<$std::size\_\-t... Is, typename... Ts$>$ static constexpr auto hope::detail::flat\_\-tuple\_\-impl$<$ std::index\_\-sequence$<$ Is...$>$, Ts...$>$::get\_\-size ()\hspace{0.3cm}{\tt  \mbox{[}inline, static\mbox{]}}}}
+\label{classhope_1_1detail_1_1flat__tuple__impl_3_01std_1_1index__sequence_3_01_is_8_8_8_4_00_01_ts_8_8_8_4_e8c18d2b32dc3aee7818265152bbfa46}
+
+
+just returns the size of the tuple (means number of fields) 
+
+\begin{Desc}
+\item[Returns:]number of fields \end{Desc}
+
+
+The documentation for this class was generated from the following file:\begin{CompactItemize}
+\item 
+lib/hope/tuple/\hyperlink{flat__tuple_8h}{flat\_\-tuple.h}\end{CompactItemize}

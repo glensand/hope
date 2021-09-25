@@ -1,0 +1,25 @@
+\hypertarget{flat__sorted__tuple_8h}{
+\section{lib/hope/tuple/flat\_\-sorted\_\-tuple.h File Reference}
+\label{flat__sorted__tuple_8h}\index{lib/hope/tuple/flat\_\-sorted\_\-tuple.h@{lib/hope/tuple/flat\_\-sorted\_\-tuple.h}}
+}
+This file contains function which might be used to create tuple of specified types. Before tuple creation all the corresponding types sorts and reorders by predicate.  
+
+
+{\tt \#include \char`\"{}hope/typelist/type\_\-list.h\char`\"{}}\par
+{\tt \#include \char`\"{}hope/typelist/typelistsort.h\char`\"{}}\par
+{\tt \#include \char`\"{}hope/tuple/flat\_\-tuple.h\char`\"{}}\par
+\subsection*{Functions}
+\begin{CompactItemize}
+\item 
+\hypertarget{namespacehope_1_1detail_92f958a639802111c3ca5c19efd66407}{
+{\footnotesize template$<$typename... Ts, typename... Vs$>$ }\\constexpr auto \textbf{hope::detail::make\_\-flat\_\-tuple\_\-from\_\-type\_\-list} (type\_\-list$<$ Ts...$>$, Vs \&\&...args)}
+\label{namespacehope_1_1detail_92f958a639802111c3ca5c19efd66407}
+
+\item 
+{\footnotesize template$<$typename... Ts$>$ }\\constexpr auto \hyperlink{namespacehope_4d5d6cdd0a3c59e7e6d3f9036bf3d135}{hope::make\_\-sorted\_\-tuple} (Ts \&\&...args)
+\end{CompactItemize}
+
+
+\subsection{Detailed Description}
+This file contains function which might be used to create tuple of specified types. Before tuple creation all the corresponding types sorts and reorders by predicate. 
+
