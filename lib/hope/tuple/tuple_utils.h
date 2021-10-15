@@ -11,6 +11,8 @@
 #include "hope/tuple/flat_tuple.h"
 #include "hope/tuple/tuple_from_struct.h"
 #include "hope/components/user_defined_types.h"
+#include "hope/components/detector.h"
+
 #include <functional>
 
 /*! \defgroup <reflection> Static reflection
@@ -59,6 +61,9 @@ namespace hope {
             constexpr auto tuple_size = size(type_list<Ts...>{});
             return (std::size_t(hash(tuple. template get<Is>()) / tuple_size) + ...);
         }
+
+        template<typename TValue>
+        using equal_operation_t = decltype(std::declval<TValue>() == std::declval<TValue>());
     }
 
     template <typename... Ts>
@@ -83,6 +88,38 @@ namespace hope {
             return detail::hash(tuple, std::make_index_sequence < size(type_list<Ts...>{})() > ());
         }
     };
+
+    template<typename TStruct>
+    bool compare(const TStruct& lhs, const TStruct& rhs,
+                float floatEps = std::numeric_limits<float>::epsilon(), 
+                double doubleEps = std::numeric_limits<double>::epsilon()) noexcept {
+        
+        static_assert(std::is_class_v<TStruct>, 
+            "hope::compare: Inbuild type has been provided, only structures and classes are allowed");
+
+        auto&& left = tuple_from_struct(lhs, hope::field_policy::reference{});
+        auto&& right = tuple_from_struct(rhs, hope::field_policy::reference{});
+        auto equal = true;
+        hope::for_each( // NOTE: do not remove hope::, 'cause utility like foreach is in conflict with stl for_each.
+            left, right, 
+            [&](auto&& l, auto&& r){
+                if (!equal) return;
+                using value_t = std::decay_t<decltype(l)>;
+                // msvc sucks and tries to compile else branch in constexpr statement (is is legal?)
+                constexpr bool has_equal_operator = is_detected_v<detail::equal_operation_t, value_t>; 
+                if constexpr (std::is_same_v<value_t, float>){
+                    equal = std::abs(l - r) < floatEps;
+                } else if constexpr (std::is_floating_point_v<value_t>){
+                    equal = std::abs(l - r) < (value_t)doubleEps;
+                } else if constexpr (has_equal_operator){
+                    equal = l == r;
+                } else if constexpr (!has_equal_operator){
+                    equal = compare(l, r, floatEps, doubleEps);
+                }
+            }
+        );
+        return equal;
+    }
 }
 
 template <typename TStruct>

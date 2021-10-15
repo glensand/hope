@@ -10,7 +10,7 @@
     \file
     \brief File contains implementation of the classic recursive tuple. This class should never be used.
     ANYMORE! NOWERE!
-    Compilation of this class os quit complicated deal.
+    Compilation of this class is quit complicated deal.
 */
 
 #pragma once
