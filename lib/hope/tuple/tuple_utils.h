@@ -100,7 +100,7 @@ namespace hope {
         auto&& left = tuple_from_struct(lhs, hope::field_policy::reference{});
         auto&& right = tuple_from_struct(rhs, hope::field_policy::reference{});
         auto equal = true;
-        for_each(
+        hope::for_each( // NOTE: do not remove hope::, 'cause utility like foreach is in conflict with stl for_each.
             left, right, 
             [&](auto&& l, auto&& r){
                 if (!equal) return;
