@@ -11,6 +11,7 @@
 #include "hope/tuple/flat_tuple.h"
 #include "hope/tuple/tuple_from_struct.h"
 #include "hope/tuple/tuple_from_struct_unsafe.h"
+#include "hope/tuple/tuple_utils.h"
 
 namespace {
 
@@ -213,4 +214,11 @@ TEST(TupleTest, TupleLikeHolder)
 
     auto&& res1 = test_struct1.get1();
     auto&& res2 = test_struct2.get1();
+}
+
+TEST(TupleTest, StructCompare){
+    test_struct_3 s1, s2;
+    ASSERT_TRUE(hope::compare(s1, s2));
+    s1._0 = 1.f;
+    //ASSERT_TRUE(!hope::compare(s1, s2));
 }
