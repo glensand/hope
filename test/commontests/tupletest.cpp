@@ -228,7 +228,7 @@ TEST(TupleTest, StructCompare){
     ASSERT_TRUE(!hope::compare(s1, s2));
 }
 
-TEST(TupleTest, CompicatedStructCompare){
+TEST(TupleTest, ComplicatedStructCompare){
     struct_string s1, s2;
     ASSERT_TRUE(hope::compare(s1, s2));
     s1.index = 10;
@@ -239,5 +239,5 @@ TEST(TupleTest, RecursiveStructCompare){
     recursive_structure s1, s2;
     ASSERT_TRUE(hope::compare(s1, s2));
     s1.v1._0 = 10.0;
-    //ASSERT_TRUE(!hope::compare(s1, s2));
+    ASSERT_TRUE(!hope::compare(s1, s2));
 }
