@@ -134,7 +134,8 @@ namespace hope {
             [[nodiscard]] constexpr decltype(auto)
             get() noexcept {
                 static_assert(tuple_size > N);
-                using value_t = typename decltype(deduce_type<native_t<N>, N>())::Type;
+                using nth_t = native_t<N>;
+                using value_t = typename decltype(deduce_type<nth_t, N>())::Type;
                 return get_impl<N, value_t>();
             }
 
@@ -148,7 +149,8 @@ namespace hope {
             [[nodiscard]] constexpr decltype(auto)
             get() const noexcept {
                 static_assert(tuple_size > N);
-                using value_t = typename decltype(deduce_type<native_t<N>, N>())::Type;
+                using nth_t = native_t<N>;
+                using value_t = typename decltype(deduce_type<nth_t, N>())::Type;
                 return get_impl<N, value_t>();
             }
 

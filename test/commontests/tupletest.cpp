@@ -11,6 +11,7 @@
 #include "hope/tuple/flat_tuple.h"
 #include "hope/tuple/tuple_from_struct.h"
 #include "hope/tuple/tuple_from_struct_unsafe.h"
+#include "hope/tuple/tuple_utils.h"
 
 namespace {
 
@@ -21,15 +22,20 @@ struct pod_imitator {
 };
 
 struct test_struct_3 {
-    double _0;
-    float _1;
-    int _2;
-    bool _3;
+    double _0 = 0;
+    float _1 = 0;
+    int _2 = 0;
+    bool _3 = false;
+};
+
+struct recursive_structure final {
+    test_struct_3 v1;
+    int value = 0;
 };
 
 struct struct_string final {
     std::string name;
-    int index;
+    int index = 0;
 };
 
 struct struct_int_vector final {
@@ -213,4 +219,25 @@ TEST(TupleTest, TupleLikeHolder)
 
     auto&& res1 = test_struct1.get1();
     auto&& res2 = test_struct2.get1();
+}
+
+TEST(TupleTest, StructCompare){
+    test_struct_3 s1, s2;
+    ASSERT_TRUE(hope::compare(s1, s2));
+    s1._0 = 1.f;
+    ASSERT_TRUE(!hope::compare(s1, s2));
+}
+
+TEST(TupleTest, CompicatedStructCompare){
+    struct_string s1, s2;
+    ASSERT_TRUE(hope::compare(s1, s2));
+    s1.index = 10;
+    ASSERT_TRUE(!hope::compare(s1, s2));
+}
+
+TEST(TupleTest, RecursiveStructCompare){
+    recursive_structure s1, s2;
+    ASSERT_TRUE(hope::compare(s1, s2));
+    s1.v1._0 = 10.0;
+    //ASSERT_TRUE(!hope::compare(s1, s2));
 }

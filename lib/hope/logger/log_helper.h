@@ -71,7 +71,7 @@ namespace hope {
         * If the type is enum and write_enum had been detected, thus it will be called
         * If member function with signature void write(log_helper&) detected, it will be called
         * If global function with signature void write(log_helper, const T&) detected, it will be called
-        * @tparam T Type of th eobject to be written
+        * @tparam T Type of the object to be written
         * @param helper Self
         * @param value Instance of the object to be written
         * @return Self
