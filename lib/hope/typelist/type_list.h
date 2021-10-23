@@ -136,8 +136,13 @@ namespace hope {
 
     template<size_t I, typename... Ts>
     constexpr auto get_nth_type(type_list<Ts...>) {
+#if defined(_MSC_VER) || defined(__INTEL_COMPILER)
+        constexpr auto extracted_ptr = detail::extract<I, Ts...>();
+        return type_holder<std::remove_pointer_t<decltype(extracted_ptr)>>{};
+#else
         return type_holder<decltype(
             detail::get<std::make_index_sequence<I>>::extractor(static_cast<Ts*>(nullptr)...))>{};
+#endif
     }
 
     template<size_t I, typename... Ts>
