@@ -48,14 +48,4 @@ namespace hope{
     }
 }
 
-/**
- * Public stream operator
- */
-template<typename T>
-constexpr std::ostream& operator<< (std::ostream& stream, const T& object) {
-    auto&& tuple = hope::ref_tuple_from_struct(object);
-    stream << tuple;
-    return stream;
-}
-
 /*! @} */
