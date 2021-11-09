@@ -342,3 +342,8 @@ healthchecksdb
 /build
 /cmake-build-debug
 /.vscode
+lib/hope/.DS_Store
+lib/.DS_Store
+samples/.DS_Store
+.gitignore
+lib/hope/.DS_Store

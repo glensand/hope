@@ -15,4 +15,4 @@ int main()
     hope::sample::multiple_value::run();
 
     return 0;
-} 
+}

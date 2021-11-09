@@ -7,6 +7,8 @@
  */
 
 #include "hope/components/typemap.h"
+#include "hope/typelist/type_value_map.h"
+#include "gtest/gtest.h"
 #include <string_view>
 
 namespace {
@@ -32,4 +34,15 @@ namespace {
     static_assert(is_same(map::get<float>(), float_value{ }));
     static_assert(is_same(map::get<std::string_view>(), string_value{ }));
     static_assert(is_same(map::get<bool>(), bool_value{ }));
+}
+
+TEST(TypeMapTest, SimpleTypes){
+    hope::type_value_map map(
+        hope::type_list<int, bool, double>{},
+        {1, 2, 3}
+    );
+
+    ASSERT_TRUE(map.get<int>() == 1);
+    ASSERT_TRUE(map.get<bool>() == 2);
+    ASSERT_TRUE(map.get<double>() == 3);
 }
