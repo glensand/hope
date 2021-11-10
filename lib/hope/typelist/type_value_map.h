@@ -11,6 +11,7 @@
 #include "hope/typelist/type_list.h"
 #include <initializer_list>
 #include <array>
+#include <cassert>
 
 namespace hope {
 
@@ -39,8 +40,8 @@ namespace hope {
     }
 
     private:
-        constexpr static type_list<Ts...> m_types;
-        std::array<TValue, size(m_types)> m_values;
+        constexpr static type_list<Ts...> m_types{ };
+        std::array<TValue, size(m_types)> m_values{ };
     };
 
 }
