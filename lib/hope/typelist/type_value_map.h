@@ -12,6 +12,7 @@
 #include "hope/tuple/flat_tuple.h"
 #include <initializer_list>
 #include <array>
+#include <cassert>
 
 namespace hope {
 
