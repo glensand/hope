@@ -38,11 +38,8 @@ namespace {
 
 TEST(TypeMapTest, SimpleTypes){
     hope::type_value_map map(
-        hope::type_list<int, bool, double>{},
-        {1, 2, 3}
+        hope::tv<int>(1)
     );
 
     ASSERT_TRUE(map.get<int>() == 1);
-    ASSERT_TRUE(map.get<bool>() == 2);
-    ASSERT_TRUE(map.get<double>() == 3);
 }
