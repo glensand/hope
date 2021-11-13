@@ -241,3 +241,10 @@ TEST(TupleTest, RecursiveStructCompare){
     s1.v1._0 = 10.0;
     ASSERT_TRUE(!hope::compare(s1, s2));
 }
+
+
+TEST(TupleTest, StructureFieldValueChange){
+    auto&& t = hope::make_flat_tuple(recursive_structure{}, 1, false);
+    t.get<recursive_structure>().value = 1000;
+    ASSERT_TRUE(t.get<recursive_structure>().value == 1000);
+}

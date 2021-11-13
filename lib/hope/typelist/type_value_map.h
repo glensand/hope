@@ -25,8 +25,12 @@ namespace hope {
     };
 
     template<typename TKey, typename TValue>
-    auto tv(const TValue& v){
-        return type_value<TKey, TValue>{ v };
+    auto tv(const TValue& v){   // decayed special for inbuilt arrays
+        if constexpr (std::is_array_v<TValue>){
+            return type_value<TKey, const std::remove_all_extents_t<TValue>*>{ &v[0] };
+        } else if constexpr (!std::is_array_v<TValue>) { // double constexpr for compilation of msvc
+            return type_value<TKey, TValue> { v };
+        }
     }
 
     template<typename... Ts>
@@ -46,8 +50,8 @@ namespace hope {
             m_map.for_each([](auto&& pair){
                 using pair_t = std::decay_t<decltype(pair)>;
                 static_assert(is_type_value_v<pair_t>, 
-                    "HOPE STATIC ASSRTATION FAILED:\n"
-                    "Onve of the arguments is not an instance of the hope::type_value structure.\n"
+                    "HOPE STATIC ASSRTATION FAILED:"
+                    "Onve of the arguments is not an instance of the hope::type_value structure."
                     "hope::type_value_map is intended to work only with hope::type_value."
                     "Wrap your key and value to it and try to compile again."
                 );
@@ -58,7 +62,7 @@ namespace hope {
         decltype(auto) get() const {
             constexpr static auto idx = index<TKey>();
             static_assert(idx < size(type_list<Ts...>{}), 
-                "HOPE STATIC ASSRTATION FAILED:\n"
+                "HOPE STATIC ASSRTATION FAILED:"
                 "Given type is not present in the specified type - value map"
             );
 
@@ -67,12 +71,13 @@ namespace hope {
 
         template<typename TKey, typename TValue>
         void set(TValue&& val){
-            using pair_t = type_value<TKey, TValue>;
+            using pair_t = type_value<TKey, std::decay_t<TValue>>;
             static_assert(contains<pair_t>(type_list<Ts...>{}), 
-                "HOPE STATIC ASSRTATION FAILED:\n"
+                "HOPE STATIC ASSRTATION FAILED:"
                 "Given combination of key type and value type is not present in type value map"
             );
-            m_map.template get<pair_t>().value = val;
+            auto&& containing_value = m_map.template get<pair_t>();
+            containing_value.value = val;
         }
 
     private:
@@ -85,7 +90,7 @@ namespace hope {
                 return std::is_same_v<TKey, key_t>;
             });
         }
-        const hope::flat_tuple<Ts...> m_map;
+        hope::flat_tuple<Ts...> m_map;
     };
 
     template<typename... Ts>

@@ -347,3 +347,4 @@ lib/.DS_Store
 samples/.DS_Store
 .gitignore
 lib/hope/.DS_Store
+lib/hope/typelist/.DS_Store
