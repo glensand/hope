@@ -1,4 +1,4 @@
-/* Copyright (C) 2021 Gleb Bezborodov - All Rights Reserved
+/* Copyright (C) 2021 - 2022 Gleb Bezborodov - All Rights Reserved
  * You may use, distribute and modify this code under the
  * terms of the MIT license.
  *
