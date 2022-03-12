@@ -10,9 +10,6 @@
 
 #include "hope/typelist/type_list.h"
 #include "hope/tuple/flat_tuple.h"
-#include <initializer_list>
-#include <array>
-#include <cassert>
 
 namespace hope {
 
@@ -50,8 +47,8 @@ namespace hope {
             m_map.for_each([](auto&& pair){
                 using pair_t = std::decay_t<decltype(pair)>;
                 static_assert(is_type_value_v<pair_t>, 
-                    "HOPE STATIC ASSRTATION FAILED:"
-                    "Onve of the arguments is not an instance of the hope::type_value structure."
+                    "HOPE STATIC ASSERTION FAILED:"
+                    "One of the arguments is not an instance of the hope::type_value structure."
                     "hope::type_value_map is intended to work only with hope::type_value."
                     "Wrap your key and value to it and try to compile again."
                 );
@@ -62,7 +59,7 @@ namespace hope {
         decltype(auto) get() const {
             constexpr static auto idx = index<TKey>();
             static_assert(idx < size(type_list<Ts...>{}), 
-                "HOPE STATIC ASSRTATION FAILED:"
+                "HOPE STATIC ASSERTION FAILED:"
                 "Given type is not present in the specified type - value map"
             );
 
@@ -73,7 +70,7 @@ namespace hope {
         void set(TValue&& val){
             using pair_t = type_value<TKey, std::decay_t<TValue>>;
             static_assert(contains<pair_t>(type_list<Ts...>{}), 
-                "HOPE STATIC ASSRTATION FAILED:"
+                "HOPE STATIC ASSERTION FAILED:"
                 "Given combination of key type and value type is not present in type value map"
             );
             auto&& containing_value = m_map.template get<pair_t>();
