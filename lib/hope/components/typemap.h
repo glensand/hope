@@ -33,6 +33,8 @@ namespace hope {
             return type_holder<typename pair::Value>();
         }
 
+        template<typename Key>
+        using get_t = typename decltype(get<Key>())::Type;
     private:
 
         template <typename Key>
