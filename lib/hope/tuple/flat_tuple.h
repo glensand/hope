@@ -243,9 +243,9 @@ namespace hope {
             template<typename T, std::size_t I>
             [[nodiscard]] constexpr auto deduce_type() const noexcept {
                 // we cannot unambiguous determine holding type, thus try to cast to value and ref, and const ref...
-                if constexpr (std::is_base_of_v<indexed_value<T, I>, self_t>)
+                if constexpr (std::is_base_of_v<::hope::detail::indexed_value<T, I>, self_t>) //fixed crazy clion error
                     return type_holder<T>{};
-                else if constexpr (std::is_base_of_v<indexed_value<T &, I>, self_t>)
+                else if constexpr (std::is_base_of_v<::hope::detail::indexed_value<T &, I>, self_t>) //fixed crazy clion error
                     return type_holder<T &>{};
                 else
                     return type_holder<const T &>{};
