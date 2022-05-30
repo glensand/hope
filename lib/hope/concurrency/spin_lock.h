@@ -20,8 +20,7 @@
 
 namespace hope::concurrency{
 
-    class spin_lock {
-
+    class spin_lock final {
     public:
         spin_lock() = default;
         ~spin_lock() = default;
