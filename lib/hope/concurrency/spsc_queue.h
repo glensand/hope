@@ -28,7 +28,7 @@ namespace hope::concurrency {
 
         explicit spsc_queue(std::size_t pre_alloc = 0) {
             node* n = new node;
-            m_tail = m_head = m_first = m_m_tail_copy = n;
+            m_tail = m_head = m_first = m_tail_copy = n;
 
             // TODO:: rework
             T dummy;
@@ -48,8 +48,7 @@ namespace hope::concurrency {
         }
 
         template<typename... Args>
-        void enqueue(Args&&... v)
-        {
+        void enqueue(Args&&... v) {
             auto* n = alloc_node(std::forward<Args>(v)...);
             n->next = nullptr;
             store_release(&m_head->next, n);
@@ -57,8 +56,7 @@ namespace hope::concurrency {
         }
 
         bool try_dequeue(T& v) {
-            if (load_consume(&m_tail->next))
-            {
+            if (load_consume(&m_tail->next)) {
                 v = m_tail->next->value;
                 store_release(&m_tail, m_tail->next);
                 return true;
@@ -93,7 +91,7 @@ namespace hope::concurrency {
         // accessed only by producer 
         node* m_head = nullptr; // head of the queue 
         node* m_first = nullptr; // last unused node (tail of node cache) 
-        node* m_m_tail_copy = nullptr; // helper (points somewhere between m_first and m_tail) 
+        node* m_tail_copy = nullptr; // helper (points somewhere between m_first and m_tail) 
 
         template<typename... Args>
         node* create_from_internal(Args&&... args) {
@@ -108,12 +106,12 @@ namespace hope::concurrency {
             // first tries to allocate node from internal node cache, 
             // if attempt fails, allocates node via ::operator new() 
 
-            if (m_first != m_m_tail_copy)
+            if (m_first != m_tail_copy)
                 return create_from_internal(std::forward<Args>(args)...);
 
-            m_m_tail_copy = load_consume(&m_tail);
+            m_tail_copy = load_consume(&m_tail);
 
-            if (m_first != m_m_tail_copy)
+            if (m_first != m_tail_copy)
                 return create_from_internal(std::forward<Args>(args)...);
 
             return new node(std::forward<Args>(args)...);
