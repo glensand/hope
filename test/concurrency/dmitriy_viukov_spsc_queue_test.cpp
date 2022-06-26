@@ -8,10 +8,37 @@
 
 #include "gtest/gtest.h"
 #include "hope/concurrency/spsc_queue.h"
+#include "hope/concurrency/mpsc_queue.h"
+#include "hope/concurrency/compound_queue.h"
 
-TEST(ViukovSpscTest, Initi)
+TEST(ViukovSpsc, Initi)
 {
     hope::concurrency::spsc_queue<int> queue;
+    queue.enqueue(4);
+    queue.enqueue(1);
+    int val;
+    queue.try_dequeue(val);
+    ASSERT_TRUE(val == 4);
+    queue.try_dequeue(val);
+    ASSERT_TRUE(val == 1);
+}
+
+TEST(Mpsc, Compilation)
+{
+    hope::concurrency::mpsc_queue<int> queue;
+    queue.enqueue(4);
+    queue.enqueue(1);
+    int val;
+    queue.try_dequeue(val);
+    ASSERT_TRUE(val == 4);
+    queue.try_dequeue(val);
+    ASSERT_TRUE(val == 1);
+}
+
+TEST(CompoundQueue, Compilation)
+{
+    hope::concurrency::compound_queue<int> queue;
+    queue.register_thread(std::this_thread::get_id());
     queue.enqueue(4);
     queue.enqueue(1);
     int val;
