@@ -47,3 +47,34 @@ TEST(CompoundQueue, Compilation)
     queue.try_dequeue(val);
     ASSERT_TRUE(val == 1);
 }
+
+TEST(MpSc, Threading)
+{
+    constexpr static auto threads_count = 5;
+    std::array<std::vector<int>, threads_count> buffer;
+    for(unsigned i = 0; i < threads_count; ++i) {
+        for(unsigned j = 0; j < 100; ++j){
+            buffer[i].push_back(std::rand());
+        }
+    }
+
+    hope::concurrency::mpsc_queue<int> queue;
+    std::vector<std::thread> threads;
+    for(unsigned i = 0; i < threads_count; ++i){
+        threads.emplace_back([i, &buffer, &queue]{
+            for(auto&& item : buffer[i]){
+                queue.enqueue(item);
+            }
+        });
+    }
+
+    for(unsigned i = 0; i < 100 * threads_count;){
+        int stb = 0;
+        if(queue.try_dequeue(stb)){
+            ++i;
+        }
+    }
+
+    for(auto&& t : threads)
+        t.join();
+}
