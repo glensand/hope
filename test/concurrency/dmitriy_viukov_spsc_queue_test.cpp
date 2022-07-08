@@ -9,7 +9,10 @@
 #include "gtest/gtest.h"
 #include "hope/concurrency/spsc_queue.h"
 #include "hope/concurrency/mpsc_queue.h"
+#include "hope/concurrency/mpmc_bounded_queue.h"
 #include "hope/concurrency/compound_queue.h"
+
+#include <array>
 
 TEST(ViukovSpsc, Initi)
 {
@@ -76,5 +79,44 @@ TEST(MpSc, Threading)
     }
 
     for(auto&& t : threads)
+        t.join();
+}
+
+TEST(MpMc, Threading)
+{
+    constexpr static auto generated_objects = 100;
+
+    constexpr static auto threads_count = 55;
+    std::vector<int> buffer;
+    for (unsigned j = 0; j < generated_objects; ++j) {
+        buffer.push_back(std::rand());
+    }
+
+    hope::concurrency::mpmc_bounded_queue<int> queue(256);
+    std::vector<std::thread> producers;
+    for (unsigned i = 0; i < threads_count; ++i) {
+        producers.emplace_back([&buffer, &queue] {
+            for (auto&& item : buffer) {
+                queue.try_enqueue(item);
+            }
+        });
+    }
+
+    std::vector<std::thread> consumers;
+    for(unsigned i = 0; i < threads_count; ++i) {
+        consumers.emplace_back([&queue] {
+            for (unsigned i = 0; i < generated_objects;) {
+                int stb = 0;
+                if (queue.try_dequeue(stb)) {
+                    ++i;
+                }
+            }
+        });
+    }
+
+    for (auto&& t : producers)
+        t.join();
+
+    for (auto&& t : consumers)
         t.join();
 }
