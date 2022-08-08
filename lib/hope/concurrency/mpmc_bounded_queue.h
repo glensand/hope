@@ -46,7 +46,7 @@ namespace hope::concurrency {
             cell* pushed;
             std::size_t pos = m_enqueue_pos.load(std::memory_order_relaxed);
             for (;;) {
-                const auto popped_pos = pos % m_buffer_mask;
+                const auto popped_pos = pos & m_buffer_mask;
                 pushed = &m_buffer[popped_pos];
                 const std::size_t seq = pushed->sequence.load(std::memory_order_acquire);
                 const intptr_t dif = (intptr_t)seq - (intptr_t)pos;
@@ -71,7 +71,7 @@ namespace hope::concurrency {
             cell* popped;
             size_t pos = m_dequeue_pos.load(std::memory_order_relaxed);
             for (;;) {
-                const auto popped_pos = pos % m_buffer_mask;
+                const auto popped_pos = pos & m_buffer_mask;
                 popped = &m_buffer[popped_pos];
                 const std::size_t seq = popped->sequence.load(std::memory_order_acquire);
                 const intptr_t dif = (intptr_t)seq - (intptr_t)(pos + 1);

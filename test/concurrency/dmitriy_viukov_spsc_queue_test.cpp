@@ -86,13 +86,13 @@ TEST(MpMc, Threading)
 {
     constexpr static auto generated_objects = 100;
 
-    constexpr static auto threads_count = 55;
+    constexpr static auto threads_count = 5;
     std::vector<int> buffer;
     for (unsigned j = 0; j < generated_objects; ++j) {
         buffer.push_back(std::rand());
     }
 
-    hope::concurrency::mpmc_bounded_queue<int> queue(256);
+    hope::concurrency::mpmc_bounded_queue<int> queue(1024);
     std::vector<std::thread> producers;
     for (unsigned i = 0; i < threads_count; ++i) {
         producers.emplace_back([&buffer, &queue] {
