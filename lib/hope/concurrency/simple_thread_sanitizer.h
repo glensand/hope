@@ -16,17 +16,25 @@ namespace tsan{
 
     struct simple_tsan_scope final {
         simple_tsan_scope(thread_id& id)
-            : this_id(id) {
-            assert(id == std::thread::id{});
-            id.store(std::this_thread::get_id(), std::memory_order_release);
+            : this_id(id)
+            , slave_scope(false) {
+            if(id != std::this_thread::get_id()) {
+                assert(id == std::thread::id{});
+                id.store(std::this_thread::get_id(), std::memory_order_release);
+            } else {
+                slave_scope = true;
+            }
         }
 
         ~simple_tsan_scope() {
-            assert(std::this_thread::get_id() == this_id.load(std::memory_order_consume));
-            this_id = std::thread::id{};
+            if(!slave_scope) {
+                assert(std::this_thread::get_id() == this_id.load(std::memory_order_consume));
+                this_id = std::thread::id{};
+            }
         }
 
         thread_id& this_id;
+        bool slave_scope;
     };
 }
 
