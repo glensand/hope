@@ -1,4 +1,4 @@
-/* Copyright (C) 2022 Gleb Bezborodov - All Rights Reserved
+/* Copyright (C) 2022 - 2023 Gleb Bezborodov - All Rights Reserved
  * You may use, distribute and modify this code under the
  * terms of the MIT license.
  *
@@ -35,8 +35,7 @@ namespace hope {
             return nullptr;
         }
 
-        templat
     private:
-        std::array<Interface*, ExpectedSize> m_map;
+        //std::array<Interface*, ExpectedSize> m_map;
     };
 }
