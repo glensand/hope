@@ -40,8 +40,8 @@ namespace hope {
                 if constexpr (I % 2 == 0) {
                     // todo:: check if callable
                     if (key == std::get<I>(expression)) {
-                        auto* Function = std::get<I + 1>(expression);
-                        (Instance.*Function)(std::forward<TVs>(Args)...);
+                        auto* function = std::get<I + 1>(expression);
+                        (Instance.*function)(std::forward<TVs>(Args)...);
                         return true;
                     }
                 }
@@ -74,7 +74,7 @@ namespace hope {
     private:
         template<typename TKey, std::size_t...Is, typename... TVs>
         bool evaluate(const TKey& key, std::index_sequence<Is...>, TVs&&... vals) {
-            return (... || try_apply<Is>(key, Forward<TVs>(vals)...));
+            return (... || try_apply<Is>(key, std::forward<TVs>(vals)...));
         }
 
         template<std::size_t I, typename TKey, typename... TVs>
@@ -84,8 +84,8 @@ namespace hope {
                 if constexpr (I % 2 == 0) {
                     // todo:: check if callable
                     if (key == std::get<I>(expression)) {
-                        auto&& Function = std::get<I + 1>(expression);
-                        Function(std::forward<TVs>(vals)...);
+                        auto&& function = std::get<I + 1>(expression);
+                        function(std::forward<TVs>(vals)...);
                         return true;
                     }
                 }
