@@ -12,9 +12,10 @@
 
 TEST(SwitchExpressionTest, Initialize)
 {
-    hope::switch_expression("key")
-        ["key1"]([] { std::cout << "key1"; })
-        ["key2"]([] { std::cout << "key2"; })
-        ["key3"]([] { std::cout << "key3"; })
-        ["key4"]([] { std::cout << "key4"; });
+    hope::switch_expression_lambda(
+        "key1", [] { std::cout << "key1"; },
+        "key2", [] { std::cout << "key2"; },
+        "key3", [] { std::cout << "key3"; },
+        "key4", [] { std::cout << "key4"; }
+    ).apply("key1");
 }

@@ -8,59 +8,95 @@
 
 #pragma once
 
-#include <any>
-#include <cassert>
-#include <unordered_map>
-#include <functional>
+#include <tuple>
+#include "hope/typelist/type_list.h"
 
 namespace hope {
 
-    template<typename Key>
-    class switch_expression final {
-        using functor_t = std::function<void()>;
-        using switch_t = std::unordered_map<Key, functor_t>;
-        using this_t = switch_expression<Key>;
-
-        class key_value_pair final {
-        public:
-            key_value_pair(this_t& master, const Key& key)
-                : m_key(key)
-                , m_master(master) {}
-
-            template<typename Functor>
-            this_t& operator()(Functor&& function) {
-                m_master.m_switch[m_key] = std::forward<Functor>(function);
-                return m_master;
-            }
-
-        private:
-            const Key& m_key;
-            this_t& m_master;
-        };
-
-        friend class key_value_pair;
+    template<typename... Ts>
+    class switch_expression_member final {
+        static_assert(sizeof ...(Ts) > 0);
     public:
-        switch_expression(const Key& key)
-            : m_key(key) { }
+        explicit switch_expression_member(const Ts&... args)
+            : expression(args...) {
 
-        ~switch_expression() {
-            if (auto && it = m_switch.find(m_key); it != std::end(m_switch))
-                it->second();
         }
 
-        key_value_pair operator[](const Key& key) {
-            const auto it = m_switch.find(key);
-            assert(it == std::cend(m_switch));
-            (void)it; // remove clang unused variable warning
-            auto&& [elementIt, _] = m_switch.emplace(key, functor_t{});
-            return { *this, elementIt->first };
+        template<typename TKey, typename TClass, typename... TVs>
+        bool apply(TClass& instance, const TKey& key, TVs&&... args) {
+            return evaluate(instance, key, std::make_index_sequence<sizeof ...(Ts)>{}, std::forward<TVs>(args)...);
         }
-     
+
     private:
-        Key m_key;
-        switch_t m_switch;
+        template<typename TKey, typename TClass, std::size_t...Is, typename... TVs>
+        bool evaluate(TClass& instance, const TKey key, std::index_sequence<Is...>, TVs&&... args) {
+            return (... || try_apply<Is>(instance, key, std::forward<TVs>(args)...));
+        }
+
+        template<std::size_t I, typename TKey, typename TClass, typename... TVs>
+        bool try_apply(TClass& Instance, const TKey key, TVs&&... args) {
+            if constexpr (I + 1 < sizeof ...(Ts)) {
+                // Even is a key, odd is a function
+                if constexpr (I % 2 == 0) {
+                    // todo:: check if callable
+                    if (key == std::get<I>(expression)) {
+                        auto* Function = std::get<I + 1>(expression);
+                        (Instance.*Function)(std::forward<TVs>(Args)...);
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        std::tuple<Ts...> expression;
     };
 
-    template<typename Key>
-    switch_expression(Key)->switch_expression<std::decay_t<Key>>;
+    template<typename... Ts>
+    switch_expression_member(Ts...) -> switch_expression_member<Ts...>;
+
+
+    template<typename... Ts>
+    class switch_expression_lambda final {
+        static_assert(sizeof ...(Ts) > 0);
+
+    public:
+        explicit switch_expression_lambda(const Ts&... args)
+            : expression(args...) {
+
+        }
+
+        template<typename TKey, typename... TVs>
+        bool apply(const TKey& key, TVs&&... vals) {
+            return evaluate(key, std::make_index_sequence<sizeof ...(Ts)>{}, std::forward<TVs>(vals)...);
+        }
+
+    private:
+        template<typename TKey, std::size_t...Is, typename... TVs>
+        bool evaluate(const TKey& key, std::index_sequence<Is...>, TVs&&... vals) {
+            return (... || try_apply<Is>(key, Forward<TVs>(vals)...));
+        }
+
+        template<std::size_t I, typename TKey, typename... TVs>
+        bool try_apply(const TKey& key, TVs&&... vals) {
+            if constexpr (I + 1 < sizeof ...(Ts)) {
+                // Even is a key, odd is a function
+                if constexpr (I % 2 == 0) {
+                    // todo:: check if callable
+                    if (key == std::get<I>(expression)) {
+                        auto&& Function = std::get<I + 1>(expression);
+                        Function(std::forward<TVs>(vals)...);
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        std::tuple<Ts...> expression;
+    };
+
+    template<typename... Ts>
+    switch_expression_lambda(Ts...) -> switch_expression_lambda<Ts...>;
+
 }
