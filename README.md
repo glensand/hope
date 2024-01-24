@@ -21,6 +21,8 @@ The hope library is in the process of being reworked (divided into thematic libr
 
 [concurrency](https://github.com/glensand/hope-threading)
 
+[json](https://github.com/glensand/hope-json)
+
 ## Library purpose
 Here are the things that I use or would like to use in my daily development. When I find an interesting technology, I immediately add it here. As a result, this repository will contain all the most interesting, in my opinion, things from the c ++ language. You can find here [my implementation](https://github.com/glensand/hope/blob/master/source/tuple/tuple_from_struct.h) of static reflection (based on magic-get idea) and wich used type loopholes. I also reworked some things from the Loki library, for example the [small object allocator](https://github.com/glensand/hope/tree/master/source/memory/small_object). Of course, here is the most important thing in c ++ in my opinion - the [list of types](https://github.com/glensand/hope/tree/master/source/typelist). With a variety of [examples](https://github.com/glensand/hope/tree/master/samples/typelist).
 ## System requirements
